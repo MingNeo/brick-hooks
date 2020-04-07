@@ -1,0 +1,3 @@
+**/*.test.js
+app/components/editor
+public

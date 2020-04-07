@@ -1,0 +1,53 @@
+{
+  "name": "custom-hooks",
+  "version": "1.0.0",
+  "description": "提取的一些hooks",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap && npm run build",
+    "start": "npm run dev",
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean --yes",
+    "compile": "lerna run --scope @umijs/use-request compile && lerna run --scope @umijs/hooks compile",
+    "build": "node ./scripts/clean-old-build.js && father build && npm run compile && node ./scripts/build-wind-up.js",
+    "cov": "father test --coverage",
+    "help": "father help",
+    "precommit": "father pre-commit",
+    "build:doc": "father-doc build",
+    "pub:doc": "now --prod",
+    "pub": "lerna publish",
+    "now-build": "echo \"hello\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MingNeo/custom-hooks.git"
+  },
+  "author": "lmr",
+  "dependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@testing-library/react-hooks": "^2.0.1",
+    "@types/jest": "^24.0.15",
+    "@types/lodash.debounce": "^4.0.6",
+    "@types/lodash.isequal": "^4.5.5",
+    "@types/lodash.throttle": "^4.1.6",
+    "babel-jest": "^25.1.0",
+    "babel-plugin-import": "^1.12.0",
+    "create-test-server": "^3.0.1",
+    "del": "^5.1.0",
+    "enzyme": "^3.10.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "jest": "^25.1.0",
+    "lerna": "^2.11.0",
+    "mockjs": "^1.1.0",
+    "react-test-renderer": "^16.13.0",
+    "ts-jest": "^25.3.0",
+    "typescript": "^3.3.3"
+  }
+}

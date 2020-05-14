@@ -1,3 +1,6 @@
 **/*.test.js
+**/*.test.ts
 app/components/editor
 public
+dist
+libs

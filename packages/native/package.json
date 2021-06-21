@@ -5,7 +5,7 @@
   "author": "liumingren <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
   "license": "ISC",
-  "main": "lib/native.js",
+  "main": "lib/index.js",
   "native": "lib/index.native.js",
   "directories": {
     "lib": "lib",
@@ -40,5 +40,6 @@
   "peerDependencies": {
     "react": ">=16.9.0",
     "react-native": ">=0.61.5"
-  }
+  },
+  "gitHead": "48e21ca211cc981ca42b5d19bc3fc6e7f2ba0b58"
 }

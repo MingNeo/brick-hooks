@@ -42,5 +42,6 @@
   "peerDependencies": {
     "react": ">=16.9.0",
     "redux": ">=4.0.1"
-  }
+  },
+  "gitHead": "48e21ca211cc981ca42b5d19bc3fc6e7f2ba0b58"
 }

@@ -28,7 +28,7 @@
   },
   "author": "lmr",
   "publishConfig": {
-    "registry": "http://registry.npm.taobao.org/",
+    "registry": "https://registry.npmjs.org",
     "access": "public"
   },
   "dependencies": {

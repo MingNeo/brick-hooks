@@ -1,6 +1,6 @@
 {
   "name": "@bricks-hooks/web",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "> TODO: description",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
@@ -29,8 +29,6 @@
   "peerDependencies": {
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
-  },
-  "dependencies": {
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^5.1.1",

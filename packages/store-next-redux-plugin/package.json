@@ -1,6 +1,6 @@
 {
   "name": "@bricks-hooks/store-next-redux-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "> TODO: description",
   "author": "klose <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks/tree/master/packages/store-next-redux-plugin#readme",
@@ -30,7 +30,7 @@
     "url": "https://github.com/MingNeo/custom-hooks/issues"
   },
   "dependencies": {
-    "@bricks-hooks/store-next": "^0.1.0"
+    "@bricks-hooks/store-next": "^0.1.1"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^5.1.1",

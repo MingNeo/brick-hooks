@@ -1,4 +1,4 @@
-# `@bricks-hooks/store-next`
+# `sea-store`
 
 一个简单的全局状态管理，只用来维护数据本身和修改数据的reducers，不会触发其他模块的重新渲染，可以使用redux dev tools
 
@@ -10,7 +10,7 @@
 同时做了性能优化，仅订阅使用的模块会触发更新，不会有使用useContext的性能问题
 
 ```javascript
-import { useStore } from '@bricks-hooks/store-next'
+import { useStore } from 'sea-store'
 
 // 使用useStore，并指定模块名称
 function useHome() {
@@ -37,7 +37,7 @@ function useAddress() {
 
 因为useStore用来处理的是全局数据，有时会需要初始化默认state, 可以在app入口处或模块入口处注册初始数据
 ```javascript
-import { registerModule, useStore } from '@bricks-hooks/store-next'
+import { registerModule, useStore } from 'sea-store'
 
 registerModule('home', {
   state: { a: 1 }
@@ -58,7 +58,7 @@ useStore的第二个参数，是是否进行自动合并。当开启了自动合
 
 
 ```javascript
-import { registerModule, useStore } from '@bricks-hooks/store-next'
+import { registerModule, useStore } from 'sea-store'
 
 registerModule('home', {
   state: { a: 1 }
@@ -119,11 +119,11 @@ function TestStore() {
 ```
 
 #### 使用redux devtool
-即使因为种种原因你不想使用redux了，但是否时常会怀念redux devtool的方便？@bricks-hooks/store-next 可以方便开启redux-devtool。仅需引入一个插件
+即使因为种种原因你不想使用redux了，但是否时常会怀念redux devtool的方便？sea-store 可以方便开启redux-devtool。仅需引入一个插件
 
 ```javascript
-import { usePlugin, store } from '@bricks-hooks/store-next'
-import reduxPlugin from '@bricks-hooks/store-next-redux-plugin'
+import { usePlugin, store } from 'sea-store'
+import reduxPlugin from 'sea-store-redux-plugin'
 
 usePlugin(reduxPlugin)
 ```
@@ -133,8 +133,8 @@ usePlugin(reduxPlugin)
 #### 多个Store实例
 如你所见，以上示例代码都是全局使用同一个Store，我们可以创建一个独立的Store实例吗？当然可以！
 ```javascript
-import { createStore, Store } from '@bricks-hooks/store-next'
-import reduxPlugin from '@bricks-hooks/store-next-redux-plugin'
+import { createStore, Store } from 'sea-store'
+import reduxPlugin from 'sea-store-redux-plugin'
 
 Store.usePlugin(reduxPlugin)
 
@@ -165,4 +165,4 @@ function Home() {
 }
 ```
 
-虽然使用@bricks-hooks/store-next可以很方便的存储全局状态，但是并不应该把所有数据都放在store中！
+虽然使用sea-store可以很方便的存储全局状态，但是并不应该把所有数据都放在store中！

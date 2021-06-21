@@ -1,5 +1,5 @@
 {
-  "name": "@bricks-hooks/store-next",
+  "name": "sea-store",
   "version": "0.1.2",
   "description": "> TODO: description",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
@@ -42,5 +42,5 @@
     "ts-jest": "^26.5.5",
     "typescript": "^3.9.9"
   },
-  "gitHead": "48e21ca211cc981ca42b5d19bc3fc6e7f2ba0b58"
+  "gitHead": "e050cf14ead088ecb1343c8dc8f3301ceba8a965"
 }

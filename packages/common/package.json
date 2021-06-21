@@ -1,5 +1,5 @@
 {
-  "name": "@bricks-hooks/common",
+  "name": "bricks-hooks",
   "version": "0.1.2",
   "description": "> TODO: description",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
@@ -32,8 +32,7 @@
   },
   "dependencies": {
     "lodash.clonedeep": "^4.5.0",
-    "lodash.isequal": "^4.5.0",
-    "reinspect": "^1.1.0"
+    "lodash.isequal": "^4.5.0"
   },
   "peerDependencies": {
     "react": ">=16.9.0",
@@ -46,5 +45,5 @@
     "ts-jest": "^26.5.5",
     "typescript": "^3.9.9"
   },
-  "gitHead": "48e21ca211cc981ca42b5d19bc3fc6e7f2ba0b58"
+  "gitHead": "e050cf14ead088ecb1343c8dc8f3301ceba8a965"
 }

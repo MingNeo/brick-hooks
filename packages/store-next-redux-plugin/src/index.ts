@@ -1,4 +1,4 @@
-import { Options, Module } from '@bricks-hooks/store-next'
+import { Options, Module } from 'sea-store'
 import openRedux from './open-redux'
 
 /**

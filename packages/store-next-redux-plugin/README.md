@@ -5,7 +5,7 @@
 ## Usage
 
 ```
-const storeNextReduxPlugin = require('@bricks-hooks/store-next-redux-plugin');
+const storeNextReduxPlugin = require('sea-store-redux-plugin');
 
 // TODO: DEMONSTRATE API
 ```

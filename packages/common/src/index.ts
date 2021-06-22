@@ -21,7 +21,7 @@ export { default as useMethodsImmer } from './useMethods/useMethodsImmer'
 export { default as usePrevious } from './usePrevious'
 export { default as useReducerImmer } from './useReducerImmer'
 
-export { default as useScrollInView } from './useScrollInView'
+// export { default as useScrollInView } from './useScrollInView'
 export { default as useSet } from './useSet'
 export { default as useState } from './useState'
 export { default as useThrottleFn } from './useThrottleFn'

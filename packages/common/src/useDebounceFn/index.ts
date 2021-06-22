@@ -1,6 +1,6 @@
 import { useRef, useMemo } from 'react'
 
-type DebunceCallback = (...args: any[]) => any
+type DebunceFn = (...args: any[]) => any
 
 // interface DebounceFnOptions {
 //   deps?: any[]
@@ -11,20 +11,20 @@ type DebunceCallback = (...args: any[]) => any
 
 /**
  * 处理一个函数返回防抖的函数
- * @param callback
+ * @param handler
  * @param wait
  * @param options //todo maxWait、trailing、leading
  */
 export default function useDebounceFn(
-  callback: DebunceCallback,
+  handler: DebunceFn,
   wait = 100
   // options: DebounceFnOptions = {},
 ) {
   // const { deps } = options
   const timer = useRef<any>()
   const waitRef = useRef<any>(wait)
-  const fnRef = useRef<DebunceCallback>(callback)
-  if (!fnRef.current) fnRef.current = callback
+  const fnRef = useRef<DebunceFn>(handler)
+  if (!fnRef.current) fnRef.current = handler
 
   const result = useMemo(() => {
     const cancel = () => {

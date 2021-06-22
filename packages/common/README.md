@@ -1,6 +1,6 @@
 # `bricks-hooks`
 
-> TODO: description
+> 可用于React/React-native 的React Hooks Library
 
 ## Usage
 

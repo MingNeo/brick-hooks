@@ -9,20 +9,20 @@ var react_1 = require("react");
 // }
 /**
  * 处理一个函数返回防抖的函数
- * @param callback
+ * @param handler
  * @param wait
  * @param options //todo maxWait、trailing、leading
  */
-function useDebounceFn(callback, wait
+function useDebounceFn(handler, wait
 // options: DebounceFnOptions = {},
 ) {
     if (wait === void 0) { wait = 100; }
     // const { deps } = options
     var timer = react_1.useRef();
     var waitRef = react_1.useRef(wait);
-    var fnRef = react_1.useRef(callback);
+    var fnRef = react_1.useRef(handler);
     if (!fnRef.current)
-        fnRef.current = callback;
+        fnRef.current = handler;
     var result = react_1.useMemo(function () {
         var cancel = function () {
             clearTimeout(timer.current);

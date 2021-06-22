@@ -9,16 +9,17 @@ interface Methods<S> {
 }
 
 /**
- * 获取store state和set方法的hook，返回state和setState用法同React.useState，但setState多了一个isAssign参数
+ * 获取store state和set方法的hook，返回state和setState用法同React.useState。
+ * setState增加了一个merge参数，设为true时使用类似类组件的this.setState的自动合并方式
  * @param storeContext
  * @param moduleName
- * @param assign 是否在执行set方法更新数据时使用自动浅合并而非替换,如果数据格式不是object，此设置无效
- * @returns
+ * @param autoMerge 是否在执行set方法更新数据时使用自动浅合并而非替换,如果数据格式不是object，此设置无效
+ * @returns {array} [state, setState, dispatch] dispatch方法可以触发注册的reducer
  */
 export default function useStore<S>(
   storeContext: any,
   moduleName: string = '',
-  assign: boolean = false
+  autoMerge: boolean = false
 ) {
   if (!moduleName) throw new Error('moduleName is required!')
 
@@ -43,7 +44,7 @@ export default function useStore<S>(
      * @param nextValue
      * @param merge 控制具体的合并或覆盖
      */
-    const setStore = (nextState: S, merge: boolean = assign) => {
+    const setStore = (nextState: S, merge: boolean = autoMerge) => {
       storeContextRef.current?.setModuleState(moduleName, nextState, merge)
     }
 
@@ -52,7 +53,7 @@ export default function useStore<S>(
     }
 
     return { setStore, dispatch }
-  }, [assign, moduleName])
+  }, [autoMerge, moduleName])
 
   return useMemo(() => {
     const moduleState: S = storeContextRef.current._state[moduleName]

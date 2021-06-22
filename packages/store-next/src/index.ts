@@ -4,11 +4,15 @@ const store = createStore()
 
 const useStore = (moduleName: string, assign: boolean) => store.useStore(moduleName, assign)
 
-const registerModule = (moduleName: string, initialModule: Module) => {
+const registerModule = useStore.registerModule = (moduleName: string, initialModule: Module) => {
   store.registerModule(moduleName, initialModule)
 }
 
-const usePlugin = (plugin: any) => {
+/**
+ * 对全局store 开启插件，这不是一个React hooks
+ */
+const usePlugin = useStore.usePlugin = (plugin: any) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   Store.usePlugin(plugin)
   store.init()
 }
@@ -24,5 +28,3 @@ export {
   Options,
   Module,
 }
-
-export default Store

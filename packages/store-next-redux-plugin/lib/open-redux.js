@@ -25,7 +25,7 @@ function openRedux(store, reduxStoreName, initialState, reducers) {
         var storeState = reduxStore === null || reduxStore === void 0 ? void 0 : reduxStore.getState();
         var prevState = store.getState();
         // 合并实际的module和注册的module
-        store._modules.add(Object.keys(storeState));
+        Object.keys(storeState).forEach(function (item) { return store._modules.add(item); });
         Array.from(store._modules).forEach(function (modeuleName) {
             var moduleState = storeState[modeuleName];
             if (prevState[modeuleName] !== moduleState) {

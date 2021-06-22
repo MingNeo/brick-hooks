@@ -29,7 +29,7 @@ export default function openRedux(store, reduxStoreName, initialState, reducers)
     const prevState = store.getState()
 
     // 合并实际的module和注册的module
-    store._modules.add(Object.keys(storeState))
+    Object.keys(storeState).forEach(item => store._modules.add(item))
 
     Array.from(store._modules).forEach((modeuleName: string) => {
       const moduleState = storeState[modeuleName]

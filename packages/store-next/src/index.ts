@@ -24,6 +24,7 @@ export {
   createStore,
   registerModule,
   usePlugin,
+  
   // ts types
   Options,
   Module,

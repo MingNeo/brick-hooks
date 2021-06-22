@@ -1,3 +1,4 @@
+/// <reference types="react" />
 export interface QueryParams {
     page: {
         pageNo: number;

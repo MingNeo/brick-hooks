@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { Draft } from 'immer';
 declare type Reducer<S, A> = (state: Draft<S>, action: A) => void;
 /**

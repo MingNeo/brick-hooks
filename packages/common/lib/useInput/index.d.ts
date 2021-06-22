@@ -1,4 +1,3 @@
-/// <reference types="react" />
 declare type OnChange = string | ((event: Event) => void);
 /**
  *

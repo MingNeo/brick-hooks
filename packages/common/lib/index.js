@@ -44,7 +44,9 @@ var usePrevious_1 = require("./usePrevious");
 Object.defineProperty(exports, "usePrevious", { enumerable: true, get: function () { return usePrevious_1.default; } });
 var useReducerImmer_1 = require("./useReducerImmer");
 Object.defineProperty(exports, "useReducerImmer", { enumerable: true, get: function () { return useReducerImmer_1.default; } });
-// export { default as useScrollInView } from './useScrollInView'
+// TODO 待测试
+var useScrollInView_1 = require("./useScrollInView");
+Object.defineProperty(exports, "useScrollInView", { enumerable: true, get: function () { return useScrollInView_1.default; } });
 var useSet_1 = require("./useSet");
 Object.defineProperty(exports, "useSet", { enumerable: true, get: function () { return useSet_1.default; } });
 var useState_1 = require("./useState");

@@ -1,6 +1,6 @@
 {
   "name": "sea-store-redux-plugin",
-  "version": "0.1.4",
+  "version": "0.1.7",
   "description": "> TODO: description",
   "author": "klose <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks/tree/master/packages/store-next-redux-plugin#readme",
@@ -30,7 +30,7 @@
     "url": "https://github.com/MingNeo/custom-hooks/issues"
   },
   "dependencies": {
-    "sea-store": "^0.1.4"
+    "sea-store": "^0.1.7"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^5.1.1",

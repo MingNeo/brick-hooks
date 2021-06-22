@@ -52,7 +52,6 @@ export default function reduxPlugin<S>(Store) {
   }
 
   Store.prototype.initRedux = function(initialState: {} | S, options: Options<S>) {
-  console.log("🚀 ~ file: index.ts ~ line 55 ~ initialState", initialState);
     const { dispatch, unsubscribe, registerModule, reduxStore } = openRedux(
       this,
       options.devtoolId,

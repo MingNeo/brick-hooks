@@ -12,7 +12,6 @@ export const singleStore = createStore({
       },
       reducers: {
         testAction: (state, payload) => {
-        console.log("🚀 ~ file: TestCreateStore.jsx ~ line 16 ~ state", state, payload);
           return ({ ...state, ...payload })
         }
       }

@@ -57,7 +57,6 @@ function reduxPlugin(Store) {
         }
     };
     Store.prototype.initRedux = function (initialState, options) {
-        console.log("🚀 ~ file: index.ts ~ line 55 ~ initialState", initialState);
         var _a = open_redux_1.default(this, options.devtoolId, initialState, this._reducers), dispatch = _a.dispatch, unsubscribe = _a.unsubscribe, registerModule = _a.registerModule, reduxStore = _a.reduxStore;
         this._reduxStore = reduxStore;
         this._dispatchRedux = dispatch;

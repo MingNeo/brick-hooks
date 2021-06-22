@@ -35,10 +35,10 @@ function openRedux(store, reduxStoreName, initialState, reducers) {
         });
     });
     return {
-        registerModule: reduxStore.registerModule,
+        registerModule: reduxStore === null || reduxStore === void 0 ? void 0 : reduxStore.registerModule,
         dispatch: dispatch,
         unsubscribe: unsubscribe,
-        replaceReducer: reduxStore.replaceReducer,
+        replaceReducer: reduxStore === null || reduxStore === void 0 ? void 0 : reduxStore.replaceReducer,
         reduxStore: reduxStore,
     };
 }

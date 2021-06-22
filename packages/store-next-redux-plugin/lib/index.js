@@ -12,6 +12,10 @@ var open_redux_1 = __importDefault(require("./open-redux"));
  * @returns
  */
 function reduxPlugin(Store) {
+    // 如果浏览器/debugger 工具没有安装redux-devtool，直接返回空处理
+    if (typeof window === 'undefined' || !window.__REDUX_DEVTOOLS_EXTENSION__) {
+        return function initial(store) { };
+    }
     var StoreOriginRegisterModule = Store.prototype.registerModule;
     Store.prototype.registerModule = function afterRegisterModule(moduleName, initialModule) {
         var _a;

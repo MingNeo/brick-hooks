@@ -9,6 +9,11 @@ import openRedux from './open-redux'
  * @returns 
  */
 export default function reduxPlugin<S>(Store) {
+  // 如果浏览器/debugger 工具没有安装redux-devtool，直接返回空处理
+  if(typeof window === 'undefined' || !window.__REDUX_DEVTOOLS_EXTENSION__) {
+    return function initial(store) {}
+  }
+
   const StoreOriginRegisterModule = Store.prototype.registerModule
   Store.prototype.registerModule = function afterRegisterModule(moduleName: string, initialModule: Module) {
     StoreOriginRegisterModule.call(this, moduleName, initialModule)

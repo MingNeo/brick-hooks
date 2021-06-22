@@ -41,10 +41,10 @@ export default function openRedux(store, reduxStoreName, initialState, reducers)
   })
 
   return {
-    registerModule: reduxStore.registerModule,
+    registerModule: reduxStore?.registerModule,
     dispatch,
     unsubscribe,
-    replaceReducer: reduxStore.replaceReducer,
+    replaceReducer: reduxStore?.replaceReducer,
     reduxStore,
   }
 }

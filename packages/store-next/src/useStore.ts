@@ -27,6 +27,10 @@ export default function useStore<S>(
   // 因为没有使用useState或者useContext，因此需要做一个强制刷新
   const [forceUpdateCount, forceUpdate] = useReducer((n: number) => n + 1, 0)
 
+  if(!storeContextRef.current._modules.has(moduleName)) {
+    storeContextRef.current._modules.add(moduleName)
+  }
+
   // storeState更新的时候触发强制渲染，每个应用当前hooks的组件都触发一次更新
   useEffect(() => {
     const currentStoreContext = storeContextRef.current

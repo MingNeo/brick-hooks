@@ -13,7 +13,7 @@ function getNextState(prevState: any, nextState: Function) {
 export const defaultReducers = {
   $setValueMerge: (prevState: StoreState, value: StoreState | any) =>
     isObject(value)
-      ? { ...prevState, ...(getNextState(prevState, value) || {}) }
+      ? { ...(prevState || {}), ...(getNextState(prevState, value) || {}) }
       : defaultReducers.$setValue(prevState, value),
   $setValue: (prevState: StoreState, value: StoreState | any) => getNextState(prevState, value),
 }

@@ -28,6 +28,9 @@ export default function openRedux(store, reduxStoreName, initialState, reducers)
     const storeState: any = reduxStore?.getState()
     const prevState = store.getState()
 
+    // 合并实际的module和注册的module
+    store._modules.add(Object.keys(storeState))
+
     Array.from(store._modules).forEach((modeuleName: string) => {
       const moduleState = storeState[modeuleName]
       if (prevState[modeuleName] !== moduleState) {

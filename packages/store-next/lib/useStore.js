@@ -33,6 +33,9 @@ function useStore(storeContext, moduleName, autoMerge) {
     var storeContextRef = react_1.useRef(storeContext);
     // 因为没有使用useState或者useContext，因此需要做一个强制刷新
     var _a = __read(react_1.useReducer(function (n) { return n + 1; }, 0), 2), forceUpdateCount = _a[0], forceUpdate = _a[1];
+    if (!storeContextRef.current._modules.has(moduleName)) {
+        storeContextRef.current._modules.add(moduleName);
+    }
     // storeState更新的时候触发强制渲染，每个应用当前hooks的组件都触发一次更新
     react_1.useEffect(function () {
         var currentStoreContext = storeContextRef.current;

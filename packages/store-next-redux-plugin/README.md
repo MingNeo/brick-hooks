@@ -1,6 +1,6 @@
-# `@bricks-hooks/store-next-redux-plugin`
+# `sea-store-redux-plugin`
 
-> TODO: description
+> sea-store redux插件，用于使用redux-dev-tool，但是对业务代码不会有任何影响
 
 ## Usage
 

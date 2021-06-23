@@ -2,6 +2,7 @@ import { useMemo, useCallback, useState } from 'react'
 
 type Reducer = (...args: any[]) => any
 
+
 type Methods = Record<string,Reducer>
 
 export type BoundMethods = Record<string, (...args: any[]) => void>
@@ -12,7 +13,7 @@ function useMethods<S>(methods: Methods, initialState: S) {
     () =>
       Object.entries(methods).reduce((methods, [name, fn]: [string, Reducer]) => {
         const method = (...args: any[]) => {
-          setValue((value: any) => fn(value, ...args))
+          setValue((value: S) => fn(value, ...args))
         }
         methods[name] = method
         return methods
@@ -22,7 +23,7 @@ function useMethods<S>(methods: Methods, initialState: S) {
 
   const dispatch = useCallback((actionName: string, ...args: any[]) => {
     const fn = methods[actionName]
-    setValue((value: any) => fn(value, ...args))
+    setValue((value: S) => fn(value, ...args))
   }, [methods])
   
   return [value, boundMethods, dispatch] as [S, BoundMethods, typeof dispatch]

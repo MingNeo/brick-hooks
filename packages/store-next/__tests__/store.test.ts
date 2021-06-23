@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { createStore } from '../src/index'
 
-describe('@bricks-hooks/store-next 校验', () => {
+describe('sea-store 校验', () => {
   it('引用正常', () => {
     expect(createStore).toBeDefined();
   });

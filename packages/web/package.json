@@ -1,12 +1,11 @@
 {
-  "name": "@bricks-hooks/web",
-  "version": "0.0.0",
+  "name": "bricks-hooks-web",
+  "version": "0.1.7",
   "description": "> TODO: description",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
   "license": "ISC",
   "main": "lib/index.js",
-  "native": "lib/index.native.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -29,8 +28,6 @@
   "peerDependencies": {
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
-  },
-  "dependencies": {
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^5.1.1",

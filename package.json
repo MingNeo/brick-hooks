@@ -6,7 +6,6 @@
   ],
   "description": "提取的一些hooks",
   "main": "lib/index.js",
-  "native": "lib/index.native.js",
   "scripts": {
     "test": "jest",
     "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap && npm run build",
@@ -15,12 +14,9 @@
     "compile": "lerna run --scope custom-hooks compile",
     "build": "tsc -m es6 --outDir dist",
     "build:es": "tsc -m esNext --outDir esm",
-    "cov": "father test --coverage",
-    "help": "father help",
-    "precommit": "father pre-commit",
-    "build:doc": "father-doc build",
     "pub:doc": "now --prod",
-    "pub": "lerna publish"
+    "publish": "lerna publish",
+    "prepublish": "lerna run build"
   },
   "repository": {
     "type": "git",
@@ -28,7 +24,7 @@
   },
   "author": "lmr",
   "publishConfig": {
-    "registry": "http://registry.npm.taobao.org/",
+    "registry": "https://registry.npmjs.org",
     "access": "public"
   },
   "dependencies": {

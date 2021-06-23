@@ -1,4 +1,4 @@
-import { Options, Module } from '@bricks-hooks/store-next'
+import { Options, Module } from 'sea-store'
 import openRedux from './open-redux'
 
 /**
@@ -9,6 +9,11 @@ import openRedux from './open-redux'
  * @returns 
  */
 export default function reduxPlugin<S>(Store) {
+  // 如果浏览器/debugger 工具没有安装redux-devtool，直接返回空处理
+  if(typeof window === 'undefined' || !window.__REDUX_DEVTOOLS_EXTENSION__) {
+    return function initial(store) {}
+  }
+
   const StoreOriginRegisterModule = Store.prototype.registerModule
   Store.prototype.registerModule = function afterRegisterModule(moduleName: string, initialModule: Module) {
     StoreOriginRegisterModule.call(this, moduleName, initialModule)
@@ -52,7 +57,6 @@ export default function reduxPlugin<S>(Store) {
   }
 
   Store.prototype.initRedux = function(initialState: {} | S, options: Options<S>) {
-  console.log("🚀 ~ file: index.ts ~ line 55 ~ initialState", initialState);
     const { dispatch, unsubscribe, registerModule, reduxStore } = openRedux(
       this,
       options.devtoolId,

@@ -1,6 +1,6 @@
 {
   "name": "test-story",
-  "version": "0.0.1",
+  "version": "0.1.11",
   "private": true,
   "description": "> TODO: description",
   "author": "Klose <mingrenjbdtx@gmail.com>",
@@ -25,25 +25,23 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
-  "peerDependencies": {
-  },
   "dependencies": {
-    "@bricks-hooks/common": "^0.0.1",
+    "bricks-hooks": "^0.1.11",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   },
   "devDependencies": {
-    "@testing-library/react-hooks": "^5.1.1",
-    "jest": "^26.6.3",
-    "ts-jest": "^26.5.5",
-    "typescript": "^3.9.9",
     "@storybook/addon-actions": "^6.0.22",
     "@storybook/addon-essentials": "^6.0.22",
     "@storybook/addon-links": "^6.0.22",
     "@storybook/addons": "^5.3.19",
     "@storybook/react": "^6.0.22",
+    "@testing-library/react-hooks": "^5.1.1",
     "@types/react": "^16.9.35",
-    "@types/react-dom": "^16.9.8"
+    "@types/react-dom": "^16.9.8",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.5",
+    "typescript": "^3.9.9"
   },
   "bugs": {
     "url": "https://github.com/MingNeo/custom-hooks/issues"

@@ -27,13 +27,16 @@ var store = base_1.default();
 exports.store = store;
 var useStore = function (moduleName, assign) { return store.useStore(moduleName, assign); };
 exports.useStore = useStore;
-var registerModule = function (moduleName, initialModule) {
+var registerModule = useStore.registerModule = function (moduleName, initialModule) {
     store.registerModule(moduleName, initialModule);
 };
 exports.registerModule = registerModule;
-var usePlugin = function (plugin) {
+/**
+ * 对全局store 开启插件，这不是一个React hooks
+ */
+var usePlugin = useStore.usePlugin = function (plugin) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     base_1.Store.usePlugin(plugin);
     store.init();
 };
 exports.usePlugin = usePlugin;
-exports.default = base_1.Store;

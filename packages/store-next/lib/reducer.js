@@ -40,7 +40,7 @@ function getNextState(prevState, nextState) {
 exports.defaultReducers = {
     $setValueMerge: function (prevState, value) {
         return utils_1.isObject(value)
-            ? __assign(__assign({}, prevState), (getNextState(prevState, value) || {})) : exports.defaultReducers.$setValue(prevState, value);
+            ? __assign(__assign({}, (prevState || {})), (getNextState(prevState, value) || {})) : exports.defaultReducers.$setValue(prevState, value);
     },
     $setValue: function (prevState, value) { return getNextState(prevState, value); },
 };

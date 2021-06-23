@@ -5,7 +5,7 @@ import { useRef, useEffect } from 'react'
  * @param fn
  * @param dep
  */
-export default function useOnUpdate(fn: () => void, dep?: any[]) {
+export default function useDidUpdate(fn: () => void, dep?: any[]) {
   const ref = useRef({ fn, mounted: false })
   ref.current.fn = fn
 

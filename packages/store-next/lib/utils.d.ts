@@ -1,4 +1,3 @@
-export declare function combineFlatReducers(modules?: {}, defaultReducers?: {}): any;
 export declare function combineReducers(reducers?: {}, defaultReducers?: {}): {
     _base: {};
 };

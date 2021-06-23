@@ -73,7 +73,7 @@ export const createReduxStore: any = ({ name, initialState = {}, reducers = {} }
     initialState,
     window.__REDUX_DEVTOOLS_EXTENSION__({
       name: name || 'React state',
-      actionsBlacklist: ['/_initModule', '/_deleteModule'],
+      actionsBlacklist: ['/_deleteModule'],
     })
   )
 

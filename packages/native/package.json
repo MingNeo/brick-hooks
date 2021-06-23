@@ -1,11 +1,11 @@
 {
-  "name": "@bricks-hooks/native",
-  "version": "0.0.1",
+  "name": "bricks-hooks-native",
+  "version": "0.1.14",
   "description": "> TODO: description",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
   "license": "ISC",
-  "main": "lib/native.js",
+  "main": "lib/index.js",
   "native": "lib/index.native.js",
   "directories": {
     "lib": "lib",
@@ -15,7 +15,7 @@
     "lib"
   ],
   "publishConfig": {
-    "registry": "http://registry.npm.taobao.org/",
+    "registry": "https://registry.npmjs.org",
     "access": "public"
   },
   "repository": {
@@ -32,13 +32,14 @@
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^5.1.1",
+    "@types/jest": "^26.0.23",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.5",
-		"typescript": "^3.9.9",
-    "@types/jest": "^26.0.23"
+    "typescript": "^3.9.9"
   },
   "peerDependencies": {
     "react": ">=16.9.0",
     "react-native": ">=0.61.5"
-  }
+  },
+  "gitHead": "e050cf14ead088ecb1343c8dc8f3301ceba8a965"
 }

@@ -1,4 +1,4 @@
 
-describe('@bricks-hooks/store-next-redux-plugin', () => {
+describe('sea-store-redux-plugin', () => {
     it('needs tests', () => {});
 });

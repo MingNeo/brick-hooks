@@ -24,6 +24,8 @@ function openRedux(store, reduxStoreName, initialState, reducers) {
     var unsubscribe = reduxStore === null || reduxStore === void 0 ? void 0 : reduxStore.subscribe(function () {
         var storeState = reduxStore === null || reduxStore === void 0 ? void 0 : reduxStore.getState();
         var prevState = store.getState();
+        // 合并实际的module和注册的module
+        Object.keys(storeState).forEach(function (item) { return store._modules.add(item); });
         Array.from(store._modules).forEach(function (modeuleName) {
             var moduleState = storeState[modeuleName];
             if (prevState[modeuleName] !== moduleState) {
@@ -33,10 +35,10 @@ function openRedux(store, reduxStoreName, initialState, reducers) {
         });
     });
     return {
-        registerModule: reduxStore.registerModule,
+        registerModule: reduxStore === null || reduxStore === void 0 ? void 0 : reduxStore.registerModule,
         dispatch: dispatch,
         unsubscribe: unsubscribe,
-        replaceReducer: reduxStore.replaceReducer,
+        replaceReducer: reduxStore === null || reduxStore === void 0 ? void 0 : reduxStore.replaceReducer,
         reduxStore: reduxStore,
     };
 }

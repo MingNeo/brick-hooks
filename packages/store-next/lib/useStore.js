@@ -18,20 +18,24 @@ var __read = (this && this.__read) || function (o, n) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = require("react");
 /**
- * 获取store state和set方法的hook，返回state和setState用法同React.useState，但setState多了一个isAssign参数
+ * 获取store state和set方法的hook，返回state和setState用法同React.useState。
+ * setState增加了一个merge参数，设为true时使用类似类组件的this.setState的自动合并方式
  * @param storeContext
  * @param moduleName
- * @param assign 是否在执行set方法更新数据时使用自动浅合并而非替换,如果数据格式不是object，此设置无效
- * @returns
+ * @param autoMerge 是否在执行set方法更新数据时使用自动浅合并而非替换,如果数据格式不是object，此设置无效
+ * @returns {array} [state, setState, dispatch] dispatch方法可以触发注册的reducer
  */
-function useStore(storeContext, moduleName, assign) {
+function useStore(storeContext, moduleName, autoMerge) {
     if (moduleName === void 0) { moduleName = ''; }
-    if (assign === void 0) { assign = false; }
+    if (autoMerge === void 0) { autoMerge = false; }
     if (!moduleName)
         throw new Error('moduleName is required!');
     var storeContextRef = react_1.useRef(storeContext);
     // 因为没有使用useState或者useContext，因此需要做一个强制刷新
     var _a = __read(react_1.useReducer(function (n) { return n + 1; }, 0), 2), forceUpdateCount = _a[0], forceUpdate = _a[1];
+    if (!storeContextRef.current._modules.has(moduleName)) {
+        storeContextRef.current._modules.add(moduleName);
+    }
     // storeState更新的时候触发强制渲染，每个应用当前hooks的组件都触发一次更新
     react_1.useEffect(function () {
         var currentStoreContext = storeContextRef.current;
@@ -49,7 +53,7 @@ function useStore(storeContext, moduleName, assign) {
          */
         var setStore = function (nextState, merge) {
             var _a;
-            if (merge === void 0) { merge = assign; }
+            if (merge === void 0) { merge = autoMerge; }
             (_a = storeContextRef.current) === null || _a === void 0 ? void 0 : _a.setModuleState(moduleName, nextState, merge);
         };
         var dispatch = function (actionName, payload) {
@@ -57,7 +61,7 @@ function useStore(storeContext, moduleName, assign) {
             (_a = storeContextRef.current) === null || _a === void 0 ? void 0 : _a.dispatchModuleAction(moduleName, actionName, payload);
         };
         return { setStore: setStore, dispatch: dispatch };
-    }, [assign, moduleName]);
+    }, [autoMerge, moduleName]);
     return react_1.useMemo(function () {
         var moduleState = storeContextRef.current._state[moduleName];
         var setStore = methods.setStore, dispatch = methods.dispatch;

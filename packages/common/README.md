@@ -1,11 +1,11 @@
-# `@bricks-hooks/base`
+# `bricks-hooks`
 
-> TODO: description
+> 可用于React/React-native 的React Hooks Library
 
 ## Usage
 
 ```
-const base = require('@bricks-hooks/base');
+const base = require('bricks-hooks');
 
 // TODO: DEMONSTRATE API
 ```

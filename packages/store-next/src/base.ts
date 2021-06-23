@@ -9,8 +9,7 @@ export type Dispatch<A> = (value: A) => void | StoreState | Promise<any>
 
 export interface Module {
   state: StoreState
-  reducers: Record<string, any>
-  effects: Record<string, any>
+  reducers?: Record<string, any>
 }
 
 export type Modules = Record<string, Module>

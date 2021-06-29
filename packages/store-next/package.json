@@ -1,9 +1,9 @@
 {
-  "name": "sea-store",
-  "version": "0.1.14",
+  "name": "@terminus/hydrogen-store",
+  "version": "0.1.19",
   "description": "> TODO: description",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
-  "homepage": "https://github.com/MingNeo/custom-hooks#readme",
+  "homepage": "https://terminus-org.erda.cloud/wb/frontend-product/brick-hooks#readme",
   "license": "ISC",
   "main": "lib/index.js",
   "directories": {
@@ -14,12 +14,12 @@
     "lib"
   ],
   "publishConfig": {
-    "registry": "https://registry.npmjs.org",
+    "registry": "https://registry.npm.terminus.io",
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MingNeo/custom-hooks.git"
+    "url": "git+https://terminus-org.erda.cloud/wb/frontend-product/brick-hooks.git"
   },
   "scripts": {
     "build": "tsc --build tsconfig.json",
@@ -27,7 +27,7 @@
     "test": "jest"
   },
   "bugs": {
-    "url": "https://github.com/MingNeo/custom-hooks/issues"
+    "url": "https://terminus-org.erda.cloud/wb/frontend-product/brick-hooks/issues"
   },
   "peerDependencies": {
     "react": ">=16.9.0",
@@ -41,5 +41,5 @@
     "ts-jest": "^26.5.5",
     "typescript": "^3.9.9"
   },
-  "gitHead": "e050cf14ead088ecb1343c8dc8f3301ceba8a965"
+  "gitHead": "9f3f24c755c83ddbc583fc6383967fcc5a635d8e"
 }

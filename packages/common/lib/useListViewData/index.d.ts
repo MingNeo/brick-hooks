@@ -33,10 +33,10 @@ export default function useListViewData(fetchFn: FetchFn, query?: {}): {
         query: Record<string, any>;
     };
     loading: boolean;
-    loadData: (fetchParams: any) => Promise<void>;
-    loadNextPage: () => Promise<void>;
+    loadData: (fetchParams: any) => Promise<unknown>;
+    loadNextPage: () => Promise<unknown>;
     clearQuery: () => void;
-    reloadData: () => Promise<void>;
+    reloadData: () => Promise<unknown>;
     setQuery: import("react").Dispatch<import("react").SetStateAction<{
         page: {
             pageNo: number;

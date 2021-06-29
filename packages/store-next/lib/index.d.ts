@@ -10,4 +10,15 @@ declare const registerModule: (moduleName: string, initialModule: Module) => voi
  * 对全局store 开启插件，这不是一个React hooks
  */
 declare const usePlugin: (plugin: any) => void;
-export { Store, store, useStore, createStore, registerModule, usePlugin, Options, Module, };
+/**
+ * 对获取全局单一实例的globalState
+ * @returns
+ */
+declare const getStoreState: () => any;
+/**
+ * 设置全局单一实例的globalState
+ * @param nextState
+ * @returns
+ */
+declare const setStoreState: (nextState: any) => void;
+export { Store, store, useStore, createStore, registerModule, usePlugin, getStoreState, setStoreState, Options, Module, };

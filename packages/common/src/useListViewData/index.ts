@@ -2,27 +2,27 @@ import { useState, useCallback, useMemo } from 'react'
 
 export interface QueryParams {
   page: {
-    pageNo: number,
-    pageSize: number,
-    hasMore: boolean,
-  },
-  query: Record<string, any>,
+    pageNo: number
+    pageSize: number
+    hasMore: boolean
+  }
+  query: Record<string, any>
 }
 
-export type FetchFn = (query: QueryParams) => Promise<{ data: any, hasMore: undefined | boolean }>
+export type FetchFn = (query: QueryParams) => Promise<{ data: any; hasMore: undefined | boolean }>
 
 export const initialQuery: QueryParams = {
   page: {
-    pageNo: 0,
+    pageNo: 1,
     pageSize: 10,
     hasMore: false,
   },
   query: {},
 }
 
- /**
-  * 处理列表数据的hooks
-  */
+/**
+ * 处理列表数据的hooks
+ */
 export default function useListViewData(fetchFn: FetchFn, query = {}) {
   const [listData, setListData] = useState([])
   const [loading, setLoading] = useState(false)
@@ -35,14 +35,22 @@ export default function useListViewData(fetchFn: FetchFn, query = {}) {
     (fetchParams) => {
       const { page, query: fetchQuery, isMerge = false } = fetchParams
       setLoading(true)
-      return fetchFn({ page, query: fetchQuery })
-        .then(({ data, hasMore }) => {
-          setListData(listData => isMerge ? listData.concat(data) : data || [])
-          setFinalQuery({ page: { ...page, hasMore }, query: fetchQuery })
-        })
-        .finally(() => setLoading(false))
+      return new Promise((resolve, reject) => {
+        fetchFn({ page, query: fetchQuery })
+          .then(({ data, hasMore }) => {
+            setLoading(false)
+            setListData((listData) => (isMerge ? listData.concat(data) : data || []))
+            setFinalQuery({ page: { ...page, hasMore }, query: fetchQuery })
+            resolve('load data success')
+          })
+          .catch((e) => {
+            setLoading(false)
+            console.log(e)
+            reject(new Error(`load data error`))
+          })
+      })
     },
-    [fetchFn],
+    [fetchFn]
   )
 
   // 获取下一页数据

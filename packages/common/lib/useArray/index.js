@@ -43,8 +43,8 @@ var methods = {
         });
     },
     // 根据id移除数据，数据格式必需为[{ [idkey], ... }]
-    removeById: function (state, _a) {
-        var idKey = _a.idKey, id = _a.id;
+    removeById: function (state, id, idKey) {
+        if (idKey === void 0) { idKey = 'id'; }
         return state.filter(function (v) { return v && v[idKey] !== id; });
     },
     removeIndex: function (state, value) { return state.filter(function (v, i) { return i !== value; }); },

@@ -1,11 +1,11 @@
-# `bricks-hooks`
+# `brick-hooks`
 
 > 可用于React/React-native 的React Hooks Library
 
 ## Usage
 
 ```
-const base = require('bricks-hooks');
-
-// TODO: DEMONSTRATE API
+const base = require('@terminus/brick-hooks');
 ```
+
+useArray

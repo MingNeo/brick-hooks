@@ -70,6 +70,7 @@ export default function useDrag(props: { id?: any; styles?: any; onDragMoving: O
   }, [])
 
   return {
+    onMousedown: readyDrag,
     readyDrag,
   }
 }

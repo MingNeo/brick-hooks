@@ -4,27 +4,25 @@
   "workspaces": [
     "packages/*"
   ],
-  "description": "提取的一些hooks",
+  "description": "通用hooks集合",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jest",
+    "test": "lerna run test",
     "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap && npm run build",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
-    "compile": "lerna run --scope custom-hooks compile",
     "build": "tsc -m es6 --outDir dist",
     "build:es": "tsc -m esNext --outDir esm",
-    "pub:doc": "now --prod",
     "publish": "lerna publish",
     "prepublish": "lerna run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MingNeo/custom-hooks.git"
+    "url": "git+https://terminus-org.erda.cloud/wb/frontend-product/brick-hooks.git"
   },
   "author": "lmr",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org",
+    "registry": "https://registry.npm.terminus.io",
     "access": "public"
   },
   "dependencies": {
@@ -86,8 +84,8 @@
     "typescript": "^3.9.9"
   },
   "bugs": {
-    "url": "https://github.com/MingNeo/custom-hooks/issues"
+    "url": "https://terminus-org.erda.cloud/wb/frontend-product/brick-hooks/issues"
   },
-  "homepage": "https://github.com/MingNeo/custom-hooks#readme",
+  "homepage": "https://terminus-org.erda.cloud/wb/frontend-product/brick-hooks#readme",
   "license": "ISC"
 }

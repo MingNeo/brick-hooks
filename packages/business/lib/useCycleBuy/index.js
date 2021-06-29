@@ -34,7 +34,7 @@ exports.getDateRange = void 0;
 var react_1 = require("react");
 var dayjs_1 = __importDefault(require("dayjs"));
 var isSameOrAfter_1 = __importDefault(require("dayjs/plugin/isSameOrAfter"));
-var bricks_hooks_1 = require("bricks-hooks");
+var brick_hooks_1 = require("@terminus/brick-hooks");
 var defaultKeyMap_1 = require("./defaultKeyMap");
 dayjs_1.default.extend(isSameOrAfter_1.default);
 function isNil(value) {
@@ -55,7 +55,7 @@ function useDateCycle(defaultData, options) {
     if (options === void 0) { options = {}; }
     var _a = options.modelKeyMap, modelKeyMap = _a === void 0 ? defaultKeyMap_1.defaultModelKeyMap : _a, _b = options.cycleKeyMap, cycleKeyMap = _b === void 0 ? defaultKeyMap_1.defaultCycleKeyMap : _b, customModels = options.customModels, customCycles = options.customCycles;
     var _c = defaultData.model, defaultModel = _c === void 0 ? '' : _c, _d = defaultData.cycle, defaultCycle = _d === void 0 ? '' : _d, _e = defaultData.dates, defaultDates = _e === void 0 ? [] : _e;
-    var _f = __read(bricks_hooks_1.useMethods(methods, {
+    var _f = __read(brick_hooks_1.useMethods(methods, {
         dates: defaultDates || [],
         model: defaultModel,
         cycle: defaultCycle,
@@ -110,8 +110,8 @@ function useDateCycle(defaultData, options) {
         var dateList = getRangeDate(currentRange).filter(function (date) { return !getIsDateDisabled(date, newModel || model, modelKeyMap); });
         dateCycleMethods.setDates(dateList);
     }, [model, range, cycle, dates, modelKeyMap]);
-    var prevModel = bricks_hooks_1.usePrevious(model);
-    var prevCycle = bricks_hooks_1.usePrevious(cycle);
+    var prevModel = brick_hooks_1.usePrevious(model);
+    var prevCycle = brick_hooks_1.usePrevious(cycle);
     react_1.useEffect(function () {
         dateCycleMethods.setModel(defaultData.model);
     }, [defaultData.model]);

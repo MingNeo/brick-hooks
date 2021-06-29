@@ -1,4 +1,4 @@
 
-describe('sea-store-redux-plugin', () => {
+describe('@terminus/hydrogen-store-redux-plugin', () => {
     it('needs tests', () => {});
 });

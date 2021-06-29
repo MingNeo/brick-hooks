@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import moment from 'dayjs'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
-import { usePrevious, useMethods } from 'bricks-hooks'
+import { usePrevious, useMethods } from '@terminus/brick-hooks'
 import { defaultModelKeyMap, defaultCycleKeyMap } from './defaultKeyMap'
 
 moment.extend(isSameOrAfter)

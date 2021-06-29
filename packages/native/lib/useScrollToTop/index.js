@@ -12,12 +12,8 @@ function useScrollToTop(ref) {
     var scrollToTop = react_1.useCallback(function (top) {
         if (top === void 0) { top = 0; }
         setTimeout(function () {
-            if (scrollRef.current && scrollRef.current.scrollTo) {
-                scrollRef.current.scrollTo({ index: top });
-            }
-            else if (scrollRef.current && scrollRef.current.scrollTop) {
-                scrollRef.current.scrollTop(top);
-            }
+            var _a, _b;
+            (_b = (_a = scrollRef.current) === null || _a === void 0 ? void 0 : _a.scrollTo) === null || _b === void 0 ? void 0 : _b.call(_a, { y: top });
         }, 0);
     }, []);
     return { scrollRef: scrollRef, scrollToTop: scrollToTop };

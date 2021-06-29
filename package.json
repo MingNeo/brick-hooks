@@ -7,14 +7,12 @@
   "description": "通用hooks集合",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jest",
+    "test": "lerna run test",
     "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap && npm run build",
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean --yes",
-    "compile": "lerna run --scope custom-hooks compile",
     "build": "tsc -m es6 --outDir dist",
     "build:es": "tsc -m esNext --outDir esm",
-    "pub:doc": "now --prod",
     "publish": "lerna publish",
     "prepublish": "lerna run build"
   },

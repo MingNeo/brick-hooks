@@ -15,10 +15,6 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -30,23 +26,21 @@ function useMethodsImmer(methods, initialState, initializer, Options) {
     if (Options === void 0) { Options = {}; }
     var immerReducer = react_1.useMemo(function () {
         return function (state, action) {
-            return immer_1.default(state, function (draft) {
-                var _a;
-                return (_a = methods(draft))[action.type].apply(_a, __spread([draft], action.payload));
+            var draftState = immer_1.default(state, function (draft) {
+                var method = methods[action.type];
+                if (method) {
+                    var result = method(draft, action.payload);
+                    return result;
+                }
             }, Options.patchListener);
+            return draftState;
         };
     }, [methods, Options.patchListener]);
     var _a = __read(react_1.useReducer(immerReducer, initialState, initializer), 2), draftState = _a[0], dispatch = _a[1];
     var actions = react_1.useMemo(function () {
-        var actionTypes = Object.keys(methods(draftState));
+        var actionTypes = Object.keys(methods);
         return actionTypes.reduce(function (prev, type) {
-            prev[type] = function () {
-                var payload = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    payload[_i] = arguments[_i];
-                }
-                return dispatch({ type: type, payload: payload });
-            };
+            prev[type] = function (payload) { return dispatch({ type: type, payload: payload }); };
             return prev;
         }, {});
         // 因为使用immer，此处并不需要监听state变动，methods也应该是静态配置好的，不会动态增加

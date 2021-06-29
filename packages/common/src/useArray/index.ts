@@ -1,7 +1,5 @@
 import useMethods from '../useMethods'
 
-type idata = Record<string, any>
-
 const methods = {
   set: (state: any, value: any) => value,
   push: (state = [], value: any) => [...state, value],
@@ -13,7 +11,7 @@ const methods = {
       typeof value === 'function' ? !value(...args) : args[0] !== value
     ),
   // 根据id移除数据，数据格式必需为[{ [idkey], ... }]
-  removeById: (state: Record<string, any>[], { idKey, id }: any) =>
+  removeById: (state: Record<string, any>[], id:string, idKey: string = 'id') =>
     state.filter((v) => v && v[idKey] !== id),
   removeIndex: (state: any[], value: number) => state.filter((v: any, i: number) => i !== value),
 }
@@ -23,7 +21,7 @@ const methods = {
  * @param initial
  * @param idKey
  */
-export default function useArray<T extends idata>(initial?: T[] | (() => T[])) {
+export default function useArray<T>(initial?: T[] | (() => T[])) {
   const [listData, actions] = useMethods(methods, initial || [])
   return [listData, actions] as [typeof listData, typeof actions]
 }

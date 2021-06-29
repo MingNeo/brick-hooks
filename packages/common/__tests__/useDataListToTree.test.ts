@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks'
 import jestDiff from 'jest-diff'
-import useDataFlatToTree from '../src/useDataFlatToTree'
+import useDataListToTree from '../src/useDataListToTree'
 
 const mockData = [
   { id: 'a', pid: 0, value: '陕西' },
@@ -50,15 +50,15 @@ const mockResult = [
   },
 ]
 
-describe('useDataFlatToTree 校验', () => {
+describe('useDataListToTree 校验', () => {
   it('引用正常', () => {
-    expect(useDataFlatToTree).toBeDefined()
+    expect(useDataListToTree).toBeDefined()
   })
 
   it('初始状态正常', () => {
-    const { result } = renderHook(({ initialValue }) => useDataFlatToTree(initialValue), {
+    const { result } = renderHook(({ initialValue }) => useDataListToTree(initialValue), {
       initialProps: { initialValue: mockData },
     })
-    expect(jestDiff(result.current, mockResult)).toBe('Compared values have no visual difference.')
+    expect(jestDiff(result.current, mockResult)).toMatch('Compared values have no visual difference.')
   })
 })

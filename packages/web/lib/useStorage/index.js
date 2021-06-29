@@ -16,54 +16,30 @@ var __read = (this && this.__read) || function (o, n) {
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getStorage = exports.setStorage = void 0;
+exports.useSessionStorage = exports.useLocalStorage = void 0;
 var react_1 = require("react");
-function setStorage(key, value) {
-    try {
-        window.localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
-    }
-    catch (error) {
-        console.log(error);
-    }
-}
-exports.setStorage = setStorage;
-function getStorage(key, initialValue) {
-    if (!(window === null || window === void 0 ? void 0 : window.localStorage)) {
-        return initialValue;
-    }
-    var value = window.localStorage.getItem(key);
-    try {
-        return value !== undefined && value !== null ? JSON.parse(value) : initialValue;
-    }
-    catch (error) {
-        // if error, return value
-        console.log(error);
-        return value !== null && value !== void 0 ? value : initialValue;
-    }
-}
-exports.getStorage = getStorage;
-function parseValue(value, initialValue) {
-    try {
-        return value ? JSON.parse(value) : initialValue;
-    }
-    catch (_a) {
-        return initialValue;
-    }
-}
+var helper_1 = require("./helper");
 /**
  *
  * @param itemName
  * @param initialValue
  * @param watchStorageChange 监听storage事件，即使不是使用当前hooks修改storage，也会更新value
  */
-function useLocalStorage(itemName, initialValue, watchStorageChange) {
+function useStorage(itemName, initialValue, _a) {
     if (initialValue === void 0) { initialValue = undefined; }
-    if (watchStorageChange === void 0) { watchStorageChange = false; }
-    var _a = __read(react_1.useState(function () { return getStorage(itemName, initialValue); }), 2), value = _a[0], setStateValue = _a[1];
-    var setValue = react_1.useCallback(function (value) {
-        setStorage(itemName, value);
-        watchStorageChange || setStateValue(parseValue(value, initialValue));
-    }, [initialValue, itemName, watchStorageChange]);
+    var _b = _a === void 0 ? {} : _a, _c = _b.watchStorageChange, watchStorageChange = _c === void 0 ? false : _c, _d = _b.storageType, storageType = _d === void 0 ? 'localStorage' : _d;
+    var _e = __read(react_1.useState(function () { return helper_1.getStorage(storageType, itemName) || initialValue; }), 2), value = _e[0], setStateValue = _e[1];
+    var methods = react_1.useMemo(function () {
+        var setValue = function (value) {
+            helper_1.setStorage(storageType, itemName, value);
+            watchStorageChange || setStateValue(helper_1.parseValue(value));
+        };
+        var clear = function () {
+            helper_1.removeStorage(storageType, itemName);
+            setValue(undefined);
+        };
+        return { setValue: setValue, clear: clear };
+    }, [itemName, storageType, watchStorageChange]);
     react_1.useEffect(function () {
         if (!(window === null || window === void 0 ? void 0 : window.localStorage) || !watchStorageChange) {
             return;
@@ -71,15 +47,28 @@ function useLocalStorage(itemName, initialValue, watchStorageChange) {
         // 当storage变化的时候更新state以触发组件render
         var onStorage = function (e) {
             if (e.key === itemName) {
-                setStateValue(parseValue(e.newValue, initialValue));
+                setStateValue(helper_1.parseValue(e.newValue));
             }
         };
-        // watchStorageChange 为 true时， 监听storage事件，即使直接调用window.localStorage.setItem也会更新当前value
+        // watchStorageChange 为 true时， 监听storage事件，即使直接修改也触发更新当前value
         window.addEventListener('storage', onStorage);
         return function () {
             window.removeEventListener('storage', onStorage);
         };
-    }, [initialValue, itemName, watchStorageChange]);
-    return [value, setValue];
+    }, [itemName, watchStorageChange]);
+    return [value, methods.setValue, methods.clear];
 }
-exports.default = useLocalStorage;
+exports.default = useStorage;
+exports.useLocalStorage = function (itemName, initialValue, _a) {
+    if (initialValue === void 0) { initialValue = undefined; }
+    var _b = (_a === void 0 ? {} : _a).watchStorageChange, watchStorageChange = _b === void 0 ? false : _b;
+    return useStorage(itemName, initialValue, { watchStorageChange: watchStorageChange, storageType: 'localStorage' });
+};
+exports.useSessionStorage = function (itemName, initialValue, _a) {
+    if (initialValue === void 0) { initialValue = undefined; }
+    var _b = (_a === void 0 ? {} : _a).watchStorageChange, watchStorageChange = _b === void 0 ? false : _b;
+    return useStorage(itemName, initialValue, {
+        watchStorageChange: watchStorageChange,
+        storageType: 'sessionStorage',
+    });
+};

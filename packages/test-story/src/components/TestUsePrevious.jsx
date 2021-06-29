@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@storybook/react/demo';
-import { usePrevious , useForceRender } from 'bricks-hooks';
+import { usePrevious , useForceRender } from 'brick-hooks';
 
 export default function Test({ equalsMode }) {
   const [state, setState] = useState(0)

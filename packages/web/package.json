@@ -1,9 +1,9 @@
 {
-  "name": "brick-hooks-web",
+  "name": "@terminus/brick-hooks-web",
   "version": "0.1.18",
   "description": "> TODO: description",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
-  "homepage": "https://github.com/MingNeo/custom-hooks#readme",
+  "homepage": "https://terminus-org.erda.cloud/wb/frontend-product/brick-hooks#readme",
   "license": "ISC",
   "main": "lib/index.js",
   "directories": {
@@ -13,9 +13,13 @@
   "files": [
     "lib"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npm.terminus.io",
+    "access": "public"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MingNeo/custom-hooks.git"
+    "url": "git+https://terminus-org.erda.cloud/wb/frontend-product/brick-hooks.git"
   },
   "scripts": {
     "test": "jest",
@@ -23,7 +27,7 @@
     "watch": "tsc --build tsconfig.json -w"
   },
   "bugs": {
-    "url": "https://github.com/MingNeo/custom-hooks/issues"
+    "url": "https://terminus-org.erda.cloud/wb/frontend-product/brick-hooks/issues"
   },
   "peerDependencies": {
     "react": ">=16.9.0",

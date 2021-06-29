@@ -53,7 +53,7 @@ var useSet_1 = require("./useSet");
 Object.defineProperty(exports, "useSet", { enumerable: true, get: function () { return useSet_1.default; } });
 var useThrottleFn_1 = require("./useThrottleFn");
 Object.defineProperty(exports, "useThrottleFn", { enumerable: true, get: function () { return useThrottleFn_1.default; } });
-var hydrogen_store_1 = require("hydrogen-store");
+var hydrogen_store_1 = require("@terminus/hydrogen-store");
 Object.defineProperty(exports, "useStore", { enumerable: true, get: function () { return hydrogen_store_1.useStore; } });
 var useTimeout_1 = require("./useTimeout");
 Object.defineProperty(exports, "useTimeout", { enumerable: true, get: function () { return useTimeout_1.default; } });

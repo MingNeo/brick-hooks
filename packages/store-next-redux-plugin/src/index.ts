@@ -1,4 +1,4 @@
-import { Options, Module } from 'hydrogen-store'
+import { Options, Module } from '@terminus/hydrogen-store'
 import openRedux from './open-redux'
 
 /**

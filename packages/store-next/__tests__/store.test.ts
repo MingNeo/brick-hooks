@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { createStore } from '../src/index'
 
-describe('hydrogen-store 校验', () => {
+describe('@terminus/hydrogen-store 校验', () => {
   it('引用正常', () => {
     expect(createStore).toBeDefined();
   });

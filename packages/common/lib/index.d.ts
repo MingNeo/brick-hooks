@@ -24,7 +24,7 @@ export { default as useReducerImmer } from './useReducerImmer';
 export { default as useScrollInView } from './useScrollInView';
 export { default as useSet } from './useSet';
 export { default as useThrottleFn } from './useThrottleFn';
-export { useStore } from 'hydrogen-store';
+export { useStore } from '@terminus/hydrogen-store';
 export { default as useTimeout } from './useTimeout';
 export { default as useToggle } from './useToogle';
 export { default as useTrimString } from './useTrimString';

@@ -5266,6 +5266,16 @@ braces@^3.0.1, braces@~3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
+brick-hooks@^0.1.18:
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/brick-hooks/-/brick-hooks-0.1.18.tgz#f626ff5ad04490e3c42a71ea989ae55ab8e7b5e1"
+  integrity sha512-ybHwqn5kUWhqJPHFPwgLXz2n5IKGhg2p/CbJMy6a9QAZxdK8Tf4uGDMOfabGnob1SZQSpUTCO1Qo9jmOKlOI7A==
+  dependencies:
+    hydrogen-store "^0.1.18"
+    immer "^9.0.3"
+    lodash.clonedeep "^4.5.0"
+    lodash.isequal "^4.5.0"
+
 brorand@^1.0.1, brorand@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/brorand/-/brorand-1.1.0.tgz"
@@ -9088,6 +9098,11 @@ humanize-ms@^1.2.1:
   integrity sha1-xG4xWaKT9riW2ikxbYtv6Lt5u+0=
   dependencies:
     ms "^2.0.0"
+
+hydrogen-store@^0.1.18:
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/hydrogen-store/-/hydrogen-store-0.1.18.tgz#686402c227d4655cddd0e257132d59ffc2c4d105"
+  integrity sha512-JKk5bBSC+FGz7E84zixY8jxOjel0cYRh4G868J6qKpjQ2inl+U6i8kfqyxtulZU3OZnWqzU0EAXzz9EXDWTzRQ==
 
 iconv-lite@0.4.24, iconv-lite@^0.4.17, iconv-lite@^0.4.24:
   version "0.4.24"

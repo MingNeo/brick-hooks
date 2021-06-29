@@ -34,7 +34,7 @@ exports.getDateRange = void 0;
 var react_1 = require("react");
 var dayjs_1 = __importDefault(require("dayjs"));
 var isSameOrAfter_1 = __importDefault(require("dayjs/plugin/isSameOrAfter"));
-var brick_hooks_1 = require("brick-hooks");
+var brick_hooks_1 = require("@terminus/brick-hooks");
 var defaultKeyMap_1 = require("./defaultKeyMap");
 dayjs_1.default.extend(isSameOrAfter_1.default);
 function isNil(value) {

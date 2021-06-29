@@ -20,11 +20,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MingNeo/custom-hooks.git"
+    "url": "git+https://terminus-org.erda.cloud/wb/frontend-product/brick-hooks.git"
   },
   "author": "lmr",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org",
+    "registry": "https://registry.npm.terminus.io",
     "access": "public"
   },
   "dependencies": {
@@ -86,8 +86,8 @@
     "typescript": "^3.9.9"
   },
   "bugs": {
-    "url": "https://github.com/MingNeo/custom-hooks/issues"
+    "url": "https://terminus-org.erda.cloud/wb/frontend-product/brick-hooks/issues"
   },
-  "homepage": "https://github.com/MingNeo/custom-hooks#readme",
+  "homepage": "https://terminus-org.erda.cloud/wb/frontend-product/brick-hooks#readme",
   "license": "ISC"
 }

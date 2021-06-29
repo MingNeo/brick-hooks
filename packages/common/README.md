@@ -5,7 +5,7 @@
 ## Usage
 
 ```
-const base = require('brick-hooks');
+const base = require('@terminus/brick-hooks');
 ```
 
 useArray

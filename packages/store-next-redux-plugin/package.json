@@ -1,6 +1,6 @@
 {
   "name": "@terminus/hydrogen-store-redux-plugin",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "> TODO: description",
   "author": "klose <mingrenjbdtx@gmail.com>",
   "homepage": "https://terminus-org.erda.cloud/wb/frontend-product/brick-hooks/tree/master/packages/store-next-redux-plugin#readme",
@@ -30,7 +30,7 @@
     "url": "https://terminus-org.erda.cloud/wb/frontend-product/brick-hooks/issues"
   },
   "dependencies": {
-    "@terminus/hydrogen-store": "^0.1.18"
+    "@terminus/hydrogen-store": "^0.1.19"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^5.1.1",

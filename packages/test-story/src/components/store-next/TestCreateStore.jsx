@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from '@storybook/react/demo'
-import { createStore, Store } from 'sea-store/src/index'
-import reduxPlugin from 'sea-store-redux-plugin'
+import { createStore, Store } from 'air-store/src/index'
+import reduxPlugin from 'air-store-redux-plugin'
 
 Store.usePlugin(reduxPlugin)
 export const singleStore = createStore({

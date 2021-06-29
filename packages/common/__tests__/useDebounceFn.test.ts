@@ -18,7 +18,7 @@ describe('useDebounceFn 校验', () => {
     expect(result.current[0]).toEqual(0)
   })
 
-  test('debounceState update', async () => {
+  it('debounceState update', async () => {
     const { result } = renderHook(() => {
       const [value, { inc }] = useCounter(0)
       const [debounceFn] = useDebounceFn(inc as any, 4)
@@ -36,7 +36,7 @@ describe('useDebounceFn 校验', () => {
     expect(result.current[0]).toBe(1)
   })
 
-  test('no debounce', async () => {
+  it('no debounce', async () => {
     const { result, rerender } = renderHook(() => {
       const [value, { inc }] = useCounter(0)
       return [value, inc]
@@ -49,6 +49,6 @@ describe('useDebounceFn 校验', () => {
       debounceFn()
     })
     await act(() => timeout(0))
-    expect(result.current).toBe(3)
+    expect(result.current[0]).toBe(3)
   })
 })

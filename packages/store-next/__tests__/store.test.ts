@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { createStore } from '../src/index'
 
-describe('sea-store 校验', () => {
+describe('air-store 校验', () => {
   it('引用正常', () => {
     expect(createStore).toBeDefined();
   });
@@ -29,7 +29,6 @@ describe('sea-store 校验', () => {
     expect(result.current[0]).toEqual({ a: 1});
 
     act(() => setStore(prev => ({ a: prev.a + 1 })));
-    console.log('result.current[0]', result.current[0], JSON.stringify(result.current[0]?.a))
     expect(result.current[0]).toEqual({ a: 2 });
 
     act(() => setStore(prev => ({ a: prev.a + 1 })));

@@ -1,19 +1,21 @@
 import { useEffect, useRef } from 'react'
-import { AppState } from 'react-native'
+import { AppState, AppStateStatus } from 'react-native'
+
+type OnAppStateChange = (nextState: any, prevState: any) => any
 
 /**
  * 获取当前App前后台的状态
- * @param {*} navigation 
- * @param {*} onAppStateChange 
+ * @param {*} navigation
+ * @param {*} onAppStateChange
  */
-export default function useAppState(onAppStateChange, navigation) {
-  const handleChangeRef = useRef()
-  const currentStateRef = useRef()
+export default function useAppState(onAppStateChange: OnAppStateChange) {
+  const handleChangeRef = useRef<(nextState: any) => any>()
+  const currentStateRef = useRef<AppStateStatus>()
+
   handleChangeRef.current = function (nextState) {
-    const { routeName } = navigation?.state || {}
     const prevState = currentStateRef.current
     currentStateRef.current = AppState.currentState
-    onAppStateChange(nextState, prevState, routeName)
+    onAppStateChange(nextState, prevState)
   }
 
   useEffect(() => {

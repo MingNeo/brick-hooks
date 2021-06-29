@@ -10,8 +10,8 @@ interface Options {
  * @param options.setState 更新state方法，一般情况下直接.then后处理即可，但有时候希望自动同步状态，则可以配置setState方法
  */
 export default function useAsync<A extends AsyncFunction>(asyncFunction: A, { immediate, setState }?: Options): [(...args: any[]) => Promise<unknown>, {
-    result: any;
-    error: any;
+    result: undefined;
+    error: undefined;
     loading: boolean;
     pendingCount: number;
 }];

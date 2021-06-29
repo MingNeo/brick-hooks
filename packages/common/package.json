@@ -33,7 +33,7 @@
     "immer": "^9.0.3",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isequal": "^4.5.0",
-    "sea-store": "^0.1.14"
+    "air-store": "^0.1.14"
   },
   "peerDependencies": {
     "react": ">=16.9.0",

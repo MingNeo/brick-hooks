@@ -1,4 +1,4 @@
 
-describe('sea-store-redux-plugin', () => {
+describe('air-store-redux-plugin', () => {
     it('needs tests', () => {});
 });

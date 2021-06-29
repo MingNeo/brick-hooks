@@ -12,6 +12,7 @@ export default function useDrag(props: {
     styles?: any;
     onDragMoving: OnDragMoving;
 }): {
+    onMousedown: (e: MouseEvent) => void;
     readyDrag: (e: MouseEvent) => void;
 };
 export {};

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from '@storybook/react/demo'
-import { registerModule, useStore, usePlugin } from 'sea-store/src/index'
-import reduxPlugin from 'sea-store-redux-plugin'
+import { registerModule, useStore, usePlugin } from 'air-store/src/index'
+import reduxPlugin from 'air-store-redux-plugin'
 
 usePlugin(reduxPlugin)
 

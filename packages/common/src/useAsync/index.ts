@@ -20,8 +20,8 @@ export default function useAsync<A extends AsyncFunction>(
   { immediate = false, setState }: Options = {}
 ) {
   const [pendingCount, { inc, dec }] = useCounter(0, { min: 0 })
-  const [result, setResult] = useState(null)
-  const [error, setError] = useState(null)
+  const [result, setResult] = useState()
+  const [error, setError] = useState()
 
   const exector = useCallback(
     (...args: any[]) => {

@@ -1,4 +1,4 @@
-import { Options, Module } from 'sea-store'
+import { Options, Module } from 'air-store'
 import openRedux from './open-redux'
 
 /**

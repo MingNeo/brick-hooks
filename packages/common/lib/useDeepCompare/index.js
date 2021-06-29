@@ -28,8 +28,13 @@ var lodash_clonedeep_1 = __importDefault(require("lodash.clonedeep"));
  */
 function useDeepCompare(value) {
     var _a = __read(react_1.useState({ value: value, isEqual: true }), 2), state = _a[0], setState = _a[1];
+    var isEqualRef = react_1.useRef(true);
     if (value && !lodash_isequal_1.default(value, state.value)) {
+        isEqualRef.current = false;
         setState({ isEqual: false, value: lodash_clonedeep_1.default(value) });
+    }
+    else if (isEqualRef.current && !state.isEqual) {
+        setState(function (prevState) { return ({ isEqual: true, value: prevState.value }); });
     }
     return state;
 }

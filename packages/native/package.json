@@ -41,5 +41,9 @@
     "react": ">=16.9.0",
     "react-native": ">=0.61.5"
   },
-  "gitHead": "e050cf14ead088ecb1343c8dc8f3301ceba8a965"
+  "gitHead": "e050cf14ead088ecb1343c8dc8f3301ceba8a965",
+  "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
+    "@types/react-native": "^0.64.10"
+  }
 }

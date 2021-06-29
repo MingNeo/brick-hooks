@@ -7,14 +7,13 @@ var react_native_1 = require("react-native");
  * @param {*} navigation
  * @param {*} onAppStateChange
  */
-function useAppState(onAppStateChange, navigation) {
+function useAppState(onAppStateChange) {
     var handleChangeRef = react_1.useRef();
     var currentStateRef = react_1.useRef();
     handleChangeRef.current = function (nextState) {
-        var routeName = ((navigation === null || navigation === void 0 ? void 0 : navigation.state) || {}).routeName;
         var prevState = currentStateRef.current;
         currentStateRef.current = react_native_1.AppState.currentState;
-        onAppStateChange(nextState, prevState, routeName);
+        onAppStateChange(nextState, prevState);
     };
     react_1.useEffect(function () {
         var handleAppStateChange = handleChangeRef.current;

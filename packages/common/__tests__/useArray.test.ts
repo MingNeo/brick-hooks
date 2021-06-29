@@ -1,56 +1,55 @@
-import { act, renderHook } from '@testing-library/react-hooks';
-import useCounter from '../src/useCounter';
+import { act, renderHook } from '@testing-library/react-hooks'
+import useArray from '../src/useArray'
 
-describe('useCounter 校验', () => {
+describe('useArray 校验', () => {
   it('引用正常', () => {
-    expect(useCounter).toBeDefined();
-  });
+    expect(useArray).toBeDefined()
+  })
 
   it('初始状态正常', () => {
-    const { result } = renderHook(({ initialValue, options }) => useCounter(initialValue, options), {
-      initialProps: { initialValue: 0, options: { min: 0, max: 3 } },
-    });
-    expect(result.current[0]).toBe(0);
-  });
-  it('加减正常', () => {
-    const { result } = renderHook(({ initialValue, options }) => useCounter(initialValue, options), {
-      initialProps: { initialValue: 0, options: { min: 0, max: 3 } },
-    });
-    const [, actions] = result.current;
+    const { result } = renderHook(({ initialValue }) => useArray(initialValue), {
+      initialProps: { initialValue: [1, 2, 3] },
+    })
+    expect(result.current[0]).toEqual([1, 2, 3])
+  })
+  it('测试方法正常', () => {
+    const { result } = renderHook(({ initialValue }) => useArray(initialValue), {
+      initialProps: { initialValue: [1, 2, 3] },
+    })
+    const [, actions] = result.current
 
-    expect(result.current[0]).toBe(0);
+    expect(result.current[0]).toEqual([1, 2, 3])
 
-    act(() => actions.inc());
-    expect(result.current[0]).toBe(1);
+    act(() => actions.slice(1))
+    expect(result.current[0]).toEqual([1, 2, 3].slice(1))
 
-    act(() => actions.inc(2));
-    expect(result.current[0]).toBe(3);
+    act(() => actions.set([1]))
+    expect(result.current[0]).toEqual([1])
 
-    act(() => actions.dec());
-    expect(result.current[0]).toBe(2);
+    act(() => actions.push(2))
+    expect(result.current[0]).toEqual([1, 2])
 
-    act(() => actions.dec(2));
-    expect(result.current[0]).toBe(0);
-  });
+    act(() => actions.pop())
+    expect(result.current[0]).toEqual([1])
 
-  it('min max 正常', () => {
-    const { result } = renderHook(({ initialValue, options }) => useCounter(initialValue, options), {
-      initialProps: { initialValue: 0, options: { min: 0, max: 3 } },
-    });
-    const [, actions] = result.current;
-    act(() => actions.dec(2));
+    act(() => actions.clear())
+    expect(result.current[0]).toEqual([])
 
-    expect(result.current[0]).toBe(0);
-  });
+    act(() => actions.set([1, 2, 3]))
+    act(() => actions.remove(2))
+    expect(result.current[0]).toEqual([1, 3])
 
+    act(() => actions.removeIndex(1))
+    expect(result.current[0]).toEqual([1])
+  })
 
-  it('reset正常', () => {
-    const { result } = renderHook(({ initialValue, options }) => useCounter(initialValue, options), {
-      initialProps: { initialValue: 0, options: { min: 0, max: 3 } },
-    });
-    const [, actions] = result.current;
-    act(() => actions.reset());
+  it('测试removeById正常', () => {
+    const { result } = renderHook(({ initialValue }) => useArray(initialValue), {
+      initialProps: { initialValue: [{ id: 1, value: 1 }, { id: 2, value: 2 }] },
+    })
+    const [, actions] = result.current
 
-    expect(result.current[0]).toBe(0);
-  });
-});
+    act(() => actions.removeById(1))
+    expect(result.current[0]).toEqual([{ id: 2, value: 2 }])
+  })
+})

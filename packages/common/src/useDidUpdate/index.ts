@@ -10,7 +10,6 @@ export default function useDidUpdate(fn: () => void, dep?: any[]) {
   ref.current.fn = fn
 
   useEffect(() => {
-    // 首次渲染不执行
     if (!ref.current.mounted) {
       ref.current.mounted = true
     } else {

@@ -1,6 +1,6 @@
 {
   "name": "bricks-hooks-web",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "> TODO: description",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
@@ -31,7 +31,10 @@
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^5.1.1",
+    "@types/jest": "^26.0.23",
     "jest": "^26.6.3",
-    "ts-jest": "^26.5.5"
-  }
+    "ts-jest": "^26.5.5",
+    "typescript": "^3.9.9"
+  },
+  "gitHead": "a7efa83c35c26d2f949d754bdb64eac802173250"
 }

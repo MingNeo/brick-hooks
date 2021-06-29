@@ -1,4 +1,4 @@
 
-describe('sea-store-redux-plugin', () => {
+describe('t-store-redux-plugin', () => {
     it('needs tests', () => {});
 });

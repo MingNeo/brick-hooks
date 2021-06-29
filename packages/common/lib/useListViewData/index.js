@@ -31,7 +31,7 @@ exports.initialQuery = void 0;
 var react_1 = require("react");
 exports.initialQuery = {
     page: {
-        pageNo: 0,
+        pageNo: 1,
         pageSize: 10,
         hasMore: false,
     },
@@ -51,13 +51,21 @@ function useListViewData(fetchFn, query) {
     var loadData = react_1.useCallback(function (fetchParams) {
         var page = fetchParams.page, fetchQuery = fetchParams.query, _a = fetchParams.isMerge, isMerge = _a === void 0 ? false : _a;
         setLoading(true);
-        return fetchFn({ page: page, query: fetchQuery })
-            .then(function (_a) {
-            var data = _a.data, hasMore = _a.hasMore;
-            setListData(function (listData) { return isMerge ? listData.concat(data) : data || []; });
-            setFinalQuery({ page: __assign(__assign({}, page), { hasMore: hasMore }), query: fetchQuery });
-        })
-            .finally(function () { return setLoading(false); });
+        return new Promise(function (resolve, reject) {
+            fetchFn({ page: page, query: fetchQuery })
+                .then(function (_a) {
+                var data = _a.data, hasMore = _a.hasMore;
+                setLoading(false);
+                setListData(function (listData) { return (isMerge ? listData.concat(data) : data || []); });
+                setFinalQuery({ page: __assign(__assign({}, page), { hasMore: hasMore }), query: fetchQuery });
+                resolve('load data success');
+            })
+                .catch(function (e) {
+                setLoading(false);
+                console.log(e);
+                reject(new Error("load data error"));
+            });
+        });
     }, [fetchFn]);
     // 获取下一页数据
     var loadNextPage = react_1.useCallback(function () {

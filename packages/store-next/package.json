@@ -1,6 +1,6 @@
 {
-  "name": "sea-store",
-  "version": "0.1.14",
+  "name": "t-store",
+  "version": "0.1.15",
   "description": "> TODO: description",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
@@ -41,5 +41,5 @@
     "ts-jest": "^26.5.5",
     "typescript": "^3.9.9"
   },
-  "gitHead": "e050cf14ead088ecb1343c8dc8f3301ceba8a965"
+  "gitHead": "a7efa83c35c26d2f949d754bdb64eac802173250"
 }

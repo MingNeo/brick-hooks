@@ -6,6 +6,6 @@
 
 ```
 const base = require('bricks-hooks');
-
-// TODO: DEMONSTRATE API
 ```
+
+useArray

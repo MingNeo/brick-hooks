@@ -1,0 +1,1 @@
+export { useStorage } from 'bricks-hooks-web'

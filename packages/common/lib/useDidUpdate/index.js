@@ -10,7 +10,6 @@ function useDidUpdate(fn, dep) {
     var ref = react_1.useRef({ fn: fn, mounted: false });
     ref.current.fn = fn;
     react_1.useEffect(function () {
-        // 首次渲染不执行
         if (!ref.current.mounted) {
             ref.current.mounted = true;
         }

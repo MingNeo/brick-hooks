@@ -12,28 +12,28 @@ describe('useDebounceState 校验', () => {
     const { result } = renderHook(({ value }) => useDebounceState(value), {
       initialProps: { value: 0 },
     })
-    expect(result.current).toEqual(0)
+    expect(result.current[0]).toEqual(0)
   })
 
-  test('debounceState update', async () => {
-    const { result, rerender } = renderHook(({ value }) => useDebounceState(value, 4), {
+  it('debounceState update', async () => {
+    const { result } = renderHook(({ value }) => useDebounceState(value, 4), {
       initialProps: { value: 99 },
     })
-    rerender({ value: 100 })
-    expect(result.current).toBe(99)
-    rerender({ value: 101 })
-    expect(result.current).toBe(99)
+    result.current[1](100)
+    expect(result.current[0]).toBe(99)
+    result.current[1](101)
+    expect(result.current[0]).toBe(99)
     await act(() => timeout(5))
-    expect(result.current).toBe(101)
+    expect(result.current[0]).toBe(101)
   })
 
-  test('no debounce', async () => {
+  it('no debounce', async () => {
     const { result, rerender } = renderHook(({ value }) => useDebounceState(value, 0), {
       initialProps: { value: 99 },
     })
-    expect(result.current).toBe(99)
-    rerender({ value: 100 })
+    expect(result.current[0]).toBe(99)
+    result.current[1](100)
     await act(() => timeout(0))
-    expect(result.current).toBe(100)
+    expect(result.current[0]).toBe(100)
   })
 })

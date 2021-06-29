@@ -8,10 +8,12 @@ describe('useListViewData 校验', () => {
 
   let fetchParams = { ...initialQuery }
 
-  let fetchFn:FetchFn = (params) => {
-    fetchParams = params
+  let fetchFn: FetchFn = (params) => {
+    fetchParams = { ...fetchParams, ...(params || {}) }
     return new Promise((resolve) => {
-      resolve({ data: [1], hasMore: true })
+      setTimeout(() => {
+        resolve({ data: [1], hasMore: true })
+      }, 100)
     })
   }
 
@@ -34,21 +36,22 @@ describe('useListViewData 校验', () => {
       },
       { initialProps: { fetchFn } }
     )
-    let fetchPromise
+
     expect(result.current.loading).toEqual(false)
 
-    act(() => {
-      fetchPromise = result.current.loadData({ page: { pageNo: 1, pageSize: 10 }, query: {} })
+    await act(async () => {
+      result.current
+        .loadData({ page: { pageNo: 1, pageSize: 10 }, query: {} })
+        .then((response: any) => {
+          expect(result.current.loading).toEqual(false)
+          expect(response).toMatch('load data success')
+        })
+      await waitForNextUpdate()
       expect(result.current.loading).toEqual(true)
     })
-
     await waitForNextUpdate()
-
-    fetchPromise.then((response: any) => {
-      expect(result.current.loading).toEqual(false)
-      expect(response).toEqual({ data: [], hasMore: true })
-    })
-    expect(result.current.listData).toEqual([])
+    expect(result.current.listData).toEqual([1])
+    expect(result.current.loading).toEqual(false)
   })
 
   it('请求下一页正常', () => {
@@ -58,12 +61,12 @@ describe('useListViewData 校验', () => {
       },
       { initialProps: { fetchFn } }
     )
-    const oldPage = ({ ...fetchParams.page } || {})
+    const oldPage = { ...fetchParams.page } || {}
     act(() => {
       result.current.loadNextPage()
     })
 
-    expect(fetchParams.page.pageNo).toEqual(((oldPage as any).pageNo || 0) + 1)
+    expect(fetchParams.page.pageNo).toEqual(((oldPage as any).pageNo || 1) + 1)
   })
 
   it('清空条件正常', () => {

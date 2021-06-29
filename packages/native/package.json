@@ -1,6 +1,6 @@
 {
   "name": "bricks-hooks-native",
-  "version": "0.1.14",
+  "version": "0.1.16",
   "description": "> TODO: description",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
@@ -41,5 +41,9 @@
     "react": ">=16.9.0",
     "react-native": ">=0.61.5"
   },
-  "gitHead": "e050cf14ead088ecb1343c8dc8f3301ceba8a965"
+  "gitHead": "9f3f24c755c83ddbc583fc6383967fcc5a635d8e",
+  "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
+    "@types/react-native": "^0.64.10"
+  }
 }

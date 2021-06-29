@@ -4,7 +4,7 @@
   "workspaces": [
     "packages/*"
   ],
-  "description": "提取的一些hooks",
+  "description": "通用hooks集合",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",

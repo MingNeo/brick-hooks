@@ -35,8 +35,8 @@ var useCounter_1 = __importDefault(require("../useCounter"));
 function useAsync(asyncFunction, _a) {
     var _b = _a === void 0 ? {} : _a, _c = _b.immediate, immediate = _c === void 0 ? false : _c, setState = _b.setState;
     var _d = __read(useCounter_1.default(0, { min: 0 }), 2), pendingCount = _d[0], _e = _d[1], inc = _e.inc, dec = _e.dec;
-    var _f = __read(react_1.useState(null), 2), result = _f[0], setResult = _f[1];
-    var _g = __read(react_1.useState(null), 2), error = _g[0], setError = _g[1];
+    var _f = __read(react_1.useState(), 2), result = _f[0], setResult = _f[1];
+    var _g = __read(react_1.useState(), 2), error = _g[0], setError = _g[1];
     var exector = react_1.useCallback(function () {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {

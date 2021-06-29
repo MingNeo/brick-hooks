@@ -62,6 +62,7 @@ function useDrag(props) {
         };
     }, []);
     return {
+        onMousedown: readyDrag,
         readyDrag: readyDrag,
     };
 }

@@ -1,8 +1,10 @@
-import produce, { PatchListener } from 'immer'
-import { useMemo, useReducer } from 'react'
+import produce, { Draft, PatchListener } from 'immer'
+import { ReducerAction, useMemo, useReducer } from 'react'
 
-type Reducer<S> = (state: S, ...payload: any[]) => void
-type Methods<S> = (state: S) => Record<string, Reducer<S>>
+export { Draft }
+
+type Reducer<S> = (state: Draft<S>, payload: any) => void
+type Methods<S> = Record<string, Reducer<S>>
 
 export default function useMethodsImmer<S>(
   methods: Methods<S>,
@@ -11,20 +13,29 @@ export default function useMethodsImmer<S>(
   Options: any = {}
 ) {
   const immerReducer = useMemo(() => {
-    return (state: S, action: any) =>
-      produce(
+    return (state: S, action: ReducerAction<Reducer<any>>) => {
+      const draftState = produce(
         state,
-        (draft: any) => methods(draft)[action.type](draft, ...action.payload),
+        (draft: Draft<S>) => {
+          const method = methods[action.type]
+          if(method) {
+            const result = method(draft, action.payload)
+            return result
+          }
+        },
         Options.patchListener as PatchListener | undefined
       )
+      return draftState
+    }
+      
   }, [methods, Options.patchListener])
 
   const [draftState, dispatch] = useReducer(immerReducer, initialState, initializer)
 
   const actions = useMemo(() => {
-    const actionTypes: string[] = Object.keys(methods(draftState))
+    const actionTypes: string[] = Object.keys(methods)
     return actionTypes.reduce((prev, type) => {
-      prev[type] = (...payload: any) => dispatch({ type, payload })
+      prev[type] = (payload: any) => dispatch({ type, payload })
       return prev
     }, {} as Record<string, any>)
 

@@ -1,6 +1,6 @@
 {
   "name": "bricks-hooks",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "> TODO: description",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
@@ -30,10 +30,10 @@
     "url": "https://github.com/MingNeo/custom-hooks/issues"
   },
   "dependencies": {
+    "air-store": "^0.1.15",
     "immer": "^9.0.3",
     "lodash.clonedeep": "^4.5.0",
-    "lodash.isequal": "^4.5.0",
-    "air-store": "^0.1.14"
+    "lodash.isequal": "^4.5.0"
   },
   "peerDependencies": {
     "react": ">=16.9.0",

@@ -1,6 +1,6 @@
 {
   "name": "brick-hooks-business",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "description": "> TODO: description",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
@@ -27,7 +27,7 @@
     "url": "https://github.com/MingNeo/custom-hooks/issues"
   },
   "dependencies": {
-    "brick-hooks": "^0.1.18"
+    "brick-hooks": "^0.1.19"
   },
   "peerDependencies": {
     "react": ">=16.9.0",

@@ -19,7 +19,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setStoreState = exports.getStoreState = exports.usePlugin = exports.registerModule = exports.createStore = exports.useStore = exports.store = exports.Store = void 0;
+exports.setStoreState = exports.getStoreState = exports.usePlugins = exports.registerModule = exports.createStore = exports.useStore = exports.store = exports.Store = void 0;
 var base_1 = __importStar(require("./base"));
 exports.createStore = base_1.default;
 Object.defineProperty(exports, "Store", { enumerable: true, get: function () { return base_1.Store; } });
@@ -34,13 +34,15 @@ exports.registerModule = registerModule;
 /**
  * 对全局store 开启插件，这不是一个React hooks
  */
-var usePlugin = useStore.usePlugin = function (plugin) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    base_1.Store.usePlugin(plugin);
-    // 因为在createStore之后调用，所以需要重新初始化一下
-    store.init();
+var usePlugins = useStore.usePlugins = function (plugins) {
+    if (plugins && plugins.length) {
+        plugins.forEach(function (plugin) { return base_1.Store.usePlugin(plugin); });
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        // 因为在createStore之后调用，所以需要重新初始化一下
+        store.init();
+    }
 };
-exports.usePlugin = usePlugin;
+exports.usePlugins = usePlugins;
 /**
  * 对获取全局单一实例的globalState
  * @returns

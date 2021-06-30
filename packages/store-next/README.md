@@ -127,7 +127,7 @@ function TestStore() {
 import { usePlugin, store } from 'hydrogen-store'
 import reduxPlugin from 'hydrogen-store-redux-plugin'
 
-usePlugin(reduxPlugin)
+usePlugins([reduxPlugin])
 ```
 
 好了，现在可以愉快的使用redux devtool进行调试了。hydrogen-store 本身不依赖redux，使用redux和不使用redux对于业务代码完全没有影响，你可以通过环境变量/打包配置等开启或禁用它。

@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button } from '@storybook/react/demo'
-import { registerModule, useStore, usePlugin } from 'hydrogen-store/src/index'
+import { registerModule, useStore, usePlugins } from 'hydrogen-store/src/index'
 import reduxPlugin from 'hydrogen-store-redux-plugin'
 
-usePlugin(reduxPlugin)
+usePlugins(reduxPlugin)
 
 registerModule('test', {
   state: {

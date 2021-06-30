@@ -6,8 +6,11 @@ export interface Module {
     reducers?: Record<string, any>;
 }
 export declare type Modules = Record<string, Module>;
-export interface Options<S> extends Record<string, any> {
+export declare type Plugin = <S>(Store: Store<S>) => (store: any) => any;
+export interface Options<S = Record<string, any>> extends Record<string, any> {
     modules?: Modules;
+    plugins?: Plugin[];
+    devtoolId?: string;
     initialState?: S;
 }
 export declare class Store<S extends StoreState> extends EventBus<any> {
@@ -55,4 +58,4 @@ export declare class Store<S extends StoreState> extends EventBus<any> {
      */
     dispatchModuleAction(moduleName: string, actionName: string, payload: any): Promise<void>;
 }
-export default function createStore(options?: {}): Store<Record<string, any>>;
+export default function createStore<S = Record<string, any>>(options?: Options<S>): Store<S>;

@@ -1,9 +1,8 @@
 import React from 'react'
 import { Button } from '@storybook/react/demo'
-import { createStore, Store } from 'hydrogen-store/src/index'
+import { createStore } from 'hydrogen-store/src/index'
 import reduxPlugin from 'hydrogen-store-redux-plugin'
 
-Store.usePlugin(reduxPlugin)
 export const singleStore = createStore({
   modules: {
     test: {
@@ -17,6 +16,7 @@ export const singleStore = createStore({
       }
     },
   },
+  plugins: [reduxPlugin],
   devtoolId: 'Test Next Store'
 })
 

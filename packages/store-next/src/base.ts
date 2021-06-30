@@ -14,8 +14,14 @@ export interface Module {
 
 export type Modules = Record<string, Module>
 
-export interface Options<S> extends Record<string, any> {
+// todo
+// eslint-disable-next-line no-use-before-define
+export type Plugin = <S>(Store: Store<S>) => (store: any) => any
+
+export interface Options<S = Record<string, any>> extends Record<string, any> {
   modules?: Modules
+  plugins?: Plugin[]
+  devtoolId?: string
   initialState?: S
 }
 
@@ -140,6 +146,8 @@ export class Store<S extends StoreState> extends EventBus<any> {
   }
 }
 
-export default function createStore(options = {}) {
-  return new Store(options)
+export default function createStore<S = Record<string, any>>(options: Options<S> = {}) {
+  const { plugins = [], ...restOptions } = options
+  plugins.forEach(plugin => Store.usePlugin(plugin))
+  return new Store(restOptions)
 }

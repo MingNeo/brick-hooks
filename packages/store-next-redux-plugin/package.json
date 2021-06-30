@@ -1,6 +1,6 @@
 {
   "name": "hydrogen-store-redux-plugin",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "description": "> TODO: description",
   "author": "klose <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks/tree/master/packages/store-next-redux-plugin#readme",
@@ -29,7 +29,7 @@
     "url": "https://github.com/MingNeo/custom-hooks/issues"
   },
   "dependencies": {
-    "hydrogen-store": "^0.1.19"
+    "hydrogen-store": "^0.1.20"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^5.1.1",

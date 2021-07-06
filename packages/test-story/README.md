@@ -1,6 +1,6 @@
 # `test-story`
 
-> TODO: description
+> 
 
 ## Usage
 

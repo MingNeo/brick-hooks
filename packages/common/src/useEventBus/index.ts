@@ -1,12 +1,12 @@
 import { useRef, useEffect } from 'react'
-import { EventSub, Subscription } from './eventBus'
+import { EventBus, Subscription } from './eventBus'
 
 const DEFAULT_ROOT_TYPE = 'DEFAULT_ROOT_TYPE'
 
-export default function useEventSub<T = void>(type = DEFAULT_ROOT_TYPE) {
-  const busRef = useRef<EventSub<T>>()
+export default function useEventBus<T = void>(type = DEFAULT_ROOT_TYPE) {
+  const busRef = useRef<EventBus<T>>()
   if (!busRef.current) {
-    busRef.current = new EventSub()
+    busRef.current = new EventBus()
   }
   const subscriptionRef = useRef<Subscription<T>>()
 
@@ -43,4 +43,4 @@ export default function useEventSub<T = void>(type = DEFAULT_ROOT_TYPE) {
   return { publish, useSubscribe, subscribe }
 }
 
-export { EventSub }
+export { EventBus }

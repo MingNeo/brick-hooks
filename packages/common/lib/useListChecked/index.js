@@ -26,35 +26,34 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = require("react");
-var checkedMapReducer = function (checkedMap, action) {
-    var _a;
-    switch (action.type) {
-        case 'SET_CHECKED': {
-            var key = action.key, checked = action.checked;
-            return __assign(__assign({}, checkedMap), (_a = {}, _a[key] = checked, _a));
-        }
-        case 'SET_ALL_CHECKED': {
-            var checked_1 = action.checked;
-            return Object.keys(checkedMap).reduce(function (prev, curr) {
-                var _a;
-                return (__assign(__assign({}, prev), (_a = {}, _a[curr] = checked_1, _a)));
-            }, {});
-        }
-        case 'SET_CHECKED_MAP': {
-            return action.payload;
-        }
-        case 'EXPAND_CHECKED_MAP': {
-            var _b = action.payload, payload = _b === void 0 ? [] : _b;
-            return payload.reduce(function (prev, curr) {
-                var _a;
-                return prev[curr] !== undefined ? prev : __assign(__assign({}, prev), (_a = {}, _a[curr] = false, _a));
-            }, checkedMap);
-        }
-        default:
-            return checkedMap;
-    }
+var useMethods_1 = __importDefault(require("../useMethods"));
+var checkedMapReducers = {
+    setChecked: function (checkedMap, payload) {
+        var _a;
+        if (checkedMap === void 0) { checkedMap = {}; }
+        return (__assign(__assign({}, (checkedMap || {})), (_a = {}, _a[payload.key] = payload.checked, _a)));
+    },
+    setAllChecked: function (checkedMap, checked) {
+        if (checkedMap === void 0) { checkedMap = {}; }
+        return Object.keys(checkedMap).reduce(function (prev, curr) {
+            var _a;
+            return (__assign(__assign({}, prev), (_a = {}, _a[curr] = checked, _a)));
+        }, {});
+    },
+    clearChecked: function () { return ({}); },
+    expandCheckedMap: function (checkedMap, payload) {
+        if (checkedMap === void 0) { checkedMap = {}; }
+        if (payload === void 0) { payload = []; }
+        return (__assign(__assign({}, payload.reduce(function (prev, curr) {
+            var _a;
+            return (__assign(__assign({}, prev), (_a = {}, _a[curr] = false, _a)));
+        }, {})), checkedMap));
+    },
 };
 /**
  * 列表的多选hooks，选择，全选，已选
@@ -69,26 +68,26 @@ function useListChecked(items, defaultSelecteds) {
         var _a;
         return (__assign(__assign({}, prev), (_a = {}, _a[curr] = defaultSelecteds.includes(curr), _a)));
     }, {}); }, [items, defaultSelecteds]);
-    var _a = __read(react_1.useReducer(checkedMapReducer, currCheckedMap), 2), checkedMap = _a[0], dispatch = _a[1];
-    var setChecked = function (key, checked) {
-        return dispatch({ type: 'SET_CHECKED', key: key, checked: checked });
-    }; // 切换全选
-    var isAllChecked = react_1.useMemo(function () { return !!Object.values(checkedMap).length && !Object.values(checkedMap).some(function (v) { return !v; }); }, [checkedMap]);
-    var setAllChecked = function (checked) { return dispatch({ type: 'SET_ALL_CHECKED', checked: checked }); };
-    // 扩展checkMap，用于动态载入下一页数据等时更新checkMap
-    var updateCheckMap = function (newItems) {
-        return dispatch({ type: 'EXPAND_CHECKED_MAP', payload: newItems });
-    };
-    // ids列表变化时, 更新map数据
-    react_1.useEffect(function () {
-        updateCheckMap(items);
-    }, [items]);
+    var _a = __read(useMethods_1.default(checkedMapReducers, currCheckedMap), 2), checkedMap = _a[0], checkedMapMethods = _a[1];
+    var _b = react_1.useMemo(function () { return ({
+        isAllChecked: !!Object.values(checkedMap).length && !Object.values(checkedMap).some(function (v) { return !v; }),
+        // 当前选中的key列表
+        checkedIds: Object.keys(checkedMap).filter(function (key) { return !!checkedMap[key]; }),
+    }); }, [checkedMap]), isAllChecked = _b.isAllChecked, checkedIds = _b.checkedIds;
+    var setChecked = react_1.useCallback(function (key, checked) { return checkedMapMethods.setChecked({ key: key, checked: checked }); }, 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []);
     // 切换全选状态或设置为指定的全选状态
-    var toggleAllChecked = react_1.useCallback(function (checked) { return setAllChecked(checked !== undefined ? checked : !isAllChecked); }, [isAllChecked]);
+    var toggleAllChecked = react_1.useCallback(function (checked) { return checkedMapMethods.setAllChecked(checked !== undefined ? checked : !isAllChecked); }, 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isAllChecked]);
     // 清空选中
-    var clearChecked = function () { return dispatch({ type: 'SET_CHECKED_MAP', payload: {} }); };
-    // 当前选中的key列表
-    var checkedIds = react_1.useMemo(function () { return Object.keys(checkedMap).filter(function (key) { return !!checkedMap[key]; }); }, [checkedMap]);
+    var clearChecked = function () { return checkedMapMethods.clearChecked(); };
+    // ids列表变化时, 更新map数据, 动态载入下一页数据等时更新checkMap
+    react_1.useEffect(function () {
+        checkedMapMethods.expandCheckedMap(items);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [items]);
     return {
         isAllChecked: isAllChecked,
         checkedIds: checkedIds,

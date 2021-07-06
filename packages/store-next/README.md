@@ -124,7 +124,7 @@ function TestStore() {
 即使因为种种原因你不想使用redux了，但是否时常会怀念redux-devtool的方便？hydrogen-store 可以方便开启redux-devtool。仅需引入一个插件
 
 ```javascript
-import { usePlugin, store } from 'hydrogen-store'
+import { usePlugins, store } from 'hydrogen-store'
 import reduxPlugin from 'hydrogen-store-redux-plugin'
 
 usePlugins([reduxPlugin])

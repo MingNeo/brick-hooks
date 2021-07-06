@@ -11,9 +11,9 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EventSub = void 0;
-var EventSub = /** @class */ (function () {
-    function EventSub() {
+exports.EventBus = void 0;
+var EventBus = /** @class */ (function () {
+    function EventBus() {
         var _this = this;
         this.eventContainer = new Map();
         this.publish = function (type, payload) {
@@ -47,6 +47,6 @@ var EventSub = /** @class */ (function () {
             return _this;
         };
     }
-    return EventSub;
+    return EventBus;
 }());
-exports.EventSub = EventSub;
+exports.EventBus = EventBus;

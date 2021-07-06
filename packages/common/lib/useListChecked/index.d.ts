@@ -6,7 +6,7 @@
 export default function useListChecked(items?: string[], defaultSelecteds?: string[]): {
     isAllChecked: boolean;
     checkedIds: string[];
-    checkedMap: any;
+    checkedMap: {};
     setChecked: (key: string, checked: boolean) => void;
     toggleAllChecked: (checked: any) => void;
     clearChecked: () => void;

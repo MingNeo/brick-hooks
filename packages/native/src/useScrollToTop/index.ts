@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native'
 export default function useScrollToTop(ref: any) {
   const scrollRef = useRef<ScrollView>()
   if (ref) {
-    scrollRef.current = ref
+    scrollRef.current = ref.current
   }
 
   const scrollToTop = useCallback((top = 0) => {

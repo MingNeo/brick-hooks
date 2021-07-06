@@ -5,7 +5,9 @@ import useOnLine from '../src/useOnline'
 
 describe('useOnLine', () => {
   const changeNavigator = (onLine: boolean | undefined) => {
+    // @ts-ignore
     delete global.navigator
+    // @ts-ignore
     global.navigator = { onLine } as any
   }
 

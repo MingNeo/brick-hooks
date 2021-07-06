@@ -4,7 +4,9 @@ export { default as useCounter } from './useCounter'
 export { default as useDataListToTree } from './useDataListToTree'
 export { default as useDataListToMap } from './useDataListToMap'
 export { default as useDataTreeToList } from './useDataTreeToList'
+export { default as useDebounceEffect } from './useDebounceEffect'
 export { default as useDebounceFn } from './useDebounceFn'
+export { default as useDebounceState } from './useDebounceState'
 export { default as useDebounceValue } from './useDebounceValue'
 export { default as useDeepCompare } from './useDeepCompare'
 export { default as useDidUpdate } from './useDidUpdate'
@@ -23,7 +25,6 @@ export { default as usePrevious } from './usePrevious'
 export { default as useReducerImmer } from './useReducerImmer'
 
 // TODO 待测试
-export { default as useScrollInView } from './useScrollInView'
 export { default as useSet } from './useSet'
 export { default as useThrottleFn } from './useThrottleFn'
 

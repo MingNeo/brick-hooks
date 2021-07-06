@@ -110,8 +110,8 @@ function useDateCycle(defaultData, options) {
         var dateList = getRangeDate(currentRange).filter(function (date) { return !getIsDateDisabled(date, newModel || model, modelKeyMap); });
         dateCycleMethods.setDates(dateList);
     }, [model, range, cycle, dates, modelKeyMap]);
-    var prevModel = brick_hooks_1.usePrevious(model);
-    var prevCycle = brick_hooks_1.usePrevious(cycle);
+    // const prevModel = usePrevious(model)
+    // const prevCycle = usePrevious(cycle)
     react_1.useEffect(function () {
         dateCycleMethods.setModel(defaultData.model);
     }, [defaultData.model]);

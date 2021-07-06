@@ -116,8 +116,8 @@ export default function useDateCycle(defaultData: IdefaultData = {}, options: IO
     [model, range, cycle, dates, modelKeyMap]
   )
 
-  const prevModel = usePrevious(model)
-  const prevCycle = usePrevious(cycle)
+  // const prevModel = usePrevious(model)
+  // const prevCycle = usePrevious(cycle)
 
   useEffect(() => {
     dateCycleMethods.setModel(defaultData.model)

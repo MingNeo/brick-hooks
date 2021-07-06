@@ -7,7 +7,7 @@ var react_1 = require("react");
 function useScrollToTop(ref) {
     var scrollRef = react_1.useRef();
     if (ref) {
-        scrollRef.current = ref;
+        scrollRef.current = ref.current;
     }
     var scrollToTop = react_1.useCallback(function (top) {
         if (top === void 0) { top = 0; }

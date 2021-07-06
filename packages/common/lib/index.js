@@ -12,8 +12,12 @@ var useDataListToMap_1 = require("./useDataListToMap");
 Object.defineProperty(exports, "useDataListToMap", { enumerable: true, get: function () { return useDataListToMap_1.default; } });
 var useDataTreeToList_1 = require("./useDataTreeToList");
 Object.defineProperty(exports, "useDataTreeToList", { enumerable: true, get: function () { return useDataTreeToList_1.default; } });
+var useDebounceEffect_1 = require("./useDebounceEffect");
+Object.defineProperty(exports, "useDebounceEffect", { enumerable: true, get: function () { return useDebounceEffect_1.default; } });
 var useDebounceFn_1 = require("./useDebounceFn");
 Object.defineProperty(exports, "useDebounceFn", { enumerable: true, get: function () { return useDebounceFn_1.default; } });
+var useDebounceState_1 = require("./useDebounceState");
+Object.defineProperty(exports, "useDebounceState", { enumerable: true, get: function () { return useDebounceState_1.default; } });
 var useDebounceValue_1 = require("./useDebounceValue");
 Object.defineProperty(exports, "useDebounceValue", { enumerable: true, get: function () { return useDebounceValue_1.default; } });
 var useDeepCompare_1 = require("./useDeepCompare");
@@ -47,8 +51,6 @@ Object.defineProperty(exports, "usePrevious", { enumerable: true, get: function 
 var useReducerImmer_1 = require("./useReducerImmer");
 Object.defineProperty(exports, "useReducerImmer", { enumerable: true, get: function () { return useReducerImmer_1.default; } });
 // TODO 待测试
-var useScrollInView_1 = require("./useScrollInView");
-Object.defineProperty(exports, "useScrollInView", { enumerable: true, get: function () { return useScrollInView_1.default; } });
 var useSet_1 = require("./useSet");
 Object.defineProperty(exports, "useSet", { enumerable: true, get: function () { return useSet_1.default; } });
 var useThrottleFn_1 = require("./useThrottleFn");

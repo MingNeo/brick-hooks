@@ -12,6 +12,8 @@ var useOnline_1 = require("./useOnline");
 Object.defineProperty(exports, "useOnline", { enumerable: true, get: function () { return useOnline_1.default; } });
 var useScript_1 = require("./useScript");
 Object.defineProperty(exports, "useScript", { enumerable: true, get: function () { return useScript_1.default; } });
+var useScrollInView_1 = require("./useScrollInView");
+Object.defineProperty(exports, "useScrollInView", { enumerable: true, get: function () { return useScrollInView_1.default; } });
 var useScroll_1 = require("./useScroll");
 Object.defineProperty(exports, "useScroll", { enumerable: true, get: function () { return useScroll_1.default; } });
 var useStorage_1 = require("./useStorage");

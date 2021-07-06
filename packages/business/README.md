@@ -1,11 +1,16 @@
-# `business`
+# `brick-hooks-business`
 
-> TODO: description
+> 业务hooks的封装
 
 ## Usage
 
 ```
-const business = require('business');
-
-// TODO: DEMONSTRATE API
+const { useCycleBuy } = require('brick-hooks-business');
 ```
+
+#### 处理请求
+[useCycleBuy](./src/useCycleBuy/README.md) 用于周期购
+
+[useDateCycle](./src/useDateCycle/README.md) 用于日历的周期选择
+
+[useAmapPoi](./src/useAmapPoi/README.md) 用于高德地图选择定位

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EventSub = void 0;
+exports.EventBus = void 0;
 var react_1 = require("react");
 var eventBus_1 = require("./eventBus");
-Object.defineProperty(exports, "EventSub", { enumerable: true, get: function () { return eventBus_1.EventSub; } });
+Object.defineProperty(exports, "EventBus", { enumerable: true, get: function () { return eventBus_1.EventBus; } });
 var DEFAULT_ROOT_TYPE = 'DEFAULT_ROOT_TYPE';
-function useEventSub(type) {
+function useEventBus(type) {
     if (type === void 0) { type = DEFAULT_ROOT_TYPE; }
     var busRef = react_1.useRef();
     if (!busRef.current) {
-        busRef.current = new eventBus_1.EventSub();
+        busRef.current = new eventBus_1.EventBus();
     }
     var subscriptionRef = react_1.useRef();
     function publish(payload) {
@@ -39,4 +39,4 @@ function useEventSub(type) {
     }
     return { publish: publish, useSubscribe: useSubscribe, subscribe: subscribe };
 }
-exports.default = useEventSub;
+exports.default = useEventBus;

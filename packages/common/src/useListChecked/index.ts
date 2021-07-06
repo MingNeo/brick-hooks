@@ -1,33 +1,18 @@
-import { useCallback, useMemo, useEffect, useReducer } from 'react'
-interface IAction extends Record<string, any> {
-  type?: string
-  payload?: any
-}
+import { useCallback, useMemo, useEffect } from 'react'
+import useMethods from '../useMethods'
 
-const checkedMapReducer = (checkedMap: {}, action: IAction) => {
-  switch (action.type) {
-    case 'SET_CHECKED': {
-      const { key, checked } = action
-      return { ...checkedMap, [key]: checked }
-    }
-    case 'SET_ALL_CHECKED': {
-      const { checked } = action
-      return Object.keys(checkedMap).reduce((prev, curr) => ({ ...prev, [curr]: checked }), {})
-    }
-    case 'SET_CHECKED_MAP': {
-      return action.payload
-    }
-    case 'EXPAND_CHECKED_MAP': {
-      const { payload = [] } = action
-      return payload.reduce(
-        (prev: Record<string, boolean | undefined>, curr: string | number) =>
-          prev[curr] !== undefined ? prev : { ...prev, [curr]: false },
-        checkedMap
-      ) as Record<string, any>
-    }
-    default:
-      return checkedMap
-  }
+const checkedMapReducers = {
+  setChecked: (checkedMap = {}, payload: { key: string | number; checked: boolean }) => ({
+    ...(checkedMap || {}),
+    [payload.key]: payload.checked,
+  }),
+  setAllChecked: (checkedMap = {}, checked: boolean) =>
+    Object.keys(checkedMap).reduce((prev, curr) => ({ ...prev, [curr]: checked }), {}),
+  clearChecked: () => ({}),
+  expandCheckedMap: (checkedMap = {}, payload = []) => ({
+    ...payload.reduce((prev, curr) => ({ ...prev, [curr]: false }), {}),
+    ...checkedMap,
+  }),
 }
 
 /**
@@ -42,40 +27,38 @@ export default function useListChecked(items: string[] = [], defaultSelecteds: s
     [items, defaultSelecteds]
   )
 
-  const [checkedMap, dispatch] = useReducer(checkedMapReducer, currCheckedMap)
-  const setChecked = (key: string, checked: boolean) =>
-    dispatch({ type: 'SET_CHECKED', key, checked }) // 切换全选
-
-  const isAllChecked = useMemo(
-    () => !!Object.values(checkedMap).length && !Object.values(checkedMap).some((v) => !v),
+  const [checkedMap, checkedMapMethods] = useMethods(checkedMapReducers, currCheckedMap)
+  const { isAllChecked, checkedIds } = useMemo(
+    () => ({
+      isAllChecked:
+        !!Object.values(checkedMap).length && !Object.values(checkedMap).some((v) => !v),
+      // 当前选中的key列表
+      checkedIds: Object.keys(checkedMap).filter((key) => !!checkedMap[key]),
+    }),
     [checkedMap]
   )
 
-  const setAllChecked = (checked: boolean) => dispatch({ type: 'SET_ALL_CHECKED', checked })
-
-  // 扩展checkMap，用于动态载入下一页数据等时更新checkMap
-  const updateCheckMap = (newItems: string[]) =>
-    dispatch({ type: 'EXPAND_CHECKED_MAP', payload: newItems })
-
-  // ids列表变化时, 更新map数据
-  useEffect(() => {
-    updateCheckMap(items)
-  }, [items])
+  const setChecked = useCallback(
+    (key: string, checked: boolean) => checkedMapMethods.setChecked({ key, checked }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
 
   // 切换全选状态或设置为指定的全选状态
   const toggleAllChecked = useCallback(
-    (checked) => setAllChecked(checked !== undefined ? checked : !isAllChecked),
+    (checked) => checkedMapMethods.setAllChecked(checked !== undefined ? checked : !isAllChecked),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [isAllChecked]
   )
 
   // 清空选中
-  const clearChecked = () => dispatch({ type: 'SET_CHECKED_MAP', payload: {} })
+  const clearChecked = () => checkedMapMethods.clearChecked()
 
-  // 当前选中的key列表
-  const checkedIds = useMemo(
-    () => Object.keys(checkedMap).filter((key) => !!checkedMap[key]),
-    [checkedMap]
-  )
+  // ids列表变化时, 更新map数据, 动态载入下一页数据等时更新checkMap
+  useEffect(() => {
+    checkedMapMethods.expandCheckedMap(items)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items])
 
   return {
     isAllChecked,

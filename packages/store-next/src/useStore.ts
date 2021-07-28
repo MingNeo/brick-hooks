@@ -6,6 +6,7 @@ type SetStore<A> = (value: A) => void
 interface Methods<S> {
   setStore: SetStore<SetStoreAction<S>>
   dispatch: (actionName: string, ...args: any[]) => void
+  boundMethods: Record<string, (state: S, payload: any) => S>
 }
 
 /**
@@ -19,7 +20,8 @@ interface Methods<S> {
 export default function useStore<S>(
   storeContext: any,
   moduleName: string = '',
-  autoMerge: boolean = false
+  autoMerge: boolean = false,
+  willUpdate: boolean = true,
 ) {
   if (!moduleName) throw new Error('moduleName is required!')
 
@@ -35,10 +37,11 @@ export default function useStore<S>(
   useEffect(() => {
     const currentStoreContext = storeContextRef.current
     const eventName = `storeChange.${moduleName}`
-    currentStoreContext?.subscribe(eventName, forceUpdate)
+    const handleStateChange = () => willUpdate && forceUpdate()
+    currentStoreContext?.subscribe(eventName, handleStateChange)
 
     return () => {
-      currentStoreContext?.unSubscribe(eventName, forceUpdate)
+      currentStoreContext?.unSubscribe(eventName, handleStateChange)
     }
   }, [moduleName])
 
@@ -52,19 +55,23 @@ export default function useStore<S>(
       storeContextRef.current?.setModuleState(moduleName, nextState, merge)
     }
 
-    const dispatch = (actionName: string, payload: any[]) => {
+    const dispatch = (actionName: string, payload: any) => {
       storeContextRef.current?.dispatchModuleAction(moduleName, actionName, payload)
     }
 
-    return { setStore, dispatch }
+    const boundMethods =  Object.keys(storeContextRef.current?._reducers?.[moduleName] || [])?.reduce((prev, curr) => {
+      return { ...prev, [curr]: (payload: any) => dispatch(curr, payload)}
+    }, {})
+
+    return { setStore, dispatch, boundMethods }
   }, [autoMerge, moduleName])
 
   return useMemo(() => {
     const moduleState: S = storeContextRef.current._state[moduleName]
-    const { setStore, dispatch } = methods
+    const { setStore, dispatch, boundMethods } = methods
 
-    return [moduleState, setStore, dispatch]
+    return [moduleState, setStore, boundMethods, dispatch]
     // 每次强制刷新的时候重续获取存储的全局数据
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [methods, forceUpdateCount]) as [S, typeof methods.setStore, typeof methods.dispatch]
+  }, [methods, forceUpdateCount]) as [S, typeof methods.setStore, typeof methods.boundMethods, typeof methods.dispatch]
 }

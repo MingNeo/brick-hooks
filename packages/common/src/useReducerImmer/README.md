@@ -1,9 +1,9 @@
 ## useReducerImmer
 
 #### 
-提供一个使用immer的reducer，除了reducer可以使用immer的方式直接修改数据外，与useReducer保持一致
+提供一个使用immer的useReducer，除了reducer可以使用immer的方式直接修改数据外，与useReducer保持一致
 
-多数情况下使用userMethodsImmer更简单清晰，考虑要不要去掉这个hooks。
+多数情况下使用useObjectStateImmer、userMethodsImmer更简单清晰，考虑要不要去掉这个hooks。
 
 ```javascript
 // immer版本

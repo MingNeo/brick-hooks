@@ -10,17 +10,32 @@ function MyComponent() {
 }
 ```
 
-#### actions
+### actions
 
 ##### set
 设置数组的值。
 ##### push
-同 arr.push
+同 Array.prototype.push
 ##### pop
-同 arr.pop
+同 Array.prototype.pop
 ##### slice
-同 arr.slice
+同 Array.prototype.slice
 ##### clear
+##### reverse
+同 Array.prototype.reverse
+##### sort
+同 Array.prototype.sort
+##### sortBy
+基于指定字段做升降序排序, 默认为ASC
+```javascript
+function MyComponent() {
+  const [testArray, testArrayMethods] = useArray([{a: 2}, {a:1}]); 
+
+  const handleButtonAClick = () => testArrayMethods.sortBy({ field: 'a', order: 'ASC' }) 
+  // next testArray: [{a: 1}, {a:2}]
+  return <Child>...</Child>;
+}
+```
 设置数据为[]
 ##### remove
 进行浅比较移除匹配的值

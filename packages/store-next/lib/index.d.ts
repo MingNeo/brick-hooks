@@ -1,7 +1,7 @@
 import createStore, { Store, Options, Module } from './base';
 declare const store: Store<Record<string, any>>;
 declare const useStore: {
-    (moduleName: string, assign: boolean): any;
+    (moduleName: string, assign: boolean, willUpdate?: boolean): any;
     registerModule(moduleName: string, initialModule: Module): void;
     usePlugins(plugins: any[]): void;
 };

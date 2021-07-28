@@ -37,6 +37,9 @@ function useAsync(asyncFunction, _a) {
     var _d = __read(useCounter_1.default(0, { min: 0 }), 2), pendingCount = _d[0], _e = _d[1], inc = _e.inc, dec = _e.dec;
     var _f = __read(react_1.useState(), 2), result = _f[0], setResult = _f[1];
     var _g = __read(react_1.useState(), 2), error = _g[0], setError = _g[1];
+    var setStateRef = react_1.useRef(setState);
+    if (setStateRef.current !== setState)
+        setStateRef.current = setState;
     var exector = react_1.useCallback(function () {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -49,7 +52,7 @@ function useAsync(asyncFunction, _a) {
                 .then(function (res) {
                 dec();
                 setResult(res);
-                setState && setState(res);
+                setStateRef.current && setStateRef.current(res);
                 resolve(res);
             })
                 .catch(function (error) {
@@ -58,7 +61,7 @@ function useAsync(asyncFunction, _a) {
                 reject(error);
             });
         });
-    }, [asyncFunction, dec, inc, setState]);
+    }, [asyncFunction, dec, inc]);
     react_1.useEffect(function () {
         if (immediate) {
             exector();

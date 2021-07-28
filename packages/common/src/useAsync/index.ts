@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import useCounter from '../useCounter'
 
 type AsyncFunction = (...args: any[]) => Promise<any>
@@ -22,6 +22,9 @@ export default function useAsync<A extends AsyncFunction>(
   const [pendingCount, { inc, dec }] = useCounter(0, { min: 0 })
   const [result, setResult] = useState()
   const [error, setError] = useState()
+  
+  const setStateRef = useRef(setState)
+  if(setStateRef.current !== setState) setStateRef.current = setState
 
   const exector = useCallback(
     (...args: any[]) => {
@@ -32,7 +35,7 @@ export default function useAsync<A extends AsyncFunction>(
           .then((res) => {
             dec()
             setResult(res)
-            setState && setState(res)
+            setStateRef.current && setStateRef.current(res)
             resolve(res)
           })
           .catch((error) => {
@@ -42,7 +45,7 @@ export default function useAsync<A extends AsyncFunction>(
           })
       })
     },
-    [asyncFunction, dec, inc, setState]
+    [asyncFunction, dec, inc]
   )
 
   useEffect(() => {

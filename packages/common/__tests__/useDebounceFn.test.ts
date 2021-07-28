@@ -37,7 +37,7 @@ describe('useDebounceFn 校验', () => {
   })
 
   it('no debounce', async () => {
-    const { result, rerender } = renderHook(() => {
+    const { result } = renderHook(() => {
       const [value, { inc }] = useCounter(0)
       return [value, inc]
     })

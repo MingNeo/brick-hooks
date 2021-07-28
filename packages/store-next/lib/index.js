@@ -25,7 +25,10 @@ exports.createStore = base_1.default;
 Object.defineProperty(exports, "Store", { enumerable: true, get: function () { return base_1.Store; } });
 var store = base_1.default();
 exports.store = store;
-var useStore = function (moduleName, assign) { return store.useStore(moduleName, assign); };
+var useStore = function (moduleName, assign, willUpdate) {
+    if (willUpdate === void 0) { willUpdate = true; }
+    return store.useStore(moduleName, assign, willUpdate);
+};
 exports.useStore = useStore;
 var registerModule = useStore.registerModule = function (moduleName, initialModule) {
     store.registerModule(moduleName, initialModule);

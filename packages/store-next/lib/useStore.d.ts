@@ -8,5 +8,5 @@ declare type SetStore<A> = (value: A) => void;
  * @param autoMerge 是否在执行set方法更新数据时使用自动浅合并而非替换,如果数据格式不是object，此设置无效
  * @returns {array} [state, setState, dispatch] dispatch方法可以触发注册的reducer
  */
-export default function useStore<S>(storeContext: any, moduleName?: string, autoMerge?: boolean): [S, SetStore<SetStoreAction<S>>, (actionName: string, ...args: any[]) => void];
+export default function useStore<S>(storeContext: any, moduleName?: string, autoMerge?: boolean, willUpdate?: boolean): [S, SetStore<SetStoreAction<S>>, Record<string, (state: S, payload: any) => S>, (actionName: string, ...args: any[]) => void];
 export {};

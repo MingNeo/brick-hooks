@@ -6,4 +6,4 @@
  */
 export default function useDataListToMap<T = Record<string, any>>(data: T[], { key }?: {
     key?: string;
-}): {};
+}): any;

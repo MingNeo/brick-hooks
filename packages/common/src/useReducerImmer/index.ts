@@ -1,5 +1,5 @@
 import produce, { Draft } from 'immer'
-import { useMemo, useReducer } from 'react'
+import { useMemo, useReducer, Dispatch } from 'react'
 
 type Reducer<S, A> = (state: Draft<S>, action: A) => void
 
@@ -8,14 +8,13 @@ type Reducer<S, A> = (state: Draft<S>, action: A) => void
  * @param reducer immer形式组织的reducer
  * @param initialState 同React.Reducer的initialState
  * @param initializer 同React.Reducer的initializer
- * @returns
  */
-export default function useReducerImmer<S, A>(
+export default function useImmerReducer<S = any, A = any>(
   reducer: Reducer<S, A>,
   initialState: S,
   initializer?: (initial: any) => S
-) {
+): [S, Dispatch<A>] {
   const immerReducer = useMemo(() => produce(reducer), [reducer])
-  const [state, dispatch] = useReducer(immerReducer, initialState as any, initializer as any)
-  return [state, dispatch] as [S, typeof dispatch]
+  // @ts-ignore
+  return useReducer(immerReducer, initialState as any, initializer)
 }

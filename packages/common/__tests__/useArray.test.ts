@@ -36,11 +36,13 @@ describe('useArray 校验', () => {
     expect(result.current[0]).toEqual([])
 
     act(() => actions.set([1, 2, 3]))
+    act(() => actions.sort())
+    act(() => actions.reverse())
     act(() => actions.remove(2))
-    expect(result.current[0]).toEqual([1, 3])
+    expect(result.current[0]).toEqual([3, 1])
 
     act(() => actions.removeIndex(1))
-    expect(result.current[0]).toEqual([1])
+    expect(result.current[0]).toEqual([3])
   })
 
   it('测试removeById正常', () => {

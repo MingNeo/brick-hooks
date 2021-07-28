@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import useObjectStateImmer from '../src/useObjectState/useObjectStateImmer'
+import useObjectStateImmer from '../src/useObjectStateImmer'
 
 const methods = {
   inc: (value) => (value += 1),

@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __read = (this && this.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
@@ -25,9 +36,10 @@ var react_1 = require("react");
  * @param autoMerge 是否在执行set方法更新数据时使用自动浅合并而非替换,如果数据格式不是object，此设置无效
  * @returns {array} [state, setState, dispatch] dispatch方法可以触发注册的reducer
  */
-function useStore(storeContext, moduleName, autoMerge) {
+function useStore(storeContext, moduleName, autoMerge, willUpdate) {
     if (moduleName === void 0) { moduleName = ''; }
     if (autoMerge === void 0) { autoMerge = false; }
+    if (willUpdate === void 0) { willUpdate = true; }
     if (!moduleName)
         throw new Error('moduleName is required!');
     var storeContextRef = react_1.useRef(storeContext);
@@ -40,12 +52,14 @@ function useStore(storeContext, moduleName, autoMerge) {
     react_1.useEffect(function () {
         var currentStoreContext = storeContextRef.current;
         var eventName = "storeChange." + moduleName;
-        currentStoreContext === null || currentStoreContext === void 0 ? void 0 : currentStoreContext.subscribe(eventName, forceUpdate);
+        var handleStateChange = function () { return willUpdate && forceUpdate(); };
+        currentStoreContext === null || currentStoreContext === void 0 ? void 0 : currentStoreContext.subscribe(eventName, handleStateChange);
         return function () {
-            currentStoreContext === null || currentStoreContext === void 0 ? void 0 : currentStoreContext.unSubscribe(eventName, forceUpdate);
+            currentStoreContext === null || currentStoreContext === void 0 ? void 0 : currentStoreContext.unSubscribe(eventName, handleStateChange);
         };
     }, [moduleName]);
     var methods = react_1.useMemo(function () {
+        var _a, _b, _c;
         /**
          * 用法同React.useState的setState, 传值或者使用函数
          * @param nextValue
@@ -60,12 +74,16 @@ function useStore(storeContext, moduleName, autoMerge) {
             var _a;
             (_a = storeContextRef.current) === null || _a === void 0 ? void 0 : _a.dispatchModuleAction(moduleName, actionName, payload);
         };
-        return { setStore: setStore, dispatch: dispatch };
+        var boundMethods = (_c = Object.keys(((_b = (_a = storeContextRef.current) === null || _a === void 0 ? void 0 : _a._reducers) === null || _b === void 0 ? void 0 : _b[moduleName]) || [])) === null || _c === void 0 ? void 0 : _c.reduce(function (prev, curr) {
+            var _a;
+            return __assign(__assign({}, prev), (_a = {}, _a[curr] = function (payload) { return dispatch(curr, payload); }, _a));
+        }, {});
+        return { setStore: setStore, dispatch: dispatch, boundMethods: boundMethods };
     }, [autoMerge, moduleName]);
     return react_1.useMemo(function () {
         var moduleState = storeContextRef.current._state[moduleName];
-        var setStore = methods.setStore, dispatch = methods.dispatch;
-        return [moduleState, setStore, dispatch];
+        var setStore = methods.setStore, dispatch = methods.dispatch, boundMethods = methods.boundMethods;
+        return [moduleState, setStore, boundMethods, dispatch];
         // 每次强制刷新的时候重续获取存储的全局数据
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [methods, forceUpdateCount]);

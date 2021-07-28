@@ -2,7 +2,7 @@ import createStore, { Store, Options, Module } from './base'
 
 const store = createStore()
 
-const useStore = (moduleName: string, assign: boolean) => store.useStore(moduleName, assign)
+const useStore = (moduleName: string, assign: boolean, willUpdate: boolean = true) => store.useStore(moduleName, assign, willUpdate)
 
 const registerModule = useStore.registerModule = (moduleName: string, initialModule: Module) => {
   store.registerModule(moduleName, initialModule)

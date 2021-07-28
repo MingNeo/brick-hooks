@@ -5,10 +5,12 @@
 通常我们直接在业务里写代码，会有如下问题
 1、太多 useState、useCallback，各种重复编码。
 2、修改的时候很难找到状态与行为的对应关系。
+3、使用useReducer的时候，reducer又臭又长
 
-这个 hooks 就是为此而生的。简单来说，给我一个初始值和一堆操作值的方法，我帮你变成 hooks。也可以说是更加简单清晰的 useReducer。
+这个 hooks 就是为此而生的，只做了一件事，将一个初始值和一些操作值的方法变成 hooks。也可以说是更加简单清晰的 useReducer。
+
 目前实现了两个版本(immer 版本和普通版本)。
-当一个 state 比较复杂，你需要使用 reducer 的时候，可以直接使用这个 hooks 来替代。
+当你需要使用 useReducer 的时候，可以直接使用这个 hooks 来替代。当数据是obj格式的时候，也可以使用useObjectState
 
 ### 普通版本
 ```javascript
@@ -18,12 +20,12 @@ const counterReducers = {
 }
 
 function MyComponent({ obj }) {
-  const [state, counterMethods] = useMethods(counterReducers, 0)
+  const [state, { inc, dec }] = useMethods(counterReducers, 0)
 
   return (
     <div>
-      <button onClick={() => counterMethods.inc()}>inc</button>
-      <button onClick={() => counterMethods.dec()}>inc</button>
+      <button onClick={() => inc()}>inc</button>
+      <button onClick={() => dec()}>inc</button>
     </div>
   )
 }

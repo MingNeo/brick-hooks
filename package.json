@@ -76,7 +76,7 @@
     "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "jest": "^26.4.2",
-    "lerna": "^3.21.0",
+    "lerna": "^3.22.1",
     "mockjs": "^1.1.0",
     "prettier": "^2.2.1",
     "react-is": "^16.9.0",

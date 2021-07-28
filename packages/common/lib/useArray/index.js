@@ -23,8 +23,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.arrayMethods = void 0;
 var useMethods_1 = __importDefault(require("../useMethods"));
-var methods = {
+exports.arrayMethods = {
     set: function (state, value) { return value; },
     push: function (state, value) {
         if (state === void 0) { state = []; }
@@ -33,6 +34,15 @@ var methods = {
     pop: function (state) { return state.slice(0, -1); },
     slice: function (state, start, end) { return state.slice(start, end); },
     clear: function () { return []; },
+    reverse: function (state) { return __spread(state).reverse(); },
+    sort: function (state, callback) { return __spread(state).sort(callback); },
+    sortBy: function (data, _a) {
+        if (data === void 0) { data = []; }
+        var field = _a.field, _b = _a.order, order = _b === void 0 ? 'ASC' : _b;
+        if (!order || !['ASC', 'DESC'].includes(order))
+            throw new Error('order error');
+        return __spread(data).sort(function (a, b) { return (order === 'ASC' ? a[field] - b[field] : b[field] - a[field]); });
+    },
     remove: function (state, value) {
         return state.filter(function () {
             var args = [];
@@ -50,12 +60,11 @@ var methods = {
     removeIndex: function (state, value) { return state.filter(function (v, i) { return i !== value; }); },
 };
 /**
- * 当state为数组时，不方便使用push等方法直接操纵数据，此hooks提供几个常用方法
+ * 当state为数组时，数据需要是immutable的，不方便使用push等方法直接操纵数据，此hook提供几个常用方法，修改可以自动触发渲染
  * @param initial
- * @param idKey
  */
 function useArray(initial) {
-    var _a = __read(useMethods_1.default(methods, initial || []), 2), listData = _a[0], actions = _a[1];
+    var _a = __read(useMethods_1.default(exports.arrayMethods, initial || []), 2), listData = _a[0], actions = _a[1];
     return [listData, actions];
 }
 exports.default = useArray;

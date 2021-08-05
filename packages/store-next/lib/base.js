@@ -95,7 +95,10 @@ var Store = /** @class */ (function (_super) {
         var initialState = utils_1.combState(modules);
         this._state = this._state || initialState || {};
         this._reducers = this._reducers || reducer_1.getReducer(modules);
-        this.useStore = useStore_1.default.bind(this, this);
+        // this.useStore = useStore.bind(this, this)
+    };
+    Store.prototype.getUseStore = function () {
+        return useStore_1.default.bind(this, this);
     };
     /**
      * use plugin
@@ -181,27 +184,18 @@ var Store = /** @class */ (function (_super) {
     Store.prototype.dispatchModuleAction = function (moduleName, actionName, payload) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function () {
-            var reducer, prevState, _c, _d;
-            return __generator(this, function (_e) {
-                switch (_e.label) {
-                    case 0:
-                        if (!moduleName)
-                            return [2 /*return*/];
-                        reducer = (_b = (_a = this._reducers) === null || _a === void 0 ? void 0 : _a[moduleName]) === null || _b === void 0 ? void 0 : _b[actionName];
-                        if (!reducer)
-                            throw new Error("not found reducer " + actionName);
-                        prevState = this._state[moduleName];
-                        _c = this._state;
-                        _d = moduleName;
-                        return [4 /*yield*/, reducer(prevState, payload)
-                            // 触发react组件更新
-                        ];
-                    case 1:
-                        _c[_d] = _e.sent();
-                        // 触发react组件更新
-                        this.publish("storeChange." + moduleName, this._state[moduleName]);
-                        return [2 /*return*/];
-                }
+            var reducer, prevState;
+            return __generator(this, function (_c) {
+                if (!moduleName)
+                    return [2 /*return*/];
+                reducer = (_b = (_a = this._reducers) === null || _a === void 0 ? void 0 : _a[moduleName]) === null || _b === void 0 ? void 0 : _b[actionName];
+                if (!reducer)
+                    throw new Error("not found reducer " + actionName);
+                prevState = this._state[moduleName];
+                this._state[moduleName] = reducer(prevState, payload);
+                // 触发react组件更新
+                this.publish("storeChange." + moduleName, this._state[moduleName]);
+                return [2 /*return*/];
             });
         });
     };

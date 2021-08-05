@@ -1,4 +1,4 @@
-import useStore from './useStore'
+import useStore, { SetStore, SetStoreAction, BoundMethods, ToolMethods } from './useStore'
 import { combState } from './utils'
 import { EventBus } from './eventBus'
 import { defaultReducers, getReducer } from './reducer'
@@ -25,11 +25,24 @@ export interface Options<S = Record<string, any>> extends Record<string, any> {
   initialState?: S
 }
 
+export type UseStoreByContext = <S>(
+  storeContext: any,
+  moduleName?: string,
+  autoMerge?: boolean,
+  willUpdate?: boolean
+) => [S, SetStore<SetStoreAction<S>>, BoundMethods<S>, ToolMethods<S>]
+
+export type UseStore = <S>(
+  moduleName?: string,
+  autoMerge?: boolean,
+  willUpdate?: boolean
+) => [S, SetStore<SetStoreAction<S>>, BoundMethods<S>, ToolMethods<S>]
+
 export class Store<S extends StoreState> extends EventBus<any> {
-  useStore: any
+  useStore: UseStoreByContext
   _state: S | {}
   // virtualState: any
-  _reducers: any
+  _reducers: Record<string, any>
 
   _modules: Set<string> = new Set<string>()
   _options: Options<S>
@@ -49,11 +62,15 @@ export class Store<S extends StoreState> extends EventBus<any> {
     this._options = this._options || options
     const { modules = {} } = this._options || {}
     this._modules = new Set(Object.keys(modules))
-    
+
     const initialState = combState(modules)
     this._state = this._state || initialState || {}
     this._reducers = this._reducers || getReducer(modules)
-    this.useStore = useStore.bind(this, this)
+    // this.useStore = useStore.bind(this, this)
+  }
+
+  getUseStore() {
+    return useStore.bind(this, this)
   }
 
   /**
@@ -73,7 +90,7 @@ export class Store<S extends StoreState> extends EventBus<any> {
     for (const pluginInitial of Store.pluginsInitial) {
       if (!pluginInitial.$i) {
         pluginInitial(this)
-        pluginInitial.$i = true;
+        pluginInitial.$i = true
       }
     }
   }
@@ -92,9 +109,9 @@ export class Store<S extends StoreState> extends EventBus<any> {
 
   /**
    * 修改配置
-   * @param options 
+   * @param options
    */
-  config(options: (Options<S> | ((oldOptions: Options<S>) => Options<S>)) = {}) {
+  config(options: Options<S> | ((oldOptions: Options<S>) => Options<S>) = {}) {
     this._options = typeof options === 'function' ? options(this._options) : options
     this.init()
   }
@@ -140,7 +157,7 @@ export class Store<S extends StoreState> extends EventBus<any> {
     if (!reducer) throw new Error(`not found reducer ${actionName}`)
 
     const prevState = this._state[moduleName]
-    this._state[moduleName] = await reducer(prevState, payload)
+    this._state[moduleName] = reducer(prevState, payload)
     // 触发react组件更新
     this.publish(`storeChange.${moduleName}`, this._state[moduleName])
   }
@@ -148,6 +165,6 @@ export class Store<S extends StoreState> extends EventBus<any> {
 
 export default function createStore<S = Record<string, any>>(options: Options<S> = {}) {
   const { plugins = [], ...restOptions } = options
-  plugins.forEach(plugin => Store.usePlugin(plugin))
+  plugins.forEach((plugin) => Store.usePlugin(plugin))
   return new Store(restOptions)
 }

@@ -23,12 +23,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = require("react");
 /**
  * 对一个函数进行节流处理，返回处理过的函数
- * @param handler
- * @param ms
+ * @param handler 需要进行节流处理的函数
+ * @param wait 等待时间
+ * @param isImmediate 是否立即执行，默认为false
  * @returns [throttleFn, cancel]
  */
-function useThrottleFn(handler, ms) {
-    if (ms === void 0) { ms = 200; }
+function useThrottleFn(handler, wait, isImmediate) {
+    if (wait === void 0) { wait = 200; }
+    if (isImmediate === void 0) { isImmediate = false; }
     var timeoutRef = react_1.useRef();
     var nextArgsRef = react_1.useRef(null);
     var throttleFn = function () {
@@ -38,27 +40,24 @@ function useThrottleFn(handler, ms) {
         }
         if (!timeoutRef.current) {
             var timeoutCallback_1 = function () {
-                if (nextArgsRef.current) {
+                if (!isImmediate && nextArgsRef.current) {
                     var currentArgs = __spread(nextArgsRef.current);
                     nextArgsRef.current = null;
-                    timeoutRef.current = setTimeout(timeoutCallback_1, ms);
+                    timeoutRef.current = setTimeout(timeoutCallback_1, wait);
                     return handler.apply(void 0, __spread(currentArgs));
                 }
-                else {
-                    timeoutRef.current = null;
-                }
+                timeoutRef.current = null;
             };
-            timeoutRef.current = setTimeout(timeoutCallback_1, ms);
-            return handler.apply(void 0, __spread(args));
+            timeoutRef.current = setTimeout(timeoutCallback_1, wait);
+            isImmediate && handler.apply(void 0, __spread(args));
         }
-        else {
-            // 当前已经有等待执行的函数，忽略本次触发，仅更新一下参数
-            nextArgsRef.current = args;
-        }
+        // 当前已经有等待执行的函数，忽略本次触发，仅更新一下参数
+        nextArgsRef.current = args;
     };
     var cancel = function () {
         timeoutRef.current && clearTimeout(timeoutRef.current);
-        timeoutRef.current = nextArgsRef.current = null;
+        timeoutRef.current = null;
+        nextArgsRef.current = null;
     };
     react_1.useEffect(function () {
         return function () {

@@ -39,7 +39,7 @@ var EventBus = /** @class */ (function () {
             var subscriptions = _this.eventContainer.get(type) || new Set();
             subscriptions.add(handler);
             _this.eventContainer.set(type, subscriptions);
-            return _this;
+            return _this.unSubscribe.bind(_this, type, handler);
         };
         this.unSubscribe = function (type, subscription) {
             var subscriptions = _this.eventContainer.get(type);

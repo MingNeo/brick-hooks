@@ -5,5 +5,5 @@ declare type State = Record<string, any>;
  * @param methods 自定义reducers方法
  * @returns [state, setState, stateMethods]
  */
-export default function useObjectState<S extends State>(initialState: S, methods?: Record<string, (...args: any[]) => S>): [S, (nextState: any, merge?: boolean) => void, Record<string, (...args: any[]) => void>];
+export default function useObjectState<S extends State>(initialState: S, methods?: Record<string, (...args: any[]) => S>): [S, (nextState: any, merge?: boolean) => void, import("../useMethods").BoundMethods];
 export {};

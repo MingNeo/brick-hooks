@@ -1,4 +1,4 @@
-import useMethods from '../useMethods'
+import useMethods, { BoundMethods } from '../useMethods'
 
 export const arrayMethods = {
   set: (state: any, value: any) => value,
@@ -28,7 +28,7 @@ export const arrayMethods = {
   // 根据id移除数据，数据格式必需为[{ [idkey], ... }]
   removeById: (state: Record<string, any>[], id: string, idKey: string = 'id') =>
     state.filter((v) => v && v[idKey] !== id),
-    
+
   removeIndex: (state: any[], value: number) => state.filter((v: any, i: number) => i !== value),
 }
 
@@ -36,7 +36,7 @@ export const arrayMethods = {
  * 当state为数组时，数据需要是immutable的，不方便使用push等方法直接操纵数据，此hook提供几个常用方法，修改可以自动触发渲染
  * @param initial
  */
-export default function useArray<T>(initial?: T[] | (() => T[])) {
+export default function useArray<T>(initial?: T[] | (() => T[])): [T[], BoundMethods] {
   const [listData, actions] = useMethods(arrayMethods, initial || [])
-  return [listData, actions] as [typeof listData, typeof actions]
+  return [listData, actions]
 }

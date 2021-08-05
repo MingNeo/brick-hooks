@@ -1,3 +1,4 @@
+import { BoundMethods } from '../useMethods';
 export declare const arrayMethods: {
     set: (state: any, value: any) => any;
     push: (state: any[], value: any) => any[];
@@ -18,4 +19,4 @@ export declare const arrayMethods: {
  * 当state为数组时，数据需要是immutable的，不方便使用push等方法直接操纵数据，此hook提供几个常用方法，修改可以自动触发渲染
  * @param initial
  */
-export default function useArray<T>(initial?: T[] | (() => T[])): [T[] | (() => T[]), Record<string, (...args: any[]) => void>];
+export default function useArray<T>(initial?: T[] | (() => T[])): [T[], BoundMethods];

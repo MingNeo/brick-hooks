@@ -23,8 +23,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = require("react");
 function useMethods(methods, initialState) {
     var _a = __read(react_1.useState(initialState), 2), value = _a[0], setValue = _a[1];
-    var boundMethods = react_1.useMemo(function () {
-        return Object.entries(methods).reduce(function (methods, _a) {
+    var _b = react_1.useMemo(function () {
+        var dispatch = function (actionName) {
+            var args = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args[_i - 1] = arguments[_i];
+            }
+            var fn = methods[actionName];
+            setValue(function (value) { return fn.apply(void 0, __spread([value], args)); });
+        };
+        var boundMethods = Object.entries(methods).reduce(function (methods, _a) {
             var _b = __read(_a, 2), name = _b[0], fn = _b[1];
             var method = function () {
                 var args = [];
@@ -35,16 +43,12 @@ function useMethods(methods, initialState) {
             };
             methods[name] = method;
             return methods;
-        }, {});
-    }, [methods]);
-    var dispatch = react_1.useCallback(function (actionName) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
-        var fn = methods[actionName];
-        setValue(function (value) { return fn.apply(void 0, __spread([value], args)); });
-    }, [methods]);
+        }, { dispatch: dispatch });
+        return {
+            boundMethods: boundMethods,
+            dispatch: dispatch,
+        };
+    }, [methods]), boundMethods = _b.boundMethods, dispatch = _b.dispatch;
     return [value, boundMethods, dispatch];
 }
 exports.default = useMethods;

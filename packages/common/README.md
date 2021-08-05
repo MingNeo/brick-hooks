@@ -24,11 +24,15 @@ const { useArray } = require('brick-hooks');
 
 [useToogle](./src/useToogle/README.md) 方便切换布尔值
 
-[useSet](./src/useSet/README.md) 方便使用set  // TODO 待完善测试
+[useSet](./src/useSet/README.md) 方便使用set
 
-[useDataListToTree](./src/useDataListToTree/README.md) 将列表类型数据转化为树的格式
+[useListData](./src/useListData/README.md) 将列表类型数据方便的自动进行对象、tree、分组等转化
 
-[useDataListToMap](./src/useDataListToMap/README.md)
+[useListState](./src/useListState/README.md) 创建/维护列表类型数据，方便的自动进行对象、tree、分组等转化
+
+[useDataListToTree](./src/useDataListToTree/README.md) useListData中转化为tree的封装，将列表类型数据转化为树的格式
+
+[useDataListToMap](./src/useDataListToMap/README.md)useListData中转化为Object的封装，
 
 [useDataTreeToList](./src/useDataTreeToList/README.md) 将树的格式的数据转化为列表
 
@@ -79,9 +83,7 @@ const { useArray } = require('brick-hooks');
 
 [useDebounceValue](./src/useDebounceValue/README.md) 对变化进行防抖处理的value
 
-[useForceRender](./src/useForceRender/README.md) 返回一个强制更新的函数，调用时强制触发组件更新
-
-// TODO 待测
-
 [useThrottleFn](./src/useThrottleFn/README.md) 对函数进行自动节流处理
+
+[useForceRender](./src/useForceRender/README.md) 返回一个强制更新的函数，调用时强制触发组件更新
 

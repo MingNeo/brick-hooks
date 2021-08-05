@@ -1,12 +1,20 @@
 import { useMemo, useEffect, useReducer, useRef } from 'react'
 
-type SetStoreAction<S> = S | ((prevState: S) => S)
-type SetStore<A> = (value: A) => void
+export type SetStoreAction<S> = S | ((prevState: S) => S)
+export type SetStore<A> = (value: A) => void
 
-interface Methods<S> {
+export type StoreHookDispatch = (actionName: string, ...args: any[]) => void
+export type BoundMethods<S> = Record<string, (state: S, payload: any) => S>
+
+export interface Methods<S> {
   setStore: SetStore<SetStoreAction<S>>
-  dispatch: (actionName: string, ...args: any[]) => void
-  boundMethods: Record<string, (state: S, payload: any) => S>
+  dispatch: StoreHookDispatch
+  boundMethods: BoundMethods<S>
+}
+
+export interface ToolMethods<S> extends BoundMethods<S>{
+  dispatch: StoreHookDispatch
+  [x: string]: (...args: any[]) => any
 }
 
 /**
@@ -15,14 +23,14 @@ interface Methods<S> {
  * @param storeContext
  * @param moduleName
  * @param autoMerge 是否在执行set方法更新数据时使用自动浅合并而非替换,如果数据格式不是object，此设置无效
- * @returns {array} [state, setState, dispatch] dispatch方法可以触发注册的reducer
+ * @returns {array} [state, setState, { dispatch }] dispatch方法可以触发注册的reducer
  */
 export default function useStore<S>(
   storeContext: any,
   moduleName: string = '',
   autoMerge: boolean = false,
   willUpdate: boolean = true,
-) {
+): [S, SetStore<SetStoreAction<S>>, ToolMethods<S>] {
   if (!moduleName) throw new Error('moduleName is required!')
 
   const storeContextRef = useRef(storeContext)
@@ -70,8 +78,8 @@ export default function useStore<S>(
     const moduleState: S = storeContextRef.current._state[moduleName]
     const { setStore, dispatch, boundMethods } = methods
 
-    return [moduleState, setStore, boundMethods, dispatch]
+    return [moduleState, setStore, { dispatch, ...boundMethods }]
     // 每次强制刷新的时候重续获取存储的全局数据
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [methods, forceUpdateCount]) as [S, typeof methods.setStore, typeof methods.boundMethods, typeof methods.dispatch]
+  }, [methods, forceUpdateCount])
 }

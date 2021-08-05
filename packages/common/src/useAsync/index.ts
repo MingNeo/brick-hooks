@@ -7,6 +7,8 @@ interface Options {
   setState?: (...args: any[]) => void
 }
 
+type Exector = (...args: any[]) => Promise<any>
+
 // type UseAsyncReturn = [exector: () => ]
 
 /**
@@ -18,13 +20,21 @@ interface Options {
 export default function useAsync<A extends AsyncFunction>(
   asyncFunction: A,
   { immediate = false, setState }: Options = {}
-) {
+): [
+  Exector,
+  {
+    result: any
+    error: any
+    loading: boolean
+    pendingCount: number
+  }
+] {
   const [pendingCount, { inc, dec }] = useCounter(0, { min: 0 })
   const [result, setResult] = useState()
   const [error, setError] = useState()
-  
+
   const setStateRef = useRef(setState)
-  if(setStateRef.current !== setState) setStateRef.current = setState
+  if (setStateRef.current !== setState) setStateRef.current = setState
 
   const exector = useCallback(
     (...args: any[]) => {
@@ -54,13 +64,5 @@ export default function useAsync<A extends AsyncFunction>(
     }
   }, [exector, immediate])
 
-  return [exector, { result, error, loading: !!pendingCount, pendingCount }] as [
-    typeof exector,
-    {
-      result: typeof result
-      error: typeof error
-      loading: boolean
-      pendingCount: number
-    }
-  ]
+  return [exector, { result, error, loading: !!pendingCount, pendingCount }]
 }

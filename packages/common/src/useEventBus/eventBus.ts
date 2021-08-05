@@ -1,7 +1,7 @@
 export type Subscription<T> = (val: T, ...args: any[]) => void
 export type EventType = string | symbol
 
-export class EventBus<T> {
+export class EventBus<T = any> {
   private eventContainer = new Map<EventType, Set<Subscription<T>>>()
 
   publish = (type: EventType, payload: any) => {
@@ -17,7 +17,7 @@ export class EventBus<T> {
     const subscriptions = this.eventContainer.get(type) || new Set<Subscription<T>>()
     subscriptions.add(handler)
     this.eventContainer.set(type, subscriptions)
-    return this
+    return this.unSubscribe.bind(this, type, handler)
   }
 
   unSubscribe = (type: EventType, subscription: Subscription<T>) => {

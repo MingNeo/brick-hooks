@@ -34,7 +34,7 @@ var react_1 = require("react");
  * @param storeContext
  * @param moduleName
  * @param autoMerge 是否在执行set方法更新数据时使用自动浅合并而非替换,如果数据格式不是object，此设置无效
- * @returns {array} [state, setState, dispatch] dispatch方法可以触发注册的reducer
+ * @returns {array} [state, setState, { dispatch }] dispatch方法可以触发注册的reducer
  */
 function useStore(storeContext, moduleName, autoMerge, willUpdate) {
     if (moduleName === void 0) { moduleName = ''; }
@@ -83,7 +83,7 @@ function useStore(storeContext, moduleName, autoMerge, willUpdate) {
     return react_1.useMemo(function () {
         var moduleState = storeContextRef.current._state[moduleName];
         var setStore = methods.setStore, dispatch = methods.dispatch, boundMethods = methods.boundMethods;
-        return [moduleState, setStore, boundMethods, dispatch];
+        return [moduleState, setStore, __assign({ dispatch: dispatch }, boundMethods)];
         // 每次强制刷新的时候重续获取存储的全局数据
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [methods, forceUpdateCount]);

@@ -3,7 +3,7 @@ import { Button } from '@storybook/react/demo'
 import { registerModule, useStore, usePlugins } from 'hydrogen-store/src/index'
 import reduxPlugin from 'hydrogen-store-redux-plugin'
 
-usePlugins(reduxPlugin)
+usePlugins([reduxPlugin])
 
 registerModule('test', {
   state: {

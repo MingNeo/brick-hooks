@@ -7,10 +7,16 @@
 export default function useStorage(itemName: string, initialValue?: any, { watchStorageChange, storageType }?: {
     watchStorageChange?: boolean;
     storageType?: string;
-}): [any, (value: string | number | Record<string, any> | any[]) => void, () => void];
+}): [any, (value?: string | number | Record<string, any> | any[]) => void, {
+    clear: () => void;
+}];
 export declare const useLocalStorage: (itemName: string, initialValue?: any, { watchStorageChange }?: {
     watchStorageChange?: boolean;
-}) => [any, (value: string | number | Record<string, any> | any[]) => void, () => void];
+}) => [any, (value?: string | number | Record<string, any> | any[]) => void, {
+    clear: () => void;
+}];
 export declare const useSessionStorage: (itemName: string, initialValue?: any, { watchStorageChange }?: {
     watchStorageChange?: boolean;
-}) => [any, (value: string | number | Record<string, any> | any[]) => void, () => void];
+}) => [any, (value?: string | number | Record<string, any> | any[]) => void, {
+    clear: () => void;
+}];

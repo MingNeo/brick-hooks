@@ -1,3 +1,4 @@
+import { SetStore, SetStoreAction, BoundMethods, ToolMethods } from './useStore';
 import { EventBus } from './eventBus';
 export declare type StoreState = Record<string, any>;
 export declare type Dispatch<A> = (value: A) => void | StoreState | Promise<any>;
@@ -13,10 +14,12 @@ export interface Options<S = Record<string, any>> extends Record<string, any> {
     devtoolId?: string;
     initialState?: S;
 }
+export declare type UseStoreByContext = <S>(storeContext: any, moduleName?: string, autoMerge?: boolean, willUpdate?: boolean) => [S, SetStore<SetStoreAction<S>>, BoundMethods<S>, ToolMethods<S>];
+export declare type UseStore = <S>(moduleName?: string, autoMerge?: boolean, willUpdate?: boolean) => [S, SetStore<SetStoreAction<S>>, BoundMethods<S>, ToolMethods<S>];
 export declare class Store<S extends StoreState> extends EventBus<any> {
-    useStore: any;
+    useStore: UseStoreByContext;
     _state: S | {};
-    _reducers: any;
+    _reducers: Record<string, any>;
     _modules: Set<string>;
     _options: Options<S>;
     _reduxStore: any;
@@ -26,6 +29,7 @@ export declare class Store<S extends StoreState> extends EventBus<any> {
     static pluginsInitial: Set<any>;
     constructor(options?: Options<S>);
     initialBase(options?: Options<S>): void;
+    getUseStore(): any;
     /**
      * use plugin
      */
@@ -44,7 +48,7 @@ export declare class Store<S extends StoreState> extends EventBus<any> {
      * 修改配置
      * @param options
      */
-    config(options?: (Options<S> | ((oldOptions: Options<S>) => Options<S>))): void;
+    config(options?: Options<S> | ((oldOptions: Options<S>) => Options<S>)): void;
     getState(moduleName?: string): any;
     setState(nextState: ((state: S) => S) | S): void;
     _setState(nextState: {} | S): void;

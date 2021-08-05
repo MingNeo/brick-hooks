@@ -27,24 +27,25 @@ var store = base_1.default();
 exports.store = store;
 var useStore = function (moduleName, assign, willUpdate) {
     if (willUpdate === void 0) { willUpdate = true; }
-    return store.useStore(moduleName, assign, willUpdate);
+    var useStoreStore = store.getUseStore();
+    return useStoreStore(moduleName, assign, willUpdate);
 };
 exports.useStore = useStore;
-var registerModule = useStore.registerModule = function (moduleName, initialModule) {
+var registerModule = (useStore.registerModule = function (moduleName, initialModule) {
     store.registerModule(moduleName, initialModule);
-};
+});
 exports.registerModule = registerModule;
 /**
  * 对全局store 开启插件，这不是一个React hooks
  */
-var usePlugins = useStore.usePlugins = function (plugins) {
+var usePlugins = (useStore.usePlugins = function (plugins) {
     if (plugins && plugins.length) {
         plugins.forEach(function (plugin) { return base_1.Store.usePlugin(plugin); });
         // eslint-disable-next-line react-hooks/rules-of-hooks
         // 因为在createStore之后调用，所以需要重新初始化一下
         store.init();
     }
-};
+});
 exports.usePlugins = usePlugins;
 /**
  * 对获取全局单一实例的globalState

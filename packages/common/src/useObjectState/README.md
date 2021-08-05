@@ -12,10 +12,12 @@ function MyComponent() {
 
   // setState 默认自动merge
   const handleUpdateTest = () => setHomeData({ text: 1 })
+  const handleUpdateTestFn = () => setHomeData(prevState => ({ text: 1 }))
   // homeData: { test: 1, text: 1 }
 
   // setState 不自动合并
   const handleUpdateTestNoMerge = () => setHomeData({ text: 1 }, false)
+  const handleUpdateTestNoMergeFn = () => setHomeData(prevState => ({ text: 1 }), false)
   // homeData: { text: 1 }
 
   return <div>/* ... */</div>

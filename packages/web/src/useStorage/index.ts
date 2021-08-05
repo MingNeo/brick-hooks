@@ -1,6 +1,10 @@
 import { useState, useEffect, useMemo } from 'react'
 import { getStorage, setStorage, parseValue, removeStorage } from './helper'
 
+function isNil(value) {
+  return value === undefined || value === null
+}
+
 /**
  *
  * @param itemName
@@ -15,9 +19,9 @@ export default function useStorage(
   const [value, setStateValue] = useState(() => getStorage(storageType, itemName) || initialValue)
 
   const methods = useMemo(() => {
-    const setValue = (value: string | number | Record<string, any> | any[]) => {
-      setStorage(storageType, itemName, value)
-      watchStorageChange || setStateValue(parseValue(value))
+    const setValue = (value?: string | number | Record<string, any> | any[]) => {
+      setStorage(storageType, itemName, !isNil(value) ? value : initialValue)
+      watchStorageChange || (!isNil(value) ? setStateValue(parseValue(value as any)) : setStateValue(initialValue))
     }
     const clear = () => {
       removeStorage(storageType, itemName)
@@ -34,7 +38,7 @@ export default function useStorage(
     // 当storage变化的时候更新state以触发组件render
     const onStorage = (e: StorageEvent) => {
       if (e.key === itemName) {
-        setStateValue(parseValue(e.newValue))
+        setStateValue(isNil(e.newValue) ? parseValue(e.newValue as any) : initialValue)
       }
     }
     // watchStorageChange 为 true时， 监听storage事件，即使直接修改也触发更新当前value
@@ -44,10 +48,13 @@ export default function useStorage(
     }
   }, [itemName, watchStorageChange])
 
-  return [value, methods.setValue, methods.clear] as [
+  return [value, methods.setValue, { clear: methods.clear,  }] as [
     typeof value,
     typeof methods.setValue,
-    typeof methods.clear
+    { 
+      clear: typeof methods.clear,
+
+    }
   ]
 }
 

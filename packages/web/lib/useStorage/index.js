@@ -19,6 +19,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.useSessionStorage = exports.useLocalStorage = void 0;
 var react_1 = require("react");
 var helper_1 = require("./helper");
+function isNil(value) {
+    return value === undefined || value === null;
+}
 /**
  *
  * @param itemName
@@ -31,8 +34,8 @@ function useStorage(itemName, initialValue, _a) {
     var _e = __read(react_1.useState(function () { return helper_1.getStorage(storageType, itemName) || initialValue; }), 2), value = _e[0], setStateValue = _e[1];
     var methods = react_1.useMemo(function () {
         var setValue = function (value) {
-            helper_1.setStorage(storageType, itemName, value);
-            watchStorageChange || setStateValue(helper_1.parseValue(value));
+            helper_1.setStorage(storageType, itemName, !isNil(value) ? value : initialValue);
+            watchStorageChange || (!isNil(value) ? setStateValue(helper_1.parseValue(value)) : setStateValue(initialValue));
         };
         var clear = function () {
             helper_1.removeStorage(storageType, itemName);
@@ -47,7 +50,7 @@ function useStorage(itemName, initialValue, _a) {
         // 当storage变化的时候更新state以触发组件render
         var onStorage = function (e) {
             if (e.key === itemName) {
-                setStateValue(helper_1.parseValue(e.newValue));
+                setStateValue(isNil(e.newValue) ? helper_1.parseValue(e.newValue) : initialValue);
             }
         };
         // watchStorageChange 为 true时， 监听storage事件，即使直接修改也触发更新当前value
@@ -56,7 +59,7 @@ function useStorage(itemName, initialValue, _a) {
             window.removeEventListener('storage', onStorage);
         };
     }, [itemName, watchStorageChange]);
-    return [value, methods.setValue, methods.clear];
+    return [value, methods.setValue, { clear: methods.clear, }];
 }
 exports.default = useStorage;
 exports.useLocalStorage = function (itemName, initialValue, _a) {

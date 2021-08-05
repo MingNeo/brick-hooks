@@ -1,7 +1,8 @@
 import createStore, { Store, Options, Module } from './base';
+import { StoreHookDispatch } from './useStore';
 declare const store: Store<Record<string, any>>;
 declare const useStore: {
-    (moduleName: string, assign: boolean, willUpdate?: boolean): any;
+    <S = any>(moduleName: string, assign: boolean, willUpdate?: boolean): [S, import("./useStore").SetStore<import("./useStore").SetStoreAction<S>>, Record<string, (state: S, payload: any) => S>, import("./useStore").ToolMethods<S>];
     registerModule(moduleName: string, initialModule: Module): void;
     usePlugins(plugins: any[]): void;
 };
@@ -21,4 +22,4 @@ declare const getStoreState: () => any;
  * @returns
  */
 declare const setStoreState: (nextState: any) => void;
-export { Store, store, useStore, createStore, registerModule, usePlugins, getStoreState, setStoreState, Options, Module, };
+export { Store, store, useStore, createStore, registerModule, usePlugins, getStoreState, setStoreState, Options, Module, StoreHookDispatch, };

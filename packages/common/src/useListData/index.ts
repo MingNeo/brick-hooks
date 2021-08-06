@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useMemo } from 'react'
 import { arrayMethods } from '../useArray'
 import {
   transformListToTree,
@@ -9,7 +9,12 @@ import {
 
 export type FilterCallback<T = any> = (value: T, index: number, array: readonly T[]) => boolean
 export type MapCallback<T = any> = (value: T, index: number, array: readonly T[]) => any[]
-export type ReduceCallback<T = any> = (previousValue: T, currentValue: T, currentIndex: T, array: T[]) => T
+export type ReduceCallback<T = any> = (
+  previousValue: T,
+  currentValue: T,
+  currentIndex: T,
+  array: T[]
+) => T
 
 export interface ChainIns {
   _value: any
@@ -98,14 +103,12 @@ export const transformsMap = {
  * 可以使用自定义处理函数对数据进行各种基础处理及转化为tree、obj、group等高级处理
  */
 export default function useListData<T extends Record<string, any>>(
-  value: T[],
+  value: T[] = [],
   transform?: (originData: T[], transformMethods: typeof transformsMap) => any
 ) {
-  const [originData] = useState(value || [])
-
   const listData = useMemo(() => {
-    return transform ? transform(originData, transformsMap) : originData
-  }, [originData, transform])
+    return transform ? transform(value, transformsMap) : value
+  }, [value, transform])
 
   return listData
 }

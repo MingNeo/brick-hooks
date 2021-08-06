@@ -23,6 +23,8 @@ function MyComponent() {
 ##### clear
 ##### reverse
 同 Array.prototype.reverse
+##### concat
+同 Array.prototype.concat
 ##### sort
 同 Array.prototype.sort
 ##### sortBy

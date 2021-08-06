@@ -6,6 +6,12 @@ interface CounterOptions {
   step?: number
 }
 
+export const arrayMethods = {
+  inc: (state, step) => state + step,
+  dec: (state, step) => state - step,
+  reset: (state, initialValue) => initialValue
+}
+
 /**
  * 数字步进
  * @param {number} initialValue 默认值

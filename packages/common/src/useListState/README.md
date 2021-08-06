@@ -6,7 +6,7 @@
 与useListData类似，不同的是useListData 类似于useMemo，对一个state进行自动处理生成新的getter的值。而这个hook则直接提供setState方法，setState原始值并自动通过回调函数进行处理
 
 ### 自定义处理
-完全自由处理的情况下，相当于一个写法不同的useMemo
+完全自由处理的情况下，相当于组合了useState/useArray及useMemo
 
 ```javascript
 const initialValue = [
@@ -14,8 +14,12 @@ const initialValue = [
   { id: 2, value: 1 },
 ]
 
-const [testData, setTestData] = useListState(listData, (originValue) => originValue.filter(v.id === 1))
+const [result, listMethods] = useListState(listData, (originValue) => originValue.filter(v.value === 1))
+// result result: [{id: 2, value: 1}]
+listMethods.push({id: 3, value: 1})
+// result result: [{id: 2, value: 1}, {id: 3, value: 1}]
 ```
+listMethods的方法见useArray
 
 ```javascript
 // result
@@ -31,7 +35,7 @@ const initialValue = [
   { id: 2, value: 1 },
 ]
 
-const [testData, setTestData] = useListState(listData, (originValue, { transObj }) => transObj(originValue))
+const [testData, listMethods] = useListState(listData, (originValue, { transObj }) => transObj(originValue))
 ```
 
 ```javascript
@@ -52,7 +56,7 @@ const initialValue = [
   { id: 'a004', pid: 'a001', value: '烟台' },
 ]
 
-const [testData, setTestData] = useListState(initialValue, (originValue, { transTree }) => transTree(originValue))
+const [testData, listMethods] = useListState(initialValue, (originValue, { transTree }) => transTree(originValue))
 ```
 
 ```javascript
@@ -81,7 +85,7 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const [testData, setTestData] = useListState(initialValue, (value, { group }) => group(value, { groupKey: 'city' }))
+const [testData, listMethods] = useListState(initialValue, (value, { group }) => group(value, { groupKey: 'city' }))
 ```
 
 ```javascript
@@ -108,7 +112,7 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const [testData, setTestData] = useListState(initialValue, (value, { partition }) =>
+const [testData, listMethods] = useListState(initialValue, (value, { partition }) =>
   partition(value, { groupKey: 'city' })
 )
 ```
@@ -137,7 +141,7 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const [testData, setTestData] = useListState(initialValue, (value, { removeById }) => removeById(value, 'q1'))
+const [testData, listMethods] = useListState(initialValue, (value, { removeById }) => removeById(value, 'q1'))
 ```
 
 ```javascript
@@ -159,7 +163,7 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const [testData, setTestData] = useListState(initialValue, (value, { removeIndex }) => removeIndex(value, 1))
+const [testData, listMethods] = useListState(initialValue, (value, { removeIndex }) => removeIndex(value, 1))
 ```
 
 ```javascript
@@ -181,7 +185,7 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const [testData, setTestData] = useListState(initialValue, (originValue, { chain }) =>
+const [testData, listMethods] = useListState(initialValue, (originValue, { chain }) =>
   chain(originValue)
     .filter((v) => !v.ignore)
     .partition({ groupKey: 'pid' })
@@ -199,14 +203,14 @@ const [testData, setTestData] = useListState(initialValue, (originValue, { chain
 ```
 除了使用内置的方法，同样可以自定义处理, 使用next即可。或随时对数据进行自由处理
 ```javascript
-const [testData, setTestData] = useListState(initialValue, (originValue, { chain }) =>
+const [testData, listMethods] = useListState(initialValue, (originValue, { chain }) =>
   chain(originValue)
     .next(value => value.filter(v => !v.ignore))
     .partition({ groupKey: 'pid' })
     .value()
 )
 
-const [testData, setTestData] = useListState(initialValue, (originValue, { chain }) => {
+const [testData, listMethods] = useListState(initialValue, (originValue, { chain }) => {
   const listData = chain(originValue)
     .next(value => value.filter(v => !v.ignore))
     .partition({ groupKey: 'pid' })

@@ -1,7 +1,7 @@
 import useMethods, { BoundMethods } from '../useMethods'
 
 export const arrayMethods = {
-  set: (state: any, value: any) => value,
+  set: (state: any, value: any) => typeof value === 'function' ? value(state) : value,
 
   push: (state = [], value: any) => [...state, value],
 
@@ -12,6 +12,8 @@ export const arrayMethods = {
   clear: () => [],
 
   reverse: (state: any[]) => [...state].reverse(),
+
+  concat: (state: any[], ...args: any[]) => [...state].concat(...args),
 
   sort: (state: any[], callback?: (a: any, b: any) => number) => [...state].sort(callback),
 

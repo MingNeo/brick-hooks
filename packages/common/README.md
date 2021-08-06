@@ -22,7 +22,7 @@ const { useArray } = require('brick-hooks');
 
 [useCounter](./src/useCounter/README.md) 步进器数字处理
 
-[useToogle](./src/useToogle/README.md) 方便切换布尔值
+[useToggle](./src/useToggle/README.md) 方便切换布尔值
 
 [useSet](./src/useSet/README.md) 方便使用set
 
@@ -38,7 +38,7 @@ const { useArray } = require('brick-hooks');
 
 [useDeepCompare](./src/useDeepCompare/README.md) 对数据进行深比较，返回比较结果和深克隆的新值
 
-[useTrimString](./src/useTrimString/README.md) 对字符串进行自动去除空格
+[useTrim](./src/useTrim/README.md) 对字符串进行自动去除空格
 
 [useMemoCompare](./src/useMemoCompare/README.md) 根据指定函数判断一个数据是否应该触发更新，返回新的值
 
@@ -46,6 +46,7 @@ const { useArray } = require('brick-hooks');
 [useMethods](./src/useMethods/README.md) & [useMethodsImmer](./src/useMethods/README.md) 使用useMethods 或者 useMethodsImmer替代useState、useReducer，可以使你早下班一个小时
 
 [useObjectState](./src/useObjectState/README.md) useMethods的更进一步封装，对于obj类型的state集合使用，类似于class组件的state，同样提供了方便使用的reducer等能力
+[useObjectStateImmer](./src/useObjectStateIMmer/README.md) useObjectState的immer版本
 
 [useReducerImmer](./src/useReducerImmer/README.md) 官方useReducer的Immer版本，通常情况下使用useMthods、useObjectState更佳
 

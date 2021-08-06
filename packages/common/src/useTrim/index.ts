@@ -6,7 +6,7 @@ import { useState } from 'react'
  * @param fullTrim 默认为false，即仅去除首尾空格，为true时将去掉字符串中所有空格
  * @returns 
  */
-export default function useTrimString(initialValue: string | undefined, fullTrim: boolean = false) {
+export default function useTrim(initialValue: string | undefined, fullTrim: boolean = false) {
   const [trimState, setState] = useState<string>(trim(initialValue || '', fullTrim))
 
   const setTrimState = (state: string | ((oldState: string | undefined) => string | undefined)) => {

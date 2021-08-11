@@ -24,7 +24,7 @@ describe('useListViewData 校验', () => {
       },
       { initialProps: { fetchFn } }
     )
-    expect(result.current.initQuery).toEqual(initialQuery)
+    expect(result.current.initialQuery).toEqual(initialQuery)
     expect(Object.values(result.current.listData)).toEqual([])
     expect(result.current.loading).toBe(false)
   })

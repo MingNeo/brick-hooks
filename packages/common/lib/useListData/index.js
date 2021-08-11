@@ -77,10 +77,10 @@ exports.transformsMap = __assign({
  * 可以使用自定义处理函数对数据进行各种基础处理及转化为tree、obj、group等高级处理
  */
 function useListData(value, transform) {
-    var _a = __read(react_1.useState(value || []), 1), originData = _a[0];
+    if (value === void 0) { value = []; }
     var listData = react_1.useMemo(function () {
-        return transform ? transform(originData, exports.transformsMap) : originData;
-    }, [originData, transform]);
+        return transform ? transform(value, exports.transformsMap) : value;
+    }, [value, transform]);
     return listData;
 }
 exports.default = useListData;

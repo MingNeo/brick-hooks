@@ -1,4 +1,6 @@
-用于普通 input
+## useInput
+
+用于普通 input。有些input你没有放在表单中，可以使用这个hook进行方便处理
 
 ```javascript
 function MyComponent() {

@@ -1,4 +1,5 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
+import useObjectState from '../useObjectState'
 
 export interface QueryParams {
   page: {
@@ -20,31 +21,49 @@ export const initialQuery: QueryParams = {
   query: {},
 }
 
+const listViewReducers = {
+  setListData: (state: any, payload: any) => ({
+    ...state,
+    listData: typeof payload === 'function' ? payload(state.listData) : payload,
+  }),
+  setFinalQuery: (state: any, payload: any) => ({
+    ...state,
+    finalQuery: typeof payload === 'function' ? payload(state.finalQuery) : payload,
+  }),
+}
+
 /**
  * 处理列表数据的hooks
  */
 export default function useListViewData(fetchFn: FetchFn, query = {}) {
-  const [listData, setListData] = useState([])
-  const [loading, setLoading] = useState(false)
   const initData = useMemo(() => ({ ...initialQuery, ...query }), [query])
-  // 用于筛选的请求参数
-  const [finalQuery, setFinalQuery] = useState(initData)
+
+  const [{ listData, loading, finalQuery }, setObjectState, { setFinalQuery }] = useObjectState(
+    {
+      listData: [],
+      loading: false,
+      finalQuery: initData, // 用于筛选的请求参数
+    },
+    listViewReducers
+  )
 
   // 获取数据, filter通过请求参数传入
   const loadData = useCallback(
     (fetchParams) => {
       const { page, query: fetchQuery, isMerge = false } = fetchParams
-      setLoading(true)
+      setObjectState({ loading: true })
       return new Promise((resolve, reject) => {
         fetchFn({ page, query: fetchQuery })
           .then(({ data, hasMore }) => {
-            setLoading(false)
-            setListData((listData) => (isMerge ? listData.concat(data) : data || []))
-            setFinalQuery({ page: { ...page, hasMore }, query: fetchQuery })
+            setObjectState((prevState) => ({
+              loading: false,
+              finalQuery: { page: { ...page, hasMore }, query: fetchQuery },
+              listData: isMerge ? prevState.listData.concat(data) : data || [],
+            }))
             resolve('load data success')
           })
           .catch((e) => {
-            setLoading(false)
+            setObjectState({ loading: false })
             console.log(e)
             reject(new Error(`load data error`))
           })
@@ -66,18 +85,18 @@ export default function useListViewData(fetchFn: FetchFn, query = {}) {
    * 清空筛选条件
    */
   const clearQuery = useCallback(() => {
-    setFinalQuery(initData)
+    setObjectState({ finalQuery: initData })
   }, [initData])
 
   // 重载数据，即清空分页、查询条件重新请求
   const reloadData = useCallback(() => {
-    setFinalQuery(initData)
+    setObjectState({ finalQuery: initData })
     return loadData(initData)
   }, [loadData, initData])
 
   return {
     listData,
-    initQuery: { ...initData },
+    initialQuery: { ...initData },
     query: finalQuery,
     loading,
     loadData,

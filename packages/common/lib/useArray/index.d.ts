@@ -6,6 +6,7 @@ export declare const arrayMethods: {
     slice: (state: string | any[], start?: number, end?: number) => string | any[];
     clear: () => any[];
     reverse: (state: any[]) => any[];
+    concat: (state: any[], ...args: any[]) => any[];
     sort: (state: any[], callback?: (a: any, b: any) => number) => any[];
     sortBy: (data: any[], { field, order }: {
         field: any;

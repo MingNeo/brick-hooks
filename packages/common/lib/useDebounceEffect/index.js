@@ -60,7 +60,6 @@ function useDebounceEffect(callback, wait, deps) {
         };
     }, []), debounceCallback = _a.debounceCallback, cancel = _a.cancel;
     react_1.useEffect(function () {
-        // 如果配置了deps，即自动在deps变化的时候执行debounceCallback
         if (deps === null || deps === void 0 ? void 0 : deps.length) {
             debounceCallback();
         }

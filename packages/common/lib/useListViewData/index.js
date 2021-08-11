@@ -26,9 +26,13 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.initialQuery = void 0;
 var react_1 = require("react");
+var useObjectState_1 = __importDefault(require("../useObjectState"));
 exports.initialQuery = {
     page: {
         pageNo: 1,
@@ -37,31 +41,38 @@ exports.initialQuery = {
     },
     query: {},
 };
+var listViewReducers = {
+    setListData: function (state, payload) { return (__assign(__assign({}, state), { listData: typeof payload === 'function' ? payload(state.listData) : payload })); },
+    setFinalQuery: function (state, payload) { return (__assign(__assign({}, state), { finalQuery: typeof payload === 'function' ? payload(state.finalQuery) : payload })); },
+};
 /**
  * 处理列表数据的hooks
  */
 function useListViewData(fetchFn, query) {
     if (query === void 0) { query = {}; }
-    var _a = __read(react_1.useState([]), 2), listData = _a[0], setListData = _a[1];
-    var _b = __read(react_1.useState(false), 2), loading = _b[0], setLoading = _b[1];
     var initData = react_1.useMemo(function () { return (__assign(__assign({}, exports.initialQuery), query)); }, [query]);
-    // 用于筛选的请求参数
-    var _c = __read(react_1.useState(initData), 2), finalQuery = _c[0], setFinalQuery = _c[1];
+    var _a = __read(useObjectState_1.default({
+        listData: [],
+        loading: false,
+        finalQuery: initData,
+    }, listViewReducers), 3), _b = _a[0], listData = _b.listData, loading = _b.loading, finalQuery = _b.finalQuery, setObjectState = _a[1], setFinalQuery = _a[2].setFinalQuery;
     // 获取数据, filter通过请求参数传入
     var loadData = react_1.useCallback(function (fetchParams) {
         var page = fetchParams.page, fetchQuery = fetchParams.query, _a = fetchParams.isMerge, isMerge = _a === void 0 ? false : _a;
-        setLoading(true);
+        setObjectState({ loading: true });
         return new Promise(function (resolve, reject) {
             fetchFn({ page: page, query: fetchQuery })
                 .then(function (_a) {
                 var data = _a.data, hasMore = _a.hasMore;
-                setLoading(false);
-                setListData(function (listData) { return (isMerge ? listData.concat(data) : data || []); });
-                setFinalQuery({ page: __assign(__assign({}, page), { hasMore: hasMore }), query: fetchQuery });
+                setObjectState(function (prevState) { return ({
+                    loading: false,
+                    finalQuery: { page: __assign(__assign({}, page), { hasMore: hasMore }), query: fetchQuery },
+                    listData: isMerge ? prevState.listData.concat(data) : data || [],
+                }); });
                 resolve('load data success');
             })
                 .catch(function (e) {
-                setLoading(false);
+                setObjectState({ loading: false });
                 console.log(e);
                 reject(new Error("load data error"));
             });
@@ -75,16 +86,16 @@ function useListViewData(fetchFn, query) {
      * 清空筛选条件
      */
     var clearQuery = react_1.useCallback(function () {
-        setFinalQuery(initData);
+        setObjectState({ finalQuery: initData });
     }, [initData]);
     // 重载数据，即清空分页、查询条件重新请求
     var reloadData = react_1.useCallback(function () {
-        setFinalQuery(initData);
+        setObjectState({ finalQuery: initData });
         return loadData(initData);
     }, [loadData, initData]);
     return {
         listData: listData,
-        initQuery: __assign({}, initData),
+        initialQuery: __assign({}, initData),
         query: finalQuery,
         loading: loading,
         loadData: loadData,

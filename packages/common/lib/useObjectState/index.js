@@ -48,8 +48,9 @@ var defaultMethods = {
  * @returns [state, setState, stateMethods]
  */
 function useObjectState(initialState, methods) {
+    if (initialState === void 0) { initialState = {}; }
     if (methods === void 0) { methods = {}; }
-    var _a = __read(useMethods_1.default(__assign(__assign({}, methods), defaultMethods), initialState || {}), 2), state = _a[0], stateMethods = _a[1];
+    var _a = __read(useMethods_1.default(__assign(__assign({}, methods), defaultMethods), initialState), 2), state = _a[0], stateMethods = _a[1];
     var setState = react_1.useCallback(function (nextState, merge) {
         if (merge === void 0) { merge = true; }
         return merge ? stateMethods._setMerge(nextState) : stateMethods._set(nextState);

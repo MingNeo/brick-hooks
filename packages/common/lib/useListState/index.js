@@ -15,22 +15,18 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = require("react");
-var useListData_1 = require("../useListData");
+var useArray_1 = __importDefault(require("../useArray"));
+var useListData_1 = __importDefault(require("../useListData"));
 /**
- * 对Record<string, any>[]格式的数据更新时进行自动处理，可以使用自定义处理函数对数据进行处理
+ * 基于useArray及useListData，对Record<string, any>[]格式的数据更新时进行自动处理，可以使用自定义处理函数对数据进行处理
  */
 function useListState(initialValue, transform) {
-    var formatListData = react_1.useCallback(function (originData) {
-        return transform ? transform(originData, useListData_1.transformsMap) : originData;
-    }, [transform]);
-    var _a = __read(react_1.useState(formatListData(initialValue || [])), 2), state = _a[0], setState = _a[1];
-    var updateState = react_1.useCallback(function (value) {
-        setState(typeof value === 'function'
-            ? function (prevState) { return formatListData(value(prevState)); }
-            : formatListData(value));
-    }, [formatListData]);
-    return [state, updateState];
+    var _a = __read(useArray_1.default(initialValue), 2), state = _a[0], arrayMethods = _a[1];
+    var listState = useListData_1.default(state, transform);
+    return [listState, arrayMethods];
 }
 exports.default = useListState;

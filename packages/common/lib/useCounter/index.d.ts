@@ -3,6 +3,11 @@ interface CounterOptions {
     max?: number;
     step?: number;
 }
+export declare const arrayMethods: {
+    inc: (state: any, step: any) => any;
+    dec: (state: any, step: any) => number;
+    reset: (state: any, initialValue: any) => any;
+};
 /**
  * 数字步进
  * @param {number} initialValue 默认值

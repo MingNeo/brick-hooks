@@ -19,33 +19,27 @@ export default function useDebounceFn(
   handler: DebunceFn,
   wait = 100
   // options: DebounceFnOptions = {},
-) {
+): [DebunceFn, () => void] {
   // const { deps } = options
-  const timer = useRef<any>()
-  const waitRef = useRef<any>(wait)
+  const timer = useRef<number>()
+  const waitRef = useRef<number>(wait)
   const fnRef = useRef<DebunceFn>(handler)
-  if (!fnRef.current) fnRef.current = handler
+  fnRef.current = handler
 
-  const result = useMemo(() => {
+  return useMemo(() => {
     const cancel = () => {
       clearTimeout(timer.current)
     }
 
     const debounceFn = (...args: any) => {
       timer.current && clearTimeout(timer.current)
+
       timer.current = setTimeout(() => {
         cancel()
         fnRef.current && fnRef.current.apply(null, args)
-      }, waitRef.current)
+        timer.current = null
+      }, waitRef.current) as unknown as number
     }
-    return [debounceFn, cancel] as [typeof debounceFn, typeof cancel]
+    return [debounceFn, cancel]
   }, [])
-
-  // useEffect(() => {
-  //   // 如果配置了deps，即自动在deps变化的时候执行debounceFn
-  //   if (deps) result[0]()
-  //   return result[1]
-  // }, deps || [])
-
-  return result
 }

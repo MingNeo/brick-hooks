@@ -87,4 +87,4 @@ export declare const transformsMap: {
  * 对Record<string, any>[]格式的数据进行memo处理, 自动监听变化并更新，
  * 可以使用自定义处理函数对数据进行各种基础处理及转化为tree、obj、group等高级处理
  */
-export default function useListData<T extends Record<string, any>>(value: T[], transform?: (originData: T[], transformMethods: typeof transformsMap) => any): any;
+export default function useListData<T extends Record<string, any>>(value?: T[], transform?: (originData: T[], transformMethods: typeof transformsMap) => any): any;

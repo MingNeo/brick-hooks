@@ -16,7 +16,13 @@ var __read = (this && this.__read) || function (o, n) {
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.arrayMethods = void 0;
 var react_1 = require("react");
+exports.arrayMethods = {
+    inc: function (state, step) { return state + step; },
+    dec: function (state, step) { return state - step; },
+    reset: function (state, initialValue) { return initialValue; }
+};
 /**
  * 数字步进
  * @param {number} initialValue 默认值

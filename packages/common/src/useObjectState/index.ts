@@ -1,7 +1,8 @@
 import { useCallback } from 'react'
-import useMethods from '../useMethods'
+import useMethods, { BoundMethods } from '../useMethods'
 
 type State = Record<string, any>
+type SetState = (nextState: any, merge?: boolean) => void
 
 const defaultMethods = {
   _set: (prevState: State, payload: State) =>
@@ -18,21 +19,21 @@ const defaultMethods = {
  * @param methods 自定义reducers方法
  * @returns [state, setState, stateMethods]
  */
-export default function useObjectState<S extends State>(
-  initialState: S,
+export default function useObjectState<S>(
+  initialState: S = {} as S,
   methods: Record<string, (...args: any[]) => S> = {}
-) {
-  const [state, stateMethods] = useMethods(
+): [S, SetState, BoundMethods] {
+  const [state, stateMethods] = useMethods<S>(
     { ...methods, ...defaultMethods },
-    initialState || {}
+    initialState as S
   )
 
-  const setState = useCallback(
+  const setState: SetState = useCallback(
     (nextState, merge: boolean = true) =>
       merge ? stateMethods._setMerge(nextState) : stateMethods._set(nextState),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
-  return [state, setState, stateMethods] as [S, typeof setState, typeof stateMethods]
+  return [state, setState, stateMethods]
 }

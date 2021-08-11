@@ -17,10 +17,6 @@ describe('useDebounceEffect 校验', () => {
     expect(useDebounceEffect).toBeDefined()
   }) 
 
-  it('引用正常', () => {
-    expect(useDebounceEffect).toBeDefined()
-  })
-
   it('初始状态正常', async () => {
     const { result } = renderHook(() => {
       const [state, setState] = useState(5)

@@ -7,6 +7,7 @@
 * 可以更方便的使用reducer，类redux的方式管理数据
 * 配合hydrogen-store-redux-plugin 可以使用redux-devtools 进行调试
 * 配合hydrogen-store-effect-plugin 可以使用effect进行异步管理
+* 配合hydrogen-store-immer-plugin 可以使用immer语法简化编写reducer
 
 ## Usage
 仅需要把useState换成useStore，即可跨模块共享全局数据，无需添加Provider等处理。
@@ -300,5 +301,30 @@ function Home() {
   }, [])
 }
 ```
+#### immer
+使用immerPlugin，可以使用immer的语法简化编写reducer
+
+!注意，当前版本不支持immerPlugin 和 reduxPlugin同时使用, 将在下个版本支持
+
+```javascript
+import { createStore } from 'hydrogen-store'
+import immerPlugin from 'hydrogen-store-immer-plugin'
+
+const testModel = {
+  state: { data: { a: { b: 1 }} },
+  reducers: {
+    testAction: (state, payload) => (state.data.a.b = 2)
+  },
+  effects: {}
+}
+
+export const singleStore = createStore({
+  modules: {
+    test: testModel
+  },
+  plugins: [effectPlugin, immerPlugin]
+})
+```
+
 
 

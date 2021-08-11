@@ -3,13 +3,16 @@ import useMethods from '../useMethods'
 
 const checkedMapReducers = {
   setChecked: (checkedMap = {}, payload: { key: string | number; checked: boolean }) => ({
-    ...(checkedMap || {}),
+    ...checkedMap,
     [payload.key]: payload.checked,
   }),
+
   setAllChecked: (checkedMap = {}, checked: boolean) =>
     Object.keys(checkedMap).reduce((prev, curr) => ({ ...prev, [curr]: checked }), {}),
+
   clearChecked: () => ({}),
-  expandCheckedMap: (checkedMap = {}, payload = []) => ({
+
+  expandCheckedMap: (checkedMap = {}, payload: (string | number)[] = []) => ({
     ...payload.reduce((prev, curr) => ({ ...prev, [curr]: false }), {}),
     ...checkedMap,
   }),
@@ -18,9 +21,9 @@ const checkedMapReducers = {
 /**
  * 列表的多选hooks，选择，全选，已选
  * @param {array} items 所有id
- * @param {array} defaultSelecteds 当前已选中的map
+ * @param {array} defaultSelecteds 当前已选中ids
  */
-export default function useListChecked(items: string[] = [], defaultSelecteds: string[] = []) {
+export default function useListChecked(items: (string | number)[] = [], defaultSelecteds: (string | number)[] = []) {
   // 当前已选中
   const currCheckedMap = useMemo(
     () => items.reduce((prev, curr) => ({ ...prev, [curr]: defaultSelecteds.includes(curr) }), {}),
@@ -38,11 +41,13 @@ export default function useListChecked(items: string[] = [], defaultSelecteds: s
     [checkedMap]
   )
 
-  const setChecked = useCallback(
-    (key: string, checked: boolean) => checkedMapMethods.setChecked({ key, checked }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
+  const { setChecked, clearChecked } = useMemo(() => {
+    return {
+      setChecked: (key: string, checked: boolean) => checkedMapMethods.setChecked({ key, checked }),
+      // 清空选中
+      clearChecked: checkedMapMethods.clearChecked as () => void,
+    }
+  }, [])
 
   // 切换全选状态或设置为指定的全选状态
   const toggleAllChecked = useCallback(
@@ -51,13 +56,10 @@ export default function useListChecked(items: string[] = [], defaultSelecteds: s
     [isAllChecked]
   )
 
-  // 清空选中
-  const clearChecked = () => checkedMapMethods.clearChecked()
-
   // ids列表变化时, 更新map数据, 动态载入下一页数据等时更新checkMap
   useEffect(() => {
     checkedMapMethods.expandCheckedMap(items)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items])
 
   return {

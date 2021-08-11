@@ -5,5 +5,5 @@ declare type DebunceFn = (...args: any[]) => any;
  * @param wait
  * @param options //todo maxWait、trailing、leading
  */
-export default function useDebounceFn(handler: DebunceFn, wait?: number): [(...args: any) => void, () => void];
+export default function useDebounceFn(handler: DebunceFn, wait?: number): [DebunceFn, () => void];
 export {};

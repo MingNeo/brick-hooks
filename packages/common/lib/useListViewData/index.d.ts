@@ -15,8 +15,8 @@ export declare const initialQuery: QueryParams;
  * 处理列表数据的hooks
  */
 export default function useListViewData(fetchFn: FetchFn, query?: {}): {
-    listData: any[];
-    initQuery: {
+    listData: any;
+    initialQuery: {
         page: {
             pageNo: number;
             pageSize: number;
@@ -24,25 +24,11 @@ export default function useListViewData(fetchFn: FetchFn, query?: {}): {
         };
         query: Record<string, any>;
     };
-    query: {
-        page: {
-            pageNo: number;
-            pageSize: number;
-            hasMore: boolean;
-        };
-        query: Record<string, any>;
-    };
-    loading: boolean;
+    query: any;
+    loading: any;
     loadData: (fetchParams: any) => Promise<unknown>;
     loadNextPage: () => Promise<unknown>;
     clearQuery: () => void;
     reloadData: () => Promise<unknown>;
-    setQuery: import("react").Dispatch<import("react").SetStateAction<{
-        page: {
-            pageNo: number;
-            pageSize: number;
-            hasMore: boolean;
-        };
-        query: Record<string, any>;
-    }>>;
+    setQuery: (...args: any[]) => void;
 };

@@ -31,7 +31,7 @@ export default function useDebounceEffect(callback: EffectCallback, wait = 100, 
           destructor && destructorSetRef.current.add(destructor)
         }
         timerRef.current = null
-      }, waitRef.current)
+      }, waitRef.current) as unknown as number
     }
     return {
       debounceCallback,
@@ -40,7 +40,6 @@ export default function useDebounceEffect(callback: EffectCallback, wait = 100, 
   }, [])
 
   useEffect(() => {
-    // 如果配置了deps，即自动在deps变化的时候执行debounceCallback
     if (deps?.length) {
       debounceCallback()
     }

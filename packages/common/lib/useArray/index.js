@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.arrayMethods = void 0;
 var useMethods_1 = __importDefault(require("../useMethods"));
 exports.arrayMethods = {
-    set: function (state, value) { return value; },
+    set: function (state, value) { return typeof value === 'function' ? value(state) : value; },
     push: function (state, value) {
         if (state === void 0) { state = []; }
         return __spread(state, [value]);
@@ -35,6 +35,14 @@ exports.arrayMethods = {
     slice: function (state, start, end) { return state.slice(start, end); },
     clear: function () { return []; },
     reverse: function (state) { return __spread(state).reverse(); },
+    concat: function (state) {
+        var _a;
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        return (_a = __spread(state)).concat.apply(_a, __spread(args));
+    },
     sort: function (state, callback) { return __spread(state).sort(callback); },
     sortBy: function (data, _a) {
         if (data === void 0) { data = []; }

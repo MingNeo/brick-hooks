@@ -21,9 +21,8 @@ function useDebounceFn(handler, wait
     var timer = react_1.useRef();
     var waitRef = react_1.useRef(wait);
     var fnRef = react_1.useRef(handler);
-    if (!fnRef.current)
-        fnRef.current = handler;
-    var result = react_1.useMemo(function () {
+    fnRef.current = handler;
+    return react_1.useMemo(function () {
         var cancel = function () {
             clearTimeout(timer.current);
         };
@@ -36,15 +35,10 @@ function useDebounceFn(handler, wait
             timer.current = setTimeout(function () {
                 cancel();
                 fnRef.current && fnRef.current.apply(null, args);
+                timer.current = null;
             }, waitRef.current);
         };
         return [debounceFn, cancel];
     }, []);
-    // useEffect(() => {
-    //   // 如果配置了deps，即自动在deps变化的时候执行debounceFn
-    //   if (deps) result[0]()
-    //   return result[1]
-    // }, deps || [])
-    return result;
 }
 exports.default = useDebounceFn;

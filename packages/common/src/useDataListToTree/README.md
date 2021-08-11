@@ -9,7 +9,7 @@ const mockData = [
   { id: 4, pid: 1, value: '烟台' },
 ]
 function MyComponent() {
-  const treeData = useDataListToMap(listData); 
+  const treeData = useDataListToTree(listData); 
 
   // treeData:
   // [{

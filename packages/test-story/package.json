@@ -1,6 +1,6 @@
 {
   "name": "test-story",
-  "version": "0.1.26",
+  "version": "0.1.27",
   "private": true,
   "description": "> ",
   "author": "Klose <mingrenjbdtx@gmail.com>",
@@ -26,7 +26,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "brick-hooks": "^0.1.26",
+    "brick-hooks": "^0.1.27",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   },

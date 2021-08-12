@@ -1,6 +1,6 @@
 ## useDataListToTree
 
-对数组类型的数据进行处理，可以直接操作数组方法
+useListData中转化为tree的封装，将列表类型数据转化为树的格式
 ```javascript
 const mockData = [
   { id: 1, pid: 0, value: '山东' },

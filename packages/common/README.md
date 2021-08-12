@@ -32,7 +32,7 @@ const { useArray } = require('brick-hooks');
 
 [useDataListToTree](./src/useDataListToTree/README.md) useListData中转化为tree的封装，将列表类型数据转化为树的格式
 
-[useDataListToMap](./src/useDataListToMap/README.md)useListData中转化为Object的封装，
+[useDataListToMap](./src/useDataListToMap/README.md) useListData中转化为Object的封装
 
 [useDataTreeToList](./src/useDataTreeToList/README.md) 将树的格式的数据转化为列表
 

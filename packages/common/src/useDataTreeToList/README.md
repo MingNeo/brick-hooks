@@ -1,5 +1,6 @@
-## useDataListToTree
+## useDataTreeToList
 
+将树的格式的数据转化为列表，为useListData中转化为tree的进一步封装
 ```javascript
   const data = [{
     id: 1,

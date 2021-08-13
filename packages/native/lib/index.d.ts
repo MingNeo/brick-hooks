@@ -1,2 +1,2 @@
-export { default as useAppstate } from './useAppstate';
+export { default as useAppState } from './useAppState';
 export { default as useScrollToTop } from './useScrollToTop';

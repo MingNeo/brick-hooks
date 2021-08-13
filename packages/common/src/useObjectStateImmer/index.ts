@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import useMethodsImmer from '../useMethods/useMethodsImmer'
+import useMethodsImmer from '../useMethodsImmer'
 
 type State = Record<string, any>
 

@@ -20,7 +20,7 @@ var __spread = (this && this.__spread) || function () {
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.useSubscribe = exports.createEventBus = exports.publish = exports.EventBus = exports.default = exports.createContextEventBus = void 0;
+exports.useSubscribe = exports.createEventBus = exports.publish = exports.EventBus = exports.createContextEventBus = exports.default = void 0;
 var react_1 = require("react");
 var eventBus_1 = require("./eventBus");
 Object.defineProperty(exports, "EventBus", { enumerable: true, get: function () { return eventBus_1.EventBus; } });

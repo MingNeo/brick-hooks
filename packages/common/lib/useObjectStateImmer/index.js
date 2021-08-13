@@ -31,7 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = require("react");
-var useMethodsImmer_1 = __importDefault(require("../useMethods/useMethodsImmer"));
+var useMethodsImmer_1 = __importDefault(require("../useMethodsImmer"));
 var defaultMethods = {
     _set: function (draftState, payload) {
         if (payload === void 0) { payload = {}; }

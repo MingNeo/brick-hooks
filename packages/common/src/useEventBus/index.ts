@@ -5,7 +5,11 @@ function subscribe<T>(bus: EventBus<T>, type: EventType, callback: Subscription<
   return bus?.subscribe(type, callback)
 }
 
-function useSubscribe<T>(bus: EventBus<T>, type: EventType, ...args: [string, Subscription<T>] | [Subscription<T>]) {
+function useSubscribe<T>(
+  bus: EventBus<T>,
+  type: EventType,
+  ...args: [string, Subscription<T>] | [Subscription<T>]
+) {
   const [eventName, callback] = type
     ? [type, ...(args as [Subscription<T>])]
     : (args as [string, Subscription<T>])
@@ -33,6 +37,10 @@ function useEventBus<T = void>(bus: EventBus<T>, type?: EventType) {
   }
 }
 
+type CreateEventBusUseSubscribe = <T>(
+  type: EventType,
+  ...args: [string, Subscription<T>] | [Subscription<T>]
+) => void
 /**
  * 创建一个独立的eventBus实例
  * @returns
@@ -42,7 +50,7 @@ const createEventBus = () => {
 
   return {
     publish: bus?.publish.bind(null),
-    useSubscribe: useSubscribe.bind(null, bus),
+    useSubscribe: useSubscribe.bind(null, bus) as CreateEventBusUseSubscribe,
     useEventBus: useEventBus.bind(null, bus),
   }
 }
@@ -50,7 +58,7 @@ const createEventBus = () => {
 /**
  * 可以生成一个用于上下文的EventBus及相关hooks
  */
-export function createContextEventBus() {
+function createContextEventBus() {
   const contextState = createEventBus()
   const eventBusContext = createContext(contextState)
 
@@ -58,7 +66,7 @@ export function createContextEventBus() {
     return useContext(eventBusContext)
   }
 
-  (eventBusContext as any).useEventBus = useContextEventBus
+  ;(eventBusContext as any).useEventBus = useContextEventBus
 
   return eventBusContext
 }
@@ -71,6 +79,7 @@ const {
 
 export {
   useEventBusWithoutContext as default,
+  createContextEventBus,
   EventBus,
   publish,
   createEventBus,

@@ -11,6 +11,7 @@ export async function setStorage(key: string, value: any) {
       await AsyncStorage.setItem(key, `${value}`)
     }
   }
+  return true
 }
 
 export async function getStorage(key: string): Promise<any> {

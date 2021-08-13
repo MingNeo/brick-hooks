@@ -40,6 +40,8 @@ const { useArray } = require('brick-hooks');
 
 [useTrim](./src/useTrim/README.md) 对字符串进行自动去除空格
 
+[useTrimValue](./src/useTrimValue/README.md) 创建一个字符串state，并对字符串进行自动去除空格
+
 [useMemoCompare](./src/useMemoCompare/README.md) 根据指定函数判断一个数据是否应该触发更新，返回新的值
 
 #### 开发方式

@@ -67,7 +67,7 @@ function setStorage(key, value) {
                     _a.sent();
                     _a.label = 6;
                 case 6: return [3 /*break*/, 7];
-                case 7: return [2 /*return*/];
+                case 7: return [2 /*return*/, true];
             }
         });
     });

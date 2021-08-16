@@ -35,7 +35,8 @@ function useStorage(itemName, initialValue, _a) {
     var methods = react_1.useMemo(function () {
         var setValue = function (value) {
             helper_1.setStorage(storageType, itemName, !isNil(value) ? value : initialValue);
-            watchStorageChange || (!isNil(value) ? setStateValue(helper_1.parseValue(value)) : setStateValue(initialValue));
+            watchStorageChange ||
+                (!isNil(value) ? setStateValue(helper_1.parseValue(value)) : setStateValue(initialValue));
         };
         var clear = function () {
             helper_1.removeStorage(storageType, itemName);
@@ -59,7 +60,7 @@ function useStorage(itemName, initialValue, _a) {
             window.removeEventListener('storage', onStorage);
         };
     }, [itemName, watchStorageChange]);
-    return [value, methods.setValue, { clear: methods.clear, }];
+    return [value, methods.setValue, { clear: methods.clear }];
 }
 exports.default = useStorage;
 exports.useLocalStorage = function (itemName, initialValue, _a) {

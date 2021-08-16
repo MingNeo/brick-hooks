@@ -1,15 +1,23 @@
 import { useState } from 'react'
 import { getCookie, setCookie } from './cookie'
 
-export default function useCookie(key: any, initialValue: string | number | boolean) {
-  const [item, setItem] = useState(() => {
-    return getCookie(key) || initialValue
-  })
+type SetItem = (value: string | number | boolean, options?: { days: number; path: string }) => void
 
-  const updateItem = (value: string | number | boolean, options = { days: 7, path: '/' }) => {
+export default function useCookie(
+  key: string
+): [string, SetItem, { getItem: () => string; refreshItem: () => void }] {
+  const getItem = () => getCookie(key)
+  const [item, setItem] = useState(getItem)
+
+  const updateItem: SetItem = (value: string, options = { days: 7, path: '/' }) => {
     setItem(value)
     setCookie(key, value, options)
   }
 
-  return [item, updateItem] as [any, typeof updateItem]
+  const refreshItem = () => {
+    const newItem = getItem()
+    setItem(newItem)
+  }
+
+  return [item, updateItem, { getItem, refreshItem }]
 }

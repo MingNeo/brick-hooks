@@ -22,8 +22,8 @@ var __spread = (this && this.__spread) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = require("react");
 var brick_hooks_1 = require("brick-hooks");
-function useScrollInView(config, dep) {
-    var containerRef = config.containerRef, targetRef = config.targetRef, onScroll = config.onScroll;
+function useScrollInView(options, dep) {
+    var containerRef = options.containerRef, targetRef = options.targetRef, onScroll = options.onScroll;
     var handleScroll = react_1.useCallback(function (event) {
         var _a, _b;
         var containerH = (_a = containerRef === null || containerRef === void 0 ? void 0 : containerRef.current) === null || _a === void 0 ? void 0 : _a.clientHeight;

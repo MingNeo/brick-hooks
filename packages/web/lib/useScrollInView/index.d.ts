@@ -1,2 +1,2 @@
-declare function useScrollInView(config: any, dep: any): void;
+declare function useScrollInView(options: any, dep: any): void;
 export default useScrollInView;

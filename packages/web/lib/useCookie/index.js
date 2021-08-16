@@ -18,15 +18,18 @@ var __read = (this && this.__read) || function (o, n) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = require("react");
 var cookie_1 = require("./cookie");
-function useCookie(key, initialValue) {
-    var _a = __read(react_1.useState(function () {
-        return cookie_1.getCookie(key) || initialValue;
-    }), 2), item = _a[0], setItem = _a[1];
+function useCookie(key) {
+    var getItem = function () { return cookie_1.getCookie(key); };
+    var _a = __read(react_1.useState(getItem), 2), item = _a[0], setItem = _a[1];
     var updateItem = function (value, options) {
         if (options === void 0) { options = { days: 7, path: '/' }; }
         setItem(value);
         cookie_1.setCookie(key, value, options);
     };
-    return [item, updateItem];
+    var refreshItem = function () {
+        var newItem = getItem();
+        setItem(newItem);
+    };
+    return [item, updateItem, { getItem: getItem, refreshItem: refreshItem }];
 }
 exports.default = useCookie;

@@ -2,6 +2,8 @@ import { useCallback } from 'react'
 import useMethodsImmer from '../useMethodsImmer'
 
 type State = Record<string, any>
+type SetState = (nextState: any, merge?: boolean) => any
+type BoundMethod = (nextState: any, payload?: any) => any
 
 const defaultMethods = {
   _set: (draftState, payload: State = {}) => {
@@ -20,7 +22,7 @@ const defaultMethods = {
         draftState[key] = value
       })
     }
-  }
+  },
 }
 
 /**
@@ -32,18 +34,18 @@ const defaultMethods = {
 export default function useObjectStateImmer<S extends State>(
   initialState: S,
   methods: Record<string, (...args: any[]) => S>
-) {
+): [S, SetState, Record<string, BoundMethod>] {
   const [state, stateMethods] = useMethodsImmer<S>(
     { ...methods, ...defaultMethods },
     initialState || {}
   )
 
-  const setState = useCallback(
+  const setState: SetState = useCallback(
     (nextState, merge: boolean = false) =>
-    merge ? stateMethods._setMerge(nextState) : stateMethods._set(nextState),
+      merge ? stateMethods._setMerge(nextState) : stateMethods._set(nextState),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
-  return [state, setState, stateMethods] as [S, typeof setState, typeof stateMethods]
+  return [state, setState, stateMethods]
 }

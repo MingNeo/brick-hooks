@@ -1,12 +1,12 @@
 import { useEffect, useCallback } from 'react'
 import { useDebounceFn } from 'brick-hooks'
 
-function useScrollInView(config, dep) {
+function useScrollInView(options, dep) {
   const {
     containerRef,
     targetRef,
-    onScroll, // 提供一个接收解除监听的回调函数
-  } = config
+    onScroll, // 提供一个接收监听的回调函数
+  } = options
 
   const handleScroll = useCallback(
     (event) => {

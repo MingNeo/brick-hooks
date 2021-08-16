@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react'
 
-// 向页面中插入一段script
-export default function useScript(src: string) {
-  const [status, setStatus] = useState(src ? 'loading' : '')
+type Status = '' | 'loading' | 'success' | 'error'
+
+/**
+ *  向页面中插入一段script
+*/ 
+export default function useScript(src: string): Status {
+  const [status, setStatus] = useState<Status>(src ? 'loading' : '')
 
   useEffect(() => {
     if (!src) {
@@ -11,36 +15,33 @@ export default function useScript(src: string) {
     }
 
     let script = document.querySelector<HTMLScriptElement>(`script[src="${src}"]`)
+    let onStatusChange = (event: Event) => {
+      setStatus(event.type === 'load' ? 'success' : 'error')
+    }
     if (!script) {
       script = document.createElement('script')
       script.src = src
       script.async = true
       script.setAttribute('data-status', 'loading')
       document.body.appendChild(script)
-      const setAttributeFromEvent = (event: Event) => {
-        ;(script as HTMLScriptElement).setAttribute(
-          'data-status',
-          event.type === 'load' ? 'success' : 'error'
-        )
+      onStatusChange = (event: Event) => {
+        setStatus(event.type === 'load' ? 'success' : 'error')
+        script.setAttribute('data-status', event.type === 'load' ? 'success' : 'error')
       }
-      script.addEventListener('load', setAttributeFromEvent)
-      script.addEventListener('error', setAttributeFromEvent)
     } else {
-      setStatus(script.getAttribute('data-status') as string)
+      setStatus(script.getAttribute('data-status') as Status)
     }
-    const setStateFromEvent = (event: Event) => {
-      setStatus(event.type === 'load' ? 'success' : 'error')
-    }
-    script.addEventListener('load', setStateFromEvent)
-    script.addEventListener('error', setStateFromEvent)
+
+    script.addEventListener('load', onStatusChange)
+    script.addEventListener('error', onStatusChange)
 
     return () => {
       if (script) {
-        script.removeEventListener('load', setStateFromEvent)
-        script.removeEventListener('error', setStateFromEvent)
+        script.removeEventListener('load', onStatusChange)
+        script.removeEventListener('error', onStatusChange)
       }
     }
   }, [src])
-  
+
   return status
 }

@@ -16,9 +16,9 @@ exports.setCookie = function (name, value, options) {
 };
 exports.getCookie = function (name) {
     try {
-        return (document.cookie || '').split('; ').reduce(function (r, v) {
-            var parts = v.split('=');
-            return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+        return (document.cookie || '').split('; ').reduce(function (prev, curr) {
+            var parts = curr.split('=');
+            return parts[0] === name ? decodeURIComponent(parts[1]) : prev;
         }, '');
     }
     catch (err) {

@@ -21,12 +21,13 @@ const counterReducers = {
 }
 
 function MyComponent({ obj }) {
-  const [state, { inc, dec }] = useMethods(counterReducers, 0)
+  const [state, { inc, dec, dispatch }] = useMethods(counterReducers, 0)
 
   return (
     <div>
       <button onClick={() => inc()}>inc</button>
-      <button onClick={() => dec()}>inc</button>
+      <button onClick={() => dispatch('inc')}>dispatchInc</button>
+      <button onClick={() => dec()}>dec</button>
     </div>
   )
 }
@@ -41,11 +42,11 @@ const counterReducers = state => ({
 })
 
 function MyComponent({ obj }) {
-  const [state, counterMethods] = useMethodsImmer(counterReducers, 0);
+  const [state, { inc, dec, dispatch }] = useMethodsImmer(counterReducers, 0);
 
   return <div>
-    <button onClick={() => counterMethods.inc()}>inc</button>
-    <button onClick={() => counterMethods.dec()}>inc</button>
+    <button onClick={() => inc()}>inc</button>
+    <button onClick={() => dec()}>dec</button>
   </div>;
 }
 

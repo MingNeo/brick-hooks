@@ -21,7 +21,8 @@ export default function useStorage(
   const methods = useMemo(() => {
     const setValue = (value?: string | number | Record<string, any> | any[]) => {
       setStorage(storageType, itemName, !isNil(value) ? value : initialValue)
-      watchStorageChange || (!isNil(value) ? setStateValue(parseValue(value as any)) : setStateValue(initialValue))
+      watchStorageChange ||
+        (!isNil(value) ? setStateValue(parseValue(value as any)) : setStateValue(initialValue))
     }
     const clear = () => {
       removeStorage(storageType, itemName)
@@ -48,12 +49,11 @@ export default function useStorage(
     }
   }, [itemName, watchStorageChange])
 
-  return [value, methods.setValue, { clear: methods.clear,  }] as [
+  return [value, methods.setValue, { clear: methods.clear }] as [
     typeof value,
     typeof methods.setValue,
-    { 
-      clear: typeof methods.clear,
-
+    {
+      clear: typeof methods.clear
     }
   ]
 }

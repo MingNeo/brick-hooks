@@ -53,7 +53,7 @@ var defaultMethods = {
                 draftState[key] = value;
             });
         }
-    }
+    },
 };
 /**
  * 面向对象的useState，自动进行合并，基本可以认为等同于class组件的this.setState

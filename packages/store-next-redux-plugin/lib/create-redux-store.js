@@ -72,6 +72,7 @@ exports.createReduxStore = function (_a) {
         }, currentState) : currentState;
         return nextState;
     };
+    console.log('name', name);
     var store = redux_1.createStore(storeReducer, initialState, window.__REDUX_DEVTOOLS_EXTENSION__({
         name: name || 'React state',
         actionsBlacklist: ['/_deleteModule'],

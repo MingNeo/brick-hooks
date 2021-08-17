@@ -121,6 +121,7 @@ function effectPlugin(Store) {
                 rootState = this._state;
                 prevState = this._state[moduleName];
                 dispatch = function (commitActionName, commitPayload) {
+                    console.log("🚀 ~ file: index.ts ~ line 78 ~ dispatch ~ commitActionName", commitActionName);
                     Store.prototype.dispatchModuleAction.bind(_this, moduleName)(commitActionName, commitPayload);
                 };
                 dispatchEffect = function (effectActionName, effectPayload, module) {
@@ -137,13 +138,14 @@ function effectPlugin(Store) {
         var _a = (this._options || {}).modules, modules = _a === void 0 ? {} : _a;
         StoreOriginInitialBase.call(this, options);
         this._effects = getEffects(modules);
-        // this.useStore = useStore.bind(this, this)
+        // this.useStore = this.getUseStore()
     };
     Store.prototype.dispatchModuleEffectAction = dispatchModuleEffectAction;
     var StoreOriginGetUseStore = Store.prototype.getUseStore;
     Store.prototype.initEffects = function () {
         this._effects = this._effects || {};
-        this.getUseStore = getUseStore.bind(this, this, StoreOriginGetUseStore, dispatchModuleEffectAction);
+        this.getUseStore = getUseStore.bind(this, this, StoreOriginGetUseStore.bind(this), dispatchModuleEffectAction);
+        // this.useStore = this.getUseStore()
     };
     return function initial(store) {
         store.initEffects();

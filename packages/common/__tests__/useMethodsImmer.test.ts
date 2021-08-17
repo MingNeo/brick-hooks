@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import useMethodsImmer from '../src/useMethods/useMethodsImmer'
+import useMethodsImmer from '../src/useMethodsImmer'
 
 const methodsCounter = {
   inc: (draftState) => void(draftState.count += 1),

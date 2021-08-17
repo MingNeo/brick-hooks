@@ -66,7 +66,6 @@ export class Store<S extends StoreState> extends EventBus<any> {
     const initialState = combState(modules)
     this._state = this._state || initialState || {}
     this._reducers = this._reducers || getReducer(modules)
-    // this.useStore = useStore.bind(this, this)
   }
 
   getUseStore() {
@@ -93,6 +92,8 @@ export class Store<S extends StoreState> extends EventBus<any> {
         pluginInitial.$i = true
       }
     }
+
+    this.useStore = this.getUseStore()
   }
 
   /**

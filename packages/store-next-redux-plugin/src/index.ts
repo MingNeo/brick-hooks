@@ -63,6 +63,7 @@ export default function reduxPlugin<S>(Store) {
       initialState,
       this._reducers
     )
+
     this._reduxStore = reduxStore
     this._dispatchRedux = dispatch
     this._unsubscribeRedux = unsubscribe

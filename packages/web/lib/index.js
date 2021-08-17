@@ -18,5 +18,7 @@ var useScroll_1 = require("./useScroll");
 Object.defineProperty(exports, "useScroll", { enumerable: true, get: function () { return useScroll_1.default; } });
 var useStorage_1 = require("./useStorage");
 Object.defineProperty(exports, "useStorage", { enumerable: true, get: function () { return useStorage_1.default; } });
+Object.defineProperty(exports, "useLocalStorage", { enumerable: true, get: function () { return useStorage_1.useLocalStorage; } });
+Object.defineProperty(exports, "useSessionStorage", { enumerable: true, get: function () { return useStorage_1.useSessionStorage; } });
 var useTitle_1 = require("./useTitle");
 Object.defineProperty(exports, "useTitle", { enumerable: true, get: function () { return useTitle_1.default; } });

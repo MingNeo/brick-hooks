@@ -68,6 +68,8 @@ export const createReduxStore: any = ({ name, initialState = {}, reducers = {} }
     return nextState
   }
 
+  console.log('name', name)
+
   const store: EnhancedStore = createStore(
     storeReducer,
     initialState,

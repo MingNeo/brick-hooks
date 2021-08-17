@@ -124,14 +124,13 @@ function useAmapPoi(_a) {
         var _b = _a === void 0 ? {} : _a, latitude = _b.latitude, longitude = _b.longitude, _c = _b.size, size = _c === void 0 ? 5 : _c, _d = _b.isAllCover, isAllCover = _d === void 0 ? true : _d, _e = _b.current, current = _e === void 0 ? false : _e;
         return __awaiter(_this, void 0, void 0, function () {
             var data, pois, isCovers_1;
-            return __generator(this, function (_f) {
-                switch (_f.label) {
+            var _f;
+            return __generator(this, function (_g) {
+                switch (_g.label) {
                     case 0: return [4 /*yield*/, getAmapNearby({ latitude: latitude, longitude: longitude })];
                     case 1:
-                        data = _f.sent();
-                        pois = (data.pois || [])
-                            .splice(0, size)
-                            .map(function (poi) { return (__assign(__assign({}, poi), { city: data.city || data.cityname })); });
+                        data = _g.sent();
+                        pois = ((_f = data.pois) === null || _f === void 0 ? void 0 : _f.splice(0, size).map(function (poi) { return (__assign(__assign({}, poi), { city: data.city || data.cityname })); })) || [];
                         if (!data.latitude || !data.longitude) {
                             return [2 /*return*/, []];
                         }
@@ -142,7 +141,7 @@ function useAmapPoi(_a) {
                         if (!(!isAllCover && getPoiDelivery)) return [3 /*break*/, 3];
                         return [4 /*yield*/, getPoiDelivery(pois)];
                     case 2:
-                        isCovers_1 = _f.sent();
+                        isCovers_1 = _g.sent();
                         return [2 /*return*/, pois.map(function (poi, i) {
                                 if (poi === void 0) { poi = {}; }
                                 return (__assign(__assign({}, poi), { isCover: isCovers_1[i] || false }));

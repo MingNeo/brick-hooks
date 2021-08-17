@@ -13,8 +13,7 @@ export const singleStore = createStore({
       },
       reducers: {
         testAction: (state, payload) => {
-          console.log("🚀 ~ file: TestStoreImmer.jsx ~ line 16 ~ state", state);
-          state.c = 300
+          state.c = payload || 300
         }
       },
       effects: {
@@ -30,12 +29,11 @@ export const singleStore = createStore({
     },
   },
   plugins: [effectPlugin, immerPlugin],
-  devtoolId: 'Test Next Store Immer'
+  devtoolId: 'Test-Next-Store-Immer'
 })
 
 const Comp1 = React.memo(function Comp1() {
-  const useStore = singleStore.getUseStore()
-  const [state = {}] = useStore('test')
+  const [state = {}] = singleStore.useStore('test')
   return <div>{state.a}</div>
 })
 
@@ -45,8 +43,7 @@ const Comp2 = React.memo(function Comp2() {
 })
 
 export default function TestCreateStore() {
-  const useStore = singleStore.getUseStore()
-  const [state = {}, setState, { dispatch, dispatchEffect }] = useStore('test', true)
+  const [state = {}, setState, { dispatch, dispatchEffect }] = singleStore.useStore('test', true)
 
   return (
     <div>
@@ -73,13 +70,13 @@ export default function TestCreateStore() {
         </Button>
         <Button
           onClick={() => {
-            dispatch('testAction', { c: 100 })
+            dispatch('testAction', 300)
           }}>
           testDispatch
         </Button>
         <Button
           onClick={() => {
-            dispatchEffect('testEffect', { c: 101 })
+            dispatchEffect('testEffect', 301)
           }}>
           testDispatchEffect
         </Button>

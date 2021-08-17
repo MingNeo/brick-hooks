@@ -95,7 +95,6 @@ var Store = /** @class */ (function (_super) {
         var initialState = utils_1.combState(modules);
         this._state = this._state || initialState || {};
         this._reducers = this._reducers || reducer_1.getReducer(modules);
-        // this.useStore = useStore.bind(this, this)
     };
     Store.prototype.getUseStore = function () {
         return useStore_1.default.bind(this, this);
@@ -130,6 +129,7 @@ var Store = /** @class */ (function (_super) {
             }
             finally { if (e_1) throw e_1.error; }
         }
+        this.useStore = this.getUseStore();
     };
     /**
      * 除了createStore时初始化，也可以通过这个方法来注册每个模块
@@ -186,6 +186,7 @@ var Store = /** @class */ (function (_super) {
         return __awaiter(this, void 0, void 0, function () {
             var reducer, prevState;
             return __generator(this, function (_c) {
+                console.log("🚀 ~ file: base.ts ~ line 161 ~ Store<S ~ dispatchModuleAction ~ prevState", moduleName, actionName);
                 if (!moduleName)
                     return [2 /*return*/];
                 reducer = (_b = (_a = this._reducers) === null || _a === void 0 ? void 0 : _a[moduleName]) === null || _b === void 0 ? void 0 : _b[actionName];

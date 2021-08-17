@@ -3,7 +3,7 @@ import { StoreHookDispatch } from './useStore'
 
 const store = createStore()
 
-const useStore = <S = any>(moduleName: string, assign: boolean, willUpdate: boolean = true) => {
+const useStore = <S = any>(moduleName: string, assign: boolean = true, willUpdate: boolean = true) => {
   const useStoreStore: UseStore = store.getUseStore()
   return useStoreStore<S>(moduleName, assign, willUpdate)
 }

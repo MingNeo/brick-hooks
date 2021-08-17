@@ -28,7 +28,7 @@ export interface ToolMethods<S> extends BoundMethods<S>{
 export default function useStore<S>(
   storeContext: any,
   moduleName: string = '',
-  autoMerge: boolean = false,
+  autoMerge: boolean = true,
   willUpdate: boolean = true,
 ): [S, SetStore<SetStoreAction<S>>, ToolMethods<S>] {
   if (!moduleName) throw new Error('moduleName is required!')

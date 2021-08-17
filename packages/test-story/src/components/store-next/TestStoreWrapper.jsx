@@ -5,6 +5,7 @@ import { useObjectState, useLogRender } from 'brick-hooks'
 import useStoreWrap from 'brick-hooks/src/useStoreWrap'
 import reduxPlugin from 'hydrogen-store-redux-plugin'
 
+
 usePlugins([reduxPlugin])
 
 const reducers = {

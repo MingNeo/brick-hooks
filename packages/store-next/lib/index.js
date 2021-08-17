@@ -26,6 +26,7 @@ Object.defineProperty(exports, "Store", { enumerable: true, get: function () { r
 var store = base_1.default();
 exports.store = store;
 var useStore = function (moduleName, assign, willUpdate) {
+    if (assign === void 0) { assign = true; }
     if (willUpdate === void 0) { willUpdate = true; }
     var useStoreStore = store.getUseStore();
     return useStoreStore(moduleName, assign, willUpdate);

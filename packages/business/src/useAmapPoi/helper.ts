@@ -1,5 +1,3 @@
-
-
 export function formatPoiInfo(data: any) {
   let name = data.formattedAddress
   name = formatPoiName(data, name)

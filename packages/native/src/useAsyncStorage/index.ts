@@ -16,11 +16,11 @@ const EVENT_TYPE = '__USE_STORAGE_CHANGE'
  * @param itemName
  * @param onStorageValueChange 当storage数据变化时触发回调函数，仅对使用useStorage的setValue/clear方法更新数据有效。
  */
-export default function useStorage(itemName: string, onStorageValueChange: Callback) {
+export default function useAsyncStorage(itemName: string, onStorageValueChange: Callback) {
   // 当storage数据变化时触发回调函数
   useSubscribe(EVENT_TYPE, (nextValue?: string) => {
-    onStorageValueChange &&
-      onStorageValueChange(nextValue === undefined ? nextValue : parseValue(nextValue))
+    const value = nextValue === undefined ? nextValue : parseValue(nextValue)
+    onStorageValueChange && onStorageValueChange(value)
   })
 
   return useMemo(() => {

@@ -1,3 +1,5 @@
+declare type SetValue = (value?: string | number | Record<string, any> | any[]) => void;
+declare type Clear = () => void;
 /**
  *
  * @param itemName
@@ -7,16 +9,17 @@
 export default function useStorage(itemName: string, initialValue?: any, { watchStorageChange, storageType }?: {
     watchStorageChange?: boolean;
     storageType?: string;
-}): [any, (value?: string | number | Record<string, any> | any[]) => void, {
-    clear: () => void;
+}): [any, SetValue, {
+    clear: Clear;
 }];
 export declare const useLocalStorage: (itemName: string, initialValue?: any, { watchStorageChange }?: {
     watchStorageChange?: boolean;
-}) => [any, (value?: string | number | Record<string, any> | any[]) => void, {
-    clear: () => void;
+}) => [any, SetValue, {
+    clear: Clear;
 }];
 export declare const useSessionStorage: (itemName: string, initialValue?: any, { watchStorageChange }?: {
     watchStorageChange?: boolean;
-}) => [any, (value?: string | number | Record<string, any> | any[]) => void, {
-    clear: () => void;
+}) => [any, SetValue, {
+    clear: Clear;
 }];
+export {};

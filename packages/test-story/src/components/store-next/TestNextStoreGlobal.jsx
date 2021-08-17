@@ -25,14 +25,14 @@ const Comp2 = React.memo(function Comp2() {
 })
 
 export default function TestCreateStore() {
-  const [state = {}, setState, dispatch] = useStore('test')
+  const [state = {}, setState, {dispatch}] = useStore('test')
 
   return (
     <div>
       <div>
         <Button
           onClick={() => {
-            setState({ a: state.a + 1 })
+            setState({ a: state.a + 1 }, true)
           }}>
           +
         </Button>

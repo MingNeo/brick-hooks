@@ -91,7 +91,7 @@ export default function effectPlugin<S>(Store: any) {
     const { modules = {} } = this._options || {}
     StoreOriginInitialBase.call(this, options)
     this._effects = getEffects(modules)
-    // this.useStore = useStore.bind(this, this)
+    // this.useStore = this.getUseStore()
   }
 
   Store.prototype.dispatchModuleEffectAction = dispatchModuleEffectAction
@@ -99,7 +99,8 @@ export default function effectPlugin<S>(Store: any) {
   const StoreOriginGetUseStore = Store.prototype.getUseStore
   Store.prototype.initEffects = function () {
     this._effects = this._effects || {}
-    this.getUseStore = getUseStore.bind(this, this, StoreOriginGetUseStore, dispatchModuleEffectAction)
+    this.getUseStore = getUseStore.bind(this, this, StoreOriginGetUseStore.bind(this), dispatchModuleEffectAction)
+    // this.useStore = this.getUseStore()
   }
 
   return function initial(store) {

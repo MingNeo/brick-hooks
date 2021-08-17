@@ -39,6 +39,7 @@ var immer_1 = __importDefault(require("immer"));
 function ImmerPlugin(Store) {
     Store.prototype.dispatchModuleAction = function (moduleName, actionName, payload) {
         var _a, _b;
+        console.log("🚀 ~ file: index.ts ~ line 15 ~ moduleName", moduleName);
         if (!moduleName)
             return;
         var reducer = (_b = (_a = this._reducers) === null || _a === void 0 ? void 0 : _a[moduleName]) === null || _b === void 0 ? void 0 : _b[actionName];

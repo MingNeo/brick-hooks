@@ -33,9 +33,9 @@ export const singleStore = createStore({
 })
 
 const Comp1 = React.memo(function Comp1() {
-  const useStore = singleStore.getUseStore()
-  const [state = {}] = useStore('test')
-  return <div>{state.a}</div>
+  // const useStore = singleStore.getUseStore()
+  const [state = {}] = singleStore.useStore('test')
+  return <div>{JSON.stringify(state)}</div>
 })
 
 const Comp2 = React.memo(function Comp2() {
@@ -44,8 +44,8 @@ const Comp2 = React.memo(function Comp2() {
 })
 
 export default function TestCreateStore() {
-  const useStore = singleStore.getUseStore()
-  const [state = {}, setState, { dispatch, dispatchEffect }] = useStore('test', true)
+  // const useStore = singleStore.getUseStore()
+  const [state = {}, setState, { dispatch, dispatchEffect }] = singleStore.useStore('test', true)
 
   return (
     <div>

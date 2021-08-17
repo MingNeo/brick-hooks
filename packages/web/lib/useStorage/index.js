@@ -31,12 +31,15 @@ function isNil(value) {
 function useStorage(itemName, initialValue, _a) {
     if (initialValue === void 0) { initialValue = undefined; }
     var _b = _a === void 0 ? {} : _a, _c = _b.watchStorageChange, watchStorageChange = _c === void 0 ? false : _c, _d = _b.storageType, storageType = _d === void 0 ? 'localStorage' : _d;
+    var initialValueRef = react_1.useRef(initialValue);
     var _e = __read(react_1.useState(function () { return helper_1.getStorage(storageType, itemName) || initialValue; }), 2), value = _e[0], setStateValue = _e[1];
     var methods = react_1.useMemo(function () {
         var setValue = function (value) {
-            helper_1.setStorage(storageType, itemName, !isNil(value) ? value : initialValue);
+            helper_1.setStorage(storageType, itemName, !isNil(value) ? value : initialValueRef.current);
             watchStorageChange ||
-                (!isNil(value) ? setStateValue(helper_1.parseValue(value)) : setStateValue(initialValue));
+                (!isNil(value)
+                    ? setStateValue(helper_1.parseValue(value))
+                    : setStateValue(initialValueRef.current));
         };
         var clear = function () {
             helper_1.removeStorage(storageType, itemName);
@@ -51,7 +54,7 @@ function useStorage(itemName, initialValue, _a) {
         // 当storage变化的时候更新state以触发组件render
         var onStorage = function (e) {
             if (e.key === itemName) {
-                setStateValue(isNil(e.newValue) ? helper_1.parseValue(e.newValue) : initialValue);
+                setStateValue(isNil(e.newValue) ? helper_1.parseValue(e.newValue) : initialValueRef.current);
             }
         };
         // watchStorageChange 为 true时， 监听storage事件，即使直接修改也触发更新当前value

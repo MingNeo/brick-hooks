@@ -121,7 +121,6 @@ function effectPlugin(Store) {
                 rootState = this._state;
                 prevState = this._state[moduleName];
                 dispatch = function (commitActionName, commitPayload) {
-                    console.log("🚀 ~ file: index.ts ~ line 78 ~ dispatch ~ commitActionName", commitActionName);
                     Store.prototype.dispatchModuleAction.bind(_this, moduleName)(commitActionName, commitPayload);
                 };
                 dispatchEffect = function (effectActionName, effectPayload, module) {

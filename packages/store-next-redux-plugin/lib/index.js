@@ -48,7 +48,6 @@ function reduxPlugin(Store) {
     };
     var StoreOriginDispatchModuleAction = Store.prototype.dispatchModuleAction;
     Store.prototype.dispatchModuleAction = function (moduleName, actionName, payload) {
-        console.log("🚀 ~ file: index.ts ~ line 48 ~ dispatchModuleAction", this._dispatchRedux, moduleName, actionName, payload);
         if (!moduleName)
             return;
         if (this._dispatchRedux) {

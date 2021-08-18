@@ -2,7 +2,7 @@ export type Subscription<T> = (val: T, ...args: any[]) => void
 export type EventType = string | symbol
 
 export class EventBus<T> {
-  private eventContainer = new Map<EventType, Set<Subscription<T>>>()
+  eventContainer = new Map<EventType, Set<Subscription<T>>>()
 
   publish = (type: EventType, payload: any) => {
     const subscriptions = this.eventContainer.get(type)

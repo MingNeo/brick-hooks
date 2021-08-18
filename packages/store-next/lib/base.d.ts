@@ -62,4 +62,50 @@ export declare class Store<S extends StoreState> extends EventBus<any> {
      */
     dispatchModuleAction(moduleName: string, actionName: string, payload: any): Promise<void>;
 }
-export default function createStore<S = Record<string, any>>(options?: Options<S>): Store<S>;
+/**
+ * 创建独立store实例
+ */
+export default function createStore<S = Record<string, any>>(options?: Options<S>): {
+    useStore: UseStoreByContext;
+    _state: unknown;
+    _reducers: Record<string, any>;
+    _modules: Set<string>;
+    _options: Options<unknown>;
+    _reduxStore: any;
+    _dispatchRedux: any;
+    _registerReduxModule: any;
+    _unsubscribeRedux: any;
+    initialBase(options?: Options<unknown>): void;
+    getUseStore(): any;
+    /**
+     * 初始化, 使用插件后，如果不是创建新的实例，则必须调用实例的这个方法后才可以正常使用
+     */
+    init(options?: Options<unknown>): void;
+    /**
+     * 除了createStore时初始化，也可以通过这个方法来注册每个模块
+     * @param moduleName
+     * @param initialModule
+     */
+    registerModule(moduleName: string, initialModule: Module): void;
+    /**
+     * 修改配置
+     * @param options
+     */
+    config(options?: Options<unknown> | ((oldOptions: Options<unknown>) => Options<unknown>)): void;
+    getState(moduleName?: string): any;
+    setState(nextState: unknown): void;
+    _setState(nextState: unknown): void;
+    setModuleState(moduleName: string, nextState: unknown, merge: boolean): void;
+    _setModuleState(moduleName: string, nextState: any): void;
+    /**
+     * 触发一个action并调用reducer修改state
+     * @param moduleName
+     * @param actionName
+     * @param payload
+     */
+    dispatchModuleAction(moduleName: string, actionName: string, payload: any): Promise<void>;
+    eventContainer: Map<import("./eventBus").EventType, Set<import("./eventBus").Subscription<any>>>;
+    publish: (type: import("./eventBus").EventType, payload: any) => void;
+    subscribe: (type: import("./eventBus").EventType, handler: import("./eventBus").Subscription<any>) => any;
+    unSubscribe: (type: import("./eventBus").EventType, subscription: import("./eventBus").Subscription<any>) => any;
+};

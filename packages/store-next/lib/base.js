@@ -186,7 +186,6 @@ var Store = /** @class */ (function (_super) {
         return __awaiter(this, void 0, void 0, function () {
             var reducer, prevState;
             return __generator(this, function (_c) {
-                console.log("🚀 ~ file: base.ts ~ line 161 ~ Store<S ~ dispatchModuleAction ~ prevState", moduleName, actionName);
                 if (!moduleName)
                     return [2 /*return*/];
                 reducer = (_b = (_a = this._reducers) === null || _a === void 0 ? void 0 : _a[moduleName]) === null || _b === void 0 ? void 0 : _b[actionName];
@@ -204,10 +203,23 @@ var Store = /** @class */ (function (_super) {
     return Store;
 }(eventBus_1.EventBus));
 exports.Store = Store;
+function classFactory() {
+    return /** @class */ (function (_super) {
+        __extends(class_1, _super);
+        function class_1() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        return class_1;
+    }(Store));
+}
+/**
+ * 创建独立store实例
+ */
 function createStore(options) {
     if (options === void 0) { options = {}; }
     var _a = options.plugins, plugins = _a === void 0 ? [] : _a, restOptions = __rest(options, ["plugins"]);
-    plugins.forEach(function (plugin) { return Store.usePlugin(plugin); });
-    return new Store(restOptions);
+    var SingleClass = classFactory();
+    plugins.forEach(function (plugin) { return SingleClass.usePlugin(plugin); });
+    return new SingleClass(restOptions);
 }
 exports.default = createStore;

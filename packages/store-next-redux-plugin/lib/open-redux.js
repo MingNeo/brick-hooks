@@ -12,7 +12,6 @@ var create_redux_store_1 = require("./create-redux-store");
  * @returns
  */
 function openRedux(store, reduxStoreName, initialState, reducers) {
-    console.log("🚀 ~ file: open-redux.ts ~ line 16 ~ openRedux ~ reduxStoreName", reduxStoreName);
     // TODO 热更新的情况下需要特殊处理
     var reduxStore = create_redux_store_1.createReduxStore({ name: reduxStoreName, initialState: initialState, reducers: reducers });
     var dispatch = function (action) {

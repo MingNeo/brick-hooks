@@ -50,7 +50,6 @@ export class Store<S extends StoreState> extends EventBus<any> {
   _dispatchRedux: any
   _registerReduxModule
   _unsubscribeRedux: any
-
   static pluginsInitial = new Set<((...args: any[]) => void) | any>()
 
   constructor(options: Options<S> = {}) {
@@ -164,8 +163,16 @@ export class Store<S extends StoreState> extends EventBus<any> {
   }
 }
 
+function classFactory<S>() {
+  return class extends Store<S> {}
+}
+
+/**
+ * 创建独立store实例
+ */
 export default function createStore<S = Record<string, any>>(options: Options<S> = {}) {
   const { plugins = [], ...restOptions } = options
-  plugins.forEach((plugin) => Store.usePlugin(plugin))
-  return new Store(restOptions)
+  const SingleClass = classFactory()
+  plugins.forEach((plugin) => SingleClass.usePlugin(plugin))
+  return new SingleClass(restOptions)
 }

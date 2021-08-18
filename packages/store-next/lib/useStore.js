@@ -72,7 +72,6 @@ function useStore(storeContext, moduleName, autoMerge, willUpdate) {
         };
         var dispatch = function (actionName, payload) {
             var _a;
-            console.log("🚀 ~ file: useStore.ts ~ line 67 ~ dispatch ~ actionName", actionName, storeContextRef.current);
             (_a = storeContextRef.current) === null || _a === void 0 ? void 0 : _a.dispatchModuleAction(moduleName, actionName, payload);
         };
         var boundMethods = (_c = Object.keys(((_b = (_a = storeContextRef.current) === null || _a === void 0 ? void 0 : _a._reducers) === null || _b === void 0 ? void 0 : _b[moduleName]) || [])) === null || _c === void 0 ? void 0 : _c.reduce(function (prev, curr) {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '@storybook/react/demo'
-import { registerModule, useStore, store, usePlugins } from 'hydrogen-store/src/index'
+import { registerModule, useStore, store, usePlugins } from 'hydrogen-store'
 import { useObjectState, useLogRender } from 'brick-hooks'
 import useStoreWrap from 'brick-hooks/src/useStoreWrap'
 import reduxPlugin from 'hydrogen-store-redux-plugin'

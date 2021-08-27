@@ -1,8 +1,8 @@
 import React from 'react'
 import { Button } from '@storybook/react/demo'
-import { createStore } from 'hydrogen-store/src/index'
+import { createStore } from 'hydrogen-store'
 import reduxPlugin from 'hydrogen-store-redux-plugin'
-import effectPlugin from 'hydrogen-store-effect-plugin/src/index'
+import effectPlugin from 'hydrogen-store-effect-plugin'
 
 export const singleStore = createStore({
   modules: {

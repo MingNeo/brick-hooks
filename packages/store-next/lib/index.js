@@ -23,7 +23,7 @@ exports.setStoreState = exports.getStoreState = exports.usePlugins = exports.reg
 var base_1 = __importStar(require("./base"));
 exports.createStore = base_1.default;
 Object.defineProperty(exports, "Store", { enumerable: true, get: function () { return base_1.Store; } });
-var store = base_1.default();
+var _a = base_1.createStoreAndClass(), store = _a.store, StoreClass = _a.StoreClass;
 exports.store = store;
 var useStore = function (moduleName, assign, willUpdate) {
     if (assign === void 0) { assign = true; }
@@ -41,7 +41,7 @@ exports.registerModule = registerModule;
  */
 var usePlugins = (useStore.usePlugins = function (plugins) {
     if (plugins && plugins.length) {
-        plugins.forEach(function (plugin) { return base_1.Store.usePlugin(plugin); });
+        plugins.forEach(function (plugin) { return StoreClass.usePlugin(plugin); });
         // eslint-disable-next-line react-hooks/rules-of-hooks
         // 因为在createStore之后调用，所以需要重新初始化一下
         store.init();

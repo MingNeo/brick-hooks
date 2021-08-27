@@ -176,3 +176,10 @@ export default function createStore<S = Record<string, any>>(options: Options<S>
   plugins.forEach((plugin) => SingleClass.usePlugin(plugin))
   return new SingleClass(restOptions)
 }
+
+export function createStoreAndClass<S = Record<string, any>>(options: Options<S> = {}) {
+  const { plugins = [], ...restOptions } = options
+  const SingleClass = classFactory()
+  plugins.forEach((plugin) => SingleClass.usePlugin(plugin))
+  return { store: new SingleClass(restOptions), StoreClass: SingleClass }
+}

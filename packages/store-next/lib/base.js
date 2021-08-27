@@ -74,7 +74,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Store = void 0;
+exports.createStoreAndClass = exports.Store = void 0;
 var useStore_1 = __importDefault(require("./useStore"));
 var utils_1 = require("./utils");
 var eventBus_1 = require("./eventBus");
@@ -223,3 +223,11 @@ function createStore(options) {
     return new SingleClass(restOptions);
 }
 exports.default = createStore;
+function createStoreAndClass(options) {
+    if (options === void 0) { options = {}; }
+    var _a = options.plugins, plugins = _a === void 0 ? [] : _a, restOptions = __rest(options, ["plugins"]);
+    var SingleClass = classFactory();
+    plugins.forEach(function (plugin) { return SingleClass.usePlugin(plugin); });
+    return { store: new SingleClass(restOptions), StoreClass: SingleClass };
+}
+exports.createStoreAndClass = createStoreAndClass;

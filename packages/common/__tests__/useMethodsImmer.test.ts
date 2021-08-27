@@ -2,8 +2,8 @@ import { act, renderHook } from '@testing-library/react-hooks'
 import useMethodsImmer from '../src/useMethodsImmer'
 
 const methodsCounter = {
-  inc: (draftState) => void(draftState.count += 1),
-  dec: (draftState) => void(draftState.count -= 1)
+  inc: (draftState: any) => void(draftState.count += 1),
+  dec: (draftState: any) => void(draftState.count -= 1)
 }
 
 describe('useMethodsImmer 校验', () => {

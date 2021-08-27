@@ -1,13 +1,16 @@
-import createStore, { Store, Options, Module, UseStore } from './base'
+import createStore, { Store, Options, Module, UseStore, createStoreAndClass } from './base'
 import { StoreHookDispatch } from './useStore'
 
-const store = createStore()
+const { store, StoreClass } = createStoreAndClass()
 
-const useStore = <S = any>(moduleName: string, assign: boolean = true, willUpdate: boolean = true) => {
+const useStore = <S = any>(
+  moduleName: string,
+  assign: boolean = true,
+  willUpdate: boolean = true
+) => {
   const useStoreStore: UseStore = store.getUseStore()
   return useStoreStore<S>(moduleName, assign, willUpdate)
 }
-  
 
 const registerModule = (useStore.registerModule = (moduleName: string, initialModule: Module) => {
   store.registerModule(moduleName, initialModule)
@@ -18,7 +21,7 @@ const registerModule = (useStore.registerModule = (moduleName: string, initialMo
  */
 const usePlugins = (useStore.usePlugins = (plugins: any[]) => {
   if (plugins && plugins.length) {
-    plugins.forEach((plugin) => Store.usePlugin(plugin))
+    plugins.forEach((plugin) => StoreClass.usePlugin(plugin))
     // eslint-disable-next-line react-hooks/rules-of-hooks
     // 因为在createStore之后调用，所以需要重新初始化一下
     store.init()

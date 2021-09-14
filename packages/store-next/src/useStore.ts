@@ -1,21 +1,5 @@
 import { useMemo, useEffect, useReducer, useRef } from 'react'
-
-export type SetStoreAction<S> = S | ((prevState: S) => S)
-export type SetStore<A> = (value: A) => void
-
-export type StoreHookDispatch = (actionName: string, ...args: any[]) => void
-export type BoundMethods<S> = Record<string, (state: S, payload: any) => S>
-
-export interface Methods<S> {
-  setStore: SetStore<SetStoreAction<S>>
-  dispatch: StoreHookDispatch
-  boundMethods: BoundMethods<S>
-}
-
-export interface ToolMethods<S> extends BoundMethods<S>{
-  dispatch: StoreHookDispatch
-  [x: string]: (...args: any[]) => any
-}
+import { ToolMethods, Methods, SetStore, SetStoreAction } from './types'
 
 /**
  * 获取store state和set方法的hook，返回state和setState用法同React.useState。
@@ -29,7 +13,7 @@ export default function useStore<S>(
   storeContext: any,
   moduleName: string = '',
   autoMerge: boolean = true,
-  willUpdate: boolean = true,
+  willUpdate: boolean = true
 ): [S, SetStore<SetStoreAction<S>>, ToolMethods<S>] {
   if (!moduleName) throw new Error('moduleName is required!')
 
@@ -37,7 +21,7 @@ export default function useStore<S>(
   // 因为没有使用useState或者useContext，因此需要做一个强制刷新
   const [forceUpdateCount, forceUpdate] = useReducer((n: number) => n + 1, 0)
 
-  if(!storeContextRef.current._modules.has(moduleName)) {
+  if (!storeContextRef.current._modules.has(moduleName)) {
     storeContextRef.current._modules.add(moduleName)
   }
 
@@ -51,7 +35,7 @@ export default function useStore<S>(
     return () => {
       currentStoreContext?.unSubscribe(eventName, handleStateChange)
     }
-  }, [moduleName])
+  }, [moduleName, willUpdate])
 
   const methods: Methods<S> = useMemo(() => {
     /**
@@ -64,11 +48,20 @@ export default function useStore<S>(
     }
 
     const dispatch = (actionName: string, payload: any) => {
-      storeContextRef.current?.dispatchModuleAction(moduleName, actionName, payload)
+      const actionSplitResult = actionName.split('/')
+      // 当前不支持‘a/b/c'格式action type
+      let moduleType = moduleName
+      let actionType = actionName
+      if (actionSplitResult.length > 1) {
+        [moduleType, actionType] = actionSplitResult
+      }
+      storeContextRef.current?.dispatchModuleAction(moduleType, actionType, payload)
     }
 
-    const boundMethods =  Object.keys(storeContextRef.current?._reducers?.[moduleName] || [])?.reduce((prev, curr) => {
-      return { ...prev, [curr]: (payload: any) => dispatch(curr, payload)}
+    const boundMethods = Object.keys(
+      storeContextRef.current?._reducers?.[moduleName] || []
+    )?.reduce((prev, curr) => {
+      return { ...prev, [curr]: (payload: any) => dispatch(curr, payload) }
     }, {})
 
     return { setStore, dispatch, boundMethods }
@@ -78,7 +71,7 @@ export default function useStore<S>(
     const moduleState: S = storeContextRef.current._state[moduleName]
     const { setStore, dispatch, boundMethods } = methods
 
-    return [moduleState, setStore, { dispatch, ...boundMethods }]
+    return [moduleState, setStore, { dispatch, ...boundMethods } as any]
     // 每次强制刷新的时候重续获取存储的全局数据
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [methods, forceUpdateCount])

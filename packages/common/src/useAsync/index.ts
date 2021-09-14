@@ -1,10 +1,12 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 import useCounter from '../useCounter'
+import useDebounceFn from '../useDebounceFn'
 
 type AsyncFunction = (...args: any[]) => Promise<any>
 interface Options {
   immediate?: boolean
   setState?: (...args: any[]) => void
+  debounceTime?: number
 }
 
 type Exector = (...args: any[]) => Promise<any>
@@ -19,7 +21,7 @@ type Exector = (...args: any[]) => Promise<any>
  */
 export default function useAsync<A extends AsyncFunction>(
   asyncFunction: A,
-  { immediate = false, setState }: Options = {}
+  { immediate = false, setState, debounceTime }: Options = {}
 ): [
   Exector,
   {
@@ -32,7 +34,8 @@ export default function useAsync<A extends AsyncFunction>(
   const [pendingCount, { inc, dec }] = useCounter(0, { min: 0 })
   const [result, setResult] = useState()
   const [error, setError] = useState()
-
+  
+  const unmountedRef = useRef(false)
   const setStateRef = useRef(setState)
   if (setStateRef.current !== setState) setStateRef.current = setState
 
@@ -58,11 +61,16 @@ export default function useAsync<A extends AsyncFunction>(
     [asyncFunction, dec, inc]
   )
 
+  const [debounceExector] = useDebounceFn(exector, debounceTime)
+
   useEffect(() => {
-    if (immediate) {
-      exector()
+    !unmountedRef.current && immediate && debounceExector()
+
+    return () => {
+      unmountedRef.current = true
     }
-  }, [exector, immediate])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return [exector, { result, error, loading: !!pendingCount, pendingCount }]
 }

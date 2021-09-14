@@ -10,6 +10,7 @@ export { default as useDebounceState } from './useDebounceState'
 export { default as useDebounceValue } from './useDebounceValue'
 export { default as useDeepCompare } from './useDeepCompare'
 export { default as useDidUpdate } from './useDidUpdate'
+export { default as useEffectMaunal } from './useEffectMaunal'
 export {
   default as useEventBus,
   createContextEventBus,

@@ -12,7 +12,7 @@ type Clear = () => void
  *
  * @param itemName
  * @param initialValue
- * @param watchStorageChange 监听storage事件，即使不是使用当前hooks修改storage，也会更新value
+ * @param watchStorageChange 监听storage事件，即使不是当前组件/hooks修改storage，也会更新value
  */
 export default function useStorage(
   itemName: string,

@@ -1,185 +1,118 @@
-import useStore, { SetStore, SetStoreAction, BoundMethods, ToolMethods } from './useStore'
-import { combState } from './utils'
-import { EventBus } from './eventBus'
-import { defaultReducers, getReducer } from './reducer'
+import { Store } from './store'
+import { Options, UseStore, Module } from './types'
 
-export type StoreState = Record<string, any>
-
-export type Dispatch<A> = (value: A) => void | StoreState | Promise<any>
-
-export interface Module {
-  state: StoreState
-  reducers?: Record<string, any>
-}
-
-export type Modules = Record<string, Module>
-
-// todo
-// eslint-disable-next-line no-use-before-define
-export type Plugin = <S>(Store: Store<S>) => (store: any) => any
-
-export interface Options<S = Record<string, any>> extends Record<string, any> {
-  modules?: Modules
-  plugins?: Plugin[]
-  devtoolId?: string
-  initialState?: S
-}
-
-export type UseStoreByContext = <S>(
-  storeContext: any,
-  moduleName?: string,
-  autoMerge?: boolean,
-  willUpdate?: boolean
-) => [S, SetStore<SetStoreAction<S>>, BoundMethods<S>, ToolMethods<S>]
-
-export type UseStore = <S>(
-  moduleName?: string,
-  autoMerge?: boolean,
-  willUpdate?: boolean
-) => [S, SetStore<SetStoreAction<S>>, BoundMethods<S>, ToolMethods<S>]
-
-export class Store<S extends StoreState> extends EventBus<any> {
-  useStore: UseStoreByContext
-  _state: S | {}
-  // virtualState: any
-  _reducers: Record<string, any>
-
-  _modules: Set<string> = new Set<string>()
-  _options: Options<S>
-  _reduxStore: any
-  _dispatchRedux: any
-  _registerReduxModule
-  _unsubscribeRedux: any
-  static pluginsInitial = new Set<((...args: any[]) => void) | any>()
-
-  constructor(options: Options<S> = {}) {
-    super()
-    this.init(options)
-  }
-
-  initialBase(options?: Options<S>) {
-    this._options = this._options || options
-    const { modules = {} } = this._options || {}
-    this._modules = new Set(Object.keys(modules))
-
-    const initialState = combState(modules)
-    this._state = this._state || initialState || {}
-    this._reducers = this._reducers || getReducer(modules)
-  }
-
-  getUseStore() {
-    return useStore.bind(this, this)
-  }
-
-  /**
-   * use plugin
-   */
-  static usePlugin(plugin) {
-    // 此处的this是class,返回用于实例的插件初始化函数
-    const initialFn = plugin(this)
-    initialFn && this.pluginsInitial.add(initialFn)
-  }
-
-  /**
-   * 初始化, 使用插件后，如果不是创建新的实例，则必须调用实例的这个方法后才可以正常使用
-   */
-  init(options?: Options<S>) {
-    this.initialBase(options)
-    for (const pluginInitial of Store.pluginsInitial) {
-      if (!pluginInitial.$i) {
-        pluginInitial(this)
-        pluginInitial.$i = true
-      }
-    }
-
-    this.useStore = this.getUseStore()
-  }
-
-  /**
-   * 除了createStore时初始化，也可以通过这个方法来注册每个模块
-   * @param moduleName
-   * @param initialModule
-   */
-  registerModule(moduleName: string, initialModule: Module) {
-    const { state, reducers } = initialModule || {}
-    state && (this._state[moduleName] = state)
-    reducers && (this._reducers[moduleName] = reducers)
-    this._modules.add(moduleName)
-  }
-
-  /**
-   * 修改配置
-   * @param options
-   */
-  config(options: Options<S> | ((oldOptions: Options<S>) => Options<S>) = {}) {
-    this._options = typeof options === 'function' ? options(this._options) : options
-    this.init()
-  }
-
-  getState(moduleName?: string) {
-    return moduleName ? this._state[moduleName] : this._state
-  }
-
-  setState(nextState: ((state: S) => S) | S) {
-    const state = defaultReducers.$setValue(this._state, nextState)
-    this._setState(state)
-  }
-
-  _setState(nextState: {} | S) {
-    this._state = nextState
-    this.publish('storeChange', this._state)
-  }
-
-  setModuleState(moduleName: string, nextState: ((state: S) => S) | S, merge: boolean) {
-    if (!moduleName) return
-    const prevState = this._state[moduleName]
-    const state = merge
-      ? defaultReducers.$setValueMerge(prevState, nextState)
-      : defaultReducers.$setValue(prevState, nextState)
-    this._setModuleState(moduleName, state)
-  }
-
-  _setModuleState(moduleName: string, nextState: any) {
-    this._state[moduleName] = nextState
-    this.publish(`storeChange.${moduleName}`, this._state[moduleName])
-  }
-
-  /**
-   * 触发一个action并调用reducer修改state
-   * @param moduleName
-   * @param actionName
-   * @param payload
-   */
-  async dispatchModuleAction(moduleName: string, actionName: string, payload: any) {
-    if (!moduleName) return
-
-    const reducer = this._reducers?.[moduleName]?.[actionName]
-    if (!reducer) throw new Error(`not found reducer ${actionName}`)
-
-    const prevState = this._state[moduleName]
-    this._state[moduleName] = reducer(prevState, payload)
-    // 触发react组件更新
-    this.publish(`storeChange.${moduleName}`, this._state[moduleName])
-  }
-}
-
-function classFactory<S>() {
+export function classFactory<S>() {
   return class extends Store<S> {}
-}
-
-/**
- * 创建独立store实例
- */
-export default function createStore<S = Record<string, any>>(options: Options<S> = {}) {
-  const { plugins = [], ...restOptions } = options
-  const SingleClass = classFactory()
-  plugins.forEach((plugin) => SingleClass.usePlugin(plugin))
-  return new SingleClass(restOptions)
 }
 
 export function createStoreAndClass<S = Record<string, any>>(options: Options<S> = {}) {
   const { plugins = [], ...restOptions } = options
   const SingleClass = classFactory()
   plugins.forEach((plugin) => SingleClass.usePlugin(plugin))
-  return { store: new SingleClass(restOptions), StoreClass: SingleClass }
+
+  return {
+    store: new SingleClass(restOptions),
+    StoreClass: SingleClass,
+  }
 }
+
+/**
+ * 创建独立store实例
+ */
+export default function createStore<S = Record<string, any>>(options: Options<S> = {}) {
+  const { store, StoreClass } = createStoreAndClass(options)
+
+  const useStore = <S = any>(
+    moduleName: string,
+    assign: boolean = true,
+    willUpdate: boolean = true
+  ) => {
+    const useStoreStore: UseStore = store.getUseStore()
+    return useStoreStore<S>(moduleName, assign, willUpdate)
+  }
+
+  const registerModule = (useStore.registerModule = (moduleName: string, initialModule: Module) => {
+    store.registerModule(moduleName, initialModule)
+  })
+
+  /**
+   * 触发全局的dispatch，如触发test module, dispatch('test/setData', {})
+   */
+  const dispatch = (useStore.dispatch = (actionName: string, payload: any) => {
+    store.dispatch(actionName, payload)
+  })
+
+  /**
+   * 对全局store 开启插件，这不是一个React hooks
+   */
+  const usePlugins = (useStore.usePlugins = (plugins: any[]) => {
+    if (plugins && plugins.length) {
+      plugins.forEach((plugin) => StoreClass.usePlugin(plugin))
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      // 因为在createStore之后调用，所以需要重新初始化一下
+      store.init()
+    }
+  })
+
+  /**
+   * 对获取全局单一实例的globalState
+   * @returns
+   */
+  const getStoreState = () => {
+    return store.getState()
+  }
+
+  /**
+   * 设置全局单一实例的globalState
+   * @param nextState
+   * @returns
+   */
+  const setStoreState = (nextState: any) => {
+    return store.setState(nextState)
+  }
+
+  return {
+    store,
+    useStore,
+    registerModule,
+    usePlugins,
+    getStoreState,
+    setStoreState,
+    dispatch,
+  }
+}
+
+// function createStoreContext<S = Record<string, any>>(options: Options<S> = {}) {
+//   const {
+//     store: baseStore,
+//     registerModule,
+//     usePlugins,
+//     getStoreState,
+//     setStoreState,
+//     dispatch,
+//   } = createStore(options)
+
+//   const context = React.createContext({
+//     store: baseStore,
+//   })
+
+//   const useStore = <S = any>(
+//     moduleName: string,
+//     assign: boolean = true,
+//     willUpdate: boolean = true
+//   ) => {
+//     const { store } = React.useContext(context)
+//     const useStoreStore: UseStore = store.getUseStore()
+//     return useStoreStore<S>(moduleName, assign, willUpdate)
+//   }
+
+//   return {
+//     store: baseStore,
+//     useStore,
+//     registerModule,
+//     usePlugins,
+//     getStoreState,
+//     setStoreState,
+//     dispatch,
+//   }
+// }

@@ -1,5 +1,5 @@
 import { combineReducers, isObject } from './utils'
-import { StoreState } from './base'
+import { StoreState } from './types'
 
 function getNextState(prevState: any, nextState: Function) {
   return typeof nextState === 'function' ? (nextState as Function)(prevState) : nextState

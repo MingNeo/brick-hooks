@@ -2,10 +2,6 @@ import { useEffect, useRef } from 'react'
 
 /**
  * 使用事件的hook
- * @param eventName 
- * @param handler 
- * @param options 
- * @returns 
  */
 function useEventListener(
   eventName: string,
@@ -13,16 +9,15 @@ function useEventListener(
   options: { capture: any; dom: Element }
 ) {
   const ref = useRef()
-  const handlerRef = useRef<Function>()
-
-  useEffect(() => {
-    handlerRef.current = handler
-  }, [handler])
+  const handlerRef = useRef<Function>(handler)
+  handlerRef.current = handler
 
   useEffect(() => {
     const { capture, dom } = options
     const element = dom || ref.current || window
-    const eventListener = (event: Event) => handlerRef.current && handlerRef.current(event)
+    const eventListener = function (event: Event) {
+      handlerRef.current && handlerRef.current.call(this, event)
+    }
     element.addEventListener(eventName, eventListener, capture)
 
     return () => {

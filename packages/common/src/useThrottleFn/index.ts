@@ -1,5 +1,8 @@
 import { useEffect, useRef } from 'react'
 
+type ThrottleFn = (...args: any[]) => void
+type Cancel = () => void
+
 /**
  * 对一个函数进行节流处理，返回处理过的函数
  * @param handler 需要进行节流处理的函数
@@ -7,11 +10,15 @@ import { useEffect, useRef } from 'react'
  * @param isImmediate 是否立即执行，默认为false
  * @returns [throttleFn, cancel]
  */
-function useThrottleFn(handler: (...args: any[]) => any, wait = 200, isImmediate = false) {
+function useThrottleFn(
+  handler: ThrottleFn,
+  wait = 200,
+  isImmediate = false
+): [ThrottleFn, Cancel] {
   const timeoutRef = useRef<any>()
   const nextArgsRef = useRef<any[]>(null)
 
-  const throttleFn = (...args) => {
+  const throttleFn = (...args: any[]) => {
     if (!timeoutRef.current) {
       const timeoutCallback = () => {
         if (!isImmediate && nextArgsRef.current) {
@@ -43,7 +50,7 @@ function useThrottleFn(handler: (...args: any[]) => any, wait = 200, isImmediate
     }
   }, [])
 
-  return [throttleFn, cancel] as [typeof throttleFn, typeof cancel]
+  return [throttleFn, cancel]
 }
 
 export default useThrottleFn

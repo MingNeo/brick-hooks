@@ -24,7 +24,7 @@ export default function useDebounceEffect(callback: EffectCallback, wait = 100, 
 
     const debounceCallback = () => {
       timerRef.current && clearTimeout(timerRef.current)
- 
+
       timerRef.current = setTimeout(() => {
         if (callbackRef.current) {
           const destructor = callbackRef.current.apply(null)
@@ -40,9 +40,7 @@ export default function useDebounceEffect(callback: EffectCallback, wait = 100, 
   }, [])
 
   useEffect(() => {
-    if (deps?.length) {
-      debounceCallback()
-    }
+    deps?.length && debounceCallback()
     return () => {
       cancel()
     }

@@ -18,3 +18,9 @@ export function combState(modules = {}) {
 export function isObject(value) {
   return Object.prototype.toString.call(value) === '[object Object]'
 }
+
+export function invariant(condition: boolean, message: string) {
+  if (!condition) {
+    throw new Error(message)
+  }
+}

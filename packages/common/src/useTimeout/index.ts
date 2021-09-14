@@ -7,10 +7,7 @@ type Callback = () => {}
  */
 export default function useTimeout<S extends Callback>(callback: S, time = 300) {
   const callbackFn = useRef<S>()
-
-  useEffect(() => {
-    callbackFn.current = callback
-  }, [callback])
+  callbackFn.current = callback
 
   useEffect(() => {
     const timer = setTimeout(() => {

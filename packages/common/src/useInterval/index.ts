@@ -1,21 +1,25 @@
 import { useEffect, useRef, useState, useMemo } from 'react'
 
 type Callback = (...args: any[]) => any
+interface Options {
+  autoRun?: boolean
+}
 
 /**
  * 方便使用setInterval的hook
  * @param callback
  * @param time
- * @returns  stopInterval 
+ * @returns  stopInterval
  */
-export default function useInterval(callback: Callback, time = 300) {
+export default function useInterval(
+  callback: Callback,
+  time = 300,
+  { autoRun = true }: Options = {}
+) {
   const intervalFn = useRef<Callback>()
+  intervalFn.current = callback
   const intervalId = useRef<number>(null)
   const [isRunning, setIsRunning] = useState(false)
-
-  useEffect(() => {
-    intervalFn.current = callback
-  }, [callback])
 
   const { start, stop } = useMemo(() => {
     return {
@@ -29,20 +33,21 @@ export default function useInterval(callback: Callback, time = 300) {
         clearInterval(intervalId.current)
         intervalId.current = null
         setIsRunning(false)
-      }
+      },
     }
   }, [time])
 
   useEffect(() => {
-    start()
+    autoRun && start()
     return () => {
       stop()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [time])
-  
+
   return {
     isRunning,
     start,
-    stop
-  } 
+    stop,
+  }
 }

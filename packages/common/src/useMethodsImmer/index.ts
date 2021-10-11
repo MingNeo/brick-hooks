@@ -3,9 +3,25 @@ import { ReducerAction, useMemo, useReducer } from 'react'
 
 export { Draft }
 
-type Reducer<S> = (state: Draft<S>, payload: any) => void
+interface Reducer<S> {
+  (state: Draft<S>, payload: any): void
+  (state: Draft<S>, ...args: any[]): void
+}
+
 type Methods<S> = Record<string, Reducer<S>>
-type Actions = Record<string, (payload?: any) => void>
+interface Action {
+  type: string
+  payload?: any
+  [x: string]: any
+}
+interface Dispatch {
+  (actionType: string, payload?: any): void
+  (action: Action): void
+}
+
+export type Actions = {
+  dispatch: Dispatch
+} & Exclude<Record<string, (payload?: any) => void>, 'dispatch'>
 
 interface Options {
   patchListener?: PatchListener
@@ -24,7 +40,7 @@ export default function useMethodsImmer<S>(
         (draft: Draft<S>) => {
           const method = methods[action.type]
           if (method) {
-            const result = method(draft, action.payload)
+            const result = method(draft, ...action.payload)
             return result
           }
         },
@@ -37,11 +53,23 @@ export default function useMethodsImmer<S>(
   const [draftState, dispatch] = useReducer(immerReducer, initialState, initializer)
 
   const actions: Actions = useMemo(() => {
+    const dispatchMethod: Dispatch = (...args: any[]) => {
+      let type: any
+      let payloads: any
+      if (typeof args[0] === 'string') {
+        type = args[0]
+        payloads = args.slice(1)
+      } else {
+        type = args[0]?.type
+        payloads = args
+      }
+      dispatch({ type, payload: payloads })
+    }
     const actionTypes: string[] = Object.keys(methods)
     return actionTypes.reduce((prev, type) => {
-      prev[type] = (payload: any) => dispatch({ type, payload })
+      prev[type] = (...args: any[]) => dispatch({ type, payload: args })
       return prev
-    }, { dispatch })
+    }, { dispatch: dispatchMethod })
 
     // 因为使用immer，此处并不需要监听state变动，methods也应该是静态配置好的，不会动态增加
     // 但是actions下的reducer应当是纯函数，不然会造成引用的其他state不是最新值

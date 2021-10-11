@@ -1,22 +1,42 @@
 import { useMemo, useState } from 'react'
 
-type Reducer = (...args: any[]) => any
+export type Reducer = (...args: any[]) => any
 
-type Dispatch = (actionName: string, ...args: any[]) => void
+export interface Action {
+  type: string
+  payload?: any
+  [x: string]: any
+}
+export interface Dispatch {
+  (actionName: string, ...args: any[]): void
+  (action: Action): void
+}
 
-type Methods = Record<string, Reducer>
+export type Methods = Record<string, Reducer>
 
 export interface BoundMethods extends Record<string, (...args: any[]) => void> {
   dispatch: Dispatch
 }
 
-function useMethods<S>(methods: Methods, initialState: S | (() => S)): [S, BoundMethods, Dispatch] {
+export default function useMethods<S>(
+  methods: Methods,
+  initialState: S | (() => S)
+): [S, BoundMethods, Dispatch] {
   const [value, setValue] = useState(initialState)
 
   const { boundMethods, dispatch } = useMemo(() => {
-    const dispatch: Dispatch = (actionName: string, ...args: any[]) => {
+    const dispatch: Dispatch = (...args: any[]) => {
+      let actionName: any
+      let payloads: any
+      if (typeof args[0] === 'string') {
+        actionName = args[0]
+        payloads = args.slice(1)
+      } else {
+        actionName = args[0]?.type
+        payloads = args
+      }
       const fn = methods[actionName]
-      setValue((value: S) => fn(value, ...args))
+      setValue((value: S) => fn(value, ...payloads))
     }
 
     const boundMethods: BoundMethods = Object.entries(methods).reduce(
@@ -38,5 +58,3 @@ function useMethods<S>(methods: Methods, initialState: S | (() => S)): [S, Bound
 
   return [value, boundMethods, dispatch]
 }
-
-export default useMethods

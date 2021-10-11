@@ -3,7 +3,8 @@ import useMethodsImmer from '../src/useMethodsImmer'
 
 const methodsCounter = {
   inc: (draftState: any) => void(draftState.count += 1),
-  dec: (draftState: any) => void(draftState.count -= 1)
+  dec: (draftState: any) => void(draftState.count -= 1),
+  set: (draftState: any, count: number) => void(draftState.count = count)
 }
 
 describe('useMethodsImmer 校验', () => {
@@ -26,5 +27,18 @@ describe('useMethodsImmer 校验', () => {
 
     act(() => actions.dec())
     expect(result.current[0]).toEqual({ count: 0 })
+
+    act(() => actions.dispatch('inc'))
+    expect(result.current[0]).toEqual({ count: 1 })
+    act(() => actions.dispatch({ type: 'inc' }))
+    expect(result.current[0]).toEqual({ count: 2 })
+
+    act(() => actions.dispatch('dec'))
+    expect(result.current[0]).toEqual({ count: 1 })
+    act(() => actions.dispatch({ type: 'dec' }))
+    expect(result.current[0]).toEqual({ count: 0 })
+
+    act(() => actions.set(3))
+    expect(result.current[0]).toEqual({ count: 3 })
   })
 })

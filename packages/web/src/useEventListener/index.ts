@@ -1,15 +1,16 @@
 import { useEffect, useRef } from 'react'
 
+type Handler = (...args: any[]) => any
 /**
  * 使用事件的hook
  */
 function useEventListener(
   eventName: string,
-  handler: Function,
-  options: { capture: any; dom: Element }
+  handler: Handler,
+  options: { capture?: any; dom?: Element }
 ) {
   const ref = useRef()
-  const handlerRef = useRef<Function>(handler)
+  const handlerRef = useRef<Handler>(handler)
   handlerRef.current = handler
 
   useEffect(() => {

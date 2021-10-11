@@ -17,10 +17,10 @@ export interface Options<S = Record<string, any>> extends Record<string, any> {
 export type StoreHookDispatch = (actionName: string, ...args: any[]) => void
 export type SetStoreAction<S> = S | ((prevState: S) => S)
 export type SetStore<A> = (value: A, merge?: boolean) => void
-export type BoundMethods<S> = Record<string, (state: S, payload: any) => S>
+export type BoundMethods<S> = Record<string, (state: S, payload?: any) => S>
 export type ToolMethods<S> = {
   dispatch: StoreHookDispatch
-} & Exclude<Record<string, (payload: any) => S>, 'dispatch'>
+} & Exclude<Record<string, (payload?: any) => S>, 'dispatch'>
 export interface Methods<S> {
   setStore: SetStore<SetStoreAction<S>>
   dispatch: StoreHookDispatch

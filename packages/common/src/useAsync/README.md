@@ -8,12 +8,9 @@
 
 ```javascript
 const fetchData = (params) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({ data: [1] })
-    }, 100)
-  })
+  return request('/api/xxx')
 }
+
 function MyComponent() {
   const [loadData, { loading, result }] = useAsync(fetchData);
 
@@ -24,20 +21,35 @@ function MyComponent() {
   // 直接使用result
   return result ? <>...</> : null
 }
-// 使用请求返回值
+
+// 手工处理请求返回值
 function MyComponent() {
   const [loadData, { loading }] = useAsync(fetchData);
 
   useEffect(() => {
     loadData().then(result => {})
-  })
+  }, [])
 }
 ```
+使用debounceTime时，将自动进行debounce处理
+注意，使用debounceTime后, deounceFn不会再有返回值
 ```javascript
 // 使用debounce
 const [loadData, { loading, result }] = useAsync(fetchData, { debounceTime: 500 });
 
+// 使用debounceTime后, deounceFn不会再有返回值，如需手工处理返回值需要
+const [loadData, { loading, result }] = useAsync((...args) => {
+  fetchData(...args).then(res => {})
+}, { debounceTime: 500 });
+```
+
+请求成功返回数据会触发onResult回调，一般情况下直接.then后处理或使用result即可，但有时候希望自动同步状态，则可以配置onResult方法
+```javascript
 // 自动更新数据
-const [data, setData] = useState({})
-const [loadData, { loading, result }] = useAsync(fetchData, { setState: setData });
+const [data, setData] = useState([])
+const [loadData, { loading, result }] = useAsync(fetchData, { onResult: setData });
+
+// or 
+const [data, setData] = useObjectState({ listData: [] })
+const [loadData, { loading, result }] = useAsync(fetchData, { onResult: (res) => setData({ listData }) });
 ```

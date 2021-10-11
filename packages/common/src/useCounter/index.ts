@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 
 interface CounterOptions {
   min?: number
@@ -6,10 +6,11 @@ interface CounterOptions {
   step?: number
 }
 
-export const arrayMethods = {
-  inc: (state, step) => state + step,
-  dec: (state, step) => state - step,
-  reset: (state, initialValue) => initialValue
+interface Methods {
+  set: (nextValue: number | ((value: number) => number)) => void
+  inc: (step?: number) => void
+  dec: (step?: number) => void
+  reset: () => void
 }
 
 /**
@@ -17,28 +18,25 @@ export const arrayMethods = {
  * @param {number} initialValue 默认值
  * @param {object} options 配置
  */
-export default function useCounter(initialValue: number = 0, options: CounterOptions = {}) {
+export default function useCounter(
+  initialValue: number = 0,
+  options: CounterOptions = {}
+): [number, Methods] {
   const [counter, setCounter] = useState(initialValue)
-  const { min = -Infinity, max = Infinity, step: defaultStep = 1 } = options
 
-  const setValue = useCallback(
-    (nextValue: number | ((value: number) => number)) => {
+  const methods = useMemo(() => {
+    const { min = -Infinity, max = Infinity, step: defaultStep = 1 } = options
+    const setValue = (nextValue: number | ((value: number) => number)) => {
       const disposeValue = (value: number) => (value < min ? min : value > max ? max : value)
-      setCounter(
-        typeof nextValue === 'function'
-          ? (value) => disposeValue(nextValue(value))
-          : disposeValue(nextValue)
-      )
-    },
-    [min, max]
-  )
+      setCounter((value) => disposeValue(typeof nextValue === 'function' ? nextValue(value) : nextValue))
+    }
+    return {
+      set: setValue,
+      inc: (step: number = defaultStep) => setValue((value: number) => value + step),
+      dec: (step: number = defaultStep) => setValue((value: number) => value - step),
+      reset: () => setCounter(initialValue),
+    }
+  }, [initialValue, options])
 
-  const inc = (step: number = defaultStep) => setValue((value: number) => value + step)
-  const dec = (step: number = defaultStep) => setValue((value: number) => value - step)
-  const reset = useCallback(() => setCounter(initialValue), [initialValue])
-
-  return [counter, { set: setValue, inc, dec, reset }] as [
-    number,
-    { set: typeof setValue; inc: typeof inc; dec: typeof dec; reset: typeof reset }
-  ]
+  return [counter, methods]
 }

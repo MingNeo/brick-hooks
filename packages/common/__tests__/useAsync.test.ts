@@ -41,21 +41,77 @@ describe('useAsync 校验', () => {
 
     await act(async () => {
       result.current[0]().then((response: any) => {
-        let [, { loading }] = result.current
-        expect(loading).toEqual(false)
+        expect(result.current[1].loading).toEqual(false)
         expect(response).toEqual({ data: [1] })
       })
       await waitForNextUpdate()
-      {
-        let [, { loading }] = result.current
-        expect(loading).toEqual(true)
-      }
+      expect(result.current[1].loading).toEqual(true)
     })
     await waitForNextUpdate()
-    {
-      let [, { result: listData, loading }] = result.current
-      expect(listData).toEqual({ data: [1] })
-      expect(loading).toEqual(false)
+
+    expect(result.current[1].result).toEqual({ data: [1] })
+    expect(result.current[1].loading).toEqual(false)
+  })
+
+  it('debounce正常', async () => {
+    let data = 0
+    let fetchDataCb = (value) => {
+      return new Promise((resolve) => {
+        console.log('data', data)
+        setTimeout(() => {
+          if (value) data = value
+          else data += 1
+          resolve({ data })
+        }, 100)
+      })
     }
+    const { result, waitForNextUpdate } = renderHook(
+      ({ fetchDataCb }) => {
+        return useAsync(fetchDataCb, { debounceTime: 300 })
+      },
+      { initialProps: { fetchDataCb } }
+    )
+
+    expect(result.current[1].loading).toEqual(false)
+
+    // 直接请求
+    await act(async () => {
+      const applyResult = result.current[0]()
+      expect(applyResult).toEqual(undefined)
+    })
+    await waitForNextUpdate()
+    expect(result.current[1].loading).toEqual(true)
+    await waitForNextUpdate()
+    expect(result.current[1].result).toEqual({ data: 1 })
+    expect(result.current[1].loading).toEqual(false)
+
+    // debounce请求
+    await act(async () => {
+      result.current[0]()
+      await waitForNextUpdate()
+      expect(result.current[1].loading).toEqual(true)
+      result.current[0]()
+      result.current[0]()
+      result.current[0]()
+      result.current[0]()
+      result.current[0]()
+    })
+    await waitForNextUpdate()
+    expect(result.current[1].result).toEqual({ data: 2 })
+    expect(result.current[1].loading).toEqual(false)
+
+    // debounce会使用最后一次的参数
+    await act(async () => {
+      result.current[0](300)
+      result.current[0]()
+      result.current[0]()
+      result.current[0]()
+      result.current[0](100)
+    })
+    await waitForNextUpdate()
+    expect(result.current[1].loading).toEqual(true)
+    await waitForNextUpdate()
+    expect(result.current[1].result).toEqual({ data: 100 })
+    expect(result.current[1].loading).toEqual(false)
   })
 })

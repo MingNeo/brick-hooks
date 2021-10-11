@@ -16,7 +16,7 @@ function applySubscription<T>(subscription: Subscription<T>, payload: any) {
 export class EventBus<T = any> {
   private eventContainer = new Map<EventType, Set<Subscription<T>>>()
 
-  publish = (type: EventType, payload: any) => {
+  publish = (type: EventType, payload?: any) => {
     const subscriptions = this.eventContainer.get(type)
     if (subscriptions) {
       for (const subscription of subscriptions) {

@@ -20,8 +20,9 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "tsc --build tsconfig.json && tsc --build tsconfig.esm.json",
-    "watch": "tsc --build tsconfig.json -w &&  && tsc --build tsconfig.esm.json -w"
+    "clear": "rm -rf esm && rm -rf lib",
+    "build": "npm run clear && tsc && tsc -m ESNext --outDir esm",
+    "watch": "tsc -w && tsc -m ESNext --outDir esm -w"
   },
   "bugs": {
     "url": "https://github.com/MingNeo/custom-hooks/issues"

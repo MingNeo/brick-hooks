@@ -3,4 +3,5 @@
 app/components/editor
 public
 dist
-libs
+lib
+esm

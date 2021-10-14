@@ -14,14 +14,11 @@ interface DebounceFnOptions {
 
 /**
  * 处理一个函数返回防抖的函数
- * @param handler
- * @param wait
- * @param options //todo maxWait、trailing、leading
  */
 export default function useDebounceFn(
   handler: DebunceFn,
   wait?: number,
-  options: DebounceFnOptions = {},
+  options: DebounceFnOptions = {}
 ): [DebunceFn, Cancel] {
   const { cancelWhenDestroy = true } = options
   const timer = useRef<number>()
@@ -47,7 +44,7 @@ export default function useDebounceFn(
         fnRef.current && fnRef.current.apply(null, args)
         timer.current = null
       }
-      if(!isNil(waitRef.current)) {
+      if (!isNil(waitRef.current)) {
         timer.current = setTimeout(cb, waitRef.current) as unknown as number
       } else {
         cb()

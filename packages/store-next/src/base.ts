@@ -64,7 +64,6 @@ export default function createStore<S = Record<string, any>>(options: Options<S>
 
   /**
    * 设置全局单一实例的globalState
-   * @param nextState
    * @returns
    */
   const setStoreState = (nextState: any) => {

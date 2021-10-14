@@ -1,8 +1,9 @@
 ## useObjectStateImmer
-useObjectStateImmer的Immer版本，可以更简单的修改状态
+
+useObjectStateImmer 的 Immer 版本，可以更简单的修改状态
 
 目前实现了两个版本(immer 版本和普通版本)。
-建议业务组件中的状态集合，都使用useObjectState/useObjectStateImmer来替代useState/useReducer。
+建议业务组件中的状态集合，都使用 useObjectState/useObjectStateImmer 来替代 useState/useReducer。
 
 ```javascript
 // 使用setState 直接更新值的时候，与useObjectState一致，都是自动进行合并数据。
@@ -19,25 +20,30 @@ function MyComponent() {
   // homeData: { text: 1 }
 
   // setState 使用更新函数
-  const handleUpdateTestNoMerge = () => setHomeData(draftState => {
-    draftState.text = 2
-  })
+  const handleUpdateTestNoMerge = () =>
+    setHomeData((draftState) => {
+      draftState.text = 2
+    })
   // homeData: { text: 2 }
 
   return <div>/* ... */</div>
 }
 ```
 
-使用methods/reducers
+使用 methods/reducers
+
 ```javascript
 const homeMethods = {
   updateTitle: (state, title) => {
     state.title = title
-  }
+  },
 }
 
 function MyComponent() {
-  const [homeData, setHomeData, { updateTitle, updatePageData }] = useObjectState({ test: 1 }, homeMethods)
+  const [homeData, setHomeData, { updateTitle, updatePageData }] = useObjectState(
+    { test: 1 },
+    homeMethods
+  )
 
   // 触发自定义reducer
   const handleUpdateTitle = () => updateTitle('test title')
@@ -46,4 +52,3 @@ function MyComponent() {
   return <div>/* ... */</div>
 }
 ```
-

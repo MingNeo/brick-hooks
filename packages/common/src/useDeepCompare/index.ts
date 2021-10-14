@@ -13,8 +13,8 @@ export default function useDeepCompare(value: Record<string, any> | any[]) {
   if (value && !isEqual(value, state.value)) {
     isEqualRef.current = false
     setState({ isEqual: false, value: cloneDeep(value) })
-  } else if(isEqualRef.current && !state.isEqual) {
-    setState(prevState => ({ isEqual: true, value: prevState.value }))
+  } else if (isEqualRef.current && !state.isEqual) {
+    setState((prevState) => ({ isEqual: true, value: prevState.value }))
   }
 
   return state

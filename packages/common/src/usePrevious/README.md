@@ -1,5 +1,6 @@
 ## usePrevious
-获取上一次的值，默认为最近一次变化前的值。也可以配置为每次rerender时触发
+
+获取上一次的值，默认为最近一次变化前的值。也可以配置为每次 rerender 时触发
 
 ```javascript
 function MyComponent(props) {

@@ -9,7 +9,6 @@ export default function useListState<T extends Record<string, any>>(
   initialValue: T[],
   transform?: (originData: T[], transformMethods: typeof transformsMap) => any
 ): [T[], BoundMethods] {
-
   const [state, arrayMethods] = useArray<T>(initialValue)
   const listState = useListData(state, transform)
 

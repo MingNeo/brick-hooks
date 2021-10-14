@@ -35,24 +35,24 @@ export function transformListToGroup(data: Data = [], { groupKey }: { groupKey?:
   }
 }
 
-export function transformListToPartition(data: Data = [], { groupKey }: { groupKey?: string } = {}) {
+export function transformListToPartition(
+  data: Data = [],
+  { groupKey }: { groupKey?: string } = {}
+) {
   const groupMap = transformListToGroup(data, { groupKey })
   return Object.values(groupMap)
 }
 
 /**
  * 字段展开
- * @param data 
- * @returns 
  */
 export function transformListToFoldList(data: Data = [], { fields }: { fields?: string[] } = {}) {
   return fields.reduce((prev, field) => [...prev, ...foldData(data, { field })], [])
 }
 
-function foldData (data: Data = [], { field }) {
+function foldData(data: Data = [], { field }) {
   return data.reduce((prev: any[], item) => {
     const { field: fieldValue, ...restData } = item
-    return [...prev, { key: field, value: fieldValue, ...restData}]
+    return [...prev, { key: field, value: fieldValue, ...restData }]
   }, []) as any[]
 }
-

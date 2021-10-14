@@ -2,8 +2,6 @@ import { useRef, useMemo, useEffect, EffectCallback } from 'react'
 
 /**
  * 一个防抖触发的useEffect
- * @param callback
- * @param wait
  */
 export default function useDebounceEffect(callback: EffectCallback, wait = 100, deps = []) {
   const timerRef = useRef<number>()

@@ -13,7 +13,7 @@ export default function useTimeout<S extends Callback>(callback: S, time = 300) 
     const timer = setTimeout(() => {
       callbackFn.current()
     }, time)
-    
+
     return () => {
       clearTimeout(timer)
     }

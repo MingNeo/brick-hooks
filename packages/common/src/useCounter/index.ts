@@ -15,8 +15,6 @@ interface Methods {
 
 /**
  * 数字步进
- * @param {number} initialValue 默认值
- * @param {object} options 配置
  */
 export default function useCounter(
   initialValue: number = 0,
@@ -28,7 +26,9 @@ export default function useCounter(
     const { min = -Infinity, max = Infinity, step: defaultStep = 1 } = options
     const setValue = (nextValue: number | ((value: number) => number)) => {
       const disposeValue = (value: number) => (value < min ? min : value > max ? max : value)
-      setCounter((value) => disposeValue(typeof nextValue === 'function' ? nextValue(value) : nextValue))
+      setCounter((value) =>
+        disposeValue(typeof nextValue === 'function' ? nextValue(value) : nextValue)
+      )
     }
     return {
       set: setValue,

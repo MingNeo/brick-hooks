@@ -4,12 +4,12 @@ export type EventType = string | symbol
 // 调用订阅的方法
 function applySubscription<T>(subscription: Subscription<T>, payload: any) {
   try {
-    subscription(payload);
+    subscription(payload)
   } catch (e) {
     // 延迟抛出错误，防止阻塞了其他任务的执行
     setTimeout(() => {
-      throw e;
-    }, 0);
+      throw e
+    }, 0)
   }
 }
 
@@ -36,8 +36,8 @@ export class EventBus<T = any> {
   subscribeOnce(type: EventType, handler: Subscription<T>) {
     this.subscribe(type, (...args: any[]) => {
       this.unSubscribe(type, handler)
-      handler.apply(this, args);
-    });
+      handler.apply(this, args)
+    })
   }
 
   unSubscribe = (type: EventType, subscription: Subscription<T>) => {

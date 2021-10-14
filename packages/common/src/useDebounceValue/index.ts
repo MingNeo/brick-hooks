@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 
 /**
  * 防抖hooks
- * @param value
- * @param wait
  */
 export default function useDebounceValue(value: any, wait = 100) {
   const timer = useRef<any>()

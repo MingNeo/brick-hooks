@@ -1,19 +1,23 @@
 ## useEventBus
 
-提供一个Pub/Sub的hook，可用作跨组件通信。
+提供一个 Pub/Sub 的 hook，可用作跨组件通信。
 
-#### 直接使用全局bus
-使用useEventBus
+#### 直接使用全局 bus
+
+使用 useEventBus
+
 ```javascript
 import { useEventBus } from 'brick-hooks'
 function Component1() {
-  const { useSubscribe, publish } = useEventBus('loginEventBus');
-  useSubscribe(payload => { /* ... */})
+  const { useSubscribe, publish } = useEventBus('loginEventBus')
+  useSubscribe((payload) => {
+    /* ... */
+  })
   const handleChange = (payload) => publish(payload)
 }
 
 function Component2() {
-  const { publish } = useEventBus('loginEventBus');
+  const { publish } = useEventBus('loginEventBus')
   const handleChange = (payload) => publish(payload)
 }
 ```
@@ -32,7 +36,8 @@ function Component2() {
 }
 ```
 
-也可以直接使用useSubscribe、publish
+也可以直接使用 useSubscribe、publish
+
 ```javascript
 import { useSubscribe, publish } from 'brick-hooks'
 function Component1() {
@@ -48,14 +53,17 @@ function Component2() {
 }
 ```
 
-#### 创建一个独立的eventBus实例及相关hooks
-通过createEventBus创建一个独立的eventBus实例，即可与全局的eventBus隔离开来
+#### 创建一个独立的 eventBus 实例及相关 hooks
+
+通过 createEventBus 创建一个独立的 eventBus 实例，即可与全局的 eventBus 隔离开来
+
 ```javascript
 import { createEventBus } from 'brick-hooks'
 const { publish, useSubscribe, useEventBus } = createEventBus()
 ```
 
-#### 创建一个独立的，且使用react context 的eventBus及相关hooks
+#### 创建一个独立的，且使用 react context 的 eventBus 及相关 hooks
+
 ```javascript
 import { createContextEventBus } from 'brick-hooks'
 const ExampleEventBus = createContextEventBus()
@@ -78,4 +86,3 @@ function Parent() {
   </ExampleEventBus.Provider>
 }
 ```
-

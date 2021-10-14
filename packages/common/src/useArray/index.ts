@@ -1,7 +1,7 @@
 import useMethods, { BoundMethods } from '../useMethods'
 
 export const arrayMethods = {
-  set: (state: any, value: any) => typeof value === 'function' ? value(state) : value,
+  set: (state: any, value: any) => (typeof value === 'function' ? value(state) : value),
 
   push: (state = [], value: any) => [...state, value],
 
@@ -36,7 +36,6 @@ export const arrayMethods = {
 
 /**
  * 当state为数组时，数据需要是immutable的，不方便使用push等方法直接操纵数据，此hook提供几个常用方法，修改可以自动触发渲染
- * @param initial
  */
 export default function useArray<T>(initial?: T[] | (() => T[])): [T[], BoundMethods] {
   const [listData, actions] = useMethods(arrayMethods, initial || [])

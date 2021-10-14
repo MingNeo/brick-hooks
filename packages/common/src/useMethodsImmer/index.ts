@@ -66,10 +66,13 @@ export default function useMethodsImmer<S>(
       dispatch({ type, payload: payloads })
     }
     const actionTypes: string[] = Object.keys(methods)
-    return actionTypes.reduce((prev, type) => {
-      prev[type] = (...args: any[]) => dispatch({ type, payload: args })
-      return prev
-    }, { dispatch: dispatchMethod })
+    return actionTypes.reduce(
+      (prev, type) => {
+        prev[type] = (...args: any[]) => dispatch({ type, payload: args })
+        return prev
+      },
+      { dispatch: dispatchMethod }
+    )
 
     // 因为使用immer，此处并不需要监听state变动，methods也应该是静态配置好的，不会动态增加
     // 但是actions下的reducer应当是纯函数，不然会造成引用的其他state不是最新值

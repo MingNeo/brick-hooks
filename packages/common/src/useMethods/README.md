@@ -5,14 +5,15 @@
 通常我们直接在业务里写代码，会有如下问题
 1、太多 useState、useCallback，各种重复编码。
 2、修改的时候很难找到状态与行为的对应关系。
-3、使用useReducer的时候，reducer又臭又长
+3、使用 useReducer 的时候，reducer 又臭又长
 
 这个 hooks 就是为此而生的，只做了一件事，将一个初始值和一些操作值的方法变成 hooks。也可以说是更加简单清晰的 useReducer。
 
 目前实现了两个版本(immer 版本和普通版本)。
-当你需要使用 useReducer 的时候，可以直接使用这个 hooks 来替代。当数据是obj格式的时候，也可以使用useObjectState
+当你需要使用 useReducer 的时候，可以直接使用这个 hooks 来替代。当数据是 obj 格式的时候，也可以使用 useObjectState
 
 ### 普通版本
+
 ```javascript
 const counterReducers = {
   inc: (value) => value + 1,
@@ -31,8 +32,10 @@ function MyComponent({ obj }) {
 }
 ```
 
-### immer版本
-immer版本的特点就是使用immer，因此数据的操作可以无需一层层创建新的对象，对数据进行直接修改
+### immer 版本
+
+immer 版本的特点就是使用 immer，因此数据的操作可以无需一层层创建新的对象，对数据进行直接修改
+
 ```javascript
 const counterReducers = state => ({
   inc: (value) => (value += 1),

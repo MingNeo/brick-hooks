@@ -1,6 +1,7 @@
 ## useRefCallback
 
-可用于替换部分情况下的React.useCallback。返回一个function，可以保证函数地址在组件中不会变化。解决 useCallback 依赖值变化而重新生成新函数的问题。
+可用于替换部分情况下的 React.useCallback。返回一个 function，可以保证函数地址在组件中不会变化。解决 useCallback 依赖值变化而重新生成新函数的问题。
+
 ```javascript
 function MyComponent() {
   const [stateA, setStateA] = useState(0)
@@ -24,6 +25,6 @@ function MyComponent() {
     testRefFn()
   }, [stateB])
 
-  return <Child>...</Child>;
+  return <Child>...</Child>
 }
 ```

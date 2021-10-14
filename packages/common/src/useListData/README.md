@@ -4,7 +4,8 @@
 可以理解为针对列表数据的相关处理函数及 useMemo 的封装，并提供链式的写法
 
 ### 自定义处理
-完全自由处理的情况下，相当于一个写法不同的useMemo
+
+完全自由处理的情况下，相当于一个写法不同的 useMemo
 
 ```javascript
 const initialValue = [
@@ -17,10 +18,11 @@ const testData = useListData(listData, (originValue) => originValue.filter(v.id 
 
 ```javascript
 // result
-[{ id: 1, value: 0 }]
+;[{ id: 1, value: 0 }]
 ```
 
 ### 使用内置方法进行处理
+
 #### transObj 数组转为对象
 
 ```javascript
@@ -55,7 +57,7 @@ const testData = useListData(initialValue, (originValue, { transTree }) => trans
 
 ```javascript
 // result
-[
+;[
   {
     id: 'a001',
     pid: 0,
@@ -113,7 +115,7 @@ const testData = useListData(initialValue, (value, { partition }) =>
 
 ```javascript
 // result
-[
+;[
   [
     { id: 'q1', city: 'qingdao', value: 0 },
     { id: 'q2', city: 'qingdao', value: 1 },
@@ -140,7 +142,7 @@ const testData = useListData(initialValue, (value, { removeById }) => removeById
 
 ```javascript
 // result
-[
+;[
   { id: 'q2', city: 'qingdao', value: 1 },
   { id: 'h1', city: 'hangzhou', value: 2 },
   { id: 'h2', city: 'hangzhou', value: 3 },
@@ -162,13 +164,15 @@ const testData = useListData(initialValue, (value, { removeIndex }) => removeInd
 
 ```javascript
 // result
-[
+;[
   { id: 'q1', city: 'qingdao', value: 0 },
   { id: 'h1', city: 'hangzhou', value: 2 },
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 ```
+
 ### 链式语法进行数据处理
+
 使用链式语法可以方便的将复杂的数据处理写的简洁清晰
 
 ```javascript
@@ -189,24 +193,26 @@ const testData = useListData(initialValue, (originValue, { chain }) =>
 
 ```javascript
 // result
-[
+;[
   { id: 'q1', city: 'qingdao', value: 0 },
   { id: 'h1', city: 'hangzhou', value: 2 },
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 ```
-除了使用内置的方法，同样可以自定义处理, 使用next即可。或随时对数据进行自由处理
+
+除了使用内置的方法，同样可以自定义处理, 使用 next 即可。或随时对数据进行自由处理
+
 ```javascript
 const testData = useListData(initialValue, (originValue, { chain }) =>
   chain(originValue)
-    .next(value => value.filter(v => !v.ignore))
+    .next((value) => value.filter((v) => !v.ignore))
     .partition({ groupKey: 'pid' })
     .value()
 )
 
 const testData = useListData(initialValue, (originValue, { chain }) => {
   const listData = chain(originValue)
-    .next(value => value.filter(v => !v.ignore))
+    .next((value) => value.filter((v) => !v.ignore))
     .partition({ groupKey: 'pid' })
     .value()
   return listData[0]
@@ -214,6 +220,7 @@ const testData = useListData(initialValue, (originValue, { chain }) => {
 ```
 
 链式语句内置方法
+
 ```javascript
 // 使用自定义fn进行处理
 next: (fn: any) => this

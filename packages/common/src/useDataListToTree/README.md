@@ -1,6 +1,7 @@
 ## useDataListToTree
 
-useListData中转化为tree的封装，将列表类型数据转化为树的格式
+useListData 中转化为 tree 的封装，将列表类型数据转化为树的格式
+
 ```javascript
 const mockData = [
   { id: 1, pid: 0, value: '山东' },
@@ -9,7 +10,7 @@ const mockData = [
   { id: 4, pid: 1, value: '烟台' },
 ]
 function MyComponent() {
-  const treeData = useDataListToTree(listData); 
+  const treeData = useDataListToTree(listData)
 
   // treeData:
   // [{
@@ -22,8 +23,7 @@ function MyComponent() {
   //     { id: 4, pid: 1, value: '烟台' },
   //   ],
   // }]
-  
-  return <Child>...</Child>;
+
+  return <Child>...</Child>
 }
 ```
-

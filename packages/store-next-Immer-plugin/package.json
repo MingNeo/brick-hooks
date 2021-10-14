@@ -6,7 +6,7 @@
   "homepage": "https://github.com/MingNeo/custom-hooks/tree/master/packages/store-next-immer-plugin#readme",
   "license": "ISC",
   "main": "lib/index.js",
-  "module": "./esm/index.js",
+  "module": "esm/index.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -30,6 +30,7 @@
     "url": "https://github.com/MingNeo/custom-hooks/issues"
   },
   "dependencies": {
+    "eslint": "^8.0.0",
     "hydrogen-store": "^0.1.29",
     "immer": "^9.0.3"
   },

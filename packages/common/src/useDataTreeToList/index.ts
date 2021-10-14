@@ -4,10 +4,6 @@ type Data = Record<string, any>[]
 
 /**
  * 将一个树转化为数组
- * @param data 
- * @param pid 
- * @param param2 
- * @returns 
  */
 
 function transformTreeToList(data: Data, pid = 0, { pidKey = 'pid' } = {}) {
@@ -23,7 +19,9 @@ function transformTreeToList(data: Data, pid = 0, { pidKey = 'pid' } = {}) {
   return newData
 }
 
-// 转化一个树形数据为扁平数据
+/**
+ *  转化一个树形数据为扁平数据
+ */ 
 export default function useDataTreeToList(data: any) {
   return useMemo(() => transformTreeToList(data), [data])
 }

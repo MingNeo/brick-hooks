@@ -6,7 +6,7 @@
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
   "license": "ISC",
   "main": "./lib/index.js",
-  "module": "./esm/index.js",
+  "module": "esm/index.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -25,12 +25,14 @@
   "scripts": {
     "build": "tsc --build tsconfig.json && tsc --build tsconfig.esm.json",
     "watch": "tsc --build tsconfig.json -w &&  && tsc --build tsconfig.esm.json -w",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint"
   },
   "bugs": {
     "url": "https://github.com/MingNeo/custom-hooks/issues"
   },
   "dependencies": {
+    "eslint": "^8.0.0",
     "hydrogen-store": "^0.1.29",
     "immer": "^9.0.3",
     "lodash.clonedeep": "^4.5.0",

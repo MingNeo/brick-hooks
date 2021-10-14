@@ -7,8 +7,6 @@ function getNextState(prevState: any, nextState: Function) {
 
 /**
  * 默认的reducer, 提供两种模式，直接覆盖, 和自动合并(需数据格式是object，否则自动使用setValue)
- * @param prevState
- * @param action
  */
 export const defaultReducers = {
   $setValueMerge: (prevState: StoreState, value: StoreState | any) =>

@@ -120,9 +120,6 @@ export class Store<S extends StoreState> extends EventBus<any> {
 
   /**
    * 触发一个action并调用reducer修改state
-   * @param moduleName
-   * @param actionName
-   * @param payload
    */
   async dispatchModuleAction(moduleName: string, actionName: string, payload: any) {
     if (!moduleName) return

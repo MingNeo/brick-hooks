@@ -3,10 +3,11 @@
 对[{}, {}, ...]格式的数据进行处理, 自动监听变化并更新，可以使用自定义处理函数对数据进行处理
 可以理解为针对列表数据的相关处理函数的封装，并提供链式的写法。
 
-与useListData类似，不同的是useListData 类似于useMemo，对一个state进行自动处理生成新的getter的值。而这个hook则直接提供setState方法，setState原始值并自动通过回调函数进行处理
+与 useListData 类似，不同的是 useListData 类似于 useMemo，对一个 state 进行自动处理生成新的 getter 的值。而这个 hook 则直接提供 setState 方法，setState 原始值并自动通过回调函数进行处理
 
 ### 自定义处理
-完全自由处理的情况下，相当于组合了useState/useArray及useMemo
+
+完全自由处理的情况下，相当于组合了 useState/useArray 及 useMemo
 
 ```javascript
 const initialValue = [
@@ -14,19 +15,23 @@ const initialValue = [
   { id: 2, value: 1 },
 ]
 
-const [result, listMethods] = useListState(listData, (originValue) => originValue.filter(v.value === 1))
+const [result, listMethods] = useListState(listData, (originValue) =>
+  originValue.filter(v.value === 1)
+)
 // result result: [{id: 2, value: 1}]
-listMethods.push({id: 3, value: 1})
+listMethods.push({ id: 3, value: 1 })
 // result result: [{id: 2, value: 1}, {id: 3, value: 1}]
 ```
-listMethods的方法见useArray
+
+listMethods 的方法见 useArray
 
 ```javascript
 // result
-[{ id: 1, value: 0 }]
+;[{ id: 1, value: 0 }]
 ```
 
 ### 使用内置方法进行处理
+
 #### transObj 数组转为对象
 
 ```javascript
@@ -35,7 +40,9 @@ const initialValue = [
   { id: 2, value: 1 },
 ]
 
-const [testData, listMethods] = useListState(listData, (originValue, { transObj }) => transObj(originValue))
+const [testData, listMethods] = useListState(listData, (originValue, { transObj }) =>
+  transObj(originValue)
+)
 ```
 
 ```javascript
@@ -56,12 +63,14 @@ const initialValue = [
   { id: 'a004', pid: 'a001', value: '烟台' },
 ]
 
-const [testData, listMethods] = useListState(initialValue, (originValue, { transTree }) => transTree(originValue))
+const [testData, listMethods] = useListState(initialValue, (originValue, { transTree }) =>
+  transTree(originValue)
+)
 ```
 
 ```javascript
 // result
-[
+;[
   {
     id: 'a001',
     pid: 0,
@@ -85,7 +94,9 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const [testData, listMethods] = useListState(initialValue, (value, { group }) => group(value, { groupKey: 'city' }))
+const [testData, listMethods] = useListState(initialValue, (value, { group }) =>
+  group(value, { groupKey: 'city' })
+)
 ```
 
 ```javascript
@@ -119,7 +130,7 @@ const [testData, listMethods] = useListState(initialValue, (value, { partition }
 
 ```javascript
 // result
-[
+;[
   [
     { id: 'q1', city: 'qingdao', value: 0 },
     { id: 'q2', city: 'qingdao', value: 1 },
@@ -141,12 +152,14 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const [testData, listMethods] = useListState(initialValue, (value, { removeById }) => removeById(value, 'q1'))
+const [testData, listMethods] = useListState(initialValue, (value, { removeById }) =>
+  removeById(value, 'q1')
+)
 ```
 
 ```javascript
 // result
-[
+;[
   { id: 'q2', city: 'qingdao', value: 1 },
   { id: 'h1', city: 'hangzhou', value: 2 },
   { id: 'h2', city: 'hangzhou', value: 3 },
@@ -163,18 +176,22 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const [testData, listMethods] = useListState(initialValue, (value, { removeIndex }) => removeIndex(value, 1))
+const [testData, listMethods] = useListState(initialValue, (value, { removeIndex }) =>
+  removeIndex(value, 1)
+)
 ```
 
 ```javascript
 // result
-[
+;[
   { id: 'q1', city: 'qingdao', value: 0 },
   { id: 'h1', city: 'hangzhou', value: 2 },
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 ```
+
 ### 链式语法进行数据处理
+
 使用链式语法可以方便的将复杂的数据处理写的简洁清晰
 
 ```javascript
@@ -195,24 +212,26 @@ const [testData, listMethods] = useListState(initialValue, (originValue, { chain
 
 ```javascript
 // result
-[
+;[
   { id: 'q1', city: 'qingdao', value: 0 },
   { id: 'h1', city: 'hangzhou', value: 2 },
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 ```
-除了使用内置的方法，同样可以自定义处理, 使用next即可。或随时对数据进行自由处理
+
+除了使用内置的方法，同样可以自定义处理, 使用 next 即可。或随时对数据进行自由处理
+
 ```javascript
 const [testData, listMethods] = useListState(initialValue, (originValue, { chain }) =>
   chain(originValue)
-    .next(value => value.filter(v => !v.ignore))
+    .next((value) => value.filter((v) => !v.ignore))
     .partition({ groupKey: 'pid' })
     .value()
 )
 
 const [testData, listMethods] = useListState(initialValue, (originValue, { chain }) => {
   const listData = chain(originValue)
-    .next(value => value.filter(v => !v.ignore))
+    .next((value) => value.filter((v) => !v.ignore))
     .partition({ groupKey: 'pid' })
     .value()
   return listData[0]
@@ -220,6 +239,7 @@ const [testData, listMethods] = useListState(initialValue, (originValue, { chain
 ```
 
 链式语句内置方法
+
 ```javascript
 // 使用自定义fn进行处理
 next: (fn: any) => this

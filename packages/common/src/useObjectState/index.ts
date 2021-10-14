@@ -23,10 +23,7 @@ export default function useObjectState<S>(
   initialState: S = {} as S,
   methods: Record<string, (...args: any[]) => S> = {}
 ): [S, SetState, BoundMethods] {
-  const [state, stateMethods] = useMethods<S>(
-    { ...methods, ...defaultMethods },
-    initialState as S
-  )
+  const [state, stateMethods] = useMethods<S>({ ...methods, ...defaultMethods }, initialState as S)
 
   const setState: SetState = useCallback(
     (nextState, merge: boolean = true) =>

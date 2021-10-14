@@ -10,11 +10,7 @@ type Cancel = () => void
  * @param isImmediate 是否立即执行，默认为false
  * @returns [throttleFn, cancel]
  */
-function useThrottleFn(
-  handler: ThrottleFn,
-  wait = 200,
-  isImmediate = false
-): [ThrottleFn, Cancel] {
+function useThrottleFn(handler: ThrottleFn, wait = 200, isImmediate = false): [ThrottleFn, Cancel] {
   const timeoutRef = useRef<any>()
   const nextArgsRef = useRef<any[]>(null)
 

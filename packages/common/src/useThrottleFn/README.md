@@ -1,8 +1,13 @@
 ## useThrottleFn
+
 对函数进行节流处理
 
 ```typescript
-function useThrottleFn(handler: (...args: any[]) => any, wait?: number, isImmediate?: boolean): [DebounceFn, Cancel]
+function useThrottleFn(
+  handler: (...args: any[]) => any,
+  wait?: number,
+  isImmediate?: boolean
+): [DebounceFn, Cancel]
 ```
 
 ```javascript

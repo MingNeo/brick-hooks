@@ -1,10 +1,21 @@
-import { Options, Module } from 'hydrogen-store'
-import produce, { Draft, PatchListener } from 'immer'
+import produce, { Draft } from 'immer'
+
+function getNextState(prevState: any, nextState: any) {
+  return typeof nextState === 'function'
+    ? produce(prevState, (draft: Draft<any>) => {
+        nextState(draft)
+      })
+    : nextState
+}
+
+function isObject(value) {
+  return Object.prototype.toString.call(value) === '[object Object]'
+}
 
 /**
- * 使用这个插件后，store-next的将可以使用effects处理异步
+ * 使用这个插件后，store-next将可以使用immer的语法编写reducer
  */
-export default function ImmerPlugin<S>(Store: any) {
+function immerPlugin<S>(Store: any) {
   Store.prototype.dispatchModuleAction = function (
     moduleName: string,
     actionName: string,
@@ -16,57 +27,33 @@ export default function ImmerPlugin<S>(Store: any) {
     if (!reducer) throw new Error(`not found reducer ${actionName}`)
 
     const prevState = this._state[moduleName]
-    this._state[moduleName] = produce(
-      prevState,
-      (draft: Draft<S>) => reducer(draft, payload)
-      // Options.patchListener as PatchListener | undefined
-    )
+    this._state[moduleName] = reducer(prevState, payload)
     // 触发react组件更新
     this.publish(`storeChange.${moduleName}`, this._state[moduleName])
   }
 
-  // const originInitialBase = Store.prototype.initialBase
-  // Store.prototype.initialBase = function (options?: Options<S>) {
-  //   originInitialBase.call(this, options)
-  //   Object.keys(this._state).forEach((module) => {
-  //     this._state[module] = produce(
-  //       this._state[module],
-  //       (draft: Draft<S>) => draft
-  //       // Options.patchListener as PatchListener | undefined
-  //     )
-  //   })
-  //   const { _base, ...moduleReducers } = this._reducers
+  const defaultReducers = {
+    $setValueMerge: (prevState: any, value: any) => {
+      const nextState = getNextState(prevState, value)
+      return isObject(prevState || nextState)
+        ? { ...(prevState || {}), ...(nextState || {}) }
+        : nextState
+    },
+    $setValue: (prevState: any, value: any) => getNextState(prevState, value),
+  }
 
-  //   this._reducers = Object.entries(moduleReducers).reduce(
-  //     (prev, [module, moduleReducers]) => ({ ...prev, [module]: getReducersImmer(moduleReducers) }),
-  //     { _base }
-  //   )
-  //   console.log('_reducers', this._reducers, moduleReducers)
-  // }
-
-  // const originRegisterModule = Store.prototype.registerModule
-  // Store.prototype.registerModule = function (moduleName: string, initialModule: Module) {
-  //   originRegisterModule.call(this, moduleName, initialModule)
-  //   if (this._reducers[moduleName]) {
-  //     this._reducers[moduleName] = getReducersImmer(this._reducers[moduleName])
-  //   }
-  // }
-
-  // Store.prototype._setState = function(nextState: {} | S) {
-  //   this._state = nextState
-  //   this.publish('storeChange', this._state)
-  // }
-
-  return function initial(store) {}
+  return function initial(store) {
+    store._reducers._base = { ...store._reducers._base, ...defaultReducers }
+    Object.entries(store._reducers).forEach(([moduleName, moduleReducers]) => {
+      Object.entries(moduleReducers).forEach(([actionName, reducer]) => {
+        store._reducers[moduleName][actionName] = (prevState: any, payload: any) => {
+          return produce(prevState, (draft: Draft<S>) => reducer(draft, payload))
+        }
+      })
+    })
+  }
 }
+immerPlugin.type = 'immerPlugin'
+immerPlugin.sortIndex = 10
 
-function getReducersImmer<S>(reducers) {
-  return Object.entries(reducers).reduce(
-    (prevReducers, [reducerAction, reducer]) =>
-      (prevState: any, payload) => ({
-        ...prevReducers,
-        [reducerAction]: produce(prevState, (draft: Draft<S>) => (reducer as any)(draft, payload)),
-      }),
-    {}
-  )
-}
+export default immerPlugin

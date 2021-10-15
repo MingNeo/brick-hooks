@@ -1,8 +1,7 @@
-import { Store } from 'hydrogen-store'
 import { useEffect } from 'react'
 
-interface Options<S> {
-  store?: Store<S>
+interface Options {
+  store?: any
   assign?: boolean
 }
 
@@ -13,7 +12,7 @@ interface Options<S> {
 export default function useStoreWrap<S extends Record<string, any>>(
   moduleName: string,
   state: S,
-  { store, assign = true }: Options<S> = {}
+  { store, assign = true }: Options = {}
 ) {
   useEffect(() => {
     store?.setModuleState(moduleName, state, assign)

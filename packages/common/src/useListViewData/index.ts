@@ -64,7 +64,7 @@ export default function useListViewData(fetchFn: FetchFn, query = {}) {
           })
           .catch((e) => {
             setObjectState({ loading: false })
-            console.log(e)
+            console.info(e)
             reject(new Error(`load data error`))
           })
       })

@@ -11,7 +11,7 @@ export const setCookie = (
       }`
       resolve(true)
     } catch (err) {
-      console.log(err)
+      console.info(err)
       reject(err)
     }
   })
@@ -24,7 +24,7 @@ export const getCookie = (name: string) => {
       return parts[0] === name ? decodeURIComponent(parts[1]) : prev
     }, '')
   } catch (err) {
-    console.log(err)
+    console.info(err)
     return ''
   }
 }

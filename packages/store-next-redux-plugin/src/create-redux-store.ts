@@ -5,6 +5,7 @@ export type UnsubscribeFn = () => void
 export type EnhancedStore = any
 
 declare global {
+  // eslint-disable-next-line no-unused-vars
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION__?: any
   }
@@ -25,14 +26,13 @@ const omit = (obj: Record<string, any>, keyToRemove: string) =>
     }, {})
 
 function getModuleReducers(reducers: any, moduleName: string) {
-  const baseReducers = Object.entries({...(reducers?._base || {}), ...(reducers?.[moduleName] || {})}).reduce(
-    (_baseReducers, [reducerName, reducer]) => ({
-      ..._baseReducers,
-      [moduleName ? `${moduleName}/${reducerName}` : reducerName]: reducer,
-    }),
-    {}
-  )
-  return baseReducers
+  return Object.entries({
+    ...(reducers?._base || {}),
+    ...(reducers?.[moduleName] || {}),
+  }).map(([reducerName, reducer]) => [
+    moduleName ? `${moduleName}/${reducerName}` : reducerName,
+    reducer,
+  ])
 }
 
 export const createReduxStore: any = ({ name, initialState = {}, reducers = {} }: any) => {
@@ -51,24 +51,23 @@ export const createReduxStore: any = ({ name, initialState = {}, reducers = {} }
 
     const currentState = isDeleteAction && moduleName ? omit(state, moduleName) : { ...state }
 
-    const moduleReducers = getModuleReducers(registeredReducers, moduleName)
-
-    const nextState = moduleName ? Object.entries(moduleReducers).reduce((state, [reducerName, reducer]: [string, any]) => {
-      const moduleState = state[moduleName]
-
-      if(isInitModule) {
-        state[moduleName] = action.payload
-      } else if (action.type === reducerName) {
-        state[moduleName] = reducer(moduleState, action.payload)
-      }
-
-      return state
-    }, currentState) : currentState
+    const nextState = moduleName
+      ? getModuleReducers(registeredReducers, moduleName).reduce(
+          (state, [reducerName, reducer]: [string, any]) => {
+            const moduleState = state[moduleName]
+            if (isInitModule) {
+              state[moduleName] = action.payload
+            } else if (action.type === reducerName) {
+              state[moduleName] = reducer(moduleState, action.payload)
+            }
+            return state
+          },
+          currentState
+        )
+      : currentState
 
     return nextState
   }
-
-  console.log('name', name)
 
   const store: EnhancedStore = createStore(
     storeReducer,

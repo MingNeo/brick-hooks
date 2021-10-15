@@ -8,7 +8,7 @@ import openRedux from './open-redux'
  * @param Store 
  * @returns 
  */
-export default function reduxPlugin<S>(Store) {
+function reduxPlugin<S>(Store) {
   // 如果浏览器/debugger 工具没有安装redux-devtool，直接返回空处理
   if(typeof window === 'undefined' || !window.__REDUX_DEVTOOLS_EXTENSION__) {
     return function initial(store) {}
@@ -74,3 +74,8 @@ export default function reduxPlugin<S>(Store) {
     !store._reduxStore && store.initRedux(store._state, store._options)
   }
 }
+
+reduxPlugin.type = 'reduxPlugin'
+reduxPlugin.sortIndex = 20
+
+export default reduxPlugin

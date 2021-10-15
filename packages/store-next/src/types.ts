@@ -1,3 +1,5 @@
+import { EventBus } from './eventBus'
+
 export type StoreState = Record<string, any>
 export type Dispatch<A> = (value: A) => void | StoreState | Promise<any>
 export interface Module {
@@ -5,7 +7,11 @@ export interface Module {
   reducers?: Record<string, any>
 }
 export type Modules = Record<string, Module>
-export type Plugin = <StoreClass>(Store: StoreClass) => (store: any) => any
+export interface Plugin {
+  <StoreClass>(Store: StoreClass): (store: any) => any
+  type?: string
+  sortIndex?: number
+}
 export interface Options<S = Record<string, any>> extends Record<string, any> {
   modules?: Modules
   plugins?: Plugin[]
@@ -36,4 +42,47 @@ export type UseStoreByContext = <S>(
   moduleName?: string,
   autoMerge?: boolean,
   willUpdate?: boolean
-) => [S, SetStore<SetStoreAction<S>>, ToolMethods<S>]  
+) => [S, SetStore<SetStoreAction<S>>, ToolMethods<S>]
+
+ export declare class StoreClass<S extends StoreState> extends EventBus<any> {
+  useStore: UseStoreByContext;
+  _state: S | {};
+  _reducers: Record<string, any>;
+  _modules: Set<string>;
+  _options: Options<S>;
+  static _plugins: Set<string>;
+  _reduxStore: any;
+  _dispatchRedux: any;
+  _registerReduxModule: any;
+  _unsubscribeRedux: any;
+  static pluginsInitial: Set<any>;
+  constructor(options?: Options<S>);
+  initialBase(options?: Options<S>): void;
+  getUseStore(): any;
+  /**
+   * use plugin
+   */
+  static usePlugin(plugin: any): void;
+  /**
+   * 初始化, 使用插件后，如果不是创建新的实例，则必须调用实例的这个方法后才可以正常使用
+   */
+  init(options?: Options<S>): void;
+  /**
+   * 除了createStore时初始化，也可以通过这个方法来注册每个模块
+   */
+  registerModule(moduleName: string, initialModule: Module): void;
+  /**
+   * 修改配置
+   */
+  config(options?: Options<S> | ((oldOptions: Options<S>) => Options<S>)): void;
+  getState(moduleName?: string): any;
+  setState(nextState: ((state: S) => S) | S): void;
+  _setState(nextState: {} | S): void;
+  setModuleState(moduleName: string, nextState: ((state: S) => S) | S, merge: boolean): void;
+  _setModuleState(moduleName: string, nextState: any): void;
+  dispatch(actionName: string, payload: any): void;
+  /**
+   * 触发一个action并调用reducer修改state
+   */
+  dispatchModuleAction(moduleName: string, actionName: string, payload: any): Promise<void>;
+}

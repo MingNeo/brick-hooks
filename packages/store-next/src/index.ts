@@ -1,9 +1,16 @@
-import { Store } from './store'
-import createStore from './base';
+import createStore from './base'
 export * from './types'
 
-const { store, useStore, registerModule, usePlugins, getStoreState, setStoreState, dispatch } =
-  createStore()
+const {
+  StoreClass: Store,
+  store,
+  useStore,
+  registerModule,
+  usePlugins,
+  getStoreState,
+  setStoreState,
+  dispatch,
+} = createStore()
 
 export {
   Store,

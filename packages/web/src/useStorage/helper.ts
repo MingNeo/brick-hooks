@@ -5,7 +5,7 @@ export function setStorage(storageType: string, key: string, value: Record<strin
   try {
     storage.setItem(key, JSON.stringify(value))
   } catch (error) {
-    console.log(error)
+    console.info(error)
     if(typeof value === 'string') {
       storage.setItem(key, value)
     } else if(typeof value === 'number') {
@@ -24,7 +24,7 @@ export function getStorage(storageType: string, key: string): any {
     return JSON.parse(value)
   } catch (error) {
     // if error, return value
-    console.log(error)
+    console.info(error)
     return value
   }
 }
@@ -34,7 +34,7 @@ export function removeStorage(storageType: string, key: string) {
   try {
     storage.removeItem(key)
   } catch (error) {
-    console.log(error)
+    console.info(error)
   }
 }
 
@@ -45,7 +45,7 @@ export function parseValue(value: string | number | Record<string, any> | any[])
       try {
         result = JSON.parse(value)
       } catch (e) {
-        console.log(e)
+        console.info(e)
         result = value
       }
       break;

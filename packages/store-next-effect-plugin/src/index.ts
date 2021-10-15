@@ -51,7 +51,7 @@ export function getEffects(modules = {}) {
  * 使用这个插件后，store-next的将可以使用effects处理异步
  * @returns
  */
-export default function effectPlugin<S>(Store: any) {
+function effectPlugin<S>(Store: any) {
   const StoreOriginRegisterModule = Store.prototype.registerModule
   Store.prototype.registerModule = function afterRegisterModule(
     moduleName: string,
@@ -106,3 +106,8 @@ export default function effectPlugin<S>(Store: any) {
     store.initEffects()
   }
 }
+
+effectPlugin.type = 'effectPlugin'
+effectPlugin.sortIndex = 0
+
+export default effectPlugin

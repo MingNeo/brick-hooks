@@ -1,17 +1,18 @@
 # `hydrogen-store`
 
-一个简单的全局状态管理，只用来维护数据本身和修改数据的reducers，
+一个简单的全局状态管理，只用来维护数据本身和修改数据的 reducers
 
-* 简单使用与 useState用法基本一样，近乎无学习成本
-* 无需添加Provider，不使用useContext，不会触发其他模块的重新渲染
-* 可以更方便的使用reducer，类redux的方式管理数据
-* 配合hydrogen-store-redux-plugin 可以使用redux-devtools 进行调试
-* 配合hydrogen-store-effect-plugin 可以使用effect进行异步管理
-* 配合hydrogen-store-immer-plugin 可以使用immer语法简化编写reducer
+- 简单使用与 useState 用法基本一样，近乎无学习成本
+- 无需添加 Provider，不使用 useContext，不会触发其他模块的重新渲染
+- 可以更方便的使用 reducer，类 redux 的方式管理数据
+- 配合 hydrogen-store-redux-plugin 可以使用 redux-devtools 进行调试
+- 配合 hydrogen-store-effect-plugin 可以使用 effect 进行异步管理
+- 配合 hydrogen-store-immer-plugin 可以使用 immer 语法简化编写 reducer
 
 ## Usage
-仅需要把useState换成useStore，即可跨模块共享全局数据，无需添加Provider等处理。
-同时做了性能优化，仅订阅使用的模块会触发更新，不会有使用useContext的性能问题
+
+仅需要把 useState 换成 useStore，即可跨模块共享全局数据，无需添加 Provider 等处理。
+同时做了性能优化，仅订阅使用的模块会触发更新，不会有使用 useContext 的性能问题
 
 ```javascript
 import { useStore } from 'hydrogen-store'
@@ -32,19 +33,20 @@ function useAddress() {
 
   // 使用更新函数
   const handleChangeStateByFn = () => {
-    setAddressState(prevState => ({ a: prevState?.a ? 1 : 2 }))
+    setAddressState((prevState) => ({ a: prevState?.a ? 1 : 2 }))
   }
 
   // ...
 }
 ```
 
-因为useStore用来处理的是全局数据，有时会需要初始化默认state, 可以在app入口处或模块入口处注册初始数据
+因为 useStore 用来处理的是全局数据，有时会需要初始化默认 state, 可以在 app 入口处或模块入口处注册初始数据
+
 ```javascript
 import { registerModule, useStore } from 'hydrogen-store'
 
 registerModule('home', {
-  state: { a: 1 }
+  state: { a: 1 },
 })
 
 function TestStore() {
@@ -55,14 +57,14 @@ function TestStore() {
 }
 ```
 
-useStore的第二个参数，为是否进行自动合并。默认开启，会对object格式的数据进行自动合并处理。
-
+useStore 的第二个参数，为是否进行自动合并。默认开启，会对 object 格式的数据进行默认自动合并处理。
+同时，在 setState 的时候，仍可以通过第二个参数控制当前是否进行合并
 
 ```javascript
 import { registerModule, useStore } from 'hydrogen-store'
 
 registerModule('home', {
-  state: { a: 1 }
+  state: { a: 1 },
 })
 
 function TestStore() {
@@ -73,7 +75,7 @@ function TestStore() {
     // 更新前：{a: 1}，更新后： { a: 1, b: 100 }
   }
 
-  // 不论useStore是否配置第二个参数，在setState的时候，仍可以传递第二个参数，同样会进行合并
+  // 不论useStore是否配置第二个参数，在setState的时候，仍可以通过第二个参数控制当前是否进行合并
   const handleChangeStateMerge = () => {
     setState({ b: 100 }, true)
     // 更新前：{a: 1}，更新后： { a: 1, b: 100 }
@@ -82,22 +84,24 @@ function TestStore() {
   }
 }
 ```
-#### 方便的使用reducer
-支持添加自定义reducer函数，对state进行更统一的管理。
 
-使用switch case 的reducer是看起来很让人头疼的，直接使用reducers则清爽了很多
+#### 方便的使用 reducer
 
-reducer格式为 (state: S, payload: any) => S
+支持添加自定义 reducer 函数，对 state 进行更统一的管理。
 
-触发reducer则可以从第三个参数调用对应方法，或者使用dispatch进行触发
+使用 switch case 的 reducer 是看起来很让人头疼的，直接使用 reducers 则清爽了很多
+
+reducer 格式为 (state: S, payload: any) => S
+
+触发 reducer 则可以从第三个参数调用对应方法，或者使用 dispatch 进行触发
 
 ```javascript
 registerModule('home', {
   state: { a: 1 },
   reducers: {
     updateTitle: (state, payload) => ({ ...state, title: payload }),
-    updatePageBg: (state, payload) => ({ ...state, pageBg: payload })
-  }
+    updatePageBg: (state, payload) => ({ ...state, pageBg: payload }),
+  },
 })
 
 function TestStore() {
@@ -111,11 +115,11 @@ function TestStore() {
     dispatch('updatePageBg', '#fff')
   }
 }
-  
 ```
 
-#### 使用redux devtool
-即使因为种种原因你不想使用redux了，但是否时常会怀念redux-devtool的方便？hydrogen-store 可以方便开启redux-devtool。仅需引入一个插件
+#### 使用 redux devtool
+
+即使因为种种原因你不想使用 redux 了，但是否时常会怀念 redux-devtool 的方便？hydrogen-store 可以方便开启 redux-devtool。仅需引入一个插件
 
 ```javascript
 import { usePlugins } from 'hydrogen-store'
@@ -124,31 +128,34 @@ import reduxPlugin from 'hydrogen-store-redux-plugin'
 usePlugins([reduxPlugin])
 ```
 
-好了，现在可以愉快的使用redux devtool进行调试了。hydrogen-store 本身不依赖redux，使用redux和不使用redux对于业务代码完全没有影响，你可以通过环境变量/打包配置等开启或禁用它。
+好了，现在可以愉快的使用 redux devtool 进行调试了。hydrogen-store 本身不依赖 redux，使用 redux 和不使用 redux 对于业务代码完全没有影响，你可以通过环境变量/打包配置等开启或禁用它。
 
-使用独立实例时需配置devtoolId，用来在devtool中加以区分
+使用独立实例时需配置 devtoolId，用来在 devtool 中加以区分
 
-#### 创建Store实例
-如你所见，以上示例代码都是全局使用默认导出的Store实例，我们可以创建一个独立的Store实例吗？当然可以！
+#### 创建 Store 实例
+
+如你所见，以上示例代码都是全局使用默认导出的 Store 实例，我们可以创建一个独立的 Store 实例吗？当然可以！
+
 ```javascript
 import { createStore } from 'hydrogen-store'
 import reduxPlugin from 'hydrogen-store-redux-plugin'
 
 export const singleStore = createStore({
+  // 创建时定义模块
   modules: {
     test: {
       state: { a: 1 },
       reducers: {
-        testAction: (state, payload) => ({ ...state, ...payload })
-      }
+        testAction: (state, payload) => ({ ...state, ...payload }),
+      },
     },
     address: {
-      state: { addressList: [] }
+      state: { addressList: [] },
     },
   },
   plugins: [reduxPlugin],
   // 每个store会连接不同的 redux devtool instance, 我们可以定义不同的id加以区分
-  devtoolId: 'Test Next Store'
+  devtoolId: 'Test Next Store',
 })
 
 // 同样可以单独注册模块
@@ -156,8 +163,8 @@ singleStore.registerModule('home', {
   state: { a: 1 },
   reducers: {
     updateTitle: (state, payload) => ({ ...state, title: payload }),
-    updatePageBg: (state, payload) => ({ ...state, pageBg: payload })
-  }
+    updatePageBg: (state, payload) => ({ ...state, pageBg: payload }),
+  },
 })
 
 function Home() {
@@ -166,8 +173,9 @@ function Home() {
 }
 ```
 
-如果你喜欢，使用createStore创建的实例页可以直接使用react context包裹下，这样就可以像普通的context、unstated-next一样基于模块管理数据。
-与直接使用react context 存储数据的区别是，store创建之后引用就不会变化，因此数据的变更不会触发无关组件更新，并且仍然可以使用redux devtool等等进行调试
+如果你喜欢，使用 createStore 创建的实例页可以直接使用 react context 包裹下，这样就可以像普通的 context、unstated-next 一样基于模块管理数据。
+与直接使用 react context 存储数据的区别是，store 创建之后引用就不会变化，因此数据的变更不会触发无关组件更新，并且仍然可以使用 redux devtool 等等进行调试
+
 ```javascript
 import { createContext } from 'react'
 import { createStore } from 'hydrogen-store'
@@ -177,21 +185,19 @@ const addressStore = createStore({
     Address: {
       state: { addressList: [] },
       reducers: {
-        testAction: (state, payload) => ({ ...state, ...payload })
-      }
-    }
+        testAction: (state, payload) => ({ ...state, ...payload }),
+      },
+    },
   },
   plugins: [reduxPlugin],
   // 每个store会连接不同的 redux devtool instance, 我们可以定义不同的id加以区分
-  devtoolId: 'Address Store'
+  devtoolId: 'Address Store',
 })
 
 const AddressStoreContext = createContext({ store: addressStore })
 
 function Parent() {
-  return <AddressStoreContext.Provider>
-    // children
-  </AddressStoreContext.Provider>
+  return <AddressStoreContext.Provider>// children</AddressStoreContext.Provider>
 }
 
 function useAddressStore() {
@@ -206,7 +212,7 @@ function Child() {
 
 #### module
 
-刚才我们已经注册了几个module，可以看到，module的具体结构如下
+刚才我们已经注册了几个 module，可以看到，module 的具体结构如下
 
 ```javascript
 {
@@ -214,7 +220,9 @@ function Child() {
   reducers: {} // 除了setState之外的自定义reducer
 }
 ```
-hydrogen-store 定义为基于module进行全局状态管理。所以应当避免在全局store根节点直接存储基本类型的值，而应该使用object格式，将一系列相关状态进行合并管理。以下写法不会报错，但应避免。
+
+hydrogen-store 定义为基于 module 进行全局状态管理。所以应当避免在全局 store 根节点直接存储基本类型的值，而应该使用 object 格式，将一系列相关状态进行合并管理。以下写法不会报错，但应避免。
+
 ```javascript
 // bad
 const [cartCount, setCartCount] = useStore('cartCount')
@@ -224,35 +232,37 @@ const handleChange = () => setCartCount(1)
 const [{ cartCount } = {}, setCart] = useStore('cart')
 const handleChange = () => setCart({ cartCount: 1 }, true)
 ```
-仅在createStore或者registerModule中进行初始化。初始化并非必须的。
 
-使用useStore('moduleName')进行使用。
+仅在 createStore 或者 registerModule 中进行初始化。初始化并非必须的。
+
+使用 useStore('moduleName')进行使用。
 
 ##### reducers
-使用reducer可以极大方便对数据对更加集中的管理。同样推荐将状态的系列变更处理放在自定义reducer中。
-但是应该注意，虽然全局state+reducer有点redux的感觉，而且还能使用redux-devtool。
-但是hydrogen-store的设计思路是一个不侵入hooks写法的状态库，更多类似的是React.useState/React.useReducer的全局化。
-reducer应当只是纯函数，只做存储数据的处理/格式化。getter、异步action这些事情，都推荐放到组件中使用useMemo、useEffect等去处理。
-虽然使用hydrogen-store可以很方便的存储全局状态，但是并不必要把所有数据都放在store中！
 
-如果你真的喜欢/需要进行统一的状态管理，见下面的effects模块
+使用 reducer 可以极大方便对数据对更加集中的管理。同样推荐将状态的系列变更处理放在自定义 reducer 中。
+但是应该注意，虽然全局 state+reducer 有点 redux 的感觉，而且还能使用 redux-devtool。
+但是 hydrogen-store 的设计思路是一个不侵入 hooks 写法的状态库，更多类似的是 React.useState/React.useReducer 的全局化。
+reducer 应当只是纯函数，只做状态的处理/格式化。getter、异步 action 这些事情，都推荐放到组件中使用 useMemo、useEffect 等去处理。
+虽然使用 hydrogen-store 可以很方便的存储全局状态，但是并不必要把所有数据都放在 store 中！
+
+如果你真的喜欢/需要进行统一的状态管理，见下面的 effects 模块
 
 #### effects
-如果你非常喜欢将异步等等操作统一使用store进行管理，可以使用effectPlugin，就可以像使用dva/vuex一样管理异步的操作
+
+如果你非常喜欢将异步等等操作统一使用 store 进行管理，可以使用 effectPlugin，就可以像使用 dva/vuex 一样管理异步的操作
 
 effect 类似于 reducer，不同在于：
+
 - effect 提交的是 reducer action，而不是直接变更状态。
 - effect 可以包含任意异步操作。
 
-effects 概念基本等同于dva的effects、vuex的actions
+effects 概念基本等同于 dva 的 effects、vuex 的 actions
 
-使用dispatch触发reducer action，使用dispatchEffect触发effect action
+使用 dispatch 触发 reducer action，使用 dispatchEffect 触发 effect action
 
 ```typescript
-type dispatchEffect = (effectName: string, payload: any, moduleName?:string) => any
+type dispatchEffect = (effectName: string, payload: any, moduleName?: string) => any
 ```
-
-!注意，如果使用reduxPlugin, effectPlugin插件应配置在reduxPlugin插件之前使用
 
 ```javascript
 import { createStore } from 'hydrogen-store'
@@ -261,7 +271,7 @@ import effectPlugin from 'hydrogen-store-effect-plugin'
 const testModel = {
   state: { dataList: [] },
   reducers: {
-    testAction: (state, payload) => ({ ...state, ...payload })
+    testAction: (state, payload) => ({ ...state, ...payload }),
   },
   effects: {
     async loadData({ state, dispatch }, payload) {
@@ -275,8 +285,8 @@ const testModel = {
       // dispatchEffect的第三个参数可以触发其他模块effect
       dispatchEffect('loadData', dataList, 'address')
       // ...
-    }
-  }
+    },
+  },
 }
 
 export const singleStore = createStore({
@@ -287,11 +297,11 @@ export const singleStore = createStore({
       effects: {
         async loadData({ state, dispatch }, payload) {
           // ...
-        }
-      }
-    }
+        },
+      },
+    },
   },
-  plugins: [effectPlugin]
+  plugins: [effectPlugin],
 })
 
 function Home() {
@@ -301,30 +311,50 @@ function Home() {
   }, [])
 }
 ```
-#### immer
-使用immerPlugin，可以使用immer的语法简化编写reducer
 
-!注意，当前版本不支持immerPlugin 和 reduxPlugin同时使用, 将在下个版本支持
+#### immer
+
+使用 immerPlugin，可以使用 immer 的语法简化编写 reducer
+
+使用 immer 插件之后，你拥有了一个 react 版的 vuex
+
+```javascript
+// 使用前
+const reducers = {
+  testAction: (state, payload) => ({
+    ...state,
+    data: { 
+      ...state.data,
+      a: { 
+        ...state.data.a, 
+        b: 2 
+      } 
+    },
+  }),
+}
+
+// 使用后
+const reducers = {
+  testAction: (state, payload) => (state.data.a.b = 2),
+}
+```
 
 ```javascript
 import { createStore } from 'hydrogen-store'
 import immerPlugin from 'hydrogen-store-immer-plugin'
 
 const testModel = {
-  state: { data: { a: { b: 1 }} },
+  state: { data: { a: { b: 1 } } },
   reducers: {
-    testAction: (state, payload) => (state.data.a.b = 2)
+    testAction: (state, payload) => (state.data.a.b = 2),
   },
-  effects: {}
+  effects: {},
 }
 
 export const singleStore = createStore({
   modules: {
-    test: testModel
+    test: testModel,
   },
-  plugins: [effectPlugin, immerPlugin]
+  plugins: [effectPlugin, immerPlugin],
 })
 ```
-
-
-

@@ -1,26 +1,19 @@
-import { Store } from './store'
-import { Options, UseStore, Module } from './types'
+import { StoreClassFactory } from './store'
+import { Options, UseStore, Module, Plugin } from './types'
 
-export function classFactory<S>() {
-  return class extends Store<S> {}
-}
-
-export function createStoreAndClass<S = Record<string, any>>(options: Options<S> = {}) {
-  const { plugins = [], ...restOptions } = options
-  const SingleClass = classFactory()
-  plugins.forEach((plugin) => SingleClass.usePlugin(plugin))
-
-  return {
-    store: new SingleClass(restOptions),
-    StoreClass: SingleClass,
-  }
+function sortPlugins(plugins: Plugin[]) {
+  return plugins.sort((a, b) => a?.sortIndex - b?.sortIndex)
 }
 
 /**
  * 创建独立store实例
  */
 export default function createStore<S = Record<string, any>>(options: Options<S> = {}) {
-  const { store, StoreClass } = createStoreAndClass(options)
+  const { plugins = [], ...restOptions } = options
+  const StoreClass = StoreClassFactory()
+  sortPlugins(plugins).forEach((plugin: Plugin) => StoreClass.usePlugin(plugin))
+
+  const store = new StoreClass(restOptions)
 
   const useStore = <S = any>(
     moduleName: string,
@@ -47,7 +40,7 @@ export default function createStore<S = Record<string, any>>(options: Options<S>
    */
   const usePlugins = (useStore.usePlugins = (plugins: any[]) => {
     if (plugins && plugins.length) {
-      plugins.forEach((plugin) => StoreClass.usePlugin(plugin))
+      sortPlugins(plugins).forEach((plugin: Plugin) => StoreClass.usePlugin(plugin))
       // eslint-disable-next-line react-hooks/rules-of-hooks
       // 因为在createStore之后调用，所以需要重新初始化一下
       store.init()
@@ -78,40 +71,6 @@ export default function createStore<S = Record<string, any>>(options: Options<S>
     getStoreState,
     setStoreState,
     dispatch,
+    StoreClass,
   }
 }
-
-// function createStoreContext<S = Record<string, any>>(options: Options<S> = {}) {
-//   const {
-//     store: baseStore,
-//     registerModule,
-//     usePlugins,
-//     getStoreState,
-//     setStoreState,
-//     dispatch,
-//   } = createStore(options)
-
-//   const context = React.createContext({
-//     store: baseStore,
-//   })
-
-//   const useStore = <S = any>(
-//     moduleName: string,
-//     assign: boolean = true,
-//     willUpdate: boolean = true
-//   ) => {
-//     const { store } = React.useContext(context)
-//     const useStoreStore: UseStore = store.getUseStore()
-//     return useStoreStore<S>(moduleName, assign, willUpdate)
-//   }
-
-//   return {
-//     store: baseStore,
-//     useStore,
-//     registerModule,
-//     usePlugins,
-//     getStoreState,
-//     setStoreState,
-//     dispatch,
-//   }
-// }

@@ -4,7 +4,7 @@ export async function setStorage(key: string, value: any) {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value))
   } catch (error) {
-    console.log(error)
+    console.info(error)
     if(typeof value === 'string') {
       await AsyncStorage.setItem(key, value)
     } else if(typeof value === 'number') {
@@ -20,7 +20,7 @@ export async function getStorage(key: string): Promise<any> {
     return JSON.parse(value)
   } catch (error) {
     // if error, return value
-    console.log(error)
+    console.info(error)
     return value
   }
 }
@@ -32,7 +32,7 @@ export function parseValue(value: string | number | Record<string, any> | any[])
       try {
         result = JSON.parse(value)
       } catch (e) {
-        console.log(e)
+        console.info(e)
         result = value
       }
       break;

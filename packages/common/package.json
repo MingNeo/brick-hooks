@@ -1,6 +1,6 @@
 {
   "name": "brick-hooks",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "description": "> React Hooks Library",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "eslint": "^8.0.0",
-    "hydrogen-store": "^0.1.29",
+    "hydrogen-store": "^0.1.30",
     "immer": "^9.0.3",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isequal": "^4.5.0"

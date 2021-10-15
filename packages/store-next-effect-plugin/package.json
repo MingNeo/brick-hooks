@@ -1,6 +1,6 @@
 {
   "name": "hydrogen-store-effect-plugin",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "description": "> ",
   "author": "klose <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks/tree/master/packages/store-next-effect-plugin#readme",
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "eslint": "^8.0.0",
-    "hydrogen-store": "^0.1.29"
+    "hydrogen-store": "^0.1.30"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^5.1.1",

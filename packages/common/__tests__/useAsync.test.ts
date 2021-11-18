@@ -57,7 +57,6 @@ describe('useAsync 校验', () => {
     let data = 0
     let fetchDataCb = (value) => {
       return new Promise((resolve) => {
-        console.log('data', data)
         setTimeout(() => {
           if (value) data = value
           else data += 1

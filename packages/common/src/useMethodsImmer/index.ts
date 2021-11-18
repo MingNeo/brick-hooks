@@ -3,17 +3,17 @@ import { ReducerAction, useMemo, useReducer } from 'react'
 
 export { Draft }
 
-interface Reducer<S> {
-  (state: Draft<S>, payload: any): void
-  (state: Draft<S>, ...args: any[]): void
-}
-
-type Methods<S> = Record<string, Reducer<S>>
 interface Action {
   type: string
   payload?: any
   [x: string]: any
 }
+
+interface Reducer<S> {
+  (state: Draft<S>, payload?: Action | any): void
+}
+
+type Methods<S> = Record<string, Reducer<S>>
 interface Dispatch {
   (actionType: string, payload?: any): void
   (action: Action): void
@@ -34,43 +34,31 @@ export default function useMethodsImmer<S>(
   Options: Options = {}
 ): [S, Actions] {
   const immerReducer = useMemo(() => {
-    return (state: S, action: ReducerAction<Reducer<any>>) => {
-      const draftState = produce(
+    return (state: S, action: ReducerAction<Reducer<any>>) =>
+      produce(
         state,
         (draft: Draft<S>) => {
           const method = methods[action.type]
           if (method) {
-            const result = method(draft, ...action.payload)
-            return result
+            return method(draft, ...(action.args || []))
           }
         },
         Options.patchListener
       )
-      return draftState
-    }
   }, [methods, Options.patchListener])
 
-  const [draftState, dispatch] = useReducer(immerReducer, initialState, initializer)
+  const [state, dispatch] = useReducer(immerReducer, initialState, initializer)
 
   const actions: Actions = useMemo(() => {
     const dispatchMethod: Dispatch = (...args: any[]) => {
-      let type: any
-      let payloads: any
-      if (typeof args[0] === 'string') {
-        type = args[0]
-        payloads = args.slice(1)
-      } else {
-        type = args[0]?.type
-        payloads = args
-      }
-      dispatch({ type, payload: payloads })
+      dispatch(
+        typeof args[0] === 'string'
+          ? { type: args[0], args: args.slice(1) }
+          : { type: args[0]?.type, args }
+      )
     }
-    const actionTypes: string[] = Object.keys(methods)
-    return actionTypes.reduce(
-      (prev, type) => {
-        prev[type] = (...args: any[]) => dispatch({ type, payload: args })
-        return prev
-      },
+    return Object.keys(methods).reduce(
+      (prev, type) => ({ ...prev, [type]: (...args: any[]) => dispatch({ type, args }) }),
       { dispatch: dispatchMethod }
     )
 
@@ -79,5 +67,5 @@ export default function useMethodsImmer<S>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return [draftState, actions]
+  return [state, actions]
 }

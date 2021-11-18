@@ -4,7 +4,7 @@ export type EventType = string | symbol
 export class EventBus<T> {
   eventContainer = new Map<EventType, Set<Subscription<T>>>()
 
-  publish = (type: EventType, payload: any) => {
+  publish = (type: EventType, payload?: any) => {
     const subscriptions = this.eventContainer.get(type)
     if (subscriptions) {
       for (const subscription of subscriptions) {

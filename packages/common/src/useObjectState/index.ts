@@ -1,8 +1,10 @@
 import { useCallback } from 'react'
-import useMethods, { BoundMethods } from '../useMethods'
+import useMethods, { BoundActionMethods } from '../useMethods'
 
 type State = Record<string, any>
 type SetState = (nextState: any, merge?: boolean) => void
+
+type Methods<S> = Record<string, (...args: any[]) => S>
 
 const defaultMethods = {
   _set: (prevState: State, payload: State) =>
@@ -21,8 +23,8 @@ const defaultMethods = {
  */
 export default function useObjectState<S>(
   initialState: S = {} as S,
-  methods: Record<string, (...args: any[]) => S> = {}
-): [S, SetState, BoundMethods] {
+  methods: Methods<S> = {}
+): [S, SetState, BoundActionMethods] {
   const [state, stateMethods] = useMethods<S>({ ...methods, ...defaultMethods }, initialState as S)
 
   const setState: SetState = useCallback(

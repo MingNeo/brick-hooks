@@ -1,4 +1,4 @@
-import useMethods, { BoundMethods } from '../useMethods'
+import useMethods, { BoundActionMethods } from '../useMethods'
 
 export const arrayMethods = {
   set: (state: any, value: any) => (typeof value === 'function' ? value(state) : value),
@@ -17,9 +17,9 @@ export const arrayMethods = {
 
   sort: (state: any[], callback?: (a: any, b: any) => number) => [...state].sort(callback),
 
-  sortBy: (data: any[] = [], { field, order = 'ASC' }) => {
+  sortBy: (state: any[] = [], { field, order = 'ASC' }) => {
     if (!order || !['ASC', 'DESC'].includes(order)) throw new Error('order error')
-    return [...data].sort((a, b) => (order === 'ASC' ? a[field] - b[field] : b[field] - a[field]))
+    return [...state].sort((a, b) => (order === 'ASC' ? a[field] - b[field] : b[field] - a[field]))
   },
 
   remove: (state: any[], value: any) =>
@@ -37,7 +37,7 @@ export const arrayMethods = {
 /**
  * 当state为数组时，数据需要是immutable的，不方便使用push等方法直接操纵数据，此hook提供几个常用方法，修改可以自动触发渲染
  */
-export default function useArray<T>(initial?: T[] | (() => T[])): [T[], BoundMethods] {
+export default function useArray<T>(initial?: T[] | (() => T[])): [T[], BoundActionMethods] {
   const [listData, actions] = useMethods(arrayMethods, initial || [])
   return [listData, actions]
 }

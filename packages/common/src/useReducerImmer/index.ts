@@ -1,5 +1,5 @@
 import produce, { Draft } from 'immer'
-import { useMemo, useReducer, Dispatch } from 'react'
+import { useReducer, Dispatch } from 'react'
 
 type Reducer<S, A> = (state: Draft<S>, action: A) => void
 
@@ -14,7 +14,6 @@ export default function useImmerReducer<S = any, A = any>(
   initialState: S,
   initializer?: (initial: any) => S
 ): [S, Dispatch<A>] {
-  const immerReducer = useMemo(() => produce(reducer), [reducer])
   // @ts-ignore
-  return useReducer(immerReducer, initialState as any, initializer)
+  return useReducer(() => produce(reducer), initialState as any, initializer)
 }

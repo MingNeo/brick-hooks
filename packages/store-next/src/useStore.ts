@@ -13,7 +13,7 @@ export default function useStore<S>(
   storeContext: any,
   moduleName: string = '',
   autoMerge: boolean = true,
-  willUpdate: boolean = true
+  doUpdate: boolean = true
 ): [S, SetStore<SetStoreAction<S>>, ToolMethods<S>] {
   if (!moduleName) throw new Error('moduleName is required!')
 
@@ -29,13 +29,13 @@ export default function useStore<S>(
   useEffect(() => {
     const currentStoreContext = storeContextRef.current
     const eventName = `storeChange.${moduleName}`
-    const handleStateChange = () => willUpdate && forceUpdate()
+    const handleStateChange = () => doUpdate && forceUpdate()
     currentStoreContext?.subscribe(eventName, handleStateChange)
 
     return () => {
       currentStoreContext?.unSubscribe(eventName, handleStateChange)
     }
-  }, [moduleName, willUpdate])
+  }, [moduleName, doUpdate])
 
   const methods: Methods<S> = useMemo(() => {
     /**
@@ -50,11 +50,8 @@ export default function useStore<S>(
     const dispatch = (actionName: string, payload: any) => {
       const actionSplitResult = actionName.split('/')
       // 当前不支持‘a/b/c'格式action type
-      let moduleType = moduleName
-      let actionType = actionName
-      if (actionSplitResult.length > 1) {
-        [moduleType, actionType] = actionSplitResult
-      }
+      const [moduleType, actionType] =
+        actionSplitResult.length > 1 ? actionSplitResult : [moduleName, actionName]
       storeContextRef.current?.dispatchModuleAction(moduleType, actionType, payload)
     }
 
@@ -71,7 +68,7 @@ export default function useStore<S>(
     const moduleState: S = storeContextRef.current._state[moduleName]
     const { setStore, dispatch, boundMethods } = methods
 
-    return [moduleState, setStore, { dispatch, ...boundMethods } as any]
+    return [moduleState, setStore, { dispatch, ...boundMethods } as ToolMethods<S>]
     // 每次强制刷新的时候重续获取存储的全局数据
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [methods, forceUpdateCount])

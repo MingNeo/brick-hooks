@@ -51,7 +51,6 @@ describe('useListState 校验', () => {
       act(() => {
         result.current[1].set([1])
       })
-      console.log('result.current[0]', result.current[0])
 
       expect(result.current[0]).toEqual([1])
     })

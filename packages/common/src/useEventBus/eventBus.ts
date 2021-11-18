@@ -1,8 +1,8 @@
-export type Subscription<T> = (val: T, ...args: any[]) => void
+export type Subscription<T = any> = (value: T, ...args: any[]) => void
 export type EventType = string | symbol
 
 // 调用订阅的方法
-function applySubscription<T>(subscription: Subscription<T>, payload: any) {
+function applySubscription<T>(subscription: Subscription<T>, payload: T) {
   try {
     subscription(payload)
   } catch (e) {
@@ -16,7 +16,7 @@ function applySubscription<T>(subscription: Subscription<T>, payload: any) {
 export class EventBus<T = any> {
   private eventContainer = new Map<EventType, Set<Subscription<T>>>()
 
-  publish = (type: EventType, payload?: any) => {
+  publish = (type: EventType, payload?: T) => {
     const subscriptions = this.eventContainer.get(type)
     if (subscriptions) {
       for (const subscription of subscriptions) {
@@ -34,10 +34,11 @@ export class EventBus<T = any> {
 
   // 只订阅一次，自动销毁
   subscribeOnce(type: EventType, handler: Subscription<T>) {
-    this.subscribe(type, (...args: any[]) => {
-      this.unSubscribe(type, handler)
-      handler.apply(this, args)
-    })
+    const subscription = (...args: any[]) => {
+      handler.apply(null, args)
+      this.unSubscribe(type, subscription)
+    }
+    this.subscribe(type, subscription)
   }
 
   unSubscribe = (type: EventType, subscription: Subscription<T>) => {

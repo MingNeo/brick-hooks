@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useReducer } from 'react'
 
 export type Reducer = (...args: any[]) => any
 
@@ -7,6 +7,7 @@ export interface Action {
   payload?: any
   [x: string]: any
 }
+
 export interface Dispatch {
   (actionName: string, ...args: any[]): void
   (action: Action): void
@@ -14,47 +15,35 @@ export interface Dispatch {
 
 export type Methods = Record<string, Reducer>
 
-export interface BoundMethods extends Record<string, (...args: any[]) => void> {
+export interface BoundActionMethods extends Record<string, (...args: any[]) => void> {
   dispatch: Dispatch
 }
 
 export default function useMethods<S>(
   methods: Methods,
   initialState: S | (() => S)
-): [S, BoundMethods, Dispatch] {
-  const [value, setValue] = useState(initialState)
+): [S, BoundActionMethods, Dispatch] {
+  const [value, dispatch] = useReducer((prev: S, action: Action) => {
+    return methods[action.type](prev, ...action.args)
+  }, initialState)
 
-  const { boundMethods, dispatch } = useMemo(() => {
-    const dispatch: Dispatch = (...args: any[]) => {
-      let actionName: any
-      let payloads: any
-      if (typeof args[0] === 'string') {
-        actionName = args[0]
-        payloads = args.slice(1)
-      } else {
-        actionName = args[0]?.type
-        payloads = args
-      }
-      const fn = methods[actionName]
-      setValue((value: S) => fn(value, ...payloads))
+  const boundMethods: BoundActionMethods = useMemo(() => {
+    const dispatchMethods: Dispatch = (...args: any[]) => {
+      dispatch(
+        typeof args[0] === 'string'
+          ? { type: args[0], args: args.slice(1) }
+          : { type: args[0]?.type, args }
+      )
     }
 
-    const boundMethods: BoundMethods = Object.entries(methods).reduce(
-      (methods, [name, fn]: [string, Reducer]) => {
-        const method = (...args: any[]) => {
-          setValue((value: S) => fn(value, ...args))
-        }
-        methods[name] = method
-        return methods
-      },
-      { dispatch }
+    return Object.keys(methods).reduce(
+      (methods, type: string) => ({
+        ...methods,
+        [type]: (...args: any[]) => dispatch({ type, args }),
+      }),
+      { dispatch: dispatchMethods }
     )
-
-    return {
-      boundMethods,
-      dispatch,
-    }
   }, [methods])
 
-  return [value, boundMethods, dispatch]
+  return [value, boundMethods, boundMethods.dispatch]
 }

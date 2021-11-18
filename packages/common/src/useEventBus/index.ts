@@ -1,72 +1,115 @@
 import { useRef, useEffect, createContext, useContext } from 'react'
 import { EventBus, EventType, Subscription } from './eventBus'
 
-function subscribe<T>(bus: EventBus<T>, type: EventType, callback: Subscription<T>) {
-  return bus?.subscribe(type, callback)
+interface Publish {
+  (type: EventType, payload?: any): void
+  (payload?: any): void
 }
 
-function useSubscribe<T>(
-  bus: EventBus<T>,
-  type: EventType,
-  ...args: [string, Subscription<T>] | [Subscription<T>]
-) {
-  const [eventName, callback] = type
-    ? [type, ...(args as [Subscription<T>])]
-    : (args as [string, Subscription<T>])
+interface SubscribeOptions {
+  once?: boolean
+}
+
+interface UseSubscribe<T = any> {
+  (type: EventType, callback: Subscription<T>, options?: SubscribeOptions): void
+}
+
+interface Subscribe {
+  <T>(type: EventType, callback: Subscription<T>, options?: SubscribeOptions): any
+  <T>(callback: Subscription<T>, options?: SubscribeOptions): any
+}
+
+type UseEventBus = <T = any>(
+  type?: EventType
+) => {
+  publish: Publish
+  useSubscribe: T
+  subscribe: any
+}
+
+interface EventBusContext<T>
+  extends React.Context<{
+    publish: Publish
+    useSubscribe: UseSubscribe<T>
+    subscribe: Subscribe
+    useEventBus: UseEventBus
+  }> {
+  useEventBus?: () => {
+    publish: Publish
+    useSubscribe: UseSubscribe<T>
+    subscribe: Subscribe
+    useEventBus: UseEventBus
+  }
+}
+
+/**
+ * 订阅当前事件的函数，回调函数传进来后就不会再改变，如果在react组件中中使用有可能会造成函数依赖值不是最新
+ * 一般情况下hooks/组件中直接使用useSubscribe，外部js中订阅使用subscribe
+ */
+function subscribeOrigin<T>(bus: EventBus<T>, type: EventType, callback: Subscription<T>, options: SubscribeOptions = {}) {
+  return options.once ? bus?.subscribeOnce(type, callback) : bus?.subscribe(type, callback)
+}
+
+function useSubscribeOrigin<T>(bus: EventBus, eventName: EventType, callback: Subscription<T>, options: SubscribeOptions = {}) {
   const subscriptionRef = useRef<Subscription<T>>(callback)
   subscriptionRef.current = callback
 
-  function subscription(val: T) {
-    subscriptionRef.current && subscriptionRef.current(val)
+  function subscription(value: T) {
+    subscriptionRef.current && subscriptionRef.current(value)
   }
 
   useEffect(() => {
-    const unSubscribe = subscribe<T>(bus, eventName, subscription)
+    const unSubscribe = subscribeOrigin<T>(bus, eventName, subscription, options)
     return () => {
       unSubscribe && unSubscribe()
     }
   }, [])
 }
 
-function useEventBus<T = void>(bus: EventBus<T>, type?: EventType) {
+function useEventBus(
+  bus: EventBus,
+  type?: EventType
+): {
+  publish: Publish
+  useSubscribe: UseSubscribe
+  subscribe: Subscribe
+} {
   return {
     publish: type ? bus.publish.bind(null, type) : bus.publish.bind(null),
-    useSubscribe: type ? <T>useSubscribe.bind(null, bus, type) : <T>useSubscribe.bind(null, bus),
-    // 订阅当前事件的函数，回调函数传进来后就不会再改变，会造成参数不是最新，一般情况下直接使用useSubscribe
-    subscribe: type ? subscribe.bind(null, bus, type) : subscribe.bind(null, bus),
+    useSubscribe: type
+      ? useSubscribeOrigin.bind(null, bus, type)
+      : useSubscribeOrigin.bind(null, bus),
+    subscribe: type ? subscribeOrigin.bind(null, bus, type) : subscribeOrigin.bind(null, bus),
   }
 }
 
-type CreateEventBusUseSubscribe = <T>(
-  type: EventType,
-  ...args: [string, Subscription<T>] | [Subscription<T>]
-) => void
 /**
  * 创建一个独立的eventBus实例
  * @returns
  */
-const createEventBus = () => {
+export function createEventBus() {
   const bus = new EventBus()
 
   return {
-    publish: bus?.publish.bind(null),
-    useSubscribe: useSubscribe.bind(null, bus) as CreateEventBusUseSubscribe,
-    useEventBus: useEventBus.bind(null, bus),
+    publish: bus?.publish.bind(null) as Publish,
+    useSubscribe: useSubscribeOrigin.bind(null, bus) as UseSubscribe,
+    subscribe: subscribeOrigin.bind(null, bus) as Subscribe,
+    useEventBus: useEventBus.bind(null, bus) as UseEventBus,
   }
 }
 
 /**
  * 可以生成一个用于上下文的EventBus及相关hooks
  */
-function createContextEventBus() {
+export function createContextEventBus<T = any>() {
   const contextState = createEventBus()
-  const eventBusContext = createContext(contextState)
+  const eventBusContext: EventBusContext<T> = createContext(contextState)
 
   const useContextEventBus = () => {
     return useContext(eventBusContext)
   }
 
-  ;(eventBusContext as any).useEventBus = useContextEventBus
+  eventBusContext.useEventBus = useContextEventBus
 
   return eventBusContext
 }
@@ -79,9 +122,7 @@ const {
 
 export {
   useEventBusWithoutContext as default,
-  createContextEventBus,
   EventBus,
   publish,
-  createEventBus,
   useSubscribeWithoutContext as useSubscribe,
 }

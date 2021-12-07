@@ -28,9 +28,7 @@ describe('useListCheck 校验', () => {
 
     expect(result.current.isAllChecked).toBeTruthy()
     expect(result.current.checkedIds).toEqual(allIds)
-    expect(result.current.checkedMap).toEqual(
-      allIds.reduce((prev, curr) => ({ ...prev, [curr]: true }), {})
-    )
+    expect(result.current.checkedMap).toEqual(allIds.reduce((prev, curr) => ({ ...prev, [curr]: true }), {}))
 
     act(() => {
       result.current.toggleAllChecked(false)
@@ -41,10 +39,9 @@ describe('useListCheck 校验', () => {
   })
 
   it('列表变化正常', () => {
-    let { result, rerender } = renderHook(
-      ({ allIds, selecteds }) => useListCheck(allIds, selecteds),
-      { initialProps: { allIds, selecteds } }
-    )
+    let { result, rerender } = renderHook(({ allIds, selecteds }) => useListCheck(allIds, selecteds), {
+      initialProps: { allIds, selecteds },
+    })
     act(() => {
       rerender({ allIds: [...allIds, 'id-10'], selecteds })
     })

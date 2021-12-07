@@ -76,7 +76,7 @@ export default function useDrag({
       removeEventListeners,
     }
   }, [])
-  
+
   useEffect(() => {
     methods.removeEventListeners()
     return function cleanup() {

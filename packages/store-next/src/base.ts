@@ -15,11 +15,7 @@ export default function createStore<S = Record<string, any>>(options: Options<S>
 
   const store = new StoreClass(restOptions)
 
-  const useStore = <S = any>(
-    moduleName: string,
-    assign: boolean = true,
-    willUpdate: boolean = true
-  ) => {
+  const useStore = <S = any>(moduleName: string, assign: boolean = true, willUpdate: boolean = true) => {
     const useStoreStore: UseStore = store.getUseStore()
     return useStoreStore<S>(moduleName, assign, willUpdate)
   }

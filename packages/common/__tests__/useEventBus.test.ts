@@ -25,21 +25,17 @@ describe('useEventBus 校验', () => {
       { initialProps: { useSubscribe: resultA.current.useSubscribe } }
     )
 
-    const { result: resultC } = renderHook(
-      () => {
-        const [value, setValue] = useState()
-        useGlobalSubscribe('test:useEventBus-changeValue', setValue)
-        return { value }
-      }
-    )
+    const { result: resultC } = renderHook(() => {
+      const [value, setValue] = useState()
+      useGlobalSubscribe('test:useEventBus-changeValue', setValue)
+      return { value }
+    })
 
-    const { result: resultOnce } = renderHook(
-      () => {
-        const [value, setValue] = useState()
-        useGlobalSubscribe('test:useEventBus-changeValue', setValue, { once: true })
-        return { value }
-      }
-    )
+    const { result: resultOnce } = renderHook(() => {
+      const [value, setValue] = useState()
+      useGlobalSubscribe('test:useEventBus-changeValue', setValue, { once: true })
+      return { value }
+    })
 
     // @ts-ignore
     act(() => resultA.current.publish(1))

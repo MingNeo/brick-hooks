@@ -16,11 +16,7 @@ function isObject(value) {
  * 使用这个插件后，store-next将可以使用immer的语法编写reducer
  */
 function immerPlugin<S>(Store: any) {
-  Store.prototype.dispatchModuleAction = function (
-    moduleName: string,
-    actionName: string,
-    payload: any
-  ) {
+  Store.prototype.dispatchModuleAction = function (moduleName: string, actionName: string, payload: any) {
     if (!moduleName) return
 
     const reducer = this._reducers?.[moduleName]?.[actionName]
@@ -35,9 +31,7 @@ function immerPlugin<S>(Store: any) {
   const defaultReducers = {
     $setValueMerge: (prevState: any, value: any) => {
       const nextState = getNextState(prevState, value)
-      return isObject(prevState || nextState)
-        ? { ...(prevState || {}), ...(nextState || {}) }
-        : nextState
+      return isObject(prevState || nextState) ? { ...(prevState || {}), ...(nextState || {}) } : nextState
     },
     $setValue: (prevState: any, value: any) => getNextState(prevState, value),
   }

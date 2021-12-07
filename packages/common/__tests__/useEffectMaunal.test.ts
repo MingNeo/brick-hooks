@@ -5,17 +5,15 @@ import useEffectMaunal from '../src/useEffectMaunal'
 describe('useEffectMaunal 校验', () => {
   it('引用正常', () => {
     expect(useEffectMaunal).toBeDefined()
-  }) 
+  })
 
   it('run success', async () => {
     const { result } = renderHook(() => {
       const [state, setState] = useState(0)
 
-      const callEffect = useEffectMaunal(
-        () => {
-          setState(prevState => prevState + 1)
-        },
-      )
+      const callEffect = useEffectMaunal(() => {
+        setState((prevState) => prevState + 1)
+      })
 
       return { state, callEffect }
     })

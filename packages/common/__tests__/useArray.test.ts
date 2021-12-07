@@ -47,7 +47,12 @@ describe('useArray 校验', () => {
 
   it('测试removeById正常', () => {
     const { result } = renderHook(({ initialValue }) => useArray(initialValue), {
-      initialProps: { initialValue: [{ id: 1, value: 1 }, { id: 2, value: 2 }] },
+      initialProps: {
+        initialValue: [
+          { id: 1, value: 1 },
+          { id: 2, value: 2 },
+        ],
+      },
     })
     const [, actions] = result.current
 

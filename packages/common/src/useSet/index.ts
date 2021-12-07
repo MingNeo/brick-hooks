@@ -10,13 +10,10 @@ import useMethods from '../useMethods'
 
 const methods = {
   add: (prevState: Set<any>, item: any) => new Set(Array.from(prevState.add(item))),
-  delete: (prevState: Set<any>, item: any) =>
-    new Set(Array.from((prevState.delete(item), prevState))),
+  delete: (prevState: Set<any>, item: any) => new Set(Array.from((prevState.delete(item), prevState))),
   has: (prevState: Set<any>, item: any) => prevState.has(item),
   toggle: (prevState: Set<any>, item: any) =>
-    new Set(
-      Array.from(prevState.has(item) ? (prevState.delete(item), prevState) : prevState.add(item))
-    ),
+    new Set(Array.from(prevState.has(item) ? (prevState.delete(item), prevState) : prevState.add(item))),
   reset: (prevState: Set<any>, initialSet: Set<any>) => new Set(initialSet),
 }
 

@@ -29,10 +29,7 @@ function getModuleReducers(reducers: any, moduleName: string) {
   return Object.entries({
     ...(reducers?._base || {}),
     ...(reducers?.[moduleName] || {}),
-  }).map(([reducerName, reducer]) => [
-    moduleName ? `${moduleName}/${reducerName}` : reducerName,
-    reducer,
-  ])
+  }).map(([reducerName, reducer]) => [moduleName ? `${moduleName}/${reducerName}` : reducerName, reducer])
 }
 
 export const createReduxStore: any = ({ name, initialState = {}, reducers = {} }: any) => {
@@ -52,18 +49,15 @@ export const createReduxStore: any = ({ name, initialState = {}, reducers = {} }
     const currentState = isDeleteAction && moduleName ? omit(state, moduleName) : { ...state }
 
     const nextState = moduleName
-      ? getModuleReducers(registeredReducers, moduleName).reduce(
-          (state, [reducerName, reducer]: [string, any]) => {
-            const moduleState = state[moduleName]
-            if (isInitModule) {
-              state[moduleName] = action.payload
-            } else if (action.type === reducerName) {
-              state[moduleName] = reducer(moduleState, action.payload)
-            }
-            return state
-          },
-          currentState
-        )
+      ? getModuleReducers(registeredReducers, moduleName).reduce((state, [reducerName, reducer]: [string, any]) => {
+          const moduleState = state[moduleName]
+          if (isInitModule) {
+            state[moduleName] = action.payload
+          } else if (action.type === reducerName) {
+            state[moduleName] = reducer(moduleState, action.payload)
+          }
+          return state
+        }, currentState)
       : currentState
 
     return nextState
@@ -86,11 +80,7 @@ export const createReduxStore: any = ({ name, initialState = {}, reducers = {} }
     })
   }
 
-  store.registerModule = (
-    moduleName: string | number,
-    reducers: Reducer<any, unknown>,
-    initialState: any
-  ) => {
+  store.registerModule = (moduleName: string | number, reducers: Reducer<any, unknown>, initialState: any) => {
     registeredReducers[moduleName] = reducers
 
     store.dispatch({

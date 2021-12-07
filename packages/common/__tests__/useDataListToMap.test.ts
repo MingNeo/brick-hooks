@@ -6,14 +6,14 @@ const mockData = [
   { id: 'a', value: 'A' },
   { id: 'b', value: 'B' },
   { id: 'c', value: 'C' },
-  { id: 'd', value: 'D' }
+  { id: 'd', value: 'D' },
 ]
 
 const mockResult = {
   a: { id: 'a', value: 'A' },
   b: { id: 'b', value: 'B' },
   c: { id: 'c', value: 'C' },
-  d: { id: 'd', value: 'D' }
+  d: { id: 'd', value: 'D' },
 }
 
 describe('useDataListToMap 校验', () => {

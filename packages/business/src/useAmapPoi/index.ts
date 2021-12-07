@@ -23,14 +23,7 @@ export default function useAmapPoi({
   const { currentPoi, currentLocation } = state
 
   // 设置临时的地址选择
-  const setPoi = async ({
-    city,
-    cityname,
-    latitude,
-    longitude,
-    street,
-    ...others
-  }: Record<string, any>) => {
+  const setPoi = async ({ city, cityname, latitude, longitude, street, ...others }: Record<string, any>) => {
     const newPoiData: Record<string, any> = {
       city: null,
       latitude: null,
@@ -75,10 +68,7 @@ export default function useAmapPoi({
     current = false,
   }: any = {}) => {
     const data = await getAmapNearby({ latitude, longitude })
-    const pois =
-      data.pois
-        ?.splice(0, size)
-        .map((poi: any) => ({ ...poi, city: data.city || data.cityname })) || []
+    const pois = data.pois?.splice(0, size).map((poi: any) => ({ ...poi, city: data.city || data.cityname })) || []
 
     if (!data.latitude || !data.longitude) {
       return []

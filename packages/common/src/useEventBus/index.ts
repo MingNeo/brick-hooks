@@ -46,11 +46,21 @@ interface EventBusContext<T>
  * 订阅当前事件的函数，回调函数传进来后就不会再改变，如果在react组件中中使用有可能会造成函数依赖值不是最新
  * 一般情况下hooks/组件中直接使用useSubscribe，外部js中订阅使用subscribe
  */
-function subscribeOrigin<T>(bus: EventBus<T>, type: EventType, callback: Subscription<T>, options: SubscribeOptions = {}) {
+function subscribeOrigin<T>(
+  bus: EventBus<T>,
+  type: EventType,
+  callback: Subscription<T>,
+  options: SubscribeOptions = {}
+) {
   return options.once ? bus?.subscribeOnce(type, callback) : bus?.subscribe(type, callback)
 }
 
-function useSubscribeOrigin<T>(bus: EventBus, eventName: EventType, callback: Subscription<T>, options: SubscribeOptions = {}) {
+function useSubscribeOrigin<T>(
+  bus: EventBus,
+  eventName: EventType,
+  callback: Subscription<T>,
+  options: SubscribeOptions = {}
+) {
   const subscriptionRef = useRef<Subscription<T>>(callback)
   subscriptionRef.current = callback
 
@@ -76,9 +86,7 @@ function useEventBus(
 } {
   return {
     publish: type ? bus.publish.bind(null, type) : bus.publish.bind(null),
-    useSubscribe: type
-      ? useSubscribeOrigin.bind(null, bus, type)
-      : useSubscribeOrigin.bind(null, bus),
+    useSubscribe: type ? useSubscribeOrigin.bind(null, bus, type) : useSubscribeOrigin.bind(null, bus),
     subscribe: type ? subscribeOrigin.bind(null, bus, type) : subscribeOrigin.bind(null, bus),
   }
 }
@@ -114,15 +122,6 @@ export function createContextEventBus<T = any>() {
   return eventBusContext
 }
 
-const {
-  publish,
-  useEventBus: useEventBusWithoutContext,
-  useSubscribe: useSubscribeWithoutContext,
-} = createEventBus()
+const { publish, useEventBus: useEventBusWithoutContext, useSubscribe: useSubscribeWithoutContext } = createEventBus()
 
-export {
-  useEventBusWithoutContext as default,
-  EventBus,
-  publish,
-  useSubscribeWithoutContext as useSubscribe,
-}
+export { useEventBusWithoutContext as default, EventBus, publish, useSubscribeWithoutContext as useSubscribe }

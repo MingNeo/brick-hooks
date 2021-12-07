@@ -69,10 +69,5 @@ function isCycleInRange(current: any, cycle: any) {
  * @param {*} m 月份间隔
  */
 function isInMonthRange(current: any, m: number = 1) {
-  return current.isBetween(
-    moment().add(1, 'M').date(1),
-    moment().add(m, 'M').endOf('month'),
-    undefined,
-    '[]'
-  )
+  return current.isBetween(moment().add(1, 'M').date(1), moment().add(m, 'M').endOf('month'), undefined, '[]')
 }

@@ -4,7 +4,7 @@ import useMethods from '../src/useMethods'
 const methodsCounter = {
   inc: (state: any) => ({ ...state, count: state.count + 1 }),
   dec: (state: any) => ({ ...state, count: state.count - 1 }),
-  set: (state: any, count: any) => ({ ...state, count })
+  set: (state: any, count: any) => ({ ...state, count }),
 }
 
 describe('useMethods 校验', () => {
@@ -40,7 +40,7 @@ describe('useMethods 校验', () => {
     expect(result.current[0]).toEqual({ count: 3 })
     act(() => actions.dispatch({ type: 'dec' }))
     expect(result.current[0]).toEqual({ count: 2 })
-    
+
     act(() => actions.set(1))
     expect(result.current[0]).toEqual({ count: 1 })
   })

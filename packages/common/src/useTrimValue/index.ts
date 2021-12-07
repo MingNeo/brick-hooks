@@ -14,11 +14,7 @@ export default function useTrimValue(
   const [trimState, setState] = useState<string>(trim(initialValue || '', fullTrim))
 
   const setTrimState: setTrimState = (state) => {
-    setState(
-      typeof state === 'function'
-        ? (oldState) => trim(state(oldState), fullTrim)
-        : trim(state, fullTrim)
-    )
+    setState(typeof state === 'function' ? (oldState) => trim(state(oldState), fullTrim) : trim(state, fullTrim))
   }
 
   return [trimState, setTrimState]

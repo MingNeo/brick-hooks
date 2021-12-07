@@ -1,6 +1,3 @@
-
 describe('business', () => {
-    it('needs tests', () => {
-        
-    });
-});
+  it('needs tests', () => {})
+})

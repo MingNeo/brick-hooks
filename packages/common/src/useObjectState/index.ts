@@ -7,8 +7,7 @@ type SetState = (nextState: any, merge?: boolean) => void
 type Methods<S> = Record<string, (...args: any[]) => S>
 
 const defaultMethods = {
-  _set: (prevState: State, payload: State) =>
-    typeof payload === 'function' ? payload(prevState) : payload,
+  _set: (prevState: State, payload: State) => (typeof payload === 'function' ? payload(prevState) : payload),
   _setMerge: (prevState: State = {}, payload: State) => ({
     ...(prevState || {}),
     ...(typeof payload === 'function' ? payload(prevState) : payload),
@@ -28,8 +27,7 @@ export default function useObjectState<S>(
   const [state, stateMethods] = useMethods<S>({ ...methods, ...defaultMethods }, initialState as S)
 
   const setState: SetState = useCallback(
-    (nextState, merge: boolean = true) =>
-      merge ? stateMethods._setMerge(nextState) : stateMethods._set(nextState),
+    (nextState, merge: boolean = true) => (merge ? stateMethods._setMerge(nextState) : stateMethods._set(nextState)),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )

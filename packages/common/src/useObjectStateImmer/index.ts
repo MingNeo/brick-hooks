@@ -35,14 +35,10 @@ export default function useObjectStateImmer<S extends State>(
   initialState: S,
   methods: Record<string, (...args: any[]) => S>
 ): [S, SetState, Record<string, BoundMethod>] {
-  const [state, stateMethods] = useMethodsImmer<S>(
-    { ...methods, ...defaultMethods },
-    initialState || {}
-  )
+  const [state, stateMethods] = useMethodsImmer<S>({ ...methods, ...defaultMethods }, initialState || {})
 
   const setState: SetState = useCallback(
-    (nextState, merge: boolean = false) =>
-      merge ? stateMethods._setMerge(nextState) : stateMethods._set(nextState),
+    (nextState, merge: boolean = false) => (merge ? stateMethods._setMerge(nextState) : stateMethods._set(nextState)),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )

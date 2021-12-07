@@ -50,14 +50,11 @@ export default function useStore<S>(
     const dispatch = (actionName: string, payload: any) => {
       const actionSplitResult = actionName.split('/')
       // 当前不支持‘a/b/c'格式action type
-      const [moduleType, actionType] =
-        actionSplitResult.length > 1 ? actionSplitResult : [moduleName, actionName]
+      const [moduleType, actionType] = actionSplitResult.length > 1 ? actionSplitResult : [moduleName, actionName]
       storeContextRef.current?.dispatchModuleAction(moduleType, actionType, payload)
     }
 
-    const boundMethods = Object.keys(
-      storeContextRef.current?._reducers?.[moduleName] || []
-    )?.reduce((prev, curr) => {
+    const boundMethods = Object.keys(storeContextRef.current?._reducers?.[moduleName] || [])?.reduce((prev, curr) => {
       return { ...prev, [curr]: (payload: any) => dispatch(curr, payload) }
     }, {})
 

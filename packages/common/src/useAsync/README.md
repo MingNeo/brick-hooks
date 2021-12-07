@@ -16,7 +16,7 @@ function MyComponent() {
 
   useEffect(() => {
     loadData()
-  })
+  }, [])
 
   // 直接使用result
   return result ? <>...</> : null

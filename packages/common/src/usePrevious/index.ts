@@ -1,14 +1,5 @@
 import { useRef, useEffect } from 'react'
 
-export function usePreviousRenderValue<S>(value: S) {
-  const previousRef = useRef<S>()
-  // useEffect会在完成这次'渲染'之后执行
-  useEffect(() => {
-    previousRef.current = value
-  })
-  return previousRef.current
-}
-
 /**
  * 获取上一次的值
  * @param value
@@ -16,8 +7,6 @@ export function usePreviousRenderValue<S>(value: S) {
  */
 export default function usePrevious<S>(value: S, equalsMode: boolean = true) {
   const prevListRef = useRef<S[]>([])
-  // const prevRenderValue = usePreviousRenderValue(value)
-  // useEffect会在完成这次'渲染'之后执行
   useEffect(() => {
     if (!equalsMode) {
       prevListRef.current[0] = value
@@ -35,8 +24,6 @@ export default function usePrevious<S>(value: S, equalsMode: boolean = true) {
       }
     }
   }, [value, equalsMode, last])
-
-  // if (!equalsMode) return prevRenderValue
 
   if (equalsMode) {
     const lastValue = prevListRef.current[prevListRef.current.length - 1]

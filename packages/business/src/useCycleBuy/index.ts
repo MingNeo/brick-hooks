@@ -40,17 +40,8 @@ const methods = {
  * 日期周期/区间选择，用于周期购等场景
  */
 export default function useDateCycle(defaultData: IdefaultData = {}, options: IOptions = {}) {
-  const {
-    modelKeyMap = defaultModelKeyMap,
-    cycleKeyMap = defaultCycleKeyMap,
-    customModels,
-    customCycles,
-  } = options
-  const {
-    model: defaultModel = '',
-    cycle: defaultCycle = '',
-    dates: defaultDates = [],
-  } = defaultData
+  const { modelKeyMap = defaultModelKeyMap, cycleKeyMap = defaultCycleKeyMap, customModels, customCycles } = options
+  const { model: defaultModel = '', cycle: defaultCycle = '', dates: defaultDates = [] } = defaultData
 
   const [{ dates, model, cycle, range }, dateCycleMethods] = useMethods(methods, {
     dates: defaultDates || [],

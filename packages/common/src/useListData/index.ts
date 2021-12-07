@@ -1,20 +1,10 @@
 import { useMemo } from 'react'
 import { arrayMethods } from '../useArray'
-import {
-  transformListToTree,
-  transformListToMap,
-  transformListToGroup,
-  transformListToPartition,
-} from './helper'
+import { transformListToTree, transformListToMap, transformListToGroup, transformListToPartition } from './helper'
 
 export type FilterCallback<T = any> = (value: T, index: number, array: readonly T[]) => boolean
 export type MapCallback<T = any> = (value: T, index: number, array: readonly T[]) => any[]
-export type ReduceCallback<T = any> = (
-  previousValue: T,
-  currentValue: T,
-  currentIndex: T,
-  array: T[]
-) => T
+export type ReduceCallback<T = any> = (previousValue: T, currentValue: T, currentIndex: T, array: T[]) => T
 
 export interface ChainIns {
   _value: any
@@ -30,12 +20,7 @@ export interface ChainIns {
   filter: (callback: (v: any) => boolean) => this
   map: (callback: MapCallback) => this
   reduce: (callback: ReduceCallback, initialValue?: any) => this
-  transTree: (options?: {
-    parentId?: string
-    id?: string
-    children?: string
-    topParentId?: number
-  }) => this
+  transTree: (options?: { parentId?: string; id?: string; children?: string; topParentId?: number }) => this
   // 将数组转化为Object
   transObj: (options?: { key?: string }) => this
   group: (options?: { groupKey?: string }) => this

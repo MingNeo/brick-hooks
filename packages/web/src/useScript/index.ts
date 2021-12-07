@@ -25,11 +25,7 @@ export default function useScript(
       methods.current.onStatusChange && methods.current.onStatusChange(event.type)
 
       // whenLoaded 只执行一次
-      if (
-        event.type === 'load' &&
-        methods.current.whenLoaded &&
-        !methods.current.whenLoaded.fired
-      ) {
+      if (event.type === 'load' && methods.current.whenLoaded && !methods.current.whenLoaded.fired) {
         methods.current.whenLoaded.fired = true
         methods.current.whenLoaded()
       }

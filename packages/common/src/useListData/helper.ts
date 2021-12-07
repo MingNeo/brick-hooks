@@ -25,9 +25,7 @@ export function transformListToGroup(data: Data = [], { groupKey }: { groupKey?:
   const groupByDataMap = {}
   if (groupKey) {
     data.forEach((item) => {
-      groupByDataMap[item[groupKey]] = [...(groupByDataMap[item[groupKey]] || []), item].filter(
-        (v) => !!v
-      )
+      groupByDataMap[item[groupKey]] = [...(groupByDataMap[item[groupKey]] || []), item].filter((v) => !!v)
     })
     return groupByDataMap
   } else {
@@ -35,10 +33,7 @@ export function transformListToGroup(data: Data = [], { groupKey }: { groupKey?:
   }
 }
 
-export function transformListToPartition(
-  data: Data = [],
-  { groupKey }: { groupKey?: string } = {}
-) {
+export function transformListToPartition(data: Data = [], { groupKey }: { groupKey?: string } = {}) {
   const groupMap = transformListToGroup(data, { groupKey })
   return Object.values(groupMap)
 }

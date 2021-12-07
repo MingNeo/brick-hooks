@@ -23,9 +23,7 @@ export const arrayMethods = {
   },
 
   remove: (state: any[], value: any) =>
-    state.filter((...args: any) =>
-      typeof value === 'function' ? !value(...args) : args[0] !== value
-    ),
+    state.filter((...args: any) => (typeof value === 'function' ? !value(...args) : args[0] !== value)),
 
   // 根据id移除数据，数据格式必需为[{ [idkey], ... }]
   removeById: (state: Record<string, any>[], id: string, idKey: string = 'id') =>

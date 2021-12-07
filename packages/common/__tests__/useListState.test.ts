@@ -25,26 +25,19 @@ describe('useListState 校验', () => {
   describe('transObj 校验正常', () => {
     it('初始状态正常', () => {
       const { result } = renderHook(
-        ({ initialValue }) =>
-          useListState(initialValue, (originValue, { transObj }) => transObj(originValue)),
+        ({ initialValue }) => useListState(initialValue, (originValue, { transObj }) => transObj(originValue)),
         {
           initialProps: { initialValue: mockData },
         }
       )
 
-      expect(jestDiff(result.current[0], mapResult)).toMatch(
-        'Compared values have no visual difference.'
-      )
+      expect(jestDiff(result.current[0], mapResult)).toMatch('Compared values have no visual difference.')
     })
 
     it('更新值正常', () => {
-      const { result } = renderHook(
-        ({ initialValue }) =>
-          useListState(initialValue, (originValue) => originValue),
-        {
-          initialProps: { initialValue: [] },
-        }
-      )
+      const { result } = renderHook(({ initialValue }) => useListState(initialValue, (originValue) => originValue), {
+        initialProps: { initialValue: [] },
+      })
 
       expect(result.current[0]).toEqual([])
 
@@ -72,16 +65,13 @@ describe('useListState 校验', () => {
   describe('transObj 校验正常', () => {
     it('初始状态正常', () => {
       const { result } = renderHook(
-        ({ initialValue }) =>
-          useListState(initialValue, (originValue, { transTree }) => transTree(originValue)),
+        ({ initialValue }) => useListState(initialValue, (originValue, { transTree }) => transTree(originValue)),
         {
           initialProps: { initialValue: mockData },
         }
       )
 
-      expect(jestDiff(result.current[0], treeResult)).toMatch(
-        'Compared values have no visual difference.'
-      )
+      expect(jestDiff(result.current[0], treeResult)).toMatch('Compared values have no visual difference.')
     })
   })
 
@@ -98,18 +88,14 @@ describe('useListState 校验', () => {
     it('初始状态正常', () => {
       const { result } = renderHook(
         ({ initialValue }) =>
-          useListState(initialValue, (originValue, { group }) =>
-            group(originValue, { groupKey: 'pid' })
-          ),
+          useListState(initialValue, (originValue, { group }) => group(originValue, { groupKey: 'pid' })),
         {
           initialProps: { initialValue: mockData },
         }
       )
       console.log('result.current[0]', result.current[0])
 
-      expect(jestDiff(result.current[0], groupResult)).toMatch(
-        'Compared values have no visual difference.'
-      )
+      expect(jestDiff(result.current[0], groupResult)).toMatch('Compared values have no visual difference.')
     })
   })
 
@@ -126,18 +112,14 @@ describe('useListState 校验', () => {
     it('初始状态正常', () => {
       const { result } = renderHook(
         ({ initialValue }) =>
-          useListState(initialValue, (originValue, { partition }) =>
-            partition(originValue, { groupKey: 'pid' })
-          ),
+          useListState(initialValue, (originValue, { partition }) => partition(originValue, { groupKey: 'pid' })),
         {
           initialProps: { initialValue: mockData },
         }
       )
       console.log('result.current[0]', result.current[0])
 
-      expect(jestDiff(result.current[0], partitionResult)).toMatch(
-        'Compared values have no visual difference.'
-      )
+      expect(jestDiff(result.current[0], partitionResult)).toMatch('Compared values have no visual difference.')
     })
   })
 
@@ -164,9 +146,7 @@ describe('useListState 校验', () => {
       )
       console.log('result.current[0]', result.current[0])
 
-      expect(jestDiff(result.current[0], partitionResult)).toMatch(
-        'Compared values have no visual difference.'
-      )
+      expect(jestDiff(result.current[0], partitionResult)).toMatch('Compared values have no visual difference.')
     })
   })
 })

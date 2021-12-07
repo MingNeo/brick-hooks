@@ -23,10 +23,7 @@ const checkedMapReducers = {
  * @param {array} items 所有id
  * @param {array} defaultSelecteds 当前已选中ids
  */
-export default function useListChecked(
-  items: (string | number)[] = [],
-  defaultSelecteds: (string | number)[] = []
-) {
+export default function useListChecked(items: (string | number)[] = [], defaultSelecteds: (string | number)[] = []) {
   // 当前已选中
   const currCheckedMap = useMemo(
     () => items.reduce((prev, curr) => ({ ...prev, [curr]: defaultSelecteds.includes(curr) }), {}),
@@ -36,8 +33,7 @@ export default function useListChecked(
   const [checkedMap, checkedMapMethods] = useMethods(checkedMapReducers, currCheckedMap)
   const { isAllChecked, checkedIds } = useMemo(
     () => ({
-      isAllChecked:
-        !!Object.values(checkedMap).length && !Object.values(checkedMap).some((v) => !v),
+      isAllChecked: !!Object.values(checkedMap).length && !Object.values(checkedMap).some((v) => !v),
       // 当前选中的key列表
       checkedIds: Object.keys(checkedMap).filter((key) => !!checkedMap[key]),
     }),

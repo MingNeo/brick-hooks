@@ -1,7 +1,7 @@
 import { Module as ModuleBase, StoreHookDispatch } from 'hydrogen-store'
 import { useMemo } from 'react'
 
-type EffectCallback<S> = ({ state, dispatch }: { state: S, dispatch: StoreHookDispatch }, payload: any) => any
+type EffectCallback<S> = ({ state, dispatch }: { state: S; dispatch: StoreHookDispatch }, payload: any) => any
 
 export type StoreHookDispatchEffect = (actionName: string, ...args: any[]) => any
 
@@ -11,7 +11,7 @@ interface Module<S> extends ModuleBase {
 }
 
 function registerModule<S = any>(moduleName: string | number, initialModule: Module<S>) {
-  if(this._effectPluginOpened) return
+  if (this._effectPluginOpened) return
   this._effects = this._effects || {}
   initialModule?.effects && (this._effects[moduleName] = initialModule?.effects)
   this._effectPluginOpened = true
@@ -20,29 +20,23 @@ function registerModule<S = any>(moduleName: string | number, initialModule: Mod
 function getUseStore(store, originGetUseStore, dispatchModuleEffectAction) {
   const useStoreStore = originGetUseStore.call(store)
 
-  return function useStore<S>(
-    moduleName: string = '',
-    autoMerge: boolean = false,
-    willUpdate: boolean = true
-  ) {
-    
-    const [moduleState, setStore, boundMethods] = useStoreStore(
-      moduleName,
-      autoMerge,
-      willUpdate
-    )
+  return function useStore<S>(moduleName: string = '', autoMerge: boolean = false, willUpdate: boolean = true) {
+    const [moduleState, setStore, boundMethods] = useStoreStore(moduleName, autoMerge, willUpdate)
 
-    return useMemo(() => ([
-      moduleState,
-      setStore,
-      { ...boundMethods, dispatchEffect: dispatchModuleEffectAction.bind(store, moduleName) },
-    ]), [boundMethods, moduleState, setStore, moduleName])
+    return useMemo(
+      () => [
+        moduleState,
+        setStore,
+        { ...boundMethods, dispatchEffect: dispatchModuleEffectAction.bind(store, moduleName) },
+      ],
+      [boundMethods, moduleState, setStore, moduleName]
+    )
   }
 }
 
 export function getEffects(modules = {}) {
   return Object.entries(modules).reduce((prev, [moduleName, value]: any[]) => {
-    if(value) prev[moduleName] = value.effects
+    if (value) prev[moduleName] = value.effects
     return prev
   }, {})
 }
@@ -53,19 +47,12 @@ export function getEffects(modules = {}) {
  */
 function effectPlugin<S>(Store: any) {
   const StoreOriginRegisterModule = Store.prototype.registerModule
-  Store.prototype.registerModule = function afterRegisterModule(
-    moduleName: string,
-    initialModule: Module<S>
-  ) {
+  Store.prototype.registerModule = function afterRegisterModule(moduleName: string, initialModule: Module<S>) {
     StoreOriginRegisterModule.call(this, moduleName, initialModule)
     registerModule.call(this, moduleName, initialModule)
   }
 
-  async function dispatchModuleEffectAction (
-    moduleName: string,
-    actionName: string,
-    payload: any
-  ) {
+  async function dispatchModuleEffectAction(moduleName: string, actionName: string, payload: any) {
     if (!moduleName) return
 
     const handler = this._effects?.[moduleName]?.[actionName]
@@ -77,7 +64,7 @@ function effectPlugin<S>(Store: any) {
       Store.prototype.dispatchModuleAction.bind(this, moduleName)(commitActionName, commitPayload)
     }
 
-    const dispatchEffect = (effectActionName: string, effectPayload: any, module:string = moduleName) => {
+    const dispatchEffect = (effectActionName: string, effectPayload: any, module: string = moduleName) => {
       Store.prototype.dispatchModuleEffectAction.bind(this, module)(effectActionName, effectPayload)
     }
     return handler({ state: prevState, dispatch, dispatchEffect, rootState }, payload)
@@ -85,7 +72,7 @@ function effectPlugin<S>(Store: any) {
 
   const StoreOriginInitialBase = Store.prototype.initialBase
 
-  Store.prototype.initialBase =  function (options?: any) {
+  Store.prototype.initialBase = function (options?: any) {
     this._options = this._options || options
     const { modules = {} } = this._options || {}
     StoreOriginInitialBase.call(this, options)

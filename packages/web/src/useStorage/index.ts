@@ -26,9 +26,7 @@ export default function useStorage(
     const setValue = (value?: string | number | Record<string, any> | any[]) => {
       setStorage(storageType, itemName, !isNil(value) ? value : initialValueRef.current)
       watchStorageChange ||
-        (!isNil(value)
-          ? setStateValue(parseValue(value as any))
-          : setStateValue(initialValueRef.current))
+        (!isNil(value) ? setStateValue(parseValue(value as any)) : setStateValue(initialValueRef.current))
     }
     const clear = () => {
       removeStorage(storageType, itemName)

@@ -9,9 +9,7 @@ type NextState = StoreState | ((...args: any[]) => StoreState | any) | any
 export const defaultReducers = {
   $setValueMerge: (prevState: StoreState, value: NextState) => {
     const nextState = getNextState(prevState, value)
-    return isObject(prevState || nextState)
-      ? { ...(prevState || {}), ...(nextState || {}) }
-      : nextState
+    return isObject(prevState || nextState) ? { ...(prevState || {}), ...(nextState || {}) } : nextState
   },
   $setValue: (prevState: StoreState, value: NextState) => getNextState(prevState, value),
 }
@@ -27,4 +25,3 @@ export function getReducer(modules = {}) {
 function getNextState(prevState: any, nextState: NextState) {
   return typeof nextState === 'function' ? (nextState as Function)(prevState) : nextState
 }
-

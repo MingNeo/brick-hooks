@@ -12,14 +12,4 @@ const {
   dispatch,
 } = createStore()
 
-export {
-  Store,
-  store,
-  useStore,
-  createStore,
-  registerModule,
-  usePlugins,
-  getStoreState,
-  setStoreState,
-  dispatch,
-}
+export { Store, store, useStore, createStore, registerModule, usePlugins, getStoreState, setStoreState, dispatch }

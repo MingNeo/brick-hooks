@@ -8,11 +8,7 @@ interface Options {
 /**
  * 方便使用setInterval的hook
  */
-export default function useInterval(
-  callback: Callback,
-  time = 300,
-  { autoRun = true }: Options = {}
-) {
+export default function useInterval(callback: Callback, time = 300, { autoRun = true }: Options = {}) {
   const intervalFn = useRef<Callback>()
   intervalFn.current = callback
   const intervalId = useRef<number>(null)

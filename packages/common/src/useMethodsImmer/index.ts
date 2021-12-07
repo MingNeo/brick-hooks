@@ -51,11 +51,7 @@ export default function useMethodsImmer<S>(
 
   const actions: Actions = useMemo(() => {
     const dispatchMethod: Dispatch = (...args: any[]) => {
-      dispatch(
-        typeof args[0] === 'string'
-          ? { type: args[0], args: args.slice(1) }
-          : { type: args[0]?.type, args }
-      )
+      dispatch(typeof args[0] === 'string' ? { type: args[0], args: args.slice(1) } : { type: args[0]?.type, args })
     }
     return Object.keys(methods).reduce(
       (prev, type) => ({ ...prev, [type]: (...args: any[]) => dispatch({ type, args }) }),

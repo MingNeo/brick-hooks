@@ -23,7 +23,7 @@ module.exports = {
   ],
   // testEnvironment: 'node',
   testEnvironment: 'jsdom',
-  testRegex: "(.*/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+  testRegex: "(.*/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js|jsx)$",
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
     '^.+\\.tsx?$': 'ts-jest',

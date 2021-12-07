@@ -8,13 +8,14 @@ const mockTestModuleModel = {
     a: 1,
   },
   reducers: {
-    changeValue: (state, payload) => ({ ...state, ...payload })
-  }
+    changeValue: (state, payload) => ({ ...state, ...payload }),
+  },
 }
 
-const { useStore } = createStore({ modules: {
-  test: mockTestModuleModel
-} })
+const { useStore } = createStore({
+  modules: {
+    test: mockTestModuleModel,
+  },
+})
 
 testUseStore(useStore)
-

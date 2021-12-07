@@ -335,7 +335,7 @@ const reducers = {
 
 // 使用后
 const reducers = {
-  testAction: (state, payload) => (state.data.a.b = 2),
+  testAction: (state, payload) => { state.data.a.b = 2 },
 }
 ```
 
@@ -346,7 +346,7 @@ import immerPlugin from 'hydrogen-store-immer-plugin'
 const testModel = {
   state: { data: { a: { b: 1 } } },
   reducers: {
-    testAction: (state, payload) => (state.data.a.b = 2),
+    testAction: (state, payload) => { state.data.a.b = 2 },
   },
   effects: {},
 }

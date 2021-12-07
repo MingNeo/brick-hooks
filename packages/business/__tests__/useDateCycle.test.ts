@@ -1,12 +1,12 @@
 // import { act, renderHook, RenderHookResult } from '@testing-library/react-hooks';
 // import moment from 'moment'
 // import business from 'moment-business'
-import useDateCycle from '../src/useDateCycle';
+import useDateCycle from '../src/useDateCycle'
 
 describe('useDateCycle 校验', () => {
   it('引用正常', () => {
-    expect(useDateCycle).toBeDefined();
-  });
+    expect(useDateCycle).toBeDefined()
+  })
 
   // const hook = renderHook(({ initialValue }) => useDateCycle(initialValue), {
   //   initialProps: { initialValue: {} },
@@ -77,7 +77,7 @@ describe('useDateCycle 校验', () => {
 
   //   expect(result.current[0]).toBe(0);
   // });
-});
+})
 
 // function getCheckDateDisableParams() {
 //   const current = moment()

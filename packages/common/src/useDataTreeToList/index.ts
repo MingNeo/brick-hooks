@@ -21,7 +21,7 @@ function transformTreeToList(data: Data, pid = 0, { pidKey = 'pid' } = {}) {
 
 /**
  *  转化一个树形数据为扁平数据
- */ 
+ */
 export default function useDataTreeToList(data: any) {
   return useMemo(() => transformTreeToList(data), [data])
 }

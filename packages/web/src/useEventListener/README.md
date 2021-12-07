@@ -1,8 +1,8 @@
 ## useEventListener
 
-方便绑定event
+方便为dom节点绑定event，组件卸载时自动进行解绑
 ```javascript
-// 对指定dom节点绑定事件
+// 通过dom指定需要绑定事件的节点，如果不指定且未使用ref则会默认使用window
 useEventListener('resize', (e) => {
   // ...
 }, { dom: window })

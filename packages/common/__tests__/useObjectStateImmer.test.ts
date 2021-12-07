@@ -16,10 +16,9 @@ describe('useObjectStateImmer 校验', () => {
     expect(result.current[0]).toEqual({ test: 0 })
   })
   it('测试方法正常', () => {
-    const { result } = renderHook(
-      ({ initialState }) => useObjectStateImmer(initialState, methods),
-      { initialProps: { initialState: { test: 0 } } }
-    )
+    const { result } = renderHook(({ initialState }) => useObjectStateImmer(initialState, methods), {
+      initialProps: { initialState: { test: 0 } },
+    })
     const [, setState] = result.current
 
     expect(result.current[0]).toEqual({ test: 0 })

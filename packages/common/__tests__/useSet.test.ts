@@ -12,7 +12,7 @@ describe('test useSet', () => {
     })
     expect(Array.from(result.current[0])).toEqual([1, 2, 3])
   })
-  
+
   it('methods success', () => {
     const { result } = renderHook(({ initialValue }) => useSet(initialValue), {
       initialProps: { initialValue: new Set<any>([1, 2, 3]) },

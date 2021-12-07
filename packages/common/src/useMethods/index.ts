@@ -29,11 +29,7 @@ export default function useMethods<S>(
 
   const boundMethods: BoundActionMethods = useMemo(() => {
     const dispatchMethods: Dispatch = (...args: any[]) => {
-      dispatch(
-        typeof args[0] === 'string'
-          ? { type: args[0], args: args.slice(1) }
-          : { type: args[0]?.type, args }
-      )
+      dispatch(typeof args[0] === 'string' ? { type: args[0], args: args.slice(1) } : { type: args[0]?.type, args })
     }
 
     return Object.keys(methods).reduce(

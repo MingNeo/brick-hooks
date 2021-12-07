@@ -26,14 +26,14 @@ describe('useDeepCompare 校验', () => {
 
     // isEqual
     initialValue.level1.level2 = { data: 1 }
-    rerender({ initialValue: { level1: { level2: { data: 1 } } }})
+    rerender({ initialValue: { level1: { level2: { data: 1 } } } })
     expect(jestDiff(result.current.value, { level1: { level2: { data: 1 } } })).toMatch(
       'Compared values have no visual difference.'
     )
     expect(result.current.isEqual).toEqual(true)
 
     // not isEqual
-    rerender({ initialValue: { level1: { level2: { data: 2 } } }})
+    rerender({ initialValue: { level1: { level2: { data: 2 } } } })
     expect(jestDiff(result.current.value, { level1: { level2: { data: 2 } } })).toMatch(
       'Compared values have no visual difference.'
     )

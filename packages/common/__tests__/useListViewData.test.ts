@@ -40,12 +40,10 @@ describe('useListViewData 校验', () => {
     expect(result.current.loading).toEqual(false)
 
     await act(async () => {
-      result.current
-        .loadData({ page: { pageNo: 1, pageSize: 10 }, query: {} })
-        .then((response: any) => {
-          expect(result.current.loading).toEqual(false)
-          expect(response).toMatch('load data success')
-        })
+      result.current.loadData({ page: { pageNo: 1, pageSize: 10 }, query: {} }).then((response: any) => {
+        expect(result.current.loading).toEqual(false)
+        expect(response).toMatch('load data success')
+      })
       await waitForNextUpdate()
       expect(result.current.loading).toEqual(true)
     })

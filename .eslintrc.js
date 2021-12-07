@@ -4,6 +4,7 @@ const config = {
   env: {
     browser: true,
     node: true,
+    jest: true
   },
   // extends: 'airbnb',
   parser: '@typescript-eslint/parser',
@@ -33,6 +34,7 @@ const config = {
     ],
     'consistent-return': 0,
     'no-param-reassign': 0,
+    'node/no-callback-literal': 0
   },
   parserOptions: {
     sourceType: 'module',

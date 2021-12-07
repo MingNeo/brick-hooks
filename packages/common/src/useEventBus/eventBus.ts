@@ -19,7 +19,7 @@ export class EventBus<T = any> {
   publish = (type: EventType, payload?: T) => {
     const subscriptions = this.eventContainer.get(type)
     if (subscriptions) {
-      subscriptions.forEach(subscription => applySubscription(subscription, payload))
+      subscriptions.forEach((subscription) => applySubscription(subscription, payload))
     }
   }
 

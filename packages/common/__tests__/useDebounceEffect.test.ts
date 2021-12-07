@@ -4,7 +4,7 @@ import useDebounceEffect from '../src/useDebounceEffect/index'
 
 const timeout = (time: number) => new Promise<any>((resolve) => setTimeout(resolve, time))
 
-let handleFetch = (setState?:any) => {
+let handleFetch = (setState?: any) => {
   for (let index = 5; index > 0; index--) {
     setTimeout(() => {
       setState && setState(index)
@@ -15,7 +15,7 @@ let handleFetch = (setState?:any) => {
 describe('useDebounceEffect 校验', () => {
   it('引用正常', () => {
     expect(useDebounceEffect).toBeDefined()
-  }) 
+  })
 
   it('初始状态正常', async () => {
     const { result } = renderHook(() => {
@@ -56,9 +56,9 @@ describe('useDebounceEffect 校验', () => {
     expect(result.current[0]).toBe(5)
     act(() => result.current[1]())
     expect(result.current[0]).toBe(5)
-    await act(async() => await timeout(3))
+    await act(async () => await timeout(3))
     expect(result.current[0]).toBe(5)
-    await act(async() => await timeout(11))
+    await act(async () => await timeout(11))
     expect(result.current[0]).toBe(1)
   })
 })

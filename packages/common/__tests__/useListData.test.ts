@@ -24,16 +24,13 @@ describe('useListData 校验', () => {
   describe('transObj 校验正常', () => {
     it('初始状态正常', () => {
       const { result } = renderHook(
-        ({ initialValue }) =>
-          useListData(initialValue, (originValue, { transObj }) => transObj(originValue)),
+        ({ initialValue }) => useListData(initialValue, (originValue, { transObj }) => transObj(originValue)),
         {
           initialProps: { initialValue: mockData },
         }
       )
 
-      expect(jestDiff(result.current, mapResult)).toMatch(
-        'Compared values have no visual difference.'
-      )
+      expect(jestDiff(result.current, mapResult)).toMatch('Compared values have no visual difference.')
     })
   })
 
@@ -53,16 +50,13 @@ describe('useListData 校验', () => {
   describe('transObj 校验正常', () => {
     it('初始状态正常', () => {
       const { result } = renderHook(
-        ({ initialValue }) =>
-          useListData(initialValue, (originValue, { transTree }) => transTree(originValue)),
+        ({ initialValue }) => useListData(initialValue, (originValue, { transTree }) => transTree(originValue)),
         {
           initialProps: { initialValue: mockData },
         }
       )
 
-      expect(jestDiff(result.current, treeResult)).toMatch(
-        'Compared values have no visual difference.'
-      )
+      expect(jestDiff(result.current, treeResult)).toMatch('Compared values have no visual difference.')
     })
   })
 
@@ -79,18 +73,14 @@ describe('useListData 校验', () => {
     it('初始状态正常', () => {
       const { result } = renderHook(
         ({ initialValue }) =>
-          useListData(initialValue, (originValue, { group }) =>
-            group(originValue, { groupKey: 'pid' })
-          ),
+          useListData(initialValue, (originValue, { group }) => group(originValue, { groupKey: 'pid' })),
         {
           initialProps: { initialValue: mockData },
         }
       )
       console.log('result.current', result.current)
 
-      expect(jestDiff(result.current, groupResult)).toMatch(
-        'Compared values have no visual difference.'
-      )
+      expect(jestDiff(result.current, groupResult)).toMatch('Compared values have no visual difference.')
     })
   })
 
@@ -107,18 +97,14 @@ describe('useListData 校验', () => {
     it('初始状态正常', () => {
       const { result } = renderHook(
         ({ initialValue }) =>
-          useListData(initialValue, (originValue, { partition }) =>
-            partition(originValue, { groupKey: 'pid' })
-          ),
+          useListData(initialValue, (originValue, { partition }) => partition(originValue, { groupKey: 'pid' })),
         {
           initialProps: { initialValue: mockData },
         }
       )
       console.log('result.current', result.current)
 
-      expect(jestDiff(result.current, partitionResult)).toMatch(
-        'Compared values have no visual difference.'
-      )
+      expect(jestDiff(result.current, partitionResult)).toMatch('Compared values have no visual difference.')
     })
   })
 
@@ -145,9 +131,7 @@ describe('useListData 校验', () => {
       )
       console.log('result.current', result.current)
 
-      expect(jestDiff(result.current, partitionResult)).toMatch(
-        'Compared values have no visual difference.'
-      )
+      expect(jestDiff(result.current, partitionResult)).toMatch('Compared values have no visual difference.')
     })
   })
 })

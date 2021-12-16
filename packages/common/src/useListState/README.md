@@ -5,8 +5,26 @@
 
 与 useListData 类似，不同的是 useListData 类似于 useMemo，对一个 state 进行自动处理生成新的 getter 的值。而这个 hook 则直接提供 setState 方法，setState 原始值并自动通过回调函数进行处理
 
-### 自定义处理
+### 基础用法
 
+使用 listMethods 替代 useArray，具体用法见 useArray
+
+- set 设置数组的值。
+- push 同 Array.prototype.push
+- pop 同 Array.prototype.pop
+- slice 同 Array.prototype.slice
+- clear
+- reverse 同 Array.prototype.reverse
+- concat 同 Array.prototype.concat
+- sort 同 Array.prototype.sort
+- sortBy 基于指定字段做升降序排序, 默认为 ASC，详情见 useArray
+- remove 移除指定值，详情见 useArray
+- removeById 当数据格式为[{ id: 'xxx', value, ... }, ...]时，根据 id 移除对应的值
+- removeIndex 移除指定 index 的值
+
+### 自定义数据处理
+
+useListState 的第二个参数，是一个数据处理回调函数，可以在其中对每次更新的数据自动做处理。
 完全自由处理的情况下，相当于组合了 useState/useArray 及 useMemo
 
 ```javascript
@@ -15,22 +33,16 @@ const initialValue = [
   { id: 2, value: 1 },
 ]
 
-const [result, listMethods] = useListState(listData, (originValue) =>
-  originValue.filter(v.value === 1)
-)
-// result result: [{id: 2, value: 1}]
+const [result, listMethods] = useListState(listData, (originValue) => originValue.filter(v.value === 1))
+// result: [{id: 2, value: 1}]
 listMethods.push({ id: 3, value: 1 })
-// result result: [{id: 2, value: 1}, {id: 3, value: 1}]
+// result: [{id: 2, value: 1}, {id: 3, value: 1}]
 ```
 
-listMethods 的方法见 useArray
+### 使用内置方法进行数据处理
 
-```javascript
-// result
-;[{ id: 1, value: 0 }]
-```
-
-### 使用内置方法进行处理
+useListState 提供了一系列内置方法，可以方便的对数据进行各种转换
+也可以通过chain 对数据进行链式的处理
 
 #### transObj 数组转为对象
 
@@ -40,9 +52,7 @@ const initialValue = [
   { id: 2, value: 1 },
 ]
 
-const [testData, listMethods] = useListState(listData, (originValue, { transObj }) =>
-  transObj(originValue)
-)
+const [testData, listMethods] = useListState(listData, (originValue, { transObj }) => transObj(originValue))
 ```
 
 ```javascript
@@ -56,21 +66,19 @@ const [testData, listMethods] = useListState(listData, (originValue, { transObj 
 #### transTree 数组转为树
 
 ```javascript
-const initialValue = [
+const flatData = [
   { id: 'a001', pid: 0, value: '山东' },
   { id: 'a002', pid: 'a001', value: '济南' },
   { id: 'a003', pid: 'a001', value: '青岛' },
   { id: 'a004', pid: 'a001', value: '烟台' },
 ]
 
-const [testData, listMethods] = useListState(initialValue, (originValue, { transTree }) =>
-  transTree(originValue)
-)
+const [treeData, listMethods] = useListState(flatData, (originValue, { transTree }) => transTree(originValue))
 ```
 
 ```javascript
 // result
-;[
+[
   {
     id: 'a001',
     pid: 0,
@@ -94,9 +102,7 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const [testData, listMethods] = useListState(initialValue, (value, { group }) =>
-  group(value, { groupKey: 'city' })
-)
+const [testData, listMethods] = useListState(initialValue, (value, { group }) => group(value, { groupKey: 'city' }))
 ```
 
 ```javascript
@@ -152,9 +158,7 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const [testData, listMethods] = useListState(initialValue, (value, { removeById }) =>
-  removeById(value, 'q1')
-)
+const [testData, listMethods] = useListState(initialValue, (value, { removeById }) => removeById(value, 'q1'))
 ```
 
 ```javascript
@@ -176,9 +180,7 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const [testData, listMethods] = useListState(initialValue, (value, { removeIndex }) =>
-  removeIndex(value, 1)
-)
+const [testData, listMethods] = useListState(initialValue, (value, { removeIndex }) => removeIndex(value, 1))
 ```
 
 ```javascript

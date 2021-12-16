@@ -1,68 +1,88 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 
 type Status = '' | 'loading' | 'success' | 'error'
-type OnStatusChange = (status: string) => void
+type OnLoaded = (status: string) => void
+
+interface Options {
+  async?: boolean
+}
 
 /**
  *  向页面中插入一段script
  */
 export default function useScript(
   src: string,
-  onStatusChange: OnStatusChange
-): { status: Status; whenLoaded: (cb: any) => void } {
+  onLoaded: OnLoaded,
+  options?: Options
+): { status: Status; load: any; ref: any; } {
+  const { async = true } = options || {}
   const [status, setStatus] = useState<Status>(src ? 'loading' : '')
-  const methods = useRef<any>({ onStatusChange })
+  const methods = useRef<any>({ onLoaded })
+  const scriptTagRef = useRef<any>()
+  const promiseRef = useRef<any>()
 
-  useEffect(() => {
-    if (!src) {
-      setStatus('')
-      return
-    }
+  const handleLoaded = useCallback((event: Event) => {
+    setStatus('success')
+    methods.current.onLoaded && methods.current.onLoaded(event.type)
+  }, [])
 
-    let script = document.querySelector<HTMLScriptElement>(`script[src="${src}"]`)
-    let changeStatusFromEvent = (event: Event) => {
-      setStatus(event.type === 'load' ? 'success' : 'error')
-      methods.current.onStatusChange && methods.current.onStatusChange(event.type)
-
-      // whenLoaded 只执行一次
-      if (event.type === 'load' && methods.current.whenLoaded && !methods.current.whenLoaded.fired) {
-        methods.current.whenLoaded.fired = true
-        methods.current.whenLoaded()
+  const loadScript = () => {
+    return new Promise((resolve, reject) => {
+      if (!src) {
+        setStatus('')
+        return
       }
-    }
 
-    if (!script) {
-      script = document.createElement('script')
-      script.src = src
-      script.async = true
-      script.setAttribute('data-status', 'loading')
-      document.body.appendChild(script)
-
-      const originOnStatusChange = changeStatusFromEvent
-      changeStatusFromEvent = (event: Event) => {
-        originOnStatusChange(event)
-        script.setAttribute('data-status', event.type === 'load' ? 'success' : 'error')
+      if (scriptTagRef.current && src !== scriptTagRef.current.src) {
+        document.body.removeChild(scriptTagRef.current)
+        scriptTagRef.current = null
       }
-    } else {
-      setStatus(script.getAttribute('data-status') as Status)
-    }
 
-    script.addEventListener('load', changeStatusFromEvent)
-    script.addEventListener('error', changeStatusFromEvent)
+      scriptTagRef.current = scriptTagRef.current || document.querySelector<HTMLScriptElement>(`script[src="${src}"]`)
 
-    return () => {
-      if (script) {
-        script.removeEventListener('load', changeStatusFromEvent)
-        script.removeEventListener('error', changeStatusFromEvent)
+      if (!scriptTagRef.current) {
+        scriptTagRef.current = document.createElement('script')
+        scriptTagRef.current.src = src
+        scriptTagRef.current.async = async
+        scriptTagRef.current.setAttribute('data-status', 'loading')
+        scriptTagRef.current.addEventListener('load', (event: Event) => {
+          if (event.type === 'load') {
+            handleLoaded(event)
+            resolve(event)
+          } else if (event.type === 'error') {
+            setStatus('error')
+          }
+        })
+        scriptTagRef.current.addEventListener('error', reject)
+
+        document.body.appendChild(scriptTagRef.current)
+      } else {
+        const status: Status = scriptTagRef.current.getAttribute('data-status')
+        setStatus(status)
+        if (status === 'success') {
+          resolve(scriptTagRef.current)
+        }
       }
-    }
-  }, [src])
-
-  const whenLoaded = (cb: any) => {
-    methods.current.whenLoaded = function () {
-      cb()
-    }
+    })
   }
 
-  return { status, whenLoaded }
+  const load = () => {
+    if (!promiseRef.current) {
+      promiseRef.current = loadScript()
+    }
+    return promiseRef.current
+  }
+
+  useEffect(() => {
+    load()
+
+    return () => {
+      if (scriptTagRef.current) {
+        document.body.removeChild(scriptTagRef.current)
+        scriptTagRef.current = null
+      }
+    }
+  }, [src, handleLoaded])
+
+  return { status, load, ref: scriptTagRef }
 }

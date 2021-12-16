@@ -1,6 +1,10 @@
 export type Subscription<T = any> = (value: T, ...args: any[]) => void
 export type EventType = string | symbol
 
+export interface EventBusOptions {
+  autoFireLatest?: boolean
+}
+
 // 调用订阅的方法
 function applySubscription<T>(subscription: Subscription<T>, payload: T) {
   try {
@@ -15,9 +19,19 @@ function applySubscription<T>(subscription: Subscription<T>, payload: T) {
 
 export class EventBus<T = any> {
   private eventContainer = new Map<EventType, Set<Subscription<T>>>()
+  cacheLatest = new Map<EventType, any>()
+  autoFireLatest = false
+
+  constructor(options: EventBusOptions = {}) {
+    this.autoFireLatest = options.autoFireLatest
+  }
 
   publish = (type: EventType, payload?: T) => {
     const subscriptions = this.eventContainer.get(type)
+    this.cacheLatest.set(type, {
+      hasFired: true,
+      payload,
+    })
     if (subscriptions) {
       subscriptions.forEach((subscription) => applySubscription(subscription, payload))
     }
@@ -27,6 +41,10 @@ export class EventBus<T = any> {
     const subscriptions = this.eventContainer.get(type) || new Set<Subscription<T>>()
     subscriptions.add(handler)
     this.eventContainer.set(type, subscriptions)
+    // autoFireLatest 为 true时绑定后立即调用最近一次触发
+    if (this.autoFireLatest && this.cacheLatest.has(type)) {
+      applySubscription(handler, this.cacheLatest.get(type).payload)
+    }
     return this.unSubscribe.bind(this, type, handler)
   }
 

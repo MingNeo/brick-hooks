@@ -6,31 +6,41 @@ type Cancel = () => void
 
 interface DebounceFnOptions {
   cancelWhenDestroy?: boolean // 是否在组件销毁时取消debounce
-  // deps?: any[]
-  // leading?: boolean // 指定在延迟开始前调用
+  leading?: boolean // 为true时在延迟开始前立即调用
+  trailing?: boolean // 为true时在延迟结束后触发调用
   // maxWait?: number // 设置 func 允许被延迟的最大值
-  // trailing?: boolean
 }
 
 /**
  * 处理一个函数返回防抖的函数
+ * @param handler 需要进行防抖处理的函数
+ * @param wait 等待时间
+ * @param options.cancelWhenDestroy 是否在组件销毁时取消debounce
+ * @param options.leading 是否在延迟开始前立即调用
+ * @param options.trailing 是否在延迟结束后触发调用
+ * @returns 
  */
 export default function useDebounceFn(
   handler: DebunceFn,
   wait?: number,
   options: DebounceFnOptions = {}
 ): [DebunceFn, Cancel] {
-  const { cancelWhenDestroy = true } = options
+  const { cancelWhenDestroy = true, leading = false, trailing = true } = options
+  const optionsRef = useRef({ wait, cancelWhenDestroy, leading, trailing, fired: false })
+  optionsRef.current = { ...optionsRef.current, wait, cancelWhenDestroy, leading, trailing }
+
   const timer = useRef<number>()
-  const waitRef = useRef<number>(wait)
   const fnRef = useRef<DebunceFn>(handler)
   fnRef.current = handler
 
   useEffect(() => {
     return () => {
-      cancelWhenDestroy && timer.current && clearTimeout(timer.current)
+      if (optionsRef.current.cancelWhenDestroy && timer.current) {
+        clearTimeout(timer.current)
+        timer.current = null
+      }
     }
-  }, [cancelWhenDestroy])
+  }, [])
 
   return useMemo(() => {
     const cancel = () => {
@@ -38,16 +48,24 @@ export default function useDebounceFn(
     }
 
     const debounceFn = (...args: any) => {
-      cancel()
-      const cb = () => {
+      const cb = (fire: boolean) => {
         cancel()
-        fnRef.current && fnRef.current.apply(null, args)
+        fire && fnRef.current && fnRef.current.apply(null, args)
         timer.current = null
       }
-      if (!isNil(waitRef.current)) {
-        timer.current = setTimeout(cb, waitRef.current) as unknown as number
+
+      if (!isNil(optionsRef.current.wait)) {
+        if (optionsRef.current.leading && !timer.current) {
+          cb(true)
+        }
+  
+        cancel()
+        timer.current = setTimeout(() => {
+          cb(optionsRef.current.trailing)
+        }, optionsRef.current.wait) as unknown as number
       } else {
-        cb()
+        cancel()
+        cb(true)
       }
     }
     return [debounceFn, cancel]

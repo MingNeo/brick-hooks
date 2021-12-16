@@ -1,37 +1,42 @@
-import { useEffect, useCallback } from 'react'
 import { useDebounceFn } from 'brick-hooks'
+import { useCallback, useRef } from 'react'
 
-function useScrollInView(options, dep) {
+interface Options {
+  onScroll?: any
+  debounceWait?: number
+}
+
+function useScrollInView(options: Options) {
   const {
-    containerRef,
-    targetRef,
     onScroll, // 提供一个接收监听的回调函数
+    debounceWait = 500,
   } = options
 
+  const containerRef = useRef<any>()
+  const targetRef = useRef<any>()
   const handleScroll = useCallback(
     (event) => {
-      const containerH = containerRef?.current?.clientHeight
+      const { clientHeight, scrollTop } = event.target
       // 获取滚动距离
-      const rect = targetRef?.current?.getBoundingClientRect()
+      const rect = targetRef.current?.getBoundingClientRect?.()
       // top 是loading组件的位置
       const top = rect ? rect.top : 0
-      onScroll({ isInView: top < containerH, targetTop: top, containerH })
+      onScroll({ isInView: top < clientHeight && top > scrollTop, targetTop: top, containerH: clientHeight })
     },
-    [onScroll]
+    [containerRef, onScroll, targetRef]
   )
 
-  const handleScrollDebounce = useDebounceFn(handleScroll)
+  const handleScrollDebounce = useDebounceFn(handleScroll, debounceWait)
 
-  useEffect(() => {
-    if (!containerRef || !targetRef) return
-
-    const containerDom = containerRef.current
-    containerDom.addEventListener('scroll', handleScrollDebounce)
-
-    return () => {
-      containerDom.removeEventListener('scroll', handleScrollDebounce)
-    }
-  }, [handleScrollDebounce, ...dep])
+  return {
+    containerProps: {
+      ref: (ref) => (containerRef.current = ref),
+      onScroll: handleScrollDebounce,
+    },
+    targetProps: {
+      ref: (ref) => (targetRef.current = ref),
+    },
+  }
 }
 
 export default useScrollInView

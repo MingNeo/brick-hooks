@@ -1,13 +1,13 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from './asyncStorage'
 
 export async function setStorage(key: string, value: any) {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value))
   } catch (error) {
     console.info(error)
-    if(typeof value === 'string') {
+    if (typeof value === 'string') {
       await AsyncStorage.setItem(key, value)
-    } else if(typeof value === 'number') {
+    } else if (typeof value === 'number') {
       await AsyncStorage.setItem(key, `${value}`)
     }
   }
@@ -35,7 +35,7 @@ export function parseValue(value: string | number | Record<string, any> | any[])
         console.info(e)
         result = value
       }
-      break;
+      break
     default:
       result = value
   }

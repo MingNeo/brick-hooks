@@ -9,7 +9,7 @@ export default function useTitle(title: string) {
     try {
       document.title = title
     } catch (e) {
-      console.error(e)
+      console.warn(e)
     }
   }, [title])
 }

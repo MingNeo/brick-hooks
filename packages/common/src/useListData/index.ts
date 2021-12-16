@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { arrayMethods } from '../useArray'
 import { transformListToTree, transformListToMap, transformListToGroup, transformListToPartition } from './helper'
 
@@ -89,11 +89,13 @@ export const transformsMap = {
  */
 export default function useListData<T extends Record<string, any>>(
   value: T[] = [],
-  transform?: (originData: T[], transformMethods: typeof transformsMap) => any
+  factory?: (originData: T[], transformMethods: typeof transformsMap) => any,
+  deps: any[] = [],
 ) {
-  const listData = useMemo(() => {
-    return transform ? transform(value, transformsMap) : value
-  }, [value, transform])
+  const factoryRef = useRef(factory)
+  factoryRef.current = factory
 
-  return listData
+  return useMemo(() => {
+    return factoryRef.current ? factoryRef.current(value, transformsMap) : value
+  }, [value, ...deps])
 }

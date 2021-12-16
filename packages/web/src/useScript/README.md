@@ -21,23 +21,16 @@ function MyComponent() {
   }, [status])
 
   // 也可以注册一个函数监听状态
-  useScript('http://xxx.cdn.com/moment.js', (status) => {
-    if(status === 'success') {
-      // ...
-    }
+  useScript('http://xxx.cdn.com/moment.js', (e) => {
+    // ...
   }); 
 
-  // 也可以通过whenLoaded监听状态加载成功，whenLoaded的回调函数只会执行一次
-  const { status, whenLoaded } = useScript('http://xxx.cdn.com/moment.js');
+  // 也可以通过load加载或安全执行加载后的逻辑
+  const { status, load } = useScript('http://xxx.cdn.com/moment.js');
 
-  const handleClick = () => {
-    if(status === 'success') {
-      // ...
-    } else {
-      whenLoaded(() => {
-        // ...
-      })
-    }
+  const handleClick = async () => {
+    await load();
+    // ...
   }
   return <Child>...</Child>;
 }

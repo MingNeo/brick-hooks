@@ -7,7 +7,7 @@ type setTrimState = (state: string | ((oldState: string | undefined) => string |
  * @param fullTrim 默认为false，即仅去除首尾空格，为true时将去掉字符串中所有空格
  * @returns
  */
-export default function useTrimValue(
+export default function useTrimState(
   initialValue: string | undefined,
   fullTrim: boolean = false
 ): [string, setTrimState] {

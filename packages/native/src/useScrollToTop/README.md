@@ -2,10 +2,25 @@
 方便滚动ScrollView到顶部
 
 ```javascript
+function Comp() {
+  const ref = React.useRef(null);
+  const scrollToTop = useScrollToTop(ref);
 
-const { scrollToTop } = useScrollToTop(ref)
+  return <ScrollView ref={ref}>
+    {/* content */}
+    <Touchable onPress={() => scrollToTop()}></Touchable>
+  </ScrollView>;
+}
+```
 
-// or
+```javascript
+function Comp() {
+  const ref = React.useRef(null);
 
-const { scrollRef, scrollToTop } = useScrollToTop()
+  useScrollToTop(React.useRef({
+    scrollToTop: () => ref.current?.scrollToOffset({ offset: -100 }),
+  }));
+
+  return <ScrollView ref={ref}>{/* content */}</ScrollView>;
+}
 ```

@@ -1,34 +1,26 @@
 // eslint-disable-next-line no-use-before-define
-import React, {
-  createContext as createReactContext,
-  useContext as useReactContext,
-  useEffect,
-  useReducer,
-} from 'react'
+import React, { createContext as createReactContext, useContext as useReactContext, useEffect, useReducer } from 'react'
+import { isObject } from 'src/utils'
 import { EventBus } from '../useEventBus/eventBus'
 
 interface UseCustomHook {
   (...args: any[]): any
 }
 
-interface memoResultFn {
+interface WrapperStateFn {
   (): Record<string, any>
   __IS_GETTER_HOOK__: boolean
   type: 'object' | 'array'
 }
 
-type MemoObject = (memoObj: Record<string, any>) => memoResultFn
-type MemoArray = (memoArr: any[]) => memoResultFn
+type WrapperState = (memoObj: Record<string, any>) => WrapperStateFn
 
-type Getter = (result: any, methods?: { memoObject?: MemoObject; memoArray?: MemoArray }) => any
+type Getter = (result: any, methods?: { wrapperState?: WrapperState }) => any
 
 /**
  * 创建一个hooks的context
  */
-export default function createHookContext(
-  useCustomHook: UseCustomHook,
-  getters: Record<string, Getter> = {}
-) {
+export default function createHookContext(useCustomHook: UseCustomHook, getters: Record<string, Getter> = {}) {
   const initialState = {}
   const CustomHookContext = createReactContext<any>(initialState)
   const eventBus = new EventBus()
@@ -51,9 +43,7 @@ export default function createHookContext(
       }
     }, [])
 
-    return (
-      <CustomHookContext.Provider value={{ hookResult }}>{children}</CustomHookContext.Provider>
-    )
+    return <CustomHookContext.Provider value={{ hookResult }}>{children}</CustomHookContext.Provider>
   }
 
   const useHook = () => {
@@ -82,44 +72,47 @@ export default function createHookContext(
 }
 
 function getNewGetterResult({ current, getter, prev }: any = {}) {
-  const getterResult = getter ? getter(current, { memoObject, memoArray }) : current
+  const getterResult = getter ? getter(current, { wrapperState }) : current
 
   if (typeof getterResult === 'function' && getterResult.__IS_GETTER_HOOK__) {
     const result = getterResult()
-    if (prev === undefined) {
+    if (!getterResult.type || prev === undefined) {
       return result
     }
-    let shoudUpdate = false
     if (getterResult.type === 'object') {
-      shoudUpdate = Array.from(new Set(Object.keys(result).concat(Object.keys(prev || {})))).some(
-        (key) => prev[key] !== result[key]
-      )
+      return checkArrayShouldUpdate({ result, prev }) ? result : prev
     } else if (getterResult.type === 'array') {
-      shoudUpdate = Array.from(new Set([...result].concat(prev))).some(
-        (value, index) => prev[index] !== result[index]
-      )
+      return checkObjShouldUpdate({ result, prev }) ? result : prev
     }
-
-    return shoudUpdate ? result : prev
   }
 
   return getterResult
 }
 
-function memoObject(obj = {}) {
-  const getResult = () => {
-    return obj
-  }
-  getResult.__IS_GETTER_HOOK__ = true
-  getResult.type = 'object'
-  return getResult
+function checkArrayShouldUpdate({ result, prev }) {
+  return Array.from(new Set(Object.keys(result).concat(Object.keys(prev || {})))).some(
+    (key) => prev[key] !== result[key]
+  )
 }
 
-function memoArray(arr = []) {
-  const getResult = () => {
-    return [...arr]
+function checkObjShouldUpdate({ result, prev }) {
+  return Array.from(new Set([...result].concat(prev))).some((value, index) => prev[index] !== result[index])
+}
+
+function wrapperState(result) {
+  let getResult = () => result
+  if (isObject(result)) {
+    getResult = () => {
+      return result || {}
+    }
+    ;(getResult as WrapperStateFn).type = 'object'
+  } else if (Array.isArray(result)) {
+    getResult = () => {
+      return result || []
+    }
+    ;(getResult as WrapperStateFn).type = 'array'
   }
-  getResult.__IS_GETTER_HOOK__ = true
-  getResult.type = 'array'
-  return getResult
+
+  ;(getResult as WrapperStateFn).__IS_GETTER_HOOK__ = true
+  return getResult as WrapperStateFn
 }

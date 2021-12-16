@@ -3,9 +3,9 @@
 对[{}, {}, ...]格式的数据进行处理, 自动监听变化并更新，可以使用自定义处理函数对数据进行处理
 可以理解为针对列表数据的相关处理函数及 useMemo 的封装，并提供链式的写法
 
-### 自定义处理
-
-完全自由处理的情况下，相当于一个写法不同的 useMemo
+### 基本用法
+不使用内置方法的情况下，相当于一个写法不同的 useMemo
+useListState 的第二个参数，是一个数据处理回调函数，可以在其中对每次更新的数据自动做处理。
 
 ```javascript
 const initialValue = [
@@ -13,12 +13,17 @@ const initialValue = [
   { id: 2, value: 1 },
 ]
 
-const testData = useListData(listData, (originValue) => originValue.filter(v.id === 1))
+const testData = useListData(initialValue, (originValue) => originValue.filter(v.id === 1))
+// transform函数中包含依赖
+const testData = useListData(
+  initialValue,
+  (originValue) => originValue.filter(v.id === testId)
+  [testId]
+)
 ```
 
 ```javascript
-// result
-;[{ id: 1, value: 0 }]
+// result: [{ id: 1, value: 0 }]
 ```
 
 ### 使用内置方法进行处理
@@ -108,9 +113,7 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const testData = useListData(initialValue, (value, { partition }) =>
-  partition(value, { groupKey: 'city' })
-)
+const testData = useListData(initialValue, (value, { partition }) => partition(value, { groupKey: 'city' }))
 ```
 
 ```javascript

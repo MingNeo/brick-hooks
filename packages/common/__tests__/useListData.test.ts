@@ -78,8 +78,6 @@ describe('useListData 校验', () => {
           initialProps: { initialValue: mockData },
         }
       )
-      console.log('result.current', result.current)
-
       expect(jestDiff(result.current, groupResult)).toMatch('Compared values have no visual difference.')
     })
   })
@@ -102,8 +100,6 @@ describe('useListData 校验', () => {
           initialProps: { initialValue: mockData },
         }
       )
-      console.log('result.current', result.current)
-
       expect(jestDiff(result.current, partitionResult)).toMatch('Compared values have no visual difference.')
     })
   })
@@ -129,8 +125,6 @@ describe('useListData 校验', () => {
           initialProps: { initialValue: mockChainData },
         }
       )
-      console.log('result.current', result.current)
-
       expect(jestDiff(result.current, partitionResult)).toMatch('Compared values have no visual difference.')
     })
   })

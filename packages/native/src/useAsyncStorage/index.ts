@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { createEventBus } from 'brick-hooks'
-import { getStorage, setStorage, parseValue, removeStorage } from './helper'
+import { getStorage, setStorage, parseValue, removeStorage } from './helper.native'
 
 type GetValue = (itemName: string) => Promise<any>
 type SetValue = (value: string | number | Record<string, any> | any[]) => void

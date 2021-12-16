@@ -1,6 +1,6 @@
 {
   "name": "brick-hooks-native",
-  "version": "0.1.31",
+  "version": "0.1.32",
   "description": "> React Hooks Library",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
@@ -28,7 +28,7 @@
     "clear": "rm -rf esm && rm -rf lib",
     "build": "npm run clear && tsc && tsc -m ESNext --outDir esm",
     "watch": "tsc -w && tsc -m ESNext --outDir esm -w",
-    "test": "jest"
+    "test": "echo ''"
   },
   "bugs": {
     "url": "https://github.com/MingNeo/custom-hooks/issues"
@@ -42,12 +42,13 @@
   },
   "peerDependencies": {
     "react": ">=16.9.0",
-    "react-native": ">=0.61.5"
+    "react-native": ">=0.61.5",
+    "@react-native-community/async-storage": ">=1.0.0"
   },
   "gitHead": "ead4a0cac82b686d3395f341686a34af59e94562",
   "dependencies": {
-    "@react-native-community/async-storage": "^1.12.1",
     "@types/react-native": "^0.64.10",
-    "eslint": "^8.0.0"
+    "eslint": "^8.0.0",
+    "brick-hooks": "^0.1.31"
   }
 }

@@ -1,19 +1,15 @@
-import { useCallback, useRef } from 'react'
-import { ScrollView } from 'react-native'
+import { useCallback } from 'react'
 
 /**
  * 滚动到当前容器的顶部，用于如切换tab时重置列表位置等
  */
-export default function useScrollToTop(ref: any) {
-  const scrollRef = useRef<ScrollView>()
-  if (ref) {
-    scrollRef.current = ref.current
-  }
-
+export default function useScrollToTop(ref: any, { animated = true }: { animated?: boolean } = {}) {
   const scrollToTop = useCallback((top = 0) => {
     setTimeout(() => {
-      scrollRef.current?.scrollTo?.({ y: top })
+      const scrollTo = ref?.current?.scrollToTop || ref?.current?.scrollTo
+      scrollTo && scrollTo({ y: top, animated })
     }, 0)
   }, [])
-  return { scrollRef, scrollToTop }
+
+  return scrollToTop
 }

@@ -14,7 +14,13 @@ const style = `
   height: 20px;
 }
 `
+
 function MyComponent() {
-  useStyle(title, 'styleUserTitle'); 
+  useStyle(style, 'styleUserTitle'); 
+}
+
+// 如果需要组件卸载时候自动移除style，使用removeOnDestroy
+function MyComponent() {
+  useStyle(style, 'styleUserTitle', { removeOnDestroy: true }); 
 }
 ```

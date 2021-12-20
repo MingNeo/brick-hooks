@@ -16,7 +16,11 @@
     "pull:hydrogen-store": "git subtree pull --prefix=packages/hydrogen-store hydrogen master",
     "push:hydrogen-store": "git subtree push --prefix=packages/hydrogen-store hydrogen master",
     "pull:h-store-effect-plugin": "git subtree pull --prefix=packages/hydrogen-store-effect-plugin effect-plugin master",
-    "push:h-store-effect-plugin": "git subtree push --prefix=packages/hydrogen-store-effect-plugin effect-plugin master"
+    "push:h-store-effect-plugin": "git subtree push --prefix=packages/hydrogen-store-effect-plugin effect-plugin master",
+    "pull:h-store-redux-plugin": "git subtree pull --prefix=packages/hydrogen-store-redux-plugin git@github.com:MingNeo/hydrogen-store-redux-plugin.git master",
+    "push:h-store-redux-plugin": "git subtree push --prefix=packages/hydrogen-store-redux-plugin git@github.com:MingNeo/hydrogen-store-redux-plugin.git master",
+    "pull:h-store-immer-plugin": "git subtree pull --prefix=packages/hydrogen-store-immer-plugin git@github.com:MingNeo/hydrogen-store-immer-plugin.git master",
+    "push:h-store-immer-plugin": "git subtree push --prefix=packages/hydrogen-store-immer-plugin git@github.com:MingNeo/hydrogen-store-immer-plugin.git master"
   },
   "repository": {
     "type": "git",

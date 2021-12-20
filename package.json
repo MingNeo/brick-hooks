@@ -14,7 +14,9 @@
     "publish": "lerna publish",
     "prepublish": "lerna run build",
     "pull:hydrogen-store": "git subtree pull --prefix=packages/hydrogen-store hydrogen master",
-    "push:hydrogen-store": "git subtree push --prefix=packages/hydrogen-store hydrogen master"
+    "push:hydrogen-store": "git subtree push --prefix=packages/hydrogen-store hydrogen master",
+    "pull:h-store-effect-plugin": "git subtree pull --prefix=packages/hydrogen-store-effect-plugin effect-plugin master",
+    "push:h-store-effect-plugin": "git subtree push --prefix=packages/hydrogen-store-effect-plugin effect-plugin master"
   },
   "repository": {
     "type": "git",

@@ -12,7 +12,9 @@
     "clean": "lerna clean --yes",
     "build": "lerna run build",
     "publish": "lerna publish",
-    "prepublish": "lerna run build"
+    "prepublish": "lerna run build",
+    "pull:hydrogen-store": "git subtree pull --prefix=packages/hydrogen-store hydrogen master",
+    "push:hydrogen-store": "git subtree push --prefix=packages/hydrogen-store hydrogen master"
   },
   "repository": {
     "type": "git",

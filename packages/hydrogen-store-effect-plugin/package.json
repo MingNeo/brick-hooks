@@ -3,7 +3,7 @@
   "version": "0.1.32",
   "description": "> ",
   "author": "klose <mingrenjbdtx@gmail.com>",
-  "homepage": "https://github.com/MingNeo/custom-hooks/tree/master/packages/store-next-effect-plugin#readme",
+  "homepage": "https://github.com/MingNeo/hydrogen-store-effect-plugin#readme",
   "license": "ISC",
   "main": "lib/index.js",
   "module": "esm/index.js",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MingNeo/custom-hooks.git"
+    "url": "git+https://github.com/MingNeo/hydrogen-store-effect-plugin.git"
   },
   "scripts": {
     "clear": "rm -rf esm && rm -rf lib",
@@ -29,7 +29,7 @@
     "test": "jest"
   },
   "bugs": {
-    "url": "https://github.com/MingNeo/custom-hooks/issues"
+    "url": "https://github.com/MingNeo/hydrogen-store-effect-plugin/issues"
   },
   "dependencies": {
     "eslint": "^8.0.0",

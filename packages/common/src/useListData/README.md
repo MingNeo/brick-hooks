@@ -4,8 +4,17 @@
 可以理解为针对列表数据的相关处理函数及 useMemo 的封装，并提供链式的写法
 
 ### 基本用法
+
 不使用内置方法的情况下，相当于一个写法不同的 useMemo
 useListState 的第二个参数，是一个数据处理回调函数，可以在其中对每次更新的数据自动做处理。
+
+```typescript
+function useListData<T extends Record<string, any>>(
+  value?: T[],
+  factory?: (originData: T[], transformMethods: typeof transformsMap) => any,
+  deps?: any[]
+): any
+```
 
 ```javascript
 const initialValue = [
@@ -13,13 +22,10 @@ const initialValue = [
   { id: 2, value: 1 },
 ]
 
-const testData = useListData(initialValue, (originValue) => originValue.filter(v.id === 1))
-// transform函数中包含依赖
-const testData = useListData(
-  initialValue,
-  (originValue) => originValue.filter(v.id === testId)
-  [testId]
-)
+const data = useListData(initialValue, (originValue) => originValue.filter(v.id === 1))
+
+// transform函数中包含依赖, 设置deps
+const data = useListData(initialValue, (originValue) => originValue.filter(v.id === testId), [testId])
 ```
 
 ```javascript
@@ -28,7 +34,11 @@ const testData = useListData(
 
 ### 使用内置方法进行处理
 
+useListData 提供了如下若干内置 transform 方法，可以方便对原始数据进行自动处理
+
 #### transObj 数组转为对象
+
+默认key为id，可不填写。
 
 ```javascript
 const initialValue = [
@@ -36,7 +46,7 @@ const initialValue = [
   { id: 2, value: 1 },
 ]
 
-const testData = useListData(listData, (originValue, { transObj }) => transObj(originValue))
+const data = useListData(listData, (originValue, { transObj }) => transObj(originValue, { key: 'id' }))
 ```
 
 ```javascript
@@ -49,6 +59,14 @@ const testData = useListData(listData, (originValue, { transObj }) => transObj(o
 
 #### transTree 数组转为树
 
+```typescript
+transTree(data: Record<string, any>[], { parentId, id, children }?: {
+  parentId?: string;
+  id?: string;
+  children?: string;
+}): Record<string, any>[]
+```
+
 ```javascript
 const initialValue = [
   { id: 'a001', pid: 0, value: '山东' },
@@ -57,12 +75,12 @@ const initialValue = [
   { id: 'a004', pid: 'a001', value: '烟台' },
 ]
 
-const testData = useListData(initialValue, (originValue, { transTree }) => transTree(originValue))
+const data = useListData(initialValue, (originValue, { transTree }) => transTree(originValue))
 ```
 
 ```javascript
 // result
-;[
+[
   {
     id: 'a001',
     pid: 0,
@@ -86,7 +104,7 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const testData = useListData(initialValue, (value, { group }) => group(value, { groupKey: 'city' }))
+const data = useListData(initialValue, (value, { group }) => group(value, { groupKey: 'city' }))
 ```
 
 ```javascript
@@ -113,12 +131,12 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const testData = useListData(initialValue, (value, { partition }) => partition(value, { groupKey: 'city' }))
+const data = useListData(initialValue, (value, { partition }) => partition(value, { groupKey: 'city' }))
 ```
 
 ```javascript
 // result
-;[
+[
   [
     { id: 'q1', city: 'qingdao', value: 0 },
     { id: 'q2', city: 'qingdao', value: 1 },
@@ -140,12 +158,12 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const testData = useListData(initialValue, (value, { removeById }) => removeById(value, 'q1'))
+const data = useListData(initialValue, (value, { removeById }) => removeById(value, 'q1'))
 ```
 
 ```javascript
 // result
-;[
+[
   { id: 'q2', city: 'qingdao', value: 1 },
   { id: 'h1', city: 'hangzhou', value: 2 },
   { id: 'h2', city: 'hangzhou', value: 3 },
@@ -162,12 +180,12 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const testData = useListData(initialValue, (value, { removeIndex }) => removeIndex(value, 1))
+const data = useListData(initialValue, (value, { removeIndex }) => removeIndex(value, 1))
 ```
 
 ```javascript
 // result
-;[
+[
   { id: 'q1', city: 'qingdao', value: 0 },
   { id: 'h1', city: 'hangzhou', value: 2 },
   { id: 'h2', city: 'hangzhou', value: 3 },
@@ -186,34 +204,36 @@ const initialValue = [
   { id: 'h2', city: 'hangzhou', value: 3 },
 ]
 
-const testData = useListData(initialValue, (originValue, { chain }) =>
+const data = useListData(initialValue, (originValue, { chain }) =>
   chain(originValue)
-    .filter((v) => !v.ignore)
-    .partition({ groupKey: 'pid' })
+    .filter((v) => v.value !== 0)
+    .partition({ groupKey: 'city' })
     .value()
 )
 ```
 
 ```javascript
 // result
-;[
-  { id: 'q1', city: 'qingdao', value: 0 },
-  { id: 'h1', city: 'hangzhou', value: 2 },
-  { id: 'h2', city: 'hangzhou', value: 3 },
+[
+  [{ id: 'q2', city: 'qingdao', value: 1 }],
+  [
+    { id: 'h1', city: 'hangzhou', value: 2 },
+    { id: 'h2', city: 'hangzhou', value: 3 },
+  ],
 ]
 ```
 
-除了使用内置的方法，同样可以自定义处理, 使用 next 即可。或随时对数据进行自由处理
+除了使用内置的方法，也可以通过next方法，使用自定义函数进行, 或随时对数据进行自由处理
 
 ```javascript
-const testData = useListData(initialValue, (originValue, { chain }) =>
+const data = useListData(initialValue, (originValue, { chain }) =>
   chain(originValue)
     .next((value) => value.filter((v) => !v.ignore))
     .partition({ groupKey: 'pid' })
     .value()
 )
 
-const testData = useListData(initialValue, (originValue, { chain }) => {
+const data = useListData(initialValue, (originValue, { chain }) => {
   const listData = chain(originValue)
     .next((value) => value.filter((v) => !v.ignore))
     .partition({ groupKey: 'pid' })
@@ -254,7 +274,6 @@ transTree: (options?: {
   parentId?: string
   id?: string
   children?: string
-  topParentId?: number
 }) => this
 // 将数组转化为Object
 transObj: (options?: { key?: string }) => this

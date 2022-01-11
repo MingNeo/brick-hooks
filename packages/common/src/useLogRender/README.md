@@ -6,6 +6,6 @@
 ```javascript
 function MyComponent(props) {
   useLogRender(props)
-  // console: [why-update]: { a }
+  // console: [render count]: 1 [why-update]: { a }
 }
 ```

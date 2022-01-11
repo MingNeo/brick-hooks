@@ -1,5 +1,5 @@
 {
-  "name": "root",
+  "name": "@brick-hooks/root",
   "private": true,
   "workspaces": [
     "packages/*"
@@ -43,11 +43,6 @@
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-typescript": "^7.9.0",
-    "@storybook/addon-actions": "^6.0.22",
-    "@storybook/addon-essentials": "^6.0.22",
-    "@storybook/addon-links": "^6.0.22",
-    "@storybook/addons": "^5.3.19",
-    "@storybook/react": "^6.0.22",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.0.4",
     "@testing-library/react-hooks": "^5.1.1",
@@ -93,5 +88,7 @@
     "url": "https://github.com/MingNeo/custom-hooks/issues"
   },
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
-  "license": "ISC"
+  "license": "ISC",
+  "version": "1.0.0",
+  "main": ".eslintrc.js"
 }

@@ -1,16 +1,19 @@
+import { isNil } from '../utils'
+
 type Data = Record<string, any>[]
 
 export function transformListToTree(
   data: Data,
-  { parentId = 'pid', id = 'id', children = 'children', topParentId = 0 } = {}
+  { parentId = 'pid', id = 'id', children = 'children' } = {}
 ) {
   const cloneData = JSON.parse(JSON.stringify(data)) as Data
-  return cloneData.filter((parent) => {
-    const childrenItem = cloneData.filter((child) => parent[id] === child[parentId])
+  const dataMap = transformListToMap(data)
+  return cloneData.filter((curr) => {
+    const childrenItem = cloneData.filter((child) => curr[id] === child[parentId])
     if (childrenItem.length) {
-      parent[children] = childrenItem
+      curr[children] = childrenItem
     }
-    return parent[parentId] === topParentId
+    return !curr[parentId] || isNil(dataMap[curr[parentId]])
   })
 }
 

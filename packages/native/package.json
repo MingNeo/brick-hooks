@@ -1,13 +1,12 @@
 {
   "name": "brick-hooks-native",
   "version": "0.1.32",
-  "description": "> React Hooks Library",
+  "description": "React-native Hooks Library",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
   "license": "ISC",
   "main": "lib/index.js",
   "module": "esm/index.js",
-  "native": "lib/index.native.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -49,6 +48,6 @@
   "dependencies": {
     "@types/react-native": "^0.64.10",
     "eslint": "^8.0.0",
-    "brick-hooks": "^0.1.31"
+    "brick-hooks": "^0.1.32"
   }
 }

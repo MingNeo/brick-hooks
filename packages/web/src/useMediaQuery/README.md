@@ -1,6 +1,6 @@
 ## useMediaquery
 
-通过 js 方便使用媒体查询
+通过 js 方便使用媒体查询判断当前是否匹配
 
 ## Usage <a name = "usage"></a>
 

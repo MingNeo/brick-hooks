@@ -13,7 +13,7 @@ interface Options {
  * 使用事件的hook
  */
 function useEventListener(eventName: string, handler: Handler, { dom, ...options }: Options = {}) {
-  const ref = useRef()
+  const ref = useRef<any>()
   const handlerRef = useRef<Handler>(handler)
   handlerRef.current = handler
 

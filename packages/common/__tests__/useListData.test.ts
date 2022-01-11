@@ -47,7 +47,7 @@ describe('useListData 校验', () => {
     },
   ]
 
-  describe('transObj 校验正常', () => {
+  describe('transTree 校验正常', () => {
     it('初始状态正常', () => {
       const { result } = renderHook(
         ({ initialValue }) => useListData(initialValue, (originValue, { transTree }) => transTree(originValue)),

@@ -1,13 +1,31 @@
-export const setCookie = (name: string, value: string | number | boolean, options: { days: any; path: any }) => {
-  const expires = new Date(Date.now() + options.days * 864e5).toUTCString()
+function asyncWrapper(callback) {
   return new Promise((resolve, reject) => {
     try {
-      document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=${options.path}`
-      resolve(true)
+      resolve(callback && callback())
     } catch (err) {
       console.info(err)
       reject(err)
     }
+  })
+}
+
+export const setCookie = (
+  name: string,
+  value: string | number | boolean,
+  { days = 7, path = '/' }: { days?: any; path?: any } = {}
+) => {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString()
+  return asyncWrapper(() => {
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=${path}`
+  })
+}
+
+export const deleteCookie = (
+  name: string,
+  { path = '/' }: { path?: any } = {}
+) => {
+  return asyncWrapper(() => {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=${path}`
   })
 }
 

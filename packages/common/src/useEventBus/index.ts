@@ -1,4 +1,5 @@
 import { useRef, useEffect, createContext, useContext } from 'react'
+import useCallbackRef from '../useCallbackRef'
 import { EventBus, EventType, Subscription } from './eventBus'
 
 interface Publish {
@@ -61,12 +62,7 @@ function useSubscribeOrigin<T>(
   callback: Subscription<T>,
   options: SubscribeOptions = {}
 ) {
-  const subscriptionRef = useRef<Subscription<T>>(callback)
-  subscriptionRef.current = callback
-
-  function subscription(value: T) {
-    subscriptionRef.current && subscriptionRef.current(value)
-  }
+  const subscription = useCallbackRef<Subscription<T>>(callback)
 
   useEffect(() => {
     const unSubscribe = subscribeOrigin<T>(bus, eventName, subscription, options)

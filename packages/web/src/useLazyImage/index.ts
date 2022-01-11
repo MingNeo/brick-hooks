@@ -1,24 +1,5 @@
 import { useEffect } from 'react'
-
-type CheckIsInWindow = (node: HTMLElement) => boolean
-
-// 判断是否在可视区域里面
-const isInWindow: CheckIsInWindow = (node: HTMLElement) => {
-  const bound = node.getBoundingClientRect()
-  const clientHeight = window.innerHeight
-  return bound.top <= clientHeight + 100
-}
-
-// 加载图片
-function checkImgs(querySelector: string, sourceAttr: string, checkIsInWindow: CheckIsInWindow) {
-  const imgs = document.querySelectorAll(querySelector)
-  Array.from(imgs).forEach((node: HTMLImageElement) => {
-    if (checkIsInWindow(node) && !node.src) {
-      const source = node.getAttribute(sourceAttr)
-      node.src = source || ''
-    }
-  })
-}
+import 'intersection-observer'
 
 /**
  * 对图片自动判断是否在可视区域并进行懒加载
@@ -27,18 +8,25 @@ function checkImgs(querySelector: string, sourceAttr: string, checkIsInWindow: C
  * @param options.sourceAttr
  * @param options.checkIsInWindow 自定义检测是否在视口中
  */
-export default function useLazyImages(
-  querySelector: string,
-  { sourceAttr = 'data-src', checkIsInWindow = isInWindow } = {}
-) {
+export default function useLazyImages(querySelector: string, { sourceAttr = 'data-src', ...ioOptions } = {}) {
   useEffect(() => {
-    checkImgs(querySelector, sourceAttr, checkIsInWindow)
-
-    const onScroll = () => checkImgs(querySelector, sourceAttr, checkIsInWindow)
-    window.addEventListener('scroll', onScroll)
-
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const node = entry.target as any
+          if (entry.isIntersecting && !node.src) {
+            node.src = node.getAttribute(sourceAttr) || ''
+          }
+        })
+      },
+      ioOptions
+    )
+    const imgs = document.querySelectorAll(querySelector)
+    Array.from(imgs).forEach((node: HTMLImageElement) => {
+      io.observe(node)
+    })
     return () => {
-      window.removeEventListener('scroll', onScroll)
+      io.disconnect()
     }
   }, [])
 }

@@ -20,11 +20,15 @@ describe('useHover', () => {
       return { isHover, stateHover }
     })
 
-    act(() => fireEvent.mouseEnter(domNode))
+    act(() => {
+      fireEvent.mouseEnter(domNode)
+    })
     expect(result.current.isHover).toEqual(true)
     expect(result.current.stateHover).toEqual(true)
 
-    act(() => fireEvent.mouseOut(domNode))
+    act(() => {
+      fireEvent.mouseOut(domNode)
+    })
     expect(result.current.isHover).toEqual(false)
     expect(result.current.stateHover).toEqual(false)
   })

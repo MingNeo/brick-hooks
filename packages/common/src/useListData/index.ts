@@ -20,7 +20,7 @@ export interface ChainIns {
   filter: (callback: (v: any) => boolean) => this
   map: (callback: MapCallback) => this
   reduce: (callback: ReduceCallback, initialValue?: any) => this
-  transTree: (options?: { parentId?: string; id?: string; children?: string; topParentId?: number }) => this
+  transTree: (options?: { parentId?: string; id?: string; children?: string; }) => this
   // 将数组转化为Object
   transObj: (options?: { key?: string }) => this
   group: (options?: { groupKey?: string }) => this

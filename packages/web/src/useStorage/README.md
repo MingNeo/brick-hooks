@@ -29,6 +29,8 @@ const [cacheUserInfo, setCacheUserInfo, { clear }] = useStorage('user', {})
 const [cacheUserInfo, setCacheUserInfo, { clear }] = useStorage('user', {}, { storageType: 'sessionStorage' })
 // watchStorageChange 为true时，监听storage事件，即使在其他组件中通过原生等方式更新storage，也会触发当前状态更新及组件rerender
 const [cacheUserInfo, setCacheUserInfo, { clear }] = useStorage('user', {}, { watchStorageChange: true })
+
+setCacheUserInfo({ userName: 'klose' })
 ```
 
 ### useLocalStorage & useSessionStorage

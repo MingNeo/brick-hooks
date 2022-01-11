@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-type Callback = () => {}
+type Callback = () => void
 
 /**
  * 方便使用setTimeout的hook

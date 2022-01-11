@@ -4,34 +4,37 @@ import { useCallback, useEffect } from 'react'
  *  向页面中插入一段style
  */
 export default function useStyle(styleContent: string, id: string, { removeOnDestroy = false } = {}) {
-  const setSyle = useCallback((id: string) => {
+  const setStyle = useCallback(() => {
     try {
       let style = document.querySelector<HTMLStyleElement>(`style#${id}`)
 
-      if (!style) {
+      if (!style && styleContent) {
         style = document.createElement('style')
+        style.id = id
         style.type = 'text/css'
-        style.innerText = styleContent
+        style.innerHTML = styleContent
         document.head.appendChild(style)
       }
     } catch (error) {
       console.warn(error)
     }
-  }, [])
+  }, [id])
 
-  const removeSyle = useCallback((id: string) => {
+  const removeSyle = useCallback(() => {
     try {
       let style = document.querySelector<HTMLStyleElement>(`style#${id}`)
       style && document.head.removeChild(style)
     } catch (error) {
       console.warn(error)
     }
-  }, [])
+  }, [id])
 
   useEffect(() => {
-    setSyle(id)
+    setStyle()
     return () => {
-      removeOnDestroy && removeSyle(id)
+      removeOnDestroy && removeSyle()
     }
-  }, [id, setSyle, removeSyle])
+  }, [setStyle, removeSyle])
+
+  return removeSyle
 }

@@ -1,21 +1,27 @@
-import { useState } from 'react'
-import { getCookie, setCookie } from './cookie'
+import { useState, useMemo } from 'react'
+import { getCookie, setCookie, deleteCookie } from './cookie'
 
 type SetItem = (value: string | number | boolean, options?: { days: number; path: string }) => void
 
-export default function useCookie(key: string): [string, SetItem, { getItem: () => string; refreshItem: () => void }] {
-  const getItem = () => getCookie(key)
-  const [item, setItem] = useState(getItem)
+export default function useCookie(key: string): [string, SetItem, { get: () => Promise<string>; refresh: () => void }] {
+  const [item, setItem] = useState(() => getCookie(key))
 
-  const updateItem: SetItem = (value: string, options = { days: 7, path: '/' }) => {
-    setItem(value)
-    setCookie(key, value, options)
-  }
+  return useMemo(() => {
+    const get = async () => getCookie(key)
+    const updateItem: SetItem = (value: string, options = { days: 7, path: '/' }) => {
+      setItem(value)
+      setCookie(key, value, options)
+    }
 
-  const refreshItem = () => {
-    const newItem = getItem()
-    setItem(newItem)
-  }
+    const refresh = async () => {
+      setItem(await get())
+    }
 
-  return [item, updateItem, { getItem, refreshItem }]
+    const deleteItem = async () => {
+      setItem('')
+      await deleteCookie(key)
+    }
+
+    return [item, updateItem, { get, refresh, delete: deleteItem }]
+  }, [key])
 }

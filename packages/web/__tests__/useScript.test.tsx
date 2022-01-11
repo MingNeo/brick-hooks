@@ -69,7 +69,9 @@ describe('useScript', () => {
       }
     })
 
-    act(() => fireEvent.load(document.querySelector<HTMLScriptElement>(`script[src="${src}"]`)))
+    act(() => {
+      fireEvent.load(document.querySelector<HTMLScriptElement>(`script[src="${src}"]`))
+    })
     await act(async () => await result.current.load())
     expect(scriptTagElement()).toBeInstanceOf(HTMLScriptElement)
 

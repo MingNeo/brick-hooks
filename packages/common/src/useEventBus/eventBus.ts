@@ -64,10 +64,10 @@ export class EventBus<T = any> {
   }
 
   clearSubscriptions(type: EventType) {
-    for (const [eventType, subscriptions] of this.eventContainer) {
+    this.eventContainer.forEach((subscriptions, eventType) => {
       if (eventType === type && subscriptions.size) {
-        this.eventContainer.delete(eventType)
+        this.eventContainer.delete(eventType);
       }
-    }
+    })
   }
 }

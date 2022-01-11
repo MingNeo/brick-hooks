@@ -1,6 +1,6 @@
 {
   "name": "hydrogen-store-immer-plugin",
-  "version": "0.1.32",
+  "version": "0.2.0",
   "description": "> ",
   "author": "klose <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/hydrogen-store-immer-plugin#readme",
@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "eslint": "^8.0.0",
-    "hydrogen-store": "^0.1.32",
+    "hydrogen-store": "^0.2.0",
     "immer": "^9.0.3"
   },
   "devDependencies": {

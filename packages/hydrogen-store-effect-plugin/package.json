@@ -1,6 +1,6 @@
 {
   "name": "hydrogen-store-effect-plugin",
-  "version": "0.1.32",
+  "version": "0.2.0",
   "description": "> ",
   "author": "klose <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/hydrogen-store-effect-plugin#readme",
@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "eslint": "^8.0.0",
-    "hydrogen-store": "^0.1.32"
+    "hydrogen-store": "^0.2.0"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^5.1.1",

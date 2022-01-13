@@ -108,13 +108,27 @@ const isUnitlessNumber = {
   strokeMiterlimit: true,
   strokeOpacity: true,
   strokeWidth: true,
+
+  matrix: true,
+  perspective: true,
+  rotate: true,
+  rotateX: true,
+  rotateY: true,
+  rotateZ: true,
+  scale: true,
+  scaleX: true,
+  scaleY: true,
+  // translateX: true,
+  // translateY: true,
+  skewX: true,
+  skewY: true,
 }
 
 function hyphenateStyleName(name) {
   return name.replace(uppercasePattern, '-$1').toLowerCase().replace(msPattern, '-ms-')
 }
 
-function dangerousStyleValue(name, value, isCustomProperty) {
+function dangerousStyleValue(name, value, isCustomProperty, easingNum) {
   const isEmpty = value == null || typeof value === 'boolean' || value === ''
 
   if (isEmpty) {
@@ -127,7 +141,7 @@ function dangerousStyleValue(name, value, isCustomProperty) {
     value !== 0 &&
     !(Object.prototype.hasOwnProperty.call(isUnitlessNumber, name) && isUnitlessNumber[name])
   ) {
-    return value + 'px'
+    return value * easingNum + 'px'
   }
 
   return ('' + value).trim()
@@ -156,14 +170,14 @@ export default function createDangerousStringForStyles(style = {}, easingNum = 1
     if (styleValue != null) {
       const isCustomProperty = styleName.indexOf('--') === 0
       serialized += delimiter + (isCustomProperty ? styleName : hyphenateStyleName(styleName)) + ':'
-      serialized += dangerousStyleValue(styleName, styleValue * easingNum, isCustomProperty)
+      serialized += dangerousStyleValue(styleName, styleValue, isCustomProperty, easingNum)
       delimiter = ';'
     }
   }
 
   // 对transform作特殊处理
   serialized += Object.entries(transform).reduce((prev, [styleName, styleValue]: any) => {
-    prev += ` ${styleName}(${dangerousStyleValue(styleName, styleValue * easingNum, false)})`
+    prev += ` ${styleName}(${dangerousStyleValue(styleName, styleValue, false, easingNum)})`
     return prev
   }, `;${hyphenateStyleName('transform')}:`)
 

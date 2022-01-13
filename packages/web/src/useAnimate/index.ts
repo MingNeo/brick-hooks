@@ -35,7 +35,7 @@ export default function useAnimate({
   }
 
   const fromRef = useRef(from)
-  const timerRef = useRef<number>()
+  const timerRef = useRef<any>()
 
   const [style, setStyle] = useState(defaultUseFrom ? fromRef.current : {})
   const id = useMemo(() => keyframesName ?? `keyframe-${uuidRef.current}`, [keyframesName])

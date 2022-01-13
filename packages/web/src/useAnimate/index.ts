@@ -1,22 +1,23 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import uuid from 'uuid'
 import useStyle from '../useStyle'
-import createDangerousStringForStyles from './helper'
+import createDangerousStringForStyles, { bounceKeyFrames } from './helper'
 
 interface Options {
   from?: any
   to?: any
   range?: any
   duration?: number
-  easing?: 'linear' | 'ease' | 'in' | 'out' | 'inOut'
+  easing?: 'linear' | 'ease' | 'in' | 'out' | 'inOut' | 'bounce'
   delay?: number
   loop?: number
   autoRun?: boolean
   keyframesName?: string
   shouldReset?: boolean
+  defaultUseFrom?: boolean
 }
 
-export default function useCssAnimate({
+export default function useAnimate({
   from,
   to,
   range,
@@ -25,7 +26,8 @@ export default function useCssAnimate({
   delay = 0,
   loop = 1,
   autoRun = true,
-  keyframesName
+  keyframesName,
+  defaultUseFrom = true,
 }: Options = {}): any[] {
   const uuidRef = useRef()
   if (!uuidRef.current) {
@@ -35,10 +37,10 @@ export default function useCssAnimate({
   const fromRef = useRef(from)
   const timerRef = useRef<number>()
 
-  const [style, setStyle] = useState(fromRef.current)
+  const [style, setStyle] = useState(defaultUseFrom ? fromRef.current : {})
   const id = useMemo(() => keyframesName ?? `keyframe-${uuidRef.current}`, [keyframesName])
 
-  useStyle(!keyframesName && from && to ? getKeyFramesStyle({ id, from, to, range }) : undefined, id, {
+  useStyle(!keyframesName && from && to ? getKeyFramesStyle({ id, from, to, range, easing }) : undefined, id, {
     removeOnDestroy: true,
   })
 
@@ -48,17 +50,18 @@ export default function useCssAnimate({
     if (!timerRef.current) {
       reset()
       timerRef.current = setTimeout(() => {
+        const animation = `${duration}ms ${easing === 'bounce' ? 'linear' : easing} ${delay}ms ${
+          loop === -1 ? 'infinite' : loop
+        } normal both running ${id}`
         setStyle({
-          ...fromRef.current,
-          animation: `${duration}ms ${easing} ${delay}ms ${loop === -1 ? 'infinite' : loop} normal both running ${id}`,
-          WebkitAnimation: `${duration}ms ${easing} ${delay}ms ${
-            loop === -1 ? 'infinite' : loop
-          } normal both running ${id}`,
+          ...(defaultUseFrom && fromRef.current),
+          animation,
+          WebkitAnimation: animation,
         })
         timerRef.current = null
       }, 0)
     }
-  }, [reset, duration, easing, delay, loop, id])
+  }, [reset, duration, easing, delay, loop, id, defaultUseFrom])
 
   useEffect(() => {
     autoRun && start()
@@ -74,7 +77,7 @@ export default function useCssAnimate({
 }
 
 // 对单条style值进行处理
-function getKeyFramesStyle({ id, from, to, range }) {
+function getKeyFramesStyle({ id, from, to, range, easing }) {
   const isMulti = Array.isArray(to)
   const inputRange = range?.length
     ? range
@@ -84,16 +87,18 @@ function getKeyFramesStyle({ id, from, to, range }) {
   const outputRange = isMulti ? [from, ...to] : [from, to]
 
   return `
-  @keyframes ${id} {
-    ${inputRange
-      .map((v, i) => {
-        return `
-      ${v * 100}% {
-        ${createDangerousStringForStyles(outputRange[i])}
-      }
-      `
-      })
-      .join('')}
-  }
-`
+    @keyframes ${id} {
+      ${easing === 'bounce' ? bounceKeyFrames(outputRange[outputRange.length - 1]) : ''}
+
+      ${inputRange
+        .map((v, i) => {
+          return `
+        ${v * 100}% {
+          ${createDangerousStringForStyles(outputRange[i])}
+        }
+        `
+        })
+        .join('')}
+    }
+  `
 }

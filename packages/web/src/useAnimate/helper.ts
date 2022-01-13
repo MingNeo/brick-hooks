@@ -17,6 +17,50 @@ const transformKeys = [
   'skewY',
 ]
 
+// 模拟react-native bounce 缓动函数动画效果
+// https://easings.net/#easeInBounce
+export const bounceKeyFrames = (style) => `
+0% {
+  ${createDangerousStringForStyles(style, 0)}
+}
+
+12% {
+  ${createDangerousStringForStyles(style, 0.1089)}
+}
+
+24% {
+  ${createDangerousStringForStyles(style, 0.4356)}
+}
+
+36% {
+  ${createDangerousStringForStyles(style, 0.9801)}
+}
+
+44% {
+  ${createDangerousStringForStyles(style, 0.7502)}
+}
+
+74% {
+  ${createDangerousStringForStyles(style, 0.9837)}
+}
+
+82% {
+  ${createDangerousStringForStyles(style, 0.9375)}
+}
+
+92% {
+  ${createDangerousStringForStyles(style, 0.9934)}
+}
+
+96% {
+  ${createDangerousStringForStyles(style, 0.9846)}
+}
+
+100% {
+  ${createDangerousStringForStyles(style, 1)}
+}
+`
+
 /**
  * CSS properties which accept numbers but are not in units of "px".
  */
@@ -89,11 +133,12 @@ function dangerousStyleValue(name, value, isCustomProperty) {
   return ('' + value).trim()
 }
 
-export default function createDangerousStringForStyles(style = {}) {
+export default function createDangerousStringForStyles(style = {}, easingNum = 1) {
   const styles: Record<string, any> = {}
-  Object.entries(style).forEach(([key, value]) => {
+  const transform = {}
+  Object.entries(style).forEach(([key, value]: any) => {
     if (transformKeys.includes(key)) {
-      styles.transform = `${styles.transform || ''} ${key}(${value})`
+      transform[key] = value
     } else {
       styles[key] = value
     }
@@ -111,10 +156,16 @@ export default function createDangerousStringForStyles(style = {}) {
     if (styleValue != null) {
       const isCustomProperty = styleName.indexOf('--') === 0
       serialized += delimiter + (isCustomProperty ? styleName : hyphenateStyleName(styleName)) + ':'
-      serialized += dangerousStyleValue(styleName, styleValue, isCustomProperty)
+      serialized += dangerousStyleValue(styleName, styleValue * easingNum, isCustomProperty)
       delimiter = ';'
     }
   }
+
+  // 对transform作特殊处理
+  serialized += Object.entries(transform).reduce((prev, [styleName, styleValue]: any) => {
+    prev += ` ${styleName}(${dangerousStyleValue(styleName, styleValue * easingNum, false)})`
+    return prev
+  }, `;${hyphenateStyleName('transform')}:`)
 
   return serialized || null
 }

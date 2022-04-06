@@ -1,5 +1,5 @@
 import { useMemo, useEffect, useReducer, useRef } from 'react'
-import { ToolMethods, Methods, SetStore, SetStoreAction } from './types'
+import { ToolMethods, Methods, SetStore, SetStoreAction, StoreInstance } from './types'
 
 /**
  * 获取store state和set方法的hook，返回state和setState用法同React.useState。
@@ -10,10 +10,10 @@ import { ToolMethods, Methods, SetStore, SetStoreAction } from './types'
  * @returns {array} [state, setState, { dispatch }] dispatch方法可以触发注册的reducer
  */
 export default function useStore<S = Record<string, any> | any>(
-  storeContext: any,
+  storeContext: StoreInstance<S>,
   moduleName: string = '',
   autoMerge: boolean = true,
-  doUpdate: boolean = true
+  triggerUpdate: boolean = true
 ): [S, SetStore<SetStoreAction<S>>, ToolMethods<S>] {
   if (!moduleName) throw new Error('moduleName is required!')
 
@@ -29,13 +29,13 @@ export default function useStore<S = Record<string, any> | any>(
   useEffect(() => {
     const currentStoreContext = storeContextRef.current
     const eventName = `storeChange.${moduleName}`
-    const handleStateChange = () => doUpdate && forceUpdate()
+    const handleStateChange = () => triggerUpdate && forceUpdate()
     currentStoreContext?.subscribe(eventName, handleStateChange)
 
     return () => {
       currentStoreContext?.unSubscribe(eventName, handleStateChange)
     }
-  }, [moduleName, doUpdate])
+  }, [moduleName, triggerUpdate])
 
   const methods: Methods<S> = useMemo(() => {
     /**

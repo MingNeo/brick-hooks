@@ -88,7 +88,7 @@ export function StoreClassFactory() {
       this.init()
     }
 
-    getState(moduleName?: string) {
+    getState(moduleName?: string): S | void | null {
       return moduleName ? this._state[moduleName] : this._state
     }
 

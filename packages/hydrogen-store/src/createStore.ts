@@ -9,15 +9,19 @@ function sortPlugins(plugins: Plugin[]) {
  * 创建独立store实例
  */
 export default function createStore<S = Record<string, any>>(options: Options<S> = {}) {
-  const { plugins = [], ...restOptions } = options
+  const { plugins = [], useStoreAutoMerge = true, ...restOptions } = options
   const StoreClass = StoreClassFactory()
   sortPlugins(plugins).forEach((plugin: Plugin) => StoreClass.usePlugin(plugin))
 
   const store = new StoreClass(restOptions)
 
-  const useStore = <S = any>(moduleName: string, assign: boolean = true, willUpdate: boolean = true) => {
+  const useStore = <StoreState = any>(
+    moduleName: string,
+    assign: boolean = useStoreAutoMerge,
+    willUpdate: boolean = true
+  ) => {
     const useStoreStore: UseStore = store.getUseStore()
-    return useStoreStore<S>(moduleName, assign, willUpdate)
+    return useStoreStore<StoreState>(moduleName, assign, willUpdate)
   }
 
   const registerModule = (useStore.registerModule = (moduleName: string, initialModule: Module) => {

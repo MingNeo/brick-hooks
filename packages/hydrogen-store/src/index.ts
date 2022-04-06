@@ -1,4 +1,5 @@
-import createStore from './base'
+import createStore from './createStore'
+export { default as createApp, createContainer } from './createApp'
 export * from './types'
 
 const {

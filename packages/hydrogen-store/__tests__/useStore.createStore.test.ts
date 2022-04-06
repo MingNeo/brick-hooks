@@ -5,7 +5,7 @@ import { testUseStore } from './useStore.test'
 
 const mockTestModuleModel = {
   state: {
-    a: 1,
+    count: 1,
   },
   reducers: {
     changeValue: (state, payload) => ({ ...state, ...payload }),

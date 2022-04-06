@@ -1,6 +1,6 @@
 {
   "name": "brick-hooks-react-navigation4",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "> React Hooks Library",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
@@ -49,7 +49,7 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
     "@types/react-native": "^0.64.10",
-    "brick-hooks-native": "^0.2.1",
+    "brick-hooks-native": "^0.3.0",
     "eslint": "^8.0.0"
   }
 }

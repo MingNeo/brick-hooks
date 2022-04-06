@@ -16,6 +16,14 @@ function isObject(value) {
  * 使用这个插件后，store-next将可以使用immer的语法编写reducer
  */
 function immerPlugin<S>(Store: any) {
+  function reducerFactory(reducers: Record<string, any>) {
+    return Object.entries(reducers).reduce((prev, [actionName, reducer]) => {
+      return { ...prev, [actionName]:(prevState: any, payload: any) => {
+        return produce(prevState, (draft: Draft<S>) => reducer(draft, payload))
+      } }
+    }, {})
+  }
+
   Store.prototype.dispatchModuleAction = function (moduleName: string, actionName: string, payload: any) {
     if (!moduleName) return
 
@@ -26,6 +34,13 @@ function immerPlugin<S>(Store: any) {
     this._state[moduleName] = reducer(prevState, payload)
     // 触发react组件更新
     this.publish(`storeChange.${moduleName}`, this._state[moduleName])
+  }
+  
+  const originRegisterModule = Store.prototype.registerModule
+  Store.prototype.registerModule = function (moduleName: string, initialModule: any) {
+    const result = originRegisterModule.call(this, moduleName, initialModule)
+    this._reducers[moduleName] && (this._reducers[moduleName] = reducerFactory(this._reducers[moduleName]))
+    return result
   }
 
   const defaultReducers = {
@@ -39,14 +54,11 @@ function immerPlugin<S>(Store: any) {
   return function initial(store) {
     store._reducers._base = { ...store._reducers._base, ...defaultReducers }
     Object.entries(store._reducers).forEach(([moduleName, moduleReducers]) => {
-      Object.entries(moduleReducers).forEach(([actionName, reducer]) => {
-        store._reducers[moduleName][actionName] = (prevState: any, payload: any) => {
-          return produce(prevState, (draft: Draft<S>) => reducer(draft, payload))
-        }
-      })
+      Object.assign(store._reducers[moduleName], reducerFactory(moduleReducers))
     })
   }
 }
+
 immerPlugin.type = 'immerPlugin'
 immerPlugin.sortIndex = 10
 

@@ -32,6 +32,7 @@
     "url": "https://github.com/MingNeo/hydrogen-store-immer-plugin/issues"
   },
   "dependencies": {
+    "@testing-library/react-hooks": "^7.0.2",
     "eslint": "^8.0.0",
     "hydrogen-store": "^0.3.0",
     "immer": "^9.0.3"
@@ -46,5 +47,5 @@
   "peerDependencies": {
     "react": ">=16.9.0"
   },
-  "gitHead": "ead4a0cac82b686d3395f341686a34af59e94562"
+  "gitHead": "e1928584bd2b9bcfbb0020109489356a01ec7f88"
 }

@@ -20,7 +20,7 @@ export interface ChainIns {
   filter: (callback: (v: any) => boolean) => this
   map: (callback: MapCallback) => this
   reduce: (callback: ReduceCallback, initialValue?: any) => this
-  transTree: (options?: { parentId?: string; id?: string; children?: string; }) => this
+  transTree: (options?: { parentId?: string; id?: string; children?: string }) => this
   // 将数组转化为Object
   transObj: (options?: { key?: string }) => this
   group: (options?: { groupKey?: string }) => this
@@ -90,12 +90,13 @@ export const transformsMap = {
 export default function useListData<T extends Record<string, any>>(
   value: T[] = [],
   factory?: (originData: T[], transformMethods: typeof transformsMap) => any,
-  deps: any[] = [],
+  deps: any[] = []
 ) {
   const factoryRef = useRef(factory)
   factoryRef.current = factory
 
   return useMemo(() => {
-    return factoryRef.current ? factoryRef.current(value, transformsMap) : value
+    return factoryRef.current ? factoryRef.current(value, { ...transformsMap }) : value
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, ...deps])
 }

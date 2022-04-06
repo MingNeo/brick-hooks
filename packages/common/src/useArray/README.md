@@ -13,35 +13,20 @@ function MyComponent() {
 
 ### actions
 
-##### set
-
-设置数组的值。
-
-##### push
-
-同 Array.prototype.push
-
-##### pop
-
-同 Array.prototype.pop
-
-##### slice
-
-同 Array.prototype.slice
-
-##### clear
-
-##### reverse
-
-同 Array.prototype.reverse
-
-##### concat
-
-同 Array.prototype.concat
-
-##### sort
-
-同 Array.prototype.sort
+| 方法 | 说明|
+|-----------|------------------------|
+| set      | 设置数组的值             | 
+| push     | 同 Array.prototype.push   | 
+| slice     | 同 Array.prototype.slice   |
+| pop     | 同 Array.prototype.pop   | 
+| clear     | 清空   | 
+| reverse | 同 Array.prototype.reverse |
+| concat | 同 Array.prototype.concat |
+| sort | 同 Array.prototype.sort |
+| sortBy | 基于指定字段做升降序排序, 默认为 ASC，详情见 useArray |
+| remove | 移除指定值，详情见 useArray |
+| removeById | 当数据格式为[{ id: 'xxx', value, ... }, ...]时，根据 id 移除对应的值 |
+| removeIndex | 移除指定 index 的值 |
 
 ##### sortBy
 

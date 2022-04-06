@@ -15,6 +15,7 @@ interface Options {
   keyframesName?: string
   shouldReset?: boolean
   defaultUseFrom?: boolean
+  reverse?: boolean
 }
 
 export default function useAnimate({
@@ -28,16 +29,17 @@ export default function useAnimate({
   autoRun = true,
   keyframesName,
   defaultUseFrom = true,
+  reverse = false,
 }: Options = {}): any[] {
   const uuidRef = useRef()
   if (!uuidRef.current) {
     uuidRef.current = uuid()
   }
 
-  const fromRef = useRef(from)
+  const fromRef = useRef(defaultUseFrom ? from : {})
   const timerRef = useRef<any>()
 
-  const [style, setStyle] = useState(defaultUseFrom ? fromRef.current : {})
+  const [style, setStyle] = useState(fromRef.current)
   const id = useMemo(() => keyframesName ?? `keyframe-${uuidRef.current}`, [keyframesName])
 
   useStyle(!keyframesName && from && to ? getKeyFramesStyle({ id, from, to, range, easing }) : undefined, id, {
@@ -52,16 +54,16 @@ export default function useAnimate({
       timerRef.current = setTimeout(() => {
         const animation = `${duration}ms ${easing === 'bounce' ? 'linear' : easing} ${delay}ms ${
           loop === -1 ? 'infinite' : loop
-        } normal both running ${id}`
+        } ${reverse ? 'reverse' : 'normal'} both running ${id}`
         setStyle({
-          ...(defaultUseFrom && fromRef.current),
+          ...fromRef.current,
           animation,
           WebkitAnimation: animation,
         })
         timerRef.current = null
       }, 0)
     }
-  }, [reset, duration, easing, delay, loop, id, defaultUseFrom])
+  }, [reset, duration, easing, delay, loop, id, defaultUseFrom, reverse])
 
   useEffect(() => {
     autoRun && start()
@@ -70,6 +72,7 @@ export default function useAnimate({
   useEffect(() => {
     return () => {
       timerRef.current && clearTimeout(timerRef.current)
+      reset()
     }
   }, [])
 

@@ -12,8 +12,8 @@ function useInView(
     root?: any
     onInView?: (status: Status) => any
     onOutView?: (status: Status) => any
-    rootMargin?: number,
-    threshold?: number | number[],
+    rootMargin?: number
+    threshold?: number | number[]
   } = {}
 ) {
   const {
@@ -25,10 +25,10 @@ function useInView(
     threshold = 0, // 参见https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
   } = options
 
-  let rootNode;
-  let rootRef;
-  if(root) {
-    if(Object.prototype.hasOwnProperty.call(root, 'current')) {
+  let rootNode
+  let rootRef
+  if (root) {
+    if (Object.prototype.hasOwnProperty.call(root, 'current')) {
       rootRef = root
     } else {
       rootNode = root
@@ -52,7 +52,7 @@ function useInView(
       {
         root: rootRef.current || null,
         rootMargin: `${rootMargin || 0}px`,
-        threshold
+        threshold,
       }
     )
     io.observe(targetRef.current)

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useReducer } from 'react'
+import { isBrowser } from '../utils'
 
 interface MediaQueryValue {
   media: string
@@ -45,6 +46,10 @@ export default function useMedia<T = any>(mediaQueryValueList: MediaQueryValueLi
   return value
 }
 
-function getMediaQueryList(mediaQueryValueList: MediaQueryValueList) {
-  return mediaQueryValueList.reduce((prev, curr) => [...prev, { ...curr, mql: window.matchMedia(curr.media) }], [])
+function defaultMatchMedia(media: string) {
+  return isBrowser ? window.matchMedia(media) : ({ media, matches: false, onchange: null }) as MediaQueryList
+}
+
+function getMediaQueryList(mediaQueryValueList: MediaQueryValueList, matchMedia = defaultMatchMedia) {
+  return mediaQueryValueList.reduce((prev, curr) => [...prev, { ...curr, mql: matchMedia(curr.media) }], [])
 }

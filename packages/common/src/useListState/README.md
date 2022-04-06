@@ -6,24 +6,24 @@
 与 useListData 类似，不同的是 useListData 类似于 useMemo，对一个 state 进行自动处理生成新的 getter 的值。而这个 hook 则直接提供 setState 方法，setState 原始值并自动通过回调函数进行处理
 
 ### 基础用法
-
 使用 listMethods 替代 useArray，具体用法见 useArray
 
-- set 设置数组的值。
-- push 同 Array.prototype.push
-- pop 同 Array.prototype.pop
-- slice 同 Array.prototype.slice
-- clear
-- reverse 同 Array.prototype.reverse
-- concat 同 Array.prototype.concat
-- sort 同 Array.prototype.sort
-- sortBy 基于指定字段做升降序排序, 默认为 ASC，详情见 useArray
-- remove 移除指定值，详情见 useArray
-- removeById 当数据格式为[{ id: 'xxx', value, ... }, ...]时，根据 id 移除对应的值
-- removeIndex 移除指定 index 的值
+| 方法 | 说明|
+|-----------|------------------------|
+| set      | 当前设置数组的值             | 
+| push     | 同 Array.prototype.push   | 
+| slice     | 同 Array.prototype.slice   |
+| pop     | 同 Array.prototype.pop   | 
+| clear     | 同 清空   | 
+| reverse | 同 Array.prototype.reverse |
+| concat | 同 Array.prototype.concat |
+| sort | 同 Array.prototype.sort |
+| sortBy | 基于指定字段做升降序排序, 默认为 ASC，详情见 useArray |
+| remove | 移除指定值，详情见 useArray |
+| removeById | 当数据格式为[{ id: 'xxx', value, ... }, ...]时，根据 id 移除对应的值 |
+| removeIndex | 移除指定 index 的值 |
 
 ### 自定义数据处理
-
 useListState 的第二个参数，是一个数据处理回调函数，可以在其中对每次更新的数据自动做处理。
 完全自由处理的情况下，相当于组合了 useState/useArray 及 useMemo
 
@@ -43,6 +43,16 @@ listMethods.push({ id: 3, value: 1 })
 
 useListState 提供了一系列内置方法，可以方便的自动对数据进行各种转换
 也可以通过chain 对数据进行链式的处理
+
+| 方法 | 说明|
+|-----------|------------------------|
+| transObj      | 数组转为对象             | 
+| transTree     | 数组转为树   | 
+| group     | 分组   |
+| partition     | partition 分组   | 
+| removeById     | 根据 id 移除数据   | 
+| removeIndex | 根据 index 移除数据 |
+| chain | 链式语法进行数据处理 |
 
 #### transObj 数组转为对象
 

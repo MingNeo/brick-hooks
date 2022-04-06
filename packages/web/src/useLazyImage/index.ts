@@ -10,17 +10,14 @@ import 'intersection-observer'
  */
 export default function useLazyImages(querySelector: string, { sourceAttr = 'data-src', ...ioOptions } = {}) {
   useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const node = entry.target as any
-          if (entry.isIntersecting && !node.src) {
-            node.src = node.getAttribute(sourceAttr) || ''
-          }
-        })
-      },
-      ioOptions
-    )
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const node = entry.target as any
+        if (entry.isIntersecting && !node.src) {
+          node.src = node.getAttribute(sourceAttr) || ''
+        }
+      })
+    }, ioOptions)
     const imgs = document.querySelectorAll(querySelector)
     Array.from(imgs).forEach((node: HTMLImageElement) => {
       io.observe(node)

@@ -17,7 +17,7 @@ export default function useLogRender(props: Record<string, any> = {}, customCall
   useEffect(() => {
     if (previousProps.current) {
       const allKeys = Object.keys({ ...previousProps.current, ...props })
-      const changedMap = changedMapRef.current = {}
+      const changedMap = (changedMapRef.current = {})
 
       allKeys.forEach((key) => {
         if (previousProps.current[key] !== props[key]) {

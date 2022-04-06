@@ -1,10 +1,16 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 // 更新组件的left/top，即可自由拖动组件
 type OnDragMoving = (rect: { top: number; left: number }, event: any) => void
 interface Rect {
   top: number
   left: number
+}
+
+interface DragStyle {
+  top: number
+  left: number
+  position?: 'static' | 'relative' | 'absolute' | 'fixed' | 'inherit'
 }
 
 /**
@@ -22,6 +28,8 @@ export default function useFreeDrag(
     disX: null,
     disY: null,
   })
+
+  const [dragStyle, setDragStyle] = useState<DragStyle>({ ...initialRect })
 
   useEffect(() => {
     dragInfo.current.top = Number(initialRect?.top)
@@ -48,13 +56,13 @@ export default function useFreeDrag(
       if (!x && !y) return
       styleRef.current.top = dragInfo.current.top + y
       styleRef.current.left = dragInfo.current.left + x
-      onDragMoving(
-        {
-          top: styleRef.current.top,
-          left: styleRef.current.left,
-        },
-        event
-      )
+
+      const rect = {
+        top: styleRef.current.top,
+        left: styleRef.current.left,
+      }
+      setDragStyle({ ...rect, position: 'absolute' })
+      onDragMoving(rect, event)
     }
 
     const onMouseup = () => {
@@ -79,7 +87,7 @@ export default function useFreeDrag(
       document.addEventListener('click', onMouseup, { once: true })
     }
 
-    const readyDrag = (e: MouseEvent) => {
+    const readyDrag = (e: any) => {
       e.preventDefault()
       if (e.button !== 0) return
       preparation(e)
@@ -103,5 +111,8 @@ export default function useFreeDrag(
 
   return {
     onMousedown: methods.readyDrag,
+    style: dragStyle,
+    props: { onMousedown: methods.readyDrag, style: dragStyle },
+    parentStyle: { position: 'relative' },
   }
 }

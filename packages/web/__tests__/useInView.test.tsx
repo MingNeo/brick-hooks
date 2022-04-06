@@ -29,9 +29,7 @@ describe('useInView', () => {
       container.scrollTop = 100
     })
 
-    await act(() => {
-      timeout(1)
-    })
+    await act(async () => await timeout(1))
     expect(container.scrollTop).toBe(100)
     expect(getByText('isInView').dataset.state).toEqual('false')
 
@@ -39,9 +37,7 @@ describe('useInView', () => {
       container.scrollTop = 220
     })
 
-    await act(() => {
-      timeout(1)
-    })
+    await act(async () => await timeout(1))
     expect(container.scrollTop).toBe(220)
     expect(getByText('isInView').dataset.state).toEqual('false')
   })

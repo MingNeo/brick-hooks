@@ -5,29 +5,17 @@
 ```typescript
 function useListViewData(
   fetchFn: FetchFn,
-  query?: {
-    page?: {
-      pageNo?: number
-      pageSize?: number
-    }
+  initialQuery?: {
+    pageNo?: number
+    pageSize?: number
     query?: Record<string, any>
   }
 ): {
   listData: any[]
-  initQuery: {
-    page: {
-      pageNo: number
-      pageSize: number
-      hasMore: boolean
-    }
-    query: Record<string, any>
-  }
   query: {
-    page: {
-      pageNo: number
-      pageSize: number
-      hasMore: boolean
-    }
+    pageNo: number
+    pageSize: number
+    hasMore: boolean
     query: Record<string, any>
   }
   loading: boolean
@@ -37,11 +25,9 @@ function useListViewData(
   reloadData: () => Promise<any>
   setQuery: React.Dispatch<
     React.SetStateAction<{
-      page: {
-        pageNo: number
-        pageSize: number
-        hasMore: boolean
-      }
+      pageNo: number
+      pageSize: number
+      hasMore: boolean
       query: Record<string, any>
     }>
   >
@@ -51,10 +37,10 @@ function useListViewData(
 ```javascript
 function MyComponent() {
   // 注意， 异步请求getData返回数据必须是any[]格式
-  const { listData, loadData, loadNextPage, loading } = useListViewData(getData, { pageSize: 1, pageNo: 10 });
+  const { listData, loadData, loadNextPage, loading } = useListViewData(getData, { pageSize: 1, pageNo: 10 })
 
   useEffect(() => {
-    loadData({ page: })
+    loadData({ pageSize: 2 })
   }, [])
   const handleLoadNextPage = () => loadNextPage()
 }

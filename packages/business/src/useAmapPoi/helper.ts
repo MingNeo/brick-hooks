@@ -1,22 +1,23 @@
-export function formatPoiInfo(data: any) {
-  let name = data.formattedAddress
-  name = formatPoiName(data, name)
-  const address = data.formattedAddress + data.number
+export function formatPoiInfo(poi: any) {
+  let name = poi.name || poi.formattedAddress
+  name = formatPoiName(poi, name)
+  const address = poi.formattedAddress + poi.number
   const currentPoi = {
-    latitude: data.latitude,
-    longitude: data.longitude,
-    isCurrent: true,
-    adcode: data.adCode,
+    ...poi,
+    latitude: poi.latitude,
+    longitude: poi.longitude,
+    adcode: poi.adCode,
     name,
     address,
-    city: data.city || data.cityname,
-    cityCode: data.cityCode,
+    city: poi.city || poi.cityname,
+    cityCode: poi.cityCode,
   }
   return currentPoi
 }
 
-export function formatPoiName(data: any, name: string) {
-  const removeAddress = data.province + data.city + data.district
+export function formatPoiName(data: any, name: string = '') {
+  const { province = '', city = '', district = '' } = data
+  const removeAddress = province + city + district
   let newName = name.replace(removeAddress, '')
 
   if (newName.length > 18) {

@@ -133,4 +133,3 @@ function getEasingFunction(type: EasingType) {
     }
   }
 }
-

@@ -6,7 +6,7 @@ interface Options {
 }
 
 // 列表页以分组模式按需加载下一组，适用每个item各不相同情况。如首页装修/信息流
-export default function useListSequenceLoad(listData = [],{ groupSize = 3 }: Options = {}) {
+export default function useListSequenceLoad(listData = [], { groupSize = 3 }: Options = {}) {
   const [showGroupIdx, setShowGroupIdx] = useState(1) // 当前动态加载的组
 
   const reset = useCallback(() => {

@@ -1,18 +1,18 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import useListViewData, { initialQuery, FetchFn } from '../src/useListViewData/index'
+import useListViewData, { defaultInitialQuery, FetchFn } from '../src/useListViewData/index'
 
 describe('useListViewData 校验', () => {
   it('引用正常', () => {
     expect(useListViewData).toBeDefined()
   })
 
-  let fetchParams = { ...initialQuery }
+  let fetchParams = { ...defaultInitialQuery }
 
   let fetchFn: FetchFn = (params) => {
-    fetchParams = { ...fetchParams, ...(params || {}) }
+    const query = { ...fetchParams, ...(params || {}) }
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve({ data: [1], hasMore: true })
+        resolve({ data: [query.pageNo], hasMore: query.pageNo < 2 })
       }, 100)
     })
   }
@@ -24,7 +24,7 @@ describe('useListViewData 校验', () => {
       },
       { initialProps: { fetchFn } }
     )
-    expect(result.current.initialQuery).toEqual(initialQuery)
+    expect(result.current.query).toEqual(defaultInitialQuery)
     expect(Object.values(result.current.listData)).toEqual([])
     expect(result.current.loading).toBe(false)
   })
@@ -52,19 +52,32 @@ describe('useListViewData 校验', () => {
     expect(result.current.loading).toEqual(false)
   })
 
-  it('请求下一页正常', () => {
-    const { result } = renderHook(
+  it('请求下一页正常', async () => {
+    const { result, waitForNextUpdate } = renderHook(
       ({ fetchFn }) => {
-        return useListViewData(fetchFn)
+        return useListViewData(fetchFn, { pageSize: 2 })
       },
       { initialProps: { fetchFn } }
     )
-    const oldPage = { ...fetchParams.page } || {}
+    act(() => {
+      result.current.loadData()
+    })
+    await waitForNextUpdate()
+    expect(result.current.query.pageNo).toEqual(1)
+    expect(result.current.listData).toEqual([1])
+
     act(() => {
       result.current.loadNextPage()
     })
+    await waitForNextUpdate()
+    expect(result.current.query.pageNo).toEqual(2)
+    expect(result.current.listData).toEqual([1, 2])
 
-    expect(fetchParams.page.pageNo).toEqual(((oldPage as any).pageNo || 1) + 1)
+    await act(async () => {
+      await result.current.loadNextPage()
+    })
+    expect(result.current.query.pageNo).toEqual(2)
+    expect(result.current.listData).toEqual([1, 2])
   })
 
   it('清空条件正常', () => {
@@ -77,7 +90,7 @@ describe('useListViewData 校验', () => {
     act(() => {
       result.current.clearQuery()
     })
-    expect(result.current.query).toEqual(initialQuery)
+    expect(result.current.query).toEqual(defaultInitialQuery)
   })
 
   it('重载正常', () => {
@@ -89,7 +102,7 @@ describe('useListViewData 校验', () => {
     )
     act(() => {
       result.current.reloadData().then(() => {
-        return expect(result.current.query).toEqual(initialQuery)
+        return expect(result.current.query).toEqual(defaultInitialQuery)
       })
     })
   })

@@ -24,21 +24,18 @@ export default function useTimeoutFn(
     clearTimeout(timer)
   }, [])
 
-  const start = useCallback(
-    (...args) => {
-      setIsPending(true)
-      return new Promise((resolve) => {
-        timerRef.current = setTimeout(() => {
-          setIsPending(false)
-          const callCb = async () => {
-            return await fnRef.current(...args)
-          }
-          callCb().then(result => resolve(result))
-        }, time)
-      })
-    },
-    []
-  )
+  const start = useCallback((...args) => {
+    setIsPending(true)
+    return new Promise((resolve) => {
+      timerRef.current = setTimeout(() => {
+        setIsPending(false)
+        const callCb = async () => {
+          return await fnRef.current(...args)
+        }
+        callCb().then((result) => resolve(result))
+      }, time)
+    })
+  }, [])
 
   useEffect(() => {
     return () => {

@@ -1,20 +1,16 @@
-import { useState, useCallback, useEffect, useRef, useMemo } from 'react'
-import useCounter from '../useCounter'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import useDebounceFn from '../useDebounceFn'
+import useObjectState from '../useObjectState'
 
-type AsyncFunction = (...args: any[]) => Promise<any>
-interface Options {
-  immediate?: boolean
-  onResult?: (res: any) => void
-  debounceTime?: number
-}
+type AsyncFunction = (...args: any[]) => any | Promise<any>
 
 type Exector = (...args: any[]) => Promise<any>
 
-// type UseAsyncReturn = [exector: () => ]
+type Status = 'success' | 'loading' | 'idle' | 'fail' | 'mutate success'
 
+// type UseAsyncReturn = [exector: () => ]
 /**
- * 仅对异步函数做简单处理，返回一个新的函数和loading状态
+ * 仅对异步函数做简单处理，返回一个新的函数和loading、result、error等状态
  * @param asyncFunction
  * @param options.immediate 是否组件加载时自动执行
  * @param options.onResult 请求成功返回数据的回调，一般情况下直接.then后处理即可，但有时候希望自动同步状态，则可以配置onResult方法
@@ -22,44 +18,64 @@ type Exector = (...args: any[]) => Promise<any>
  */
 export default function useAsync<A extends AsyncFunction>(
   asyncFunction: A,
-  { immediate = false, onResult, debounceTime }: Options = {}
+  {
+    immediate = false,
+    onResult,
+    debounceTime,
+  }: {
+    immediate?: boolean
+    onResult?: (res: any) => void
+    debounceTime?: number
+    manual?: boolean
+  } = {}
 ): [
   Exector,
   {
     result: any
     error: any
     loading: boolean
-    pendingCount: number
+    status: 'success' | 'loading' | 'idle' | 'fail' | 'mutate success'
+    mutate: (...args: any[]) => any
   }
 ] {
-  const [pendingCount, { inc, dec }] = useCounter(0, { min: 0 })
-  const [result, setResult] = useState()
-  const [error, setError] = useState()
+  const [{ result, status, error }, setData] = useObjectState<{ status: Status; result: any; error: any }>({
+    status: 'idle',
+    result: undefined,
+    error: undefined,
+  })
 
   const unmountedRef = useRef(false)
   const onResultRef = useRef(onResult)
+  const resultRef = useRef(result)
+  resultRef.current = result
+  const fetchingPromiseRef = useRef<Promise<any>>()
   if (onResultRef.current !== onResult) onResultRef.current = onResult
 
   const originExector = useCallback(
     (...args: any[]) => {
-      inc()
-      return new Promise((resolve, reject) => {
+      // 如果正在请求中，则直接返回请求的promise
+      if (fetchingPromiseRef.current) {
+        return fetchingPromiseRef.current
+      }
+      fetchingPromiseRef.current = new Promise((resolve, reject) => {
         const pending = asyncFunction(...args)
+        setData({ status: 'loading' })
         pending
           .then((res) => {
-            dec()
-            setResult(res)
+            fetchingPromiseRef.current = null
+            setData({ result: res, status: 'success' })
             onResultRef.current && onResultRef.current(res)
             resolve(res)
           })
-          .catch((error) => {
-            dec()
-            setError(error)
-            reject(error)
+          .catch((err) => {
+            fetchingPromiseRef.current = null
+            setData({ result: undefined, error: err, status: 'fail' })
+            reject(err)
           })
       })
+      return fetchingPromiseRef.current
     },
-    [asyncFunction, dec, inc]
+    [asyncFunction, setData]
   )
 
   const [debounceExector] = useDebounceFn(originExector, debounceTime)
@@ -69,6 +85,11 @@ export default function useAsync<A extends AsyncFunction>(
     () => (debounceTime ? debounceExector : originExector),
     [debounceExector, debounceTime, originExector]
   )
+
+  const mutate = useCallback(async (callback) => {
+    const data = await callback(resultRef.current)
+    setData({ result: data, status: 'mutate success' })
+  }, [])
 
   useEffect(() => {
     !unmountedRef.current && immediate && exector()
@@ -80,5 +101,14 @@ export default function useAsync<A extends AsyncFunction>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return [exector, { result, error, loading: !!pendingCount, pendingCount }]
+  return [
+    exector,
+    {
+      result,
+      status,
+      error,
+      loading: status === 'loading' || status === 'mutate success',
+      mutate,
+    },
+  ]
 }

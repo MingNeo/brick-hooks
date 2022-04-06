@@ -8,8 +8,12 @@ export { default as useDebounceFn } from './useDebounceFn'
 export { default as useDebounceState } from './useDebounceState'
 export { default as useDebounceValue } from './useDebounceValue'
 export { default as useDeepCompare } from './useDeepCompare'
+export { default as useDidMount } from './useDidMount'
+export { default as useWillUnmount } from './useWillUnmount'
 export { default as useDidUpdate } from './useDidUpdate'
+export { default as useUnmountedRef } from './useUnmountedRef'
 export { default as useEffectMaunal } from './useEffectMaunal'
+export { default as useIsoEffect } from './useIsoEffect'
 export {
   default as useEventBus,
   createContextEventBus,
@@ -28,6 +32,7 @@ export { default as useObjectState } from './useObjectState'
 export { default as useObjectStateImmer } from './useObjectStateImmer'
 export { default as usePrevious } from './usePrevious'
 export { default as useReducerImmer } from './useReducerImmer'
+export { default as useRefCallback } from './useRefCallback'
 export { default as useSet } from './useSet'
 export { default as useThrottleFn } from './useThrottleFn'
 

@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react'
 import moment from 'dayjs'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
 import { usePrevious, useMethods } from 'brick-hooks'
-import { defaultModelKeyMap, defaultCycleKeyMap } from './defaultKeyMap'
+import { defaultModelMap, defaultCycleMap, getMonthRange, formatDatas, getRangeDate } from './helper'
 
 moment.extend(isSameOrAfter)
 
@@ -39,33 +39,55 @@ const methods = {
 /**
  * 日期周期/区间选择，用于周期购等场景
  */
-export default function useDateCycle(defaultData: IdefaultData = {}, options: IOptions = {}) {
-  const { modelKeyMap = defaultModelKeyMap, cycleKeyMap = defaultCycleKeyMap, customModels, customCycles } = options
+export default function useCycleBuy(defaultData: IdefaultData = {}, options: IOptions = {}) {
+  const { modelMap = defaultModelMap, cycleMap = defaultCycleMap, customModels, customCycles } = options
   const { model: defaultModel = '', cycle: defaultCycle = '', dates: defaultDates = [] } = defaultData
 
   const [{ dates, model, cycle, range }, dateCycleMethods] = useMethods(methods, {
     dates: defaultDates || [],
     model: defaultModel,
     cycle: defaultCycle,
-    range: getDateRange(defaultDates || []),
+    range: formatDatas(defaultDates || [])?.range,
   })
 
   const models = customModels || [
-    { label: '单次购', value: modelKeyMap.singleday },
-    { label: '每日送', value: modelKeyMap.everyday },
-    { label: '工作日送', value: modelKeyMap.weekday },
-    { label: '单日送', value: modelKeyMap.oddday },
-    { label: '双日送', value: modelKeyMap.evenday },
-    { label: '三日送', value: modelKeyMap.threeday },
-    { label: '周末送', value: modelKeyMap.weekend },
+    { label: '单次购', value: modelMap.singleday.key },
+    { label: '每日送', value: modelMap.everyday.key },
+    { label: '工作日送', value: modelMap.weekday.key },
+    { label: '单日送', value: modelMap.oddday.key },
+    { label: '双日送', value: modelMap.evenday.key },
+    { label: '三日送', value: modelMap.threeday.key },
+    { label: '周末送', value: modelMap.weekend.key },
   ]
 
   const cycles = customCycles || [
-    { label: '随心订', value: cycleKeyMap.custom },
-    { label: '下个月', value: cycleKeyMap.nextMonth },
-    { label: '下两个月', value: cycleKeyMap.nextTwoMonth },
-    { label: '下三个月', value: cycleKeyMap.nextThreeMonth },
+    { label: '随心订', value: cycleMap.custom.key },
+    { label: '下个月', value: cycleMap.nextMonth.key },
+    { label: '下两个月', value: cycleMap.nextTwoMonth.key },
+    { label: '下三个月', value: cycleMap.nextThreeMonth.key },
   ]
+
+  // 当日期为连续时间段时
+  const setRangeAndDates = useCallback(
+    ({ cycle: newCycle, model: newModel, dates: newDates }, setRangeBydate = false) => {
+      let currentRange = range && range.length ? range : []
+      if (isNil(newCycle) && newCycle !== cycleMap.custom.key) {
+        const current = moment()
+        const monthNum = cycleMap[newCycle]?.value
+        currentRange = getMonthRange(current, monthNum)
+        dateCycleMethods.setRange(currentRange as any[])
+      } else if (setRangeBydate || !range?.length) {
+        currentRange = formatDatas(newDates || dates)?.range
+        dateCycleMethods.setRange(currentRange as any[])
+      }
+
+      const getIsDisabled = modelMap[newModel || model]?.disabled || (() => false)
+      // 过滤掉禁用的日期
+      const dateList = getRangeDate(currentRange as any).filter((date) => !getIsDisabled(date))
+      dateCycleMethods.setDates(dateList)
+    },
+    [model, range, dates, modelMap, cycleMap, dateCycleMethods]
+  )
 
   const onChangeModel = (newModel: string | number) => {
     dateCycleMethods.setModel(newModel)
@@ -82,53 +104,28 @@ export default function useDateCycle(defaultData: IdefaultData = {}, options: IO
     setRangeAndDates({ cycle, model, dates: newDates }, true)
   }
 
-  const setRangeAndDates = useCallback(
-    ({ cycle: newCycle, model: newModel, dates: newDates }, setRangeBydate = false) => {
-      let currentRange = range && range.length ? range : []
-      if (isNil(newCycle) && newCycle !== cycleKeyMap.custom) {
-        const current = moment()
-        const monthNum = {
-          [cycleKeyMap.nextMonth]: 1,
-          [cycleKeyMap.nextTwoMonth]: 2,
-          [cycleKeyMap.nextThreeMonth]: 3,
-        }[newCycle]
-        currentRange = getMonthRange(current, monthNum)
-        dateCycleMethods.setRange(currentRange as any[])
-      } else if (setRangeBydate || !range) {
-        currentRange = getDateRange(newDates || dates)
-        dateCycleMethods.setRange(currentRange as any[])
-      }
-
-      const dateList = getRangeDate(currentRange as any).filter(
-        (date) => !getIsDateDisabled(date, newModel || model, modelKeyMap)
-      )
-      dateCycleMethods.setDates(dateList)
-    },
-    [model, range, cycle, dates, modelKeyMap]
-  )
-
   // const prevModel = usePrevious(model)
   // const prevCycle = usePrevious(cycle)
 
   useEffect(() => {
     dateCycleMethods.setModel(defaultData.model)
-  }, [defaultData.model])
+  }, [dateCycleMethods, defaultData.model])
 
   useEffect(() => {
     dateCycleMethods.setCycle(defaultData.cycle)
-  }, [defaultData.cycle])
+  }, [dateCycleMethods, defaultData.cycle])
 
   // 校验当前时间点是否可选
   const checkDateDisable = useCallback(
     (current) => {
       // 当前日期两天之后之前禁选
       if (current && current.isSameOrBefore(moment().add(2, 'd'))) return true
-      if (!isCycleInRange(current, cycle, cycleKeyMap)) return true
-
-      const isDisabled = getIsDateDisabled(current, model, modelKeyMap)
+      if (!isCycleInRange(current, cycle, cycleMap)) return true
+      const getIsDisabled = modelMap[model]?.disabled || (() => false)
+      const isDisabled = getIsDisabled(current)
       return isDisabled
     },
-    [model, cycle, modelKeyMap, cycleKeyMap]
+    [cycle, cycleMap, modelMap, model]
   )
 
   return {
@@ -137,7 +134,7 @@ export default function useDateCycle(defaultData: IdefaultData = {}, options: IO
     model,
     models,
     cycles,
-    range,
+    range, // 返回一个
     setRange: dateCycleMethods.setRange,
     onChangeModel,
     cycle,
@@ -146,70 +143,7 @@ export default function useDateCycle(defaultData: IdefaultData = {}, options: IO
   }
 }
 
-function getIsDateDisabled(current: any, model: any, modelKeyMap: IKeyMap) {
-  const currDate = moment(current)
-  switch (model) {
-    case modelKeyMap.everyday:
-      return false
-    case modelKeyMap.weekday:
-      return [1, 2, 3, 4, 5].includes(currDate.day())
-    case modelKeyMap.oddday:
-      return currDate.date() % 2 === 0
-    case modelKeyMap.evenday:
-      return currDate.date() % 2 !== 0
-    case modelKeyMap.threeday:
-      return currDate.date() % 3 !== 0
-    case modelKeyMap.weekend:
-      return [0, 6].includes(currDate.day())
-    default:
-      return false
-  }
-}
-
-function isCycleInRange(current: any, cycle: string | number, cycleKeyMap: IKeyMap) {
-  switch (cycle) {
-    case cycleKeyMap.nextMonth:
-      return isInMonthRange(current, 1)
-    case cycleKeyMap.nextTwoMonth:
-      return isInMonthRange(current, 2)
-    case cycleKeyMap.nextThreeMonth:
-      return isInMonthRange(current, 3)
-    default:
-      return true
-  }
-}
-
-const getMonthRange = (current: any, m: number = 1): [any?, any?] => {
-  return [moment(current).add(1, 'M').date(1), moment(current).add(m, 'M').endOf('month')]
-}
-
-export const getDateRange = (dates: any[]): any => {
-  const sortValue = dates.sort((a: any, b: any) => moment(a).diff(b))
-  return sortValue.length ? [moment(sortValue[0]), moment(sortValue[sortValue.length - 1])] : []
-}
-
-/**
- *
- * @param {*} current 当前时间 moment对象
- * @param {*} m 月份间隔
- */
-function isInMonthRange(current: any, m: number = 1) {
-  const [start, end] = getMonthRange(moment(), m)
-  return current.isBetween(start, end, 'day', '[]')
-}
-
-// 获取连续日期内的所有时间
-function getRangeDate([start, end] = []) {
-  const current = moment(start)
-  const list = []
-  let next = true
-  while (next) {
-    if ((current as any).isSameOrBefore(end)) {
-      list.push(current.format('YYYY-MM-DD'))
-      current.add(1, 'd')
-    } else {
-      next = false
-    }
-  }
-  return list
+function isCycleInRange(current: any, cycle: string | number, cycleMap: any) {
+  const isInMonthRange = cycleMap[cycle] || (() => true)
+  return isInMonthRange(current)
 }

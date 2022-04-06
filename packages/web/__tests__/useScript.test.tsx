@@ -39,7 +39,7 @@ describe('useScript', () => {
     expect(result.current.status).toEqual('loading')
     expect(result.current.isLoaded).toEqual(false)
 
-    await act(() => {
+    act(() => {
       result.current.load().then(() => {
         expect(result.current.status).toEqual('success')
         expect(result.current.isLoaded).toEqual(true)
@@ -60,7 +60,7 @@ describe('useScript', () => {
     expect(scriptTagElement()).toBeNull()
 
     const { result, unmount } = renderHook(() => {
-      const { ref, status, load } = useScript(src, () => {})
+      const { ref, status, load } = useScript(src, () => {}, { removeOnDestroy: true })
 
       return {
         ref,

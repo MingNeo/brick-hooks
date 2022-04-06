@@ -19,7 +19,7 @@ function MyComponent() {
   // 使用useRefCallback则无这个问题，不论useEffect中deps添不添加testRefFn，对结果都无影响。stateA变化不会更新testRefFn引用因此也不会触发useEffect渲染。
   const testRefFn = useRefCallback(() => {
     // ...
-  }, [stateA])
+  })
 
   useEffect(() => {
     testRefFn()

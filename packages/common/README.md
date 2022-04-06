@@ -57,10 +57,14 @@ const { useArray } = require('brick-hooks');
 [useForceRender](./src/useForceRender/README.md) 返回一个强制更新的函数，调用时强制触发组件更新
 
 #### 生命周期
+[useDidMount](./src/useDidMount/README.md) 提供一个类似于componentDidMount生命周期的hook
 [useDidUpdate](./src/useDidUpdate/README.md) 提供一个类似于componentDidUpdate生命周期的hook，首次不执行，仅更新时执行方法
+[useWillUnmount](./src/useWillUnmount/README.md) 提供一个类似于componentWillUnmount生命周期的hook
+[useUnmountedRef](./src/useUnmountedRef/README.md) 返回一个ref，ref的值为当前是否已卸载
 
 #### debug
 [useLogRender](./src/useLogRender/README.md) 打印触发当前组件渲染的state
+[useRenderCount](./src/useRenderCount/README.md) 打印当前组件渲染的次数
 
 
 #### 常见简单业务
@@ -71,6 +75,8 @@ const { useArray } = require('brick-hooks');
 [useInput](./src/useInput/README.md) 对input进行自动管理数据
 
 #### 其他
+
+[useIsoEffect](./src/useIsoEffect/README.md) 当当前环境为浏览器的时候，使用useLayoutEffect 替代 useEffect。用于一些动画等需要即时更新
 
 [usePrevious](./src/usePrevious/README.md) 获取上一次的值，默认为最近一次更新前的值。也可以配置为每次rerender时触发
 
@@ -88,5 +94,5 @@ const { useArray } = require('brick-hooks');
 
 [useThrottleFn](./src/useThrottleFn/README.md) 对函数进行自动节流处理
 
-[useForceRender](./src/useForceRender/README.md) 返回一个强制更新的函数，调用时强制触发组件更新
+[useRefCallback](./src/useRefCallback/README.md) 对函数使用React.useRef存储，保证任何依赖更新函数引用都不会改变
 

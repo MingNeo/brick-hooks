@@ -1,8 +1,9 @@
 ## useAnimate
 方便在web中使用 animate
 
-注：如果你使用react-native-web且使用brick-hooks-native，那么可以直接使用brickHooksNative.useAnimate，无需更换适配
-brickHooksNative.useAnimate用法与本hook基本一致，但是基于react-native-web的animated，而非css。内置easing也要丰富一些
+注：如果你使用react-native-web且使用brick-hooks-native，那么可以直接使用brickHooksNative.useAnimate，无需更换适配。
+
+brickHooksNative.useAnimate基于react-native-web的animated而非css，内置easing要丰富一些且支持自定义函数。其他用法与本hook基本一致。
 
 ```typescript
 function useAnimate(options: {

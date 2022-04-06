@@ -2,10 +2,7 @@ import { isNil } from '../utils'
 
 type Data = Record<string, any>[]
 
-export function transformListToTree(
-  data: Data,
-  { parentId = 'pid', id = 'id', children = 'children' } = {}
-) {
+export function transformListToTree(data: Data, { parentId = 'pid', id = 'id', children = 'children' } = {}) {
   const cloneData = JSON.parse(JSON.stringify(data)) as Data
   const dataMap = transformListToMap(data)
   return cloneData.filter((curr) => {
@@ -54,3 +51,13 @@ function foldData(data: Data = [], { field }) {
     return [...prev, { key: field, value: fieldValue, ...restData }]
   }, []) as any[]
 }
+
+const transform = {
+  tree: transformListToTree,
+  obj: transformListToMap,
+  group: transformListToGroup,
+  partition: transformListToPartition,
+  fold: transformListToFoldList,
+}
+
+export default transform

@@ -23,7 +23,7 @@ const defaultMethods = {
 export default function useObjectState<S>(
   initialState: S = {} as S,
   methods: Methods<S> = {}
-): [S, SetState, BoundActionMethods] {
+): [State, SetState, BoundActionMethods] {
   const [state, stateMethods] = useMethods<S>({ ...methods, ...defaultMethods }, initialState as S)
 
   const setState: SetState = useCallback(

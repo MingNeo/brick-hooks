@@ -1,108 +1,103 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import useObjectState from '../useObjectState'
+import useAsync from '../useAsync'
 
 export interface QueryParams {
-  page: {
-    pageNo: number
-    pageSize: number
-    hasMore: boolean
-  }
+  pageNo: number
+  pageSize: number
   query: Record<string, any>
 }
 
 export type FetchFn = (query: QueryParams) => Promise<{ data: any; hasMore: undefined | boolean }>
 
-export const initialQuery: QueryParams = {
-  page: {
-    pageNo: 1,
-    pageSize: 10,
-    hasMore: false,
-  },
+export const defaultInitialQuery: QueryParams = {
+  pageNo: 1,
+  pageSize: 10,
   query: {},
 }
 
 const listViewReducers = {
-  setListData: (state: any, payload: any) => ({
+  setQuery: (state: any, payload: any) => ({
     ...state,
-    listData: typeof payload === 'function' ? payload(state.listData) : payload,
-  }),
-  setFinalQuery: (state: any, payload: any) => ({
-    ...state,
-    finalQuery: typeof payload === 'function' ? payload(state.finalQuery) : payload,
+    query: typeof payload === 'function' ? payload(state.query) : payload,
   }),
 }
 
 /**
  * 处理列表数据的hooks
  */
-export default function useListViewData(fetchFn: FetchFn, query = {}) {
-  const initData = useMemo(() => ({ ...initialQuery, ...query }), [query])
+export default function useListViewData(fetchFn: FetchFn, initialQuery = {}, options = {}) {
+  const initQuery = useMemo(() => ({ ...defaultInitialQuery, ...initialQuery }), [initialQuery])
 
-  const [{ listData, loading, finalQuery }, setObjectState, { setFinalQuery }] = useObjectState(
+  const { isMerge = true } = options as any
+  const [asyncFetchData, { loading }] = useAsync(fetchFn)
+
+  const [{ listData, query, hasMore }, setObjectState, { setQuery }] = useObjectState(
     {
+      hasMore: false,
+      listDataMap: {},
       listData: [],
-      loading: false,
-      finalQuery: initData, // 用于筛选的请求参数
+      query: initQuery, // 用于筛选的请求参数
     },
     listViewReducers
   )
 
   // 获取数据, filter通过请求参数传入
   const loadData = useCallback(
-    (fetchParams) => {
-      const { page, query: fetchQuery, isMerge = false } = fetchParams
-      setObjectState({ loading: true })
+    (params?: Record<string, any>) => {
+      const currentQuery = { ...query, ...params }
       return new Promise((resolve, reject) => {
-        fetchFn({ page, query: fetchQuery })
-          .then(({ data, hasMore }) => {
+        asyncFetchData(params)
+          .then(({ data, hasMore: hasMorePage }) => {
             setObjectState((prevState) => ({
-              loading: false,
-              finalQuery: { page: { ...page, hasMore }, query: fetchQuery },
-              listData: isMerge ? prevState.listData.concat(data) : data || [],
+              hasMore: hasMorePage,
+              query: currentQuery,
+              listData: isMerge ? [...prevState.listData, ...data] : data,
             }))
             resolve('load data success')
           })
           .catch((e) => {
-            setObjectState({ loading: false })
-            console.info(e)
             reject(new Error(`load data error`))
           })
       })
     },
-    [fetchFn]
+    [asyncFetchData, isMerge, query, setObjectState]
   )
+
+  useEffect(() => {}, [])
 
   // 获取下一页数据
   const loadNextPage = useCallback(() => {
-    return loadData({
-      ...finalQuery,
-      page: { ...finalQuery.page, pageNo: finalQuery.page.pageNo + 1 },
-      isMerge: true,
-    })
-  }, [loadData, finalQuery])
+    return (
+      hasMore &&
+      loadData({
+        ...query,
+        pageNo: query.pageNo + 1,
+      })
+    )
+  }, [loadData, query, hasMore])
 
   /**
    * 清空筛选条件
    */
   const clearQuery = useCallback(() => {
-    setObjectState({ finalQuery: initData })
-  }, [initData])
+    setObjectState({ query: initQuery })
+  }, [initQuery, setObjectState])
 
   // 重载数据，即清空分页、查询条件重新请求
   const reloadData = useCallback(() => {
-    setObjectState({ finalQuery: initData })
-    return loadData(initData)
-  }, [loadData, initData])
+    setObjectState({ query: initQuery })
+    return loadData(initQuery)
+  }, [setObjectState, initQuery, loadData])
 
   return {
     listData,
-    initialQuery: { ...initData },
-    query: finalQuery,
+    query: query,
     loading,
     loadData,
     loadNextPage,
     clearQuery,
     reloadData,
-    setQuery: setFinalQuery,
+    setQuery,
   }
 }

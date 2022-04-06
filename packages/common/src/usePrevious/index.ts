@@ -29,5 +29,6 @@ export default function usePrevious<S>(value: S, equalsMode: boolean = true) {
     const lastValue = prevListRef.current[prevListRef.current.length - 1]
     return value === lastValue ? prevListRef.current[prevListRef.current.length - 2] : lastValue
   }
+
   return prevListRef.current[0]
 }

@@ -1,20 +1,26 @@
-## useDrag
+## useFreeDrag
 
 可以快速给一个绝对定位的节点提供自由拖拽能力
 
 ```javascript
 function Comp() {
-  const [dragStyle, setDragStyle] = useState({})
-  const { onMousedown } = useFreeDrag((rect) => setDragStyle(rect))
-  const ref = useEventListener('mousedown', onMousedown)
+  const { onMousedown, dragStyle } = useFreeDrag((rect) => {
+    console.log(rect)
+  })
 
   return (
     <div style={{ position: 'relative', height: 450, width: '100%' }}>
       <div
-        ref={(r) => (ref.current = r)}
-        style={{ position: 'absolute', height: 50, width: 50, backgroundColor: 'blue', ...dragStyle }}
+        onMousedown={onMousedown}
+        style={{ height: 50, width: 50, backgroundColor: 'blue', ...dragStyle }}
       />
     </div>
   )
 }
+```
+
+如果初始状态不是 left:0,top:0，则需要设置 initialRect
+
+```javascript
+  const { onMousedown, dragStyle } = useFreeDrag(() => {}, { initialRect: { left: 10, top: 10 })
 ```

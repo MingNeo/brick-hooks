@@ -1,4 +1,4 @@
-import useIsoEffect from '../utils/useIsoEffect'
+import { useLayoutEffect } from 'react'
 import useAnimate from '../useAnimate'
 
 export default function useTransition({ from, to, reverse = false, ...config }) {
@@ -10,13 +10,14 @@ export default function useTransition({ from, to, reverse = false, ...config }) 
   })
 
   const [reverseStyle, reverseApi] = useAnimate({
-    from: to,
-    to: from,
+    from,
+    to,
     autoRun: false,
+    reverse: true,
     ...config,
   })
 
-  useIsoEffect(() => {
+  useLayoutEffect(() => {
     if (!reverse) {
       api.start()
     } else {

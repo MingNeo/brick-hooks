@@ -55,7 +55,10 @@ function MyComponent() {
 
 #### 设置曲线
 
-'linear', 'ease','quad','cubic','sin','circle','exp','bounce','in', 'out', 'inOut' 之一的曲线，或自定义曲线函数(可直接使用react-native的Easing)
+```typescript
+type easing = 'linear'| 'ease'|'quad'|'cubic'|'sin'|'circle'|'exp'|'bounce'|'in'| 'out'| 'inOut' | ((...any[]) => any);
+```
+使用内置曲线，或自定义曲线函数(可直接使用react-native的Easing)
 ```javascript
 function MyComponent() {
   const [styleProps, { start }] = useAnimate({

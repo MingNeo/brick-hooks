@@ -18,7 +18,7 @@ interface DebounceFnOptions {
  * @param options.cancelWhenDestroy 是否在组件销毁时取消debounce
  * @param options.leading 是否在延迟开始前立即调用
  * @param options.trailing 是否在延迟结束后触发调用
- * @returns 
+ * @returns
  */
 export default function useDebounceFn(
   handler: DebunceFn,
@@ -58,7 +58,7 @@ export default function useDebounceFn(
         if (optionsRef.current.leading && !timer.current) {
           cb(true)
         }
-  
+
         cancel()
         timer.current = setTimeout(() => {
           cb(optionsRef.current.trailing)

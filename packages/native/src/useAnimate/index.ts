@@ -19,7 +19,7 @@ const transformKeys = [
 
 interface AnimateOptions {
   from: Record<string, any>
-  to:  Record<string, any> | Record<string, any>[]
+  to: Record<string, any> | Record<string, any>[]
   range?: number[]
   onAnimationEnd?: any
   loop?: number

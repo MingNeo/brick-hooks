@@ -16,13 +16,14 @@ export function isObject(value: any) {
  * @example '2px' + 1 = '3px'
  * @example '15em' + (-2) = '13em'
  */
- export function increaseWithUnit(target: string | number, delta: number): string | number {
-  if (typeof target === 'number')
-    return target + delta
+export function increaseWithUnit(target: string | number, delta: number): string | number {
+  if (typeof target === 'number') return target + delta
   const value = target.match(/^-?[0-9]+\.?[0-9]*/)?.[0] || ''
   const unit = target.slice(value.length)
-  const result = (parseFloat(value) + delta)
-  if (Number.isNaN(result))
-    return target
+  const result = parseFloat(value) + delta
+  if (Number.isNaN(result)) return target
   return result + unit
 }
+
+export const isBrowser = !!(typeof window !== 'undefined' && window.document && window.document.createElement)
+

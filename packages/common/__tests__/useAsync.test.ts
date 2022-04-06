@@ -35,22 +35,27 @@ describe('useAsync 校验', () => {
     )
 
     {
-      let [, { loading }] = result.current
+      let [, { loading, status }] = result.current
       expect(loading).toEqual(false)
+      expect(status).toEqual('idle')
     }
 
     await act(async () => {
       result.current[0]().then((response: any) => {
         expect(result.current[1].loading).toEqual(false)
+        expect(result.current[1].status).toEqual('success')
         expect(response).toEqual({ data: [1] })
       })
+      result.current[0]()
       await waitForNextUpdate()
       expect(result.current[1].loading).toEqual(true)
+      expect(result.current[1].status).toEqual('loading')
     })
     await waitForNextUpdate()
 
     expect(result.current[1].result).toEqual({ data: [1] })
     expect(result.current[1].loading).toEqual(false)
+    expect(result.current[1].status).toEqual('success')
   })
 
   it('debounce正常', async () => {

@@ -20,7 +20,8 @@ function Item(props) {
         marginBottom: 10,
         border: '1px solid #eee',
       }}
-      {...props}></div>
+      {...props}
+    ></div>
   )
 }
 
@@ -80,11 +81,14 @@ export const UseLazySequenceLoadDemo = () => {
 }
 
 UseLazySequenceLoadDemo.story = {
-  name: 'UseLazySequenceLoad'
+  name: 'UseLazySequenceLoad',
 }
 
 export const UseLazySequenceLoadDemo2 = () => {
-  const { showfooterLoading, showList, rootProps, loadingProps } = useLazySequenceLoad(list, { groupSize: 3, rootMargin: 200 })
+  const { showfooterLoading, showList, rootProps, loadingProps } = useLazySequenceLoad(list, {
+    groupSize: 3,
+    rootMargin: 200,
+  })
 
   return (
     <div>
@@ -100,5 +104,5 @@ export const UseLazySequenceLoadDemo2 = () => {
 }
 
 UseLazySequenceLoadDemo2.story = {
-  name: 'UseLazySequenceLoad 设置rootMargin 来提前加载'
+  name: 'UseLazySequenceLoad 设置rootMargin 来提前加载',
 }

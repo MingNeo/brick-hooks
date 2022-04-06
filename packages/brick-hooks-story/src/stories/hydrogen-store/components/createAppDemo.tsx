@@ -1,34 +1,39 @@
 import React from 'react'
 import { Button } from '@storybook/react/demo'
-import { registerModule, useStore, usePlugins } from 'hydrogen-store/src/index'
-import reduxPlugin from 'hydrogen-store-redux-plugin/src/index'
-import effectPlugin from 'hydrogen-store-effect-plugin/src/index'
+import { createApp } from 'hydrogen-store'
+import reduxPlugin from 'hydrogen-store-redux-plugin'
+import effectPlugin from 'hydrogen-store-effect-plugin'
 import { useLogRender } from 'brick-hooks'
 import ChildrenComp from './childrenComp'
 
-usePlugins([reduxPlugin, effectPlugin])
-
-registerModule('test', {
-  state: {
-    count: 1,
-    actionCount: 0,
-    effectCount: 0,
-  },
-  reducers: {
-    countInc: (state, payload) => ({ ...state, count: (state.count || 0) + payload.step }),
-    setEffectCountInc: (state, payload) => ({ ...state, effectCount: (state.effectCount || 0) + payload.step }),
-  },
-  effects: {
-    async effectCountInc({ state, dispatchEffect }, payload) {
-      setTimeout(() => {
-        dispatchEffect('testEffect1', payload)
-      }, 100)
+const { Provider, useStore } = createApp({
+  modules: {
+    test: {
+      state: {
+        a: 1,
+      },
+      reducers: {
+        testAction: (state, payload) => {
+          return { ...state, ...payload }
+        },
+      },
+      effects: {
+        async testEffect({ state, dispatchEffect }, payload) {
+          setTimeout(() => {
+            dispatchEffect('testEffect1', payload)
+          }, 100)
+        },
+        async testEffect1({ state, dispatch }, payload) {
+          dispatch('testAction', payload)
+        },
+      },
     },
-    async testEffect1({ state, dispatch }, payload) {
-      dispatch('setEffectCountInc', payload)
-    },
   },
+  plugins: [effectPlugin, reduxPlugin],
+  devtoolId: 'createStore demo',
 })
+
+export { Provider }
 
 const Comp1 = React.memo(function Comp1() {
   const [state = {}] = useStore('test')
@@ -44,8 +49,8 @@ const Comp2 = React.memo(function Comp2() {
   )
 })
 
-export default function GlobalStoreDemo() {
-  const [state = {}, setState, { dispatch, dispatchEffect }] = useStore('test')
+export default function CreateStoreDemo() {
+  const [state = {}, setState, { dispatch, dispatchEffect }] = useStore('test', true)
 
   return (
     <div>
@@ -59,8 +64,10 @@ export default function GlobalStoreDemo() {
         <Button onClick={() => setState((prev) => ({ setCount: (prev.setCount || 0) + 1 }), false)}>
           通过set方式更新
         </Button>
-        <Button onClick={() => dispatch('countInc', { step: 1 })}>dispatch action</Button>
-        <Button onClick={() => dispatchEffect('effectCountInc', { step: 1 })}>dispatchEffect action</Button>
+        <Button onClick={() => dispatch('testAction', { actionCount: (state.actionCount || 0) + 1 })}>
+          dispatch action
+        </Button>
+        <Button onClick={() => dispatchEffect('testEffect', { c: 101 })}>dispatchEffect action</Button>
       </div>
       <p>state: {JSON.stringify(state)}</p>
       <Comp1 />

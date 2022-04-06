@@ -39,27 +39,31 @@ const Parent = function () {
       <Button
         onClick={() => {
           setState({ a: state.a + 1 })
-        }}>
+        }}
+      >
         +
       </Button>
       {state.a}
       <Button
         onClick={() => {
           setState({ a: state.a - 1 })
-        }}>
+        }}
+      >
         -
       </Button>
       {JSON.stringify(state)}
       <Button
         onClick={() => {
           setState({ b: (state.b || 0) + 1 }, true)
-        }}>
+        }}
+      >
         B ++
       </Button>
       <Button
         onClick={() => {
           dispatch('testAction', { c: 100 })
-        }}>
+        }}
+      >
         testDispatch
       </Button>
       <p>state: {JSON.stringify(state)}</p>

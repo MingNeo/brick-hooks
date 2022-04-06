@@ -76,7 +76,8 @@ export const Demo1 = () => {
               height: 200,
               background:
                 'url(https://img1.baidu.com/it/u=3796593454,4087161325&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500)',
-            }}></div>
+            }}
+          ></div>
         </Transition>
         <Transition from={to} to={from} visible={visible} style={{ position: 'absolute' }}>
           <div
@@ -84,7 +85,8 @@ export const Demo1 = () => {
               width: 200,
               height: 200,
               background: 'url(https://img0.baidu.com/it/u=3927459320,2138990686&fm=26&fmt=auto)',
-            }}></div>
+            }}
+          ></div>
         </Transition>
       </div>
       <div>
@@ -167,7 +169,8 @@ export const Demo3 = () => {
 
     return (
       <Animated.View
-        style={{ position: 'absolute', background: props.styleColor, width: '100%', height: 50, ...style }}>
+        style={{ position: 'absolute', background: props.styleColor, width: '100%', height: 50, ...style }}
+      >
         <div>{props.value}</div>
       </Animated.View>
     )

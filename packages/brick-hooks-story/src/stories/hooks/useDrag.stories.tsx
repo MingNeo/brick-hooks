@@ -24,3 +24,17 @@ export const useFreeDragDemo = () => {
 useFreeDragDemo.story = {
   name: 'useFreeDragDemo',
 }
+
+export const useFreeDragDemo2 = () => {
+  const { onMousedown, style: dragStyle } = useFreeDrag()
+
+  return (
+    <div style={{ position: 'relative', height: 450, width: '100%' }}>
+      <div onMouseDown={onMousedown} style={{ height: 50, width: 50, backgroundColor: 'blue', ...dragStyle }} />
+    </div>
+  )
+}
+
+useFreeDragDemo2.story = {
+  name: 'useFreeDragDemo2',
+}

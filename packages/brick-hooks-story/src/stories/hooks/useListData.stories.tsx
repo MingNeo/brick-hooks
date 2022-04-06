@@ -6,19 +6,25 @@ export default {
   title: 'useListData',
 }
 
-function ShowResult ({ origin, result }) {
+function ShowResult({ origin, result }) {
   const options = {
     enableClipboard: false,
     displayDataTypes: false,
     displayObjectSize: false,
     name: null,
     quotesOnKeys: false,
-    displayArrayKey: false
+    displayArrayKey: false,
   }
-  return <div>
-    <div>origin: <ReactJson src={origin} { ...options} /></div>
-    <div>result: <ReactJson src={result} { ...options} /></div>
-  </div>
+  return (
+    <div>
+      <div>
+        origin: <ReactJson src={origin} {...options} />
+      </div>
+      <div>
+        result: <ReactJson src={result} {...options} />
+      </div>
+    </div>
+  )
 }
 
 export const Default = () => {
@@ -28,7 +34,7 @@ export const Default = () => {
     { id: 'h1', city: 'hangzhou', value: 2 },
     { id: 'h2', city: 'hangzhou', value: 3 },
   ]
-  
+
   const data = useListData(initialValue, (originValue, { chain }) =>
     chain(originValue)
       .filter((v) => v.value !== 0)
@@ -50,7 +56,7 @@ export const TransObj = () => {
     { id: 'a003', pid: 'a001', value: '青岛' },
     { id: 'a004', pid: 'a001', value: '烟台' },
   ]
-  
+
   const data = useListData(initialValue, (originValue, { transObj }) => transObj(originValue))
 
   return <ShowResult origin={initialValue} result={data} />
@@ -67,7 +73,7 @@ export const TransTree = () => {
     { id: 'a003', pid: 'a001', value: '青岛' },
     { id: 'a004', pid: 'a001', value: '烟台' },
   ]
-  
+
   const data = useListData(initialValue, (originValue, { transTree }) => transTree(originValue))
 
   return <ShowResult origin={initialValue} result={data} />
@@ -84,7 +90,7 @@ export const TransToGroup = () => {
     { id: 'h1', city: 'hangzhou', value: 2 },
     { id: 'h2', city: 'hangzhou', value: 3 },
   ]
-  
+
   const data = useListData(initialValue, (value, { group }) => group(value, { groupKey: 'city' }))
 
   return <ShowResult origin={initialValue} result={data} />
@@ -101,7 +107,7 @@ export const TransToPartition = () => {
     { id: 'h1', city: 'hangzhou', value: 2 },
     { id: 'h2', city: 'hangzhou', value: 3 },
   ]
-  
+
   const data = useListData(initialValue, (originValue, { partition }) => partition(originValue, { groupKey: 'city' }))
 
   return <ShowResult origin={initialValue} result={data} />

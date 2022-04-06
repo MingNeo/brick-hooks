@@ -63,18 +63,16 @@ export default function ImmerDemo() {
         {state.count}
         <Button onClick={() => setState({ count: (state.count || 0) - 1 })}>-</Button>
         <Button
-          onClick={() => setState((prevState) => {
-            prevState.mergeCount = (prevState.mergeCount || 0) + 1
-          }, true)}>
+          onClick={() =>
+            setState((prevState) => {
+              prevState.mergeCount = (prevState.mergeCount || 0) + 1
+            }, true)
+          }
+        >
           testMerge
         </Button>
-        <Button onClick={() => dispatch('countInc', { step: 1 })}>
-          dispatch action
-        </Button>
-        <Button
-          onClick={() => dispatchEffect('effectCountInc', { step: 1 })}>
-          dispatchEffect action
-        </Button>
+        <Button onClick={() => dispatch('countInc', { step: 1 })}>dispatch action</Button>
+        <Button onClick={() => dispatchEffect('effectCountInc', { step: 1 })}>dispatchEffect action</Button>
       </div>
       <div>{JSON.stringify(state)}</div>
       <Comp1></Comp1>

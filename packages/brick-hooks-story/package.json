@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "animated": "^0.2.2",
+    "antd": "^4.19.0",
     "brick-hooks": "^0.2.1",
     "eslint": "^8.0.0",
     "range-interpolator": "^1.0.2",

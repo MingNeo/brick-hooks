@@ -1,6 +1,6 @@
 {
   "name": "brick-hooks-business",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "> React Hooks Library",
   "author": "liumingren <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/custom-hooks#readme",
@@ -30,7 +30,7 @@
     "url": "https://github.com/MingNeo/custom-hooks/issues"
   },
   "dependencies": {
-    "brick-hooks": "^0.3.2",
+    "brick-hooks": "^0.3.3",
     "eslint": "^8.0.0"
   },
   "peerDependencies": {

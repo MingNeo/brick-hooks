@@ -1,22 +1,37 @@
 ## useListChecked
 
-对列表提供单选、多选能力
+对列表提供单选、多选能力, 如购物车、带 checkbox 的列表等
+
+```typescript
+function useListChecked(
+  items?: (string | number)[],
+  defaultSelecteds?: (string | number)[]
+): {
+  isAllChecked: boolean
+  checkedIds: string[]
+  checkedMap: {}
+  setChecked: (key: string, checked: boolean) => void
+  toggleChecked: (key: string, checked?: boolean) => void
+  toggleAllChecked: (checked: any) => void
+  clearChecked: () => void
+}
+```
 
 ```javascript
-const initialValue = [
-  { id: 1, value: 0 },
-  { id: 2, value: 1 },
-  { id: 3, value: 1 },
-].map(v => v.id)
+function Comp() {
+  const { isAllChecked, checkedIds, toggleChecked, toggleAllChecked, clearChecked } = useListChecked(
+    [1, 2, 3],
+    [1, 2]
+  )
 
-const defaultSelected = [1, 2]
-
-const { isAllChecked, checkedIds, checkedMap, setChecked, toggleAllChecked, clearChecked } = useListChecked(initialValue, defaultSelected)
-// isAllChecked: false
-// checkedIds: [1, 2]
-// checkedMap: {1: true, 2: true, 3: false}
-
-const handleClick = (id) => setChecked(id, true);
-<button onClick={toggleAllChecked}>全选</button>
-<button onClick={clearChecked}>清空</button>
+  return (
+    <div>
+      <ul>
+        <li><Checkbox onClick={() => toggleChecked(id)} /></li>
+      </ul>
+      <button onClick={toggleAllChecked}>全选</button>
+      <button onClick={clearChecked}>清空</button>
+    </div>
+  )
+}
 ```

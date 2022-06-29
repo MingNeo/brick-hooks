@@ -33,7 +33,7 @@ const initialValue = [
   { id: 2, value: 1 },
 ]
 
-const [result, listMethods] = useListState(listData, (originValue) => originValue.filter(v.value === 1))
+const [result, listMethods] = useListState(initialValue, (originValue) => originValue.filter(v.value === 1))
 // result: [{id: 2, value: 1}]
 listMethods.push({ id: 3, value: 1 })
 // result: [{id: 2, value: 1}, {id: 3, value: 1}]
@@ -62,7 +62,7 @@ const initialValue = [
   { id: 2, value: 1 },
 ]
 
-const [data, listMethods] = useListState(listData, (originValue, { transObj }) => transObj(originValue, { key: 'id' }))
+const [data, listMethods] = useListState(initialValue, (originValue, { transObj }) => transObj(originValue, { key: 'id' }))
 ```
 
 ```javascript

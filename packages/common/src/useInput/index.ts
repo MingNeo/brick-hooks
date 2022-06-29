@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 
-type OnChange = string | ((event: Event) => void)
+type OnChange = string | ((value: any, event: Event) => void)
 
 /**
  *
@@ -18,8 +18,9 @@ export default function useInput(initialValue: any, valueKey?: string, onChange?
   const [value, setValue] = useState(initialValue)
   const setValueFromEvent = useCallback(
     (event) => {
-      setValue(event.currentTarget[valueType])
-      if (typeof onChange === 'function') onChange(event)
+      const current = event.currentTarget[valueType]
+      setValue(current)
+      if (typeof onChange === 'function') onChange(current, event)
     },
     [onChange, valueType]
   )

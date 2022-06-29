@@ -7,6 +7,11 @@ const checkedMapReducers = {
     [payload.key]: payload.checked,
   }),
 
+  toggleChecked: (checkedMap = {}, payload: { key: string | number; checked?: boolean }) => ({
+    ...checkedMap,
+    [payload.key]: payload.checked ?? !checkedMap[payload.key],
+  }),
+
   setAllChecked: (checkedMap = {}, checked: boolean) =>
     Object.keys(checkedMap).reduce((prev, curr) => ({ ...prev, [curr]: checked }), {}),
 
@@ -40,9 +45,10 @@ export default function useListChecked(items: (string | number)[] = [], defaultS
     [checkedMap]
   )
 
-  const { setChecked, clearChecked } = useMemo(() => {
+  const { setChecked, clearChecked, toggleChecked } = useMemo(() => {
     return {
       setChecked: (key: string, checked: boolean) => checkedMapMethods.setChecked({ key, checked }),
+      toggleChecked: (key: string, checked?: boolean) => checkedMapMethods.toggleChecked({ key, checked }),
       // 清空选中
       clearChecked: checkedMapMethods.clearChecked as () => void,
     }
@@ -66,6 +72,7 @@ export default function useListChecked(items: (string | number)[] = [], defaultS
     checkedIds,
     checkedMap,
     setChecked,
+    toggleChecked,
     toggleAllChecked,
     clearChecked,
   }

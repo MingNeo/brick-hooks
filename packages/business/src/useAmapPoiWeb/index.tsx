@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import useAmapPoi, { GetNearByInfos } from '../useAmapPoi'
 import { getNearByInfos, searchPois } from './helper'
 

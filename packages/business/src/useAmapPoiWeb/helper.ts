@@ -130,26 +130,3 @@ const inserScript = () => {
     }
   })
 }
-
-export const transData = (data) => {
-  const { addressComponent = {}, formattedAddress, pois, position, POIName, AOIName } = data
-  return {
-    data: {
-      latitude: `${position.lat}`, // 转为string，统一格式
-      longitude: `${position.lng}`,
-      formattedAddress,
-      pois,
-      province: addressComponent.province,
-      city: addressComponent.city,
-      district: addressComponent.district,
-      citycode: addressComponent.citycode,
-      adcode: addressComponent.adcode,
-      street: addressComponent.street,
-
-      number: addressComponent.number || addressComponent.streetNumber, // 没有number，存在streetNumber，与rn不一样
-      country: addressComponent.country, // 没有，与rn不一样
-      POIName, // 没有，与rn不一样
-      AOIName, // 没有，与rn不一样
-    },
-  }
-}

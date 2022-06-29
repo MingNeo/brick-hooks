@@ -4,6 +4,8 @@
 
 ```javascript
 function MyComponent() {
-  useDidMount()
+  useDidMount(() => {
+    // ...
+  })
 }
 ```

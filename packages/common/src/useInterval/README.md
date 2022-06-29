@@ -6,17 +6,28 @@
 function useInterval(
   callback: Callback,
   time?: number
+  options?: {
+    autoRun?: boolean
+  }
 ): {
   isRunning: boolean
   start: () => void
   stop: () => void
 }
 ```
-
+### 直接使用
 ```javascript
 function MyComponent() {
   useInterval(() => {
     // ...
   }, 200)
+}
+```
+### 手动触发
+```javascript
+function MyComponent() {
+  const { start, stop, isRunning } = useInterval(() => {
+    // ...
+  }, 200, { autoRun: false })
 }
 ```

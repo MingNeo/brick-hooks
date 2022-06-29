@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
 interface CounterOptions {
   min?: number

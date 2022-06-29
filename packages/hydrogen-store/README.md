@@ -154,7 +154,7 @@ usePlugins([reduxPlugin])
 
 #### 创建 Store 实例
 
-如你所见，以上示例代码都是全局使用默认导出的 Store 实例，我们可以创建一个独立的 Store 实例吗？当然可以！
+如你所见，以上示例代码都是全局使用默认导出的 全局单一 Store 实例，我们可以创建一个独立的 Store 实例吗？当然可以！
 
 ```javascript
 import { createStore } from 'hydrogen-store'
@@ -195,7 +195,7 @@ function Home() {
 
 ##### 使用 createApp
 
-如果你喜欢将 store 存放在 context 中并使用 Provider，可以使用 createApp。
+如果你喜欢将 store 存放在 context 中并使用 Provider，或者SSR等需要不在整个端共享Store, 可以使用 createApp。
 与不使用 hydrogen-store 直接使用 react context 存储数据对比
 
 - hydrogen-store 带来的各种方便开发、管理的能力，如 reducer、使用 redux devtool 等等进行调试。
@@ -366,7 +366,7 @@ function Home() {
 
 #### immer
 
-使用 immerPlugin，可以使用 immer 的语法简化编写 reducer
+可以使用 immerPlugin，可以使用 immer 的语法简化编写 reducer
 
 使用 immer 插件之后，你拥有了一个 react 版的 vuex
 

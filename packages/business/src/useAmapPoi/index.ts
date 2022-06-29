@@ -80,13 +80,11 @@ export default function useAmapPoi({
       longitude,
       size = 5,
       formatPois = (pois: Poi[]) => pois.map(formatPoi),
-      showCurrent = nearbyShowCurrent,
     }: {
       latitude: string
       longitude: string
       size?: number
       formatPois?: ((pois: Poi) => Poi[]) | ((pois: Poi) => Promise<Poi[]>)
-      showCurrent?: boolean
     } = {} as any
   ) => {
     const { pois, ...current } = await getNearByPoiList({ latitude, longitude })
@@ -99,7 +97,7 @@ export default function useAmapPoi({
     }
 
     // 地图等当前定位列表里增加当前定位点
-    if (showCurrent) {
+    if (nearbyShowCurrent) {
       showPois.unshift(current)
     }
 

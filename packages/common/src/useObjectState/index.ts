@@ -20,10 +20,10 @@ const defaultMethods = {
  * @param methods 自定义reducers方法
  * @returns [state, setState, stateMethods]
  */
-export default function useObjectState<S>(
+export default function useObjectState<S extends State>(
   initialState: S = {} as S,
   methods: Methods<S> = {}
-): [State, SetState, BoundActionMethods] {
+): [S, SetState, BoundActionMethods] {
   const [state, stateMethods] = useMethods<S>({ ...methods, ...defaultMethods }, initialState as S)
 
   const setState: SetState = useCallback(

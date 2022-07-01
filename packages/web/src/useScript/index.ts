@@ -13,11 +13,12 @@ export default function useScript(
   onLoaded?: OnLoaded,
   options?: {
     async?: boolean
+    defer?: boolean
     manual?: boolean
     removeOnDestroy?: boolean
   }
 ): { status: Status; load: Load; ref: any } {
-  const { async = true, manual = false, removeOnDestroy = false } = options || {}
+  const { async = true, defer = false, manual = false, removeOnDestroy = false } = options || {}
   const [status, setStatus] = useState<Status>(src ? 'loading' : 'idle')
   const methods = useRef<any>({ onLoaded })
   const scriptTagRef = useRef<any>()
@@ -47,6 +48,7 @@ export default function useScript(
           scriptTagRef.current = document.createElement('script')
           scriptTagRef.current.src = src
           scriptTagRef.current.async = async
+          scriptTagRef.current.defer = defer
           scriptTagRef.current.setAttribute('data-status', 'loading')
           scriptTagRef.current.addEventListener('load', (event: Event) => {
             if (event.type === 'load') {
@@ -86,7 +88,7 @@ export default function useScript(
         scriptTagRef.current = null
       }
     }
-  }, [src])
+  }, [load, manual, removeOnDestroy, src])
 
   return { status, load, ref: scriptTagRef }
 }

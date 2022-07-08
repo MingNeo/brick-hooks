@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import 'intersection-observer'
+import { isBrowser } from '../utils'
 
 /**
  * 对图片自动判断是否在可视区域并进行懒加载
@@ -10,20 +11,22 @@ import 'intersection-observer'
  */
 export default function useLazyImages(querySelector: string, { sourceAttr = 'data-src', ...ioOptions } = {}) {
   useEffect(() => {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const node = entry.target as any
-        if (entry.isIntersecting && !node.src) {
-          node.src = node.getAttribute(sourceAttr) || ''
-        }
+    if(isBrowser) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const node = entry.target as any
+          if (entry.isIntersecting && !node.src) {
+            node.src = node.getAttribute(sourceAttr) || ''
+          }
+        })
+      }, ioOptions)
+      const imgs = document.querySelectorAll(querySelector)
+      Array.from(imgs).forEach((node: HTMLImageElement) => {
+        io.observe(node)
       })
-    }, ioOptions)
-    const imgs = document.querySelectorAll(querySelector)
-    Array.from(imgs).forEach((node: HTMLImageElement) => {
-      io.observe(node)
-    })
-    return () => {
-      io.disconnect()
+      return () => {
+        io.disconnect()
+      }
     }
   }, [])
 }

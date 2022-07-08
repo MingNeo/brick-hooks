@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from 'react'
+import { isBrowser } from '../utils'
 
 /**
  *  向页面中插入一段style
@@ -30,9 +31,9 @@ export default function useStyle(styleContent: string, id: string, { removeOnDes
   }, [id])
 
   useEffect(() => {
-    setStyle()
+    isBrowser && setStyle()
     return () => {
-      removeOnDestroy && removeSyle()
+      isBrowser && removeOnDestroy && removeSyle()
     }
   }, [setStyle, removeSyle])
 

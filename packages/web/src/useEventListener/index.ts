@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { isBrowser } from '../utils'
 
 type Handler = (...args: any[]) => any
 interface Options {
@@ -21,14 +22,16 @@ function useEventListener(eventName: string, handler: Handler, { dom, ...options
   optionsRef.current = options
 
   useEffect(() => {
-    const element = dom || ref.current || window
-    const eventListener = function (event: Event) {
-      handlerRef.current && handlerRef.current.call(this, event)
-    }
-    element.addEventListener(eventName, eventListener, optionsRef.current)
+    if (isBrowser) {
+      const element = dom || ref.current || window
+      const eventListener = function (event: Event) {
+        handlerRef.current && handlerRef.current.call(this, event)
+      }
+      element.addEventListener(eventName, eventListener, optionsRef.current)
 
-    return () => {
-      element.removeEventListener(eventName, eventListener, optionsRef.current)
+      return () => {
+        element.removeEventListener(eventName, eventListener, optionsRef.current)
+      }
     }
   }, [eventName, dom])
 

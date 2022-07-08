@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef, useCallback, useMemo } from 'react'
+import { isBrowser } from '../utils'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 type OnLoaded = (status: string) => void
@@ -32,9 +33,14 @@ export default function useScript(
   const load = useMemo(() => {
     const loadScript = () => {
       return new Promise((resolve, reject) => {
+        if (!isBrowser) {
+          setStatus('idle')
+          return reject('not in browser')
+        }
+
         if (!src) {
           setStatus('idle')
-          return
+          return reject('src is empty')
         }
 
         if (scriptTagRef.current && src !== scriptTagRef.current.src) {
@@ -84,7 +90,7 @@ export default function useScript(
 
     return () => {
       if (removeOnDestroy && scriptTagRef.current) {
-        document.body.removeChild(scriptTagRef.current)
+        isBrowser && document.body.removeChild(scriptTagRef.current)
         scriptTagRef.current = null
       }
     }

@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
+import { isBrowser } from '../utils'
 import { getStorage, setStorage, parseValue, removeStorage } from './helper'
 
 function isNil(value) {
@@ -36,7 +37,7 @@ export default function useStorage(
   }, [itemName, storageType, watchStorageChange])
 
   useEffect(() => {
-    if (!window?.localStorage || !watchStorageChange) {
+    if (!isBrowser || !window?.localStorage || !watchStorageChange) {
       return
     }
 

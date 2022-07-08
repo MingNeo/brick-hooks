@@ -6,6 +6,7 @@ export type KeyPredicate = (event: KeyboardEvent) => boolean
 export type Handler = (event: KeyboardEvent) => void
 
 export interface Options<T> {
+  key?: string
   event?: 'keydown' | 'keypress' | 'keyup'
   target?: T | null
   capture?: any
@@ -14,19 +15,35 @@ export interface Options<T> {
   signal?: AbortSignal
 }
 
-export default function useKey<T extends Element>(key: string, fn: Handler = () => {}, options: Options<T> = {}) {
-  const { event = 'keydown', target } = options
+/**
+ * 监听键盘事件
+ * @param fn  事件处理函数
+ * @param options   事件监听的配置
+ * @param options.key  键盘事件的keyCode
+ * @param options.event 事件类型, 默认为keydown
+ * @param options.target 事件目标
+ * @param options.capture 事件捕获
+ * @param options.once 事件只监听一次
+ * @param options.passive 事件是否可以被延迟响应
+ * @param options.signal 事件取消标志
+ */
+export default function useKey<T extends Element>(fn: Handler = () => {}, options: Options<T> = {}) {
+  const { key, event = 'keydown', target, ...restProps } = options
   const refFn = useRefCallback(fn)
   useEventListener(
     event,
     useCallback(
       (e) => {
-        if (e.key === key) {
+        if (key) {
+          if (e.key === key) {
+            return refFn(e)
+          }
+        } else {
           return refFn(e)
         }
       },
       [key, refFn]
     ),
-    { dom: target }
+    { dom: target, ...restProps }
   )
 }

@@ -24,7 +24,7 @@ export default function useMedia<T = any>(mediaQueryValueList: MediaQueryValueLi
       mediaQueryListRef.current = getMediaQueryList(mediaQueryValueList)
       dispatch()
     }
-    mediaQueryListRef.current.forEach(({ mql }) => {
+    isBrowser && mediaQueryListRef.current.forEach(({ mql }) => {
       if (Object.prototype.hasOwnProperty.call(mql, 'addEventListener')) {
         mql.addEventListener('change', onMediaChange)
       } else {
@@ -33,7 +33,7 @@ export default function useMedia<T = any>(mediaQueryValueList: MediaQueryValueLi
     })
 
     return () => {
-      mediaQueryListRef.current.forEach(({ mql }) => {
+      isBrowser && mediaQueryListRef.current.forEach(({ mql }) => {
         if (Object.prototype.hasOwnProperty.call(mql, 'removeEventListener')) {
           mql!.removeEventListener('change', onMediaChange)
         } else {

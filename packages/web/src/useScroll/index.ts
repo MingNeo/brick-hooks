@@ -14,7 +14,7 @@ export default function useScroll({ root, onScroll: onScrollChange }: { root?: E
     let ticking: number | null = null
     const onScroll = () => {
       // 使用requestAnimationFrame做防抖
-      if (isBrowser && ticking === null) {
+      if (ticking === null) {
         ticking = window.requestAnimationFrame(() => {
           const { scrollLeft, scrollTop } = isWindow(scrollRef.current)
             ? document.documentElement
@@ -25,10 +25,10 @@ export default function useScroll({ root, onScroll: onScrollChange }: { root?: E
         })
       }
     }
-    scrollRef.current?.addEventListener('scroll', onScroll)
+    isBrowser && scrollRef.current?.addEventListener('scroll', onScroll)
     return () => {
       timerRef.current && clearTimeout(timerRef.current)
-      scrollRef.current?.removeEventListener('scroll', onScroll)
+      isBrowser && scrollRef.current?.removeEventListener('scroll', onScroll)
     }
   }, [])
 

@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { isBrowser } from '../utils'
 
 /**
  * 设置h5标题
@@ -6,10 +7,6 @@ import { useEffect } from 'react'
  */
 export default function useTitle(title: string) {
   useEffect(() => {
-    try {
-      document.title = title
-    } catch (e) {
-      console.warn(e)
-    }
+    isBrowser && (document.title = title)
   }, [title])
 }

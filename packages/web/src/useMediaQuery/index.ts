@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
+import { isBrowser } from '../utils'
 
-export default function useMediaQuery(mediaQuery: string): boolean {
+function useMediaQuery(mediaQuery: string): boolean {
   const mqlRef = useRef<MediaQueryList>(window.matchMedia(mediaQuery))
   const [isMatch, setIsMatch] = useState(mqlRef.current.matches)
 
@@ -33,4 +34,9 @@ export default function useMediaQuery(mediaQuery: string): boolean {
   }, [])
 
   return isMatch
+}
+
+export default function (mediaQuery: string): boolean {
+  const hook = isBrowser ? useMediaQuery : () => false
+  return hook(mediaQuery)
 }

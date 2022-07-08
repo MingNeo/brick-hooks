@@ -1,3 +1,5 @@
+import { isBrowser } from '../utils'
+
 const getStorageInstance = (storageType: string) =>
   storageType === 'sessionStorage' ? window.sessionStorage : window.localStorage
 
@@ -16,10 +18,9 @@ export function setStorage(storageType: string, key: string, value: Record<strin
 }
 
 export function getStorage(storageType: string, key: string): any {
+  if (!isBrowser) return undefined
   const storage = getStorageInstance(storageType)
-  if (!storage) {
-    return undefined
-  }
+  if (!storage) return undefined
   const value = storage?.getItem(key)
   try {
     return JSON.parse(value)

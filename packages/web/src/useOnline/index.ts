@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { isBrowser } from '../utils'
 
 /**
  * 获取当前是否在线状态
@@ -9,7 +10,7 @@ export default function useOnline() {
   )
 
   useEffect(() => {
-    if (window) {
+    if (isBrowser) {
       const onOnline = () => setIsOnline(true)
       const onOffline = () => setIsOnline(false)
       window.addEventListener('online', onOnline)

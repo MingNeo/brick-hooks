@@ -8,36 +8,48 @@
 const { useCookie } = require('brick-hooks-web');
 ```
 
-[useBreakpoint](./src/useBreakpoint/README.md) 方便处理不同视图尺寸
+[useAnimate](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useBreakpoint/README.md) 动画
 
-[useCookie](./src/useCookie/README.md) 方便使用Cookie
+[useBreakpoint](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useBreakpoint/README.md) 方便处理不同视图尺寸
 
-[useDarkMode](./src/useDarkMode/README.md) 使用夜间模式
+[useCookie](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useCookie/README.md) 方便使用Cookie
 
-[useDrag](./src/useDrag/README.md) 方便对一个绝对定位的元素添加随意拖动定位的能力
+[useDarkMode](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useDarkMode/README.md) 使用夜间模式
 
-[useEventListener](./src/useEventListener/README.md) 方便绑定dom事件
+[useEventListener](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useEventListener/README.md) 使用夜间模式
 
-[useHover](./src/useHover/README.md) 方便添加鼠标悬浮处理
+[useFreeDrag](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useFreeDrag/README.md) 方便对一个绝对定位的元素添加随意拖动定位的能力
 
-[useInView](./src/useInView/README.md) 方便判断组件是否滚动到容器可视范围内
+[useHover](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useHover/README.md) 方便添加鼠标悬浮处理
 
-[useLazyImage](./src/useLazyImage/README.md) 对图片进行懒加载，自动判断是否在视口中
+[useInView](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useInView/README.md) 方便判断组件是否滚动到容器可视范围内
 
-[useLazySequenceLoad](./src/useLazySequenceLoad/README.md) 对列表进行按组按顺序分批懒加载，自动判断是否在视口中
+[useKey](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useKey/README.md) 监听键盘按下
 
-[useMedia](./src/useMedia/README.md) 通过 js 方便使用媒体查询
+[useLazyImage](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useLazyImage/README.md) 对图片进行懒加载，自动判断是否在视口中
 
-[useMediaQuery](./src/useMediaQuery/README.md) 通过 js 方便使用媒体查询判断当前是否匹配
+[useLazySequenceLoad](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useLazySequenceLoad/README.md) 对列表进行按组按顺序分批懒加载，自动判断是否在视口中
 
-[useOnline](./src/useOnline/README.md) 方便监听在线离线状态
+[useMedia](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useMedia/README.md) 通过 js 方便使用媒体查询
 
-[useScript](./src/useScript/README.md) 方便在react组件中动态拆入一段js
+[useLink](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useLink/README.md) 动态插入css link标签
 
-[useScroll](./src/useScroll/README.md) 方便获取一个scroll的滚动值
+[useMedia](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useMedia/README.md) 通过 js 方便使用媒体查询
 
-[useStorage](./src/useStorage/README.md) 方便使用localStorage、sessionStorage
+[useMediaQuery](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useMediaQuery/README.md) 通过 js 方便使用媒体查询判断当前是否匹配
 
-[useStyle](./src/useStyle/README.md) 方便向页面中插入一段Style
+[useOnline](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useOnline/README.md) 方便监听在线离线状态
 
-[useTitle](./src/useTitle/README.md) 方便修改titile
+[useScript](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useScript/README.md) 方便在react组件中动态拆入一段js
+
+[useScroll](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useScroll/README.md) 方便获取一个scroll的滚动值
+
+[useScrollFixed](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useScrollFixed/README.md) 判断某个元素是否需要固定位置悬浮，多用于滚动到一定位置后，悬浮header等
+
+[useStorage](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useStorage/README.md) 方便使用localStorage、sessionStorage
+
+[useStyle](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useStyle/README.md) 方便向页面中插入一段Style
+
+[useTitle](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useTitle/README.md) 方便修改titile
+
+[useTransition](https://github.com/MingNeo/brick-hooks/blob/master/packages/web/src/useTransition/README.md) 方便使用动画transition效果

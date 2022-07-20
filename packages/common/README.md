@@ -45,9 +45,12 @@ const { useArray } = require('brick-hooks');
 [useMemoCompare](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useMemoCompare/README.md) 根据指定函数判断一个数据是否应该触发更新，返回新的值
 
 #### 开发方式
-[useMethods](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useMethods/README.md) & [useMethodsImmer](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useMethods/README.md) 使用useMethods 或者 useMethodsImmer替代useState、useReducer，可以使你早下班一个小时
+[useMethods](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useMethods/README.md) 使用useMethods 替代useState、useReducer，可以使你早下班一个小时
+
+[useMethodsImmer](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useMethods/README.md) 使用useMethodsImmer替代useState、useReducer，向vuex一样管理reducer! 可以使你早下班一个小时
 
 [useObjectState](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useObjectState/README.md) useMethods的更进一步封装，对于obj类型的state集合使用，类似于class组件的state，同样提供了方便使用的reducer等能力
+
 [useObjectStateImmer](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useObjectStateIMmer/README.md) useObjectState的immer版本
 
 [useReducerImmer](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useReducerImmer/README.md) 官方useReducer的Immer版本，通常情况下使用useMthods、useObjectState更佳
@@ -58,12 +61,16 @@ const { useArray } = require('brick-hooks');
 
 #### 生命周期
 [useDidMount](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useDidMount/README.md) 提供一个类似于componentDidMount生命周期的hook
+
 [useDidUpdate](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useDidUpdate/README.md) 提供一个类似于componentDidUpdate生命周期的hook，首次不执行，仅更新时执行方法
+
 [useWillUnmount](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useWillUnmount/README.md) 提供一个类似于componentWillUnmount生命周期的hook
+
 [useUnmountedRef](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useUnmountedRef/README.md) 返回一个ref，ref的值为当前是否已卸载
 
 #### debug
 [useLogRender](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useLogRender/README.md) 打印触发当前组件渲染的state
+
 [useRenderCount](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useRenderCount/README.md) 打印当前组件渲染的次数
 
 
@@ -73,6 +80,14 @@ const { useArray } = require('brick-hooks');
 [useListViewData](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useListViewData/README.md) 列表页的请求、请求下一页等能力
 
 [useInput](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useInput/README.md) 对input进行自动管理数据
+
+[useCountdown](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useCountdown/README.md) 倒计时、天时分秒毫秒
+
+[useCountup](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useCountup/README.md) 计时、天时分秒毫秒
+
+[useListSequenceLoad](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useListSequenceLoad/README.md) 信息列表分组懒加载，可用于首页等每个组件都自己维护状态/请求等的组件
+
+
 
 #### 其他
 
@@ -84,7 +99,11 @@ const { useArray } = require('brick-hooks');
 
 [useTimeout](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useTimeout/README.md) 方便使用setTimeout
 
+[useTimeoutFn](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useTimeoutFn/README.md) 方便使用setTimeout,返回一个安全包裹的setTimeout函数
+
 [useDebounceEffect](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useDebounceEffect/README.md) 提供一个防抖的Effect
+
+[useEffectMaunal](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useEffectMaunal/README.md) 同useEffect，不同的是，不通过deps进行触发, 而通过返回一个更新函数触发effect callback
 
 [useDebounceFn](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useDebounceFn/README.md) 对函数进行自动防抖处理
 
@@ -95,4 +114,6 @@ const { useArray } = require('brick-hooks');
 [useThrottleFn](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useThrottleFn/README.md) 对函数进行自动节流处理
 
 [useRefCallback](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useRefCallback/README.md) 对函数使用React.useRef存储，保证任何依赖更新函数引用都不会改变
+
+[useValueRef](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useValueRef/README.md) 使用ref存储的value
 

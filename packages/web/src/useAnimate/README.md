@@ -1,9 +1,10 @@
 ## useAnimate
-方便在web中使用 animate
 
-注：如果你使用react-native-web且使用brick-hooks-native，那么可以直接使用brickHooksNative.useAnimate，无需更换适配。
+方便在 web 中使用 animate
 
-brickHooksNative.useAnimate基于react-native-web的animated而非css，内置easing要丰富一些且支持自定义函数。其他用法与本hook基本一致。
+注：如果你使用 react-native-web 且使用 brick-hooks-native，那么可以直接使用 brickHooksNative.useAnimate，无需更换适配。
+
+brickHooksNative.useAnimate 基于 react-native-web 的 animated 而非 css，内置 easing 要丰富一些且支持自定义函数。其他用法与本 hook 基本一致。
 
 ```typescript
 function useAnimate(options: {
@@ -22,25 +23,35 @@ function useAnimate(options: {
 ```
 
 #### 基本使用
+
 ```javascript
 function MyComponent() {
   const [styleProps, { start }] = useAnimate({
-    from: { opacity: 0, marginLeft: 0, width: 50, height: 50},
+    from: { opacity: 0, marginLeft: 0, width: 50, height: 50 },
     to: { opacity: 1, marginLeft: 500, width: 200, height: 200 },
-    autoRun: true
+    autoRun: true,
   })
 
   return <div style={{ ...baseStyle, ...styleProps }} />
 }
 ```
 
-#### 使用keyframesName 指定已有css
+#### 使用 keyframesName 指定已有 css
+
 ```css
+/* index.css */
 @keyframes test {
-  0% { opacity: 0.8; transform: rotateZ(0deg); }
-  100% { opacity: 0.8; transform: rotateZ(25deg); }
+  0% {
+    opacity: 0.8;
+    transform: rotateZ(0deg);
+  }
+  100% {
+    opacity: 0.8;
+    transform: rotateZ(25deg);
+  }
 }
 ```
+
 ```javascript
 function MyComponent() {
   const [styleProps, { start }] = useAnimate({
@@ -59,14 +70,15 @@ function MyComponent() {
 ```
 
 #### 设置循环次数、动画持续时间、延迟时间、手动触发等
+
 ```javascript
 function MyComponent() {
   const [styleProps, { start }] = useAnimate({
-    from: { opacity: 0, marginLeft: 0, width: 50, height: 50},
+    from: { opacity: 0, marginLeft: 0, width: 50, height: 50 },
     to: { opacity: 1, marginLeft: 500, width: 200, height: 200 },
     loop: 2, // -1则无限循环
     duration: 500,
-    delay: 1000
+    delay: 1000,
   })
 
   return (
@@ -79,22 +91,25 @@ function MyComponent() {
 ```
 
 #### 设置曲线
+
 'linear', 'ease', 'in', 'out', 'inOut'
+
 ```javascript
 function MyComponent() {
   const [styleProps, { start }] = useAnimate({
-    from: { opacity: 0, marginLeft: 0, width: 50, height: 50},
+    from: { opacity: 0, marginLeft: 0, width: 50, height: 50 },
     to: { opacity: 1, marginLeft: 500, width: 200, height: 200 },
     easing: 'bounce',
     // 等同于
-    easing: Easing.bounce
+    easing: Easing.bounce,
   })
 
   return <div style={{ ...baseStyle, ...styleProps }} />
 }
 ```
 
-#### 设置多个keyframe
+#### 设置多个 keyframe
+
 ```javascript
 function MyComponent() {
   const [styleProps, { start }] = useAnimate({
@@ -117,7 +132,8 @@ function MyComponent() {
 }
 ```
 
-#### 使用transform
+#### 使用 transform
+
 ```javascript
 function MyComponent() {
   const [styleProps, { start }] = useAnimate({

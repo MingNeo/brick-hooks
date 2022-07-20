@@ -45,7 +45,7 @@ describe('useScript', () => {
         expect(result.current.isLoaded).toEqual(true)
       })
       // 模拟触发load事件
-      fireEvent.load(document.querySelector<HTMLScriptElement>(`script[src="${src}"]`))
+      fireEvent.load(document.querySelector<HTMLScriptElement | any>(`script[src="${src}"]`))
     })
 
     expect(result.current.status).toEqual('success')
@@ -70,9 +70,9 @@ describe('useScript', () => {
     })
 
     act(() => {
-      fireEvent.load(document.querySelector<HTMLScriptElement>(`script[src="${src}"]`))
+      fireEvent.load(document.querySelector<HTMLScriptElement | any>(`script[src="${src}"]`))
     })
-    await act(async () => await result.current.load())
+    await act(async () => await result.current.load() as any)
     expect(scriptTagElement()).toBeInstanceOf(HTMLScriptElement)
 
     unmount()

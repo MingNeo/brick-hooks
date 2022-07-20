@@ -7,6 +7,10 @@ function useKey<T extends Element>(fn?: Handler, options?: {
   key?: number
   event?: 'keydown' | 'keypress' | 'keyup'
   target?: T | null
+  ctrlKey?: boolean
+  altKey?: boolean
+  shiftKey?: boolean
+  metaKey?: boolean
   capture?: any
   once?: boolean
   passive?: boolean
@@ -30,5 +34,14 @@ function Comp () {
   useKey((e) => {
     // ...
   }, { key: 13 })
+}
+```
+
+#### 监听ctrlKey、altKey、shiftKey、metaKey(window/command)
+```javascript
+function Comp () {
+  useKey((e) => {
+    // ...
+  }, { key: 13, ctrlKey: true })
 }
 ```

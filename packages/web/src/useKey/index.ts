@@ -9,6 +9,10 @@ export interface Options<T> {
   key?: string
   event?: 'keydown' | 'keypress' | 'keyup'
   target?: T | null
+  ctrlKey?: boolean
+  altKey?: boolean
+  shiftKey?: boolean
+  metaKey?: boolean
   capture?: any
   once?: boolean
   passive?: boolean
@@ -28,19 +32,18 @@ export interface Options<T> {
  * @param options.signal 事件取消标志
  */
 export default function useKey<T extends Element>(fn: Handler = () => {}, options: Options<T> = {}) {
-  const { key, event = 'keydown', target, ...restProps } = options
+  const { key, event = 'keydown', target, ctrlKey, shiftKey, altKey, metaKey, ...restProps } = options
   const refFn = useRefCallback(fn)
   useEventListener(
     event,
     useCallback(
       (e) => {
-        if (key) {
-          if (e.key === key) {
-            return refFn(e)
-          }
-        } else {
-          return refFn(e)
-        }
+        if(ctrlKey && !e.ctrlKey) return
+        if(shiftKey && !e.shiftKey) return
+        if(altKey && !e.altKey) return
+        if(metaKey && !e.metaKey) return
+        if(key && e.keyCode !== key) return
+        refFn(e)
       },
       [key, refFn]
     ),

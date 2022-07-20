@@ -1,6 +1,6 @@
 ## useKey
 
-自动对图片进行懒加载处理
+监听键盘按下
 
 ```typescript
 function useKey<T extends Element>(fn?: Handler, options?: {

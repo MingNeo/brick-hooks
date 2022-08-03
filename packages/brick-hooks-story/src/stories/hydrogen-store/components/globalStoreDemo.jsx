@@ -3,7 +3,7 @@ import { Button } from '@storybook/react/demo'
 import { registerModule, useStore, usePlugins } from 'hydrogen-store/src/index'
 import reduxPlugin from 'hydrogen-store-redux-plugin/src/index'
 import effectPlugin from 'hydrogen-store-effect-plugin/src/index'
-import { useLogRender } from 'brick-hooks'
+import { useLogRender } from '../../../../../common/src'
 import ChildrenComp from './childrenComp'
 
 usePlugins([reduxPlugin, effectPlugin])

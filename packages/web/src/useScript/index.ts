@@ -20,7 +20,7 @@ export default function useScript(
   }
 ): { status: Status; load: Load; ref: any } {
   const { async = true, defer = false, manual = false, removeOnDestroy = false } = options || {}
-  const [status, setStatus] = useState<Status>(src ? 'loading' : 'idle')
+  const [status, setStatus] = useState<Status>(src && !manual ? 'loading' : 'idle')
   const methods = useRef<any>({ onLoaded })
   const scriptTagRef = useRef<any>()
   const promiseRef = useRef<any>()
@@ -35,12 +35,14 @@ export default function useScript(
       return new Promise((resolve, reject) => {
         if (!isBrowser) {
           setStatus('idle')
-          return reject('not in browser')
+          reject('not in browser');
+          return;
         }
 
         if (!src) {
           setStatus('idle')
-          return reject('src is empty')
+          reject(new Error('src is empty'));
+          return;
         }
 
         if (scriptTagRef.current && src !== scriptTagRef.current.src) {

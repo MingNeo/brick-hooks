@@ -20,7 +20,7 @@ type Getter = (result: any, methods?: { wrapperState?: WrapperState }) => any
 /**
  * 创建一个hooks的context
  */
-export default function createContextHook(useCustomHook: UseCustomHook, getters: Record<string, Getter> = {}) {
+export default function createContextHook<G extends Record<string, Getter>>(useCustomHook: UseCustomHook, getters?: G) {
   const initialState = {}
   const CustomHookContext = createReactContext<any>(initialState)
   const eventBus = new EventBus()
@@ -51,7 +51,7 @@ export default function createContextHook(useCustomHook: UseCustomHook, getters:
     return hookResult
   }
 
-  const resultGetters = Object.entries(getters).reduce((prev, [name, getter]) => {
+  const resultGetters: { [K in keyof G]?: () => any } = Object.entries(getters || {}).reduce((prev, [name, getter]) => {
     const useGetterHook = () => {
       const [result, dispatch] = useReducer(
         (prev: any, current: any) => getNewGetterResult({ current, prev, getter }),

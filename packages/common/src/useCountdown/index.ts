@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { formatTime as formatTimeByString, getTimeByString, invariant, isBrowser } from '../utils'
+import { formatTime as formatTimeByString, isBrowser, getTimeByString, invariant, setIntervalBySetTimeout, clearTimer } from '../utils'
 
 interface CountDownProps {
   total?: number // 倒计时时间，格式毫秒
@@ -23,7 +23,7 @@ export default function useCountDown({
   onStep,
   onFinished,
   step,
-  format = 'dd hh:mm:ss',
+  format = 'hh:mm:ss',
   endTime,
   total,
   autoRun = true,
@@ -33,9 +33,12 @@ export default function useCountDown({
   const intervalRef = useRef<number | null>(null)
   const timerRef = useRef<number | null>(null)
   const statusRef = useRef<string>('idle')
+  const endTimeRef = useRef(
+    typeof endTime === 'string' ? getTimeByString(endTime) : endTime || Date.now() + (total || 0)
+  )
   const [{ endTime: endTimeState, status, countdown }, setState] = useState<StateProps>({
     status: 'idle',
-    endTime: typeof endTime === 'string' ? getTimeByString(endTime) : endTime || Date.now() + (total || 0),
+    endTime: endTimeRef.current,
     countdown: 0,
   })
 
@@ -43,60 +46,60 @@ export default function useCountDown({
 
   // 停止倒计时
   const stop = useCallback(() => {
-    clearInterval(intervalRef.current)
+    clearTimer(intervalRef.current)
     clearTimeout(timerRef.current)
     setState((prev) => ({ ...prev, countdown: 0, status: 'finished' }))
     statusRef.current = 'finished'
-    onFinished && onFinished()
+    onFinished?.()
   }, [onFinished, setState])
 
   // 开始倒计时
   const start = useCallback(() => {
-    onStart && onStart()
-    setState((prev) => ({ ...prev, status: 'running' }))
+    clearTimer(intervalRef.current)
+    onStart?.()
+    endTimeRef.current = !endTime ? Date.now() + (total || 0) : endTimeRef.current
+    setState((prev) => ({ ...prev, status: 'running', endTime: endTimeRef.current }))
     statusRef.current = 'running'
+
     const running = () => {
       // 每次都取当前时间比较，而非减去step的时间，防止进入后台等造成不准确的情况
-      const currentCountDown = Math.max(endTimeState - Date.now(), 0)
+      const currentCountDown = Math.max(endTimeRef.current - Date.now(), 0)
       const formatedProgress = formatTime(currentCountDown, format)
 
       setState((prev) => ({ ...prev, countdown: currentCountDown }))
-      onStep && onStep(currentCountDown, formatedProgress)
+      onStep?.(currentCountDown, formatedProgress)
 
       currentCountDown === 0 && stop()
       return currentCountDown
     }
 
-    if ((step && step >= 17) || !isBrowser) {
-      intervalRef.current = setInterval(() => {
-        running()
-      }, step)
-    } else {
-      const requestAnimFrame =
-        window.requestAnimationFrame ||
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        window.webkitRequestAnimationFrame ||
-        ((callback) => {
-          window.setTimeout(callback, 1000 / 60)
-        })
+    const raf =
+      window.requestAnimationFrame ||
+      (window as any).webkitRequestAnimationFrame ||
+      ((callback: TimerHandler) => setTimeout(callback, 1000 / 60))
+    const isUseInterval = (step && step >= 17) || !isBrowser
 
-      timerRef.current = setTimeout(() => {
-        (function loop() {
-          const progress = running()
-          if (progress > 0 && statusRef.current === 'running') {
-            requestAnimFrame(loop)
-          }
-        })()
-      }, 0)
-    }
+    timerRef.current = setTimeout(() => {
+      const loop = () => {
+        clearTimer(intervalRef.current)
+        clearTimeout(timerRef.current)
+        const progress = running()
+        console.log('🚀 ~ file: index.ts ~ line 85 ~ loop ~ progress', progress, statusRef.current)
+        if (progress > 0 && statusRef.current === 'running') {
+          intervalRef.current = isUseInterval
+            ? setIntervalBySetTimeout(running, step)
+            : raf(loop)
+        }
+      }
+      loop()
+    }, 0)
   }, [endTimeState, format, onStart, onStep, setState, step, stop])
 
   useEffect(() => {
     autoRun && start()
 
     return () => {
-      intervalRef.current && clearInterval(intervalRef.current)
+      clearTimer(intervalRef.current)
       timerRef.current && clearTimeout(timerRef.current)
     }
   }, [])

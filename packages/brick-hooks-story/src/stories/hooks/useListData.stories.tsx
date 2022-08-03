@@ -1,5 +1,5 @@
 import React from 'react'
-import useListData from 'brick-hooks/src/useListData'
+import useListData from '../../../../common/src/useListData'
 import ReactJson from 'react-json-view'
 
 export default {

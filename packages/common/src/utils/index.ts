@@ -74,3 +74,48 @@ export const getDateByString = (date: string, utc = false) => {
 }
 
 export const getTimeByString = (date: string, utc = false) => getDateByString(date, utc).getTime()
+
+/**
+ * isFunction
+ */
+export function isFunction(value) {
+  return typeof value === 'function'
+}
+
+export function setIntervalBySetTimeout(callback: () => void, delay: number) {
+  let timer: number | null = null
+  let offset = 0 // 误差时间
+
+  let count = 0
+  let nextDelay = delay
+  const start = Date.now()
+
+  const loop = () => {
+    nextDelay = delay - offset
+    callback()
+    timer = setTimeout(() => {
+      offset = Date.now() - start - count * delay
+      loop()
+    }, nextDelay)
+  }
+
+  loop()
+  return timer
+}
+
+export function clearTimer(timer: number) {
+  if (!timer) return
+
+  try {
+    clearInterval(timer)
+  } catch (error) {}
+
+  try {
+    const clearRaf = window.cancelAnimationFrame || (window as any).webkitCancelAnimationFrame
+    clearRaf(timer)
+  } catch (error) {}
+
+  try {
+    clearTimeout(timer)
+  } catch (error) {}
+}

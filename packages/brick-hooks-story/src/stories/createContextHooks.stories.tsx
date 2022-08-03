@@ -1,10 +1,8 @@
-import React, { useRef } from 'react'
-import { Button } from '@storybook/react/demo'
-import createContextHook from 'brick-hooks/src/createContextHook'
-import { useObjectState, useLogRender } from 'brick-hooks'
+import React from 'react'
+import { createContextHook, useLogRender, useObjectState } from '../../../common/src'
 
 function useContainer() {
-  const [state, setState, { dispatch } = {}] = useObjectState(
+  const [state, setState, { dispatch }] = useObjectState(
     { a: 1 },
     {
       testAction: (state = {}, payload = {}) => {
@@ -36,36 +34,36 @@ const Parent = function () {
 
   return (
     <div>
-      <Button
+      <button
         onClick={() => {
           setState({ a: state.a + 1 })
         }}
       >
         +
-      </Button>
+      </button>
       {state.a}
-      <Button
+      <button
         onClick={() => {
           setState({ a: state.a - 1 })
         }}
       >
         -
-      </Button>
+      </button>
       {JSON.stringify(state)}
-      <Button
+      <button
         onClick={() => {
           setState({ b: (state.b || 0) + 1 }, true)
         }}
       >
         B ++
-      </Button>
-      <Button
+      </button>
+      <button
         onClick={() => {
           dispatch('testAction', { c: 100 })
         }}
       >
         testDispatch
-      </Button>
+      </button>
       <p>state: {JSON.stringify(state)}</p>
     </div>
   )

@@ -20,10 +20,10 @@ function useScrollFixed(options?: {
 ```javascript
 // 相对window
 function Comp() {
-  const { targetRef, isFixed, fixedStyle } = useScrollFixed()
+  const { targetRef, isFixed } = useScrollFixed()
 
   return (
-    <div ref={targetRef} style={fixedStyle}>
+    <div ref={targetRef} className={isFixed ? 'fixed' : ''}>
     </div>
   )
 }
@@ -33,6 +33,8 @@ function Comp() {
 ```javascript
 function Comp() {
   const { targetRef, rootRef, isFixed, fixedStyle } = useScrollFixed({ limit: 90, fixedStyle: { top: 16 }})
+
+  // fixedStyle: { position: 'fixed', zIndex: 100, top: 16 }
 
   return (
     <div className="container" ref={rootRef}>

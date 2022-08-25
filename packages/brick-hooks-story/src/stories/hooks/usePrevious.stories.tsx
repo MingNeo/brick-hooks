@@ -1,4 +1,4 @@
-import { EqualsModeFalseDemo, EqualsModeTrueDemo } from 'packages/common/src/usePrevious/demo'
+import { EqualsModeFalseDemo, EqualsModeTrueDemo } from '../../../../../packages/common/src/usePrevious/demo'
 import React from 'react'
 
 export default {

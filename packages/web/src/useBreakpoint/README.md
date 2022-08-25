@@ -7,8 +7,10 @@
 
 breakpointList 是一个数组，当有多条匹配时，会根据数组 index 的顺序获取第一个匹配的 value
 
+如过设置初始值，则初始状态不根据媒体查询判断，而使用初始值
+
 ```typescript
-function useBreakpoint(breakpointList: BreakpointList, defaultValue: any): any
+function useBreakpoint(breakpointList: BreakpointList, initialValue?: any): any
 ```
 
 ```javascript
@@ -19,7 +21,7 @@ function MyComponent() {
     { min: 768, max: 992, value: 12 },
     { max: 768, value: 24 },
   ]
-  const col = useBreakpoint(breakpointList, 6)
+  const col = useBreakpoint(breakpointList)
 }
 
 // 不同尺寸使用不同的style样式

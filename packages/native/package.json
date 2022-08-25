@@ -37,7 +37,8 @@
     "@types/jest": "^26.0.23",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.5",
-    "typescript": "^3.9.9"
+    "typescript": "^3.9.9",
+    "eslint": "^8.0.0"
   },
   "peerDependencies": {
     "@react-native-community/async-storage": ">=1.0.0",
@@ -47,7 +48,6 @@
   "gitHead": "ead4a0cac82b686d3395f341686a34af59e94562",
   "dependencies": {
     "@types/react-native": "^0.64.10",
-    "brick-hooks": "^0.3.6",
-    "eslint": "^8.0.0"
+    "brick-hooks": "^0.3.6"
   }
 }

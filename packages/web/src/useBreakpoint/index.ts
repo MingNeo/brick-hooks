@@ -9,7 +9,7 @@ interface Breakpoint {
 }
 type BreakpointList = Breakpoint[]
 
-export default function useBreakpoint(breakpointList: BreakpointList, defaultValue: any) {
+export default function useBreakpoint(breakpointList: BreakpointList, initialValue?: any) {
   return useMedia(
     useMemo(
       () =>
@@ -29,6 +29,6 @@ export default function useBreakpoint(breakpointList: BreakpointList, defaultVal
           .filter((v) => v.media),
       [breakpointList]
     ),
-    defaultValue
+    initialValue
   )
 }

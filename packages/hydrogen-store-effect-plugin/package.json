@@ -32,16 +32,15 @@
     "url": "https://github.com/MingNeo/hydrogen-store-effect-plugin/issues"
   },
   "dependencies": {
-    "@testing-library/react-hooks": "^7.0.2",
-    "eslint": "^8.0.0",
     "hydrogen-store": "^0.3.2"
   },
   "devDependencies": {
-    "@testing-library/react-hooks": "^5.1.1",
     "@types/jest": "^26.0.23",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.5",
-    "typescript": "^3.9.9"
+    "typescript": "^3.9.9",
+    "@testing-library/react-hooks": "^7.0.2",
+    "eslint": "^8.0.0"
   },
   "peerDependencies": {
     "react": ">=16.9.0"

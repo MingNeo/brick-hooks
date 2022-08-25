@@ -8,7 +8,7 @@ interface MediaQueryValue {
 }
 type MediaQueryValueList = MediaQueryValue[]
 
-export default function useMedia<T = any>(mediaQueryValueList: MediaQueryValueList = [], defaultValue: T): T {
+export default function useMedia<T = any>(mediaQueryValueList: MediaQueryValueList = [], initialValue?: T): T {
   const mediaQueryListRef = useRef<MediaQueryValue[]>(getMediaQueryList(mediaQueryValueList))
 
   useEffect(() => {
@@ -16,8 +16,8 @@ export default function useMedia<T = any>(mediaQueryValueList: MediaQueryValueLi
   }, [mediaQueryValueList])
 
   const [value, dispatch] = useReducer(() => {
-    return mediaQueryListRef.current.find(({ mql }) => mql.matches)?.value ?? defaultValue
-  }, defaultValue)
+    return mediaQueryListRef.current.find(({ mql }) => mql.matches)?.value ?? initialValue
+  }, initialValue ?? mediaQueryListRef.current.find(({ mql }) => mql.matches)?.value)
 
   useEffect(() => {
     const onMediaChange = () => {

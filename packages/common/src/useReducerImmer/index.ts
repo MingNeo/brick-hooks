@@ -1,4 +1,5 @@
-import produce, { Draft } from 'immer'
+import produce from 'immer'
+import { Draft } from 'immer/dist/immer.d'
 import { useReducer, Dispatch } from 'react'
 
 type Reducer<S, A> = (state: Draft<S>, action: A) => void

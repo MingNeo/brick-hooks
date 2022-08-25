@@ -29,10 +29,15 @@ function MyComponent() {
   const [styleProps, { start }] = useAnimate({
     from: { opacity: 0, marginLeft: 0, width: 50, height: 50 },
     to: { opacity: 1, marginLeft: 500, width: 200, height: 200 },
-    autoRun: true,
+    autoRun: false,
   })
 
-  return <div style={{ ...baseStyle, ...styleProps }} />
+  return (
+    <div>
+      <div style={{ ...baseStyle, ...styleProps }} />
+      <Button onClick={() => start()}>Start</Button>
+    </div>
+  )
 }
 ```
 
@@ -54,22 +59,16 @@ function MyComponent() {
 
 ```javascript
 function MyComponent() {
-  const [styleProps, { start }] = useAnimate({
+  const [styleProps] = useAnimate({
     keyframesName: 'test',
     duration: 1000,
-    autoRun: true,
   })
 
-  return (
-    <div>
-      <div style={{ ...baseStyle, ...styleProps }} />
-      <Button onClick={() => start()}>Start</Button>
-    </div>
-  )
+  return <div style={{ ...baseStyle, ...styleProps }} />
 }
 ```
 
-#### 设置循环次数、动画持续时间、延迟时间、手动触发等
+#### 设置循环次数、动画持续时间、延迟时间等
 
 ```javascript
 function MyComponent() {
@@ -120,7 +119,7 @@ function MyComponent() {
     ],
     range: [0, 0.7, 1], // from、to[0]、to[1] 分别对应0%, 70%, 100%keyframe，可不填，则为均分每个keyframe
     duration: 1000,
-    autoRun: true,
+    autoRun: false,
   })
 
   return (

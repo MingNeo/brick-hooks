@@ -1,6 +1,6 @@
 import React from 'react'
 import { Animated, Easing } from 'react-native'
-import useAnimate from 'brick-hooks-native/src/useAnimate'
+import useAnimate from '.'
 
 const baseStyle = {
   width: 50,

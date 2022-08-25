@@ -23,3 +23,5 @@ mock
 .chrome
 
 coverage
+# React Component Preview
+previewConfig.json

@@ -1,4 +1,5 @@
-import produce, { Draft } from 'immer'
+import produce from 'immer'
+import { Draft } from 'immer/dist/immer.d'
 
 function getNextState(prevState: any, nextState: any) {
   return typeof nextState === 'function'

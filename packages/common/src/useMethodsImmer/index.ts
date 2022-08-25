@@ -1,7 +1,6 @@
-import produce, { Draft, PatchListener } from 'immer'
+import produce from 'immer'
+import { Draft, PatchListener } from 'immer/dist/immer.d'
 import { ReducerAction, useMemo, useReducer } from 'react'
-
-export { Draft }
 
 interface Action {
   type: string

@@ -51,7 +51,7 @@ export { default as useListSequenceLoad } from './useListSequenceLoad'
 export { default as useLogRender } from './useLogRender'
 export { default as useRenderCount } from './useRenderCount'
 
-export { useStore } from 'hydrogen-store'
+// export { useStore } from 'hydrogen-store'
 export { default as useTimeout } from './useTimeout'
 export { default as useTimeoutFn } from './useTimeoutFn'
 export { default as useToggle } from './useToggle'

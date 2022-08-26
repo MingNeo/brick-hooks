@@ -87,6 +87,9 @@ const { useArray } = require('brick-hooks');
 
 [useListSequenceLoad](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useListSequenceLoad/README.md) 信息列表分组懒加载，可用于首页等每个组件都自己维护状态/请求等的组件
 
+[useHistoryRef](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useHistoryRef/README.md) 创建、管理历史记录，并可进行回退、重做功能。返回ref
+
+[useHistoryState](https://github.com/MingNeo/brick-hooks/blob/master/packages/common/src/useHistoryState/README.md) 创建、管理历史记录，并可进行回退、重做功能。
 
 
 #### 其他

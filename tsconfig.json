@@ -75,5 +75,5 @@
   "include": [
     "packages/**/src/**/*"
   ],
-  "exclude": ["node_modules", "packages/**/node_modules", "*.test.js"]
+  "exclude": ["node_modules", "packages/**/node_modules", "**/__tests__/**", "*.test.js", "*.test.ts", "*.test.tsx"]
 }

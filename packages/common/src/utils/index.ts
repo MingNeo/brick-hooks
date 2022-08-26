@@ -52,6 +52,16 @@ export const formatTime = (timestamp: number, format = 'dd hh:mm:ss.SSS'): strin
   return formatedStr
 }
 
+export const getformatTimeInfo = (timestamp: number) => {
+  return {
+    day: Math.floor(timestamp / 1000 / 60 / 60 / 24), // 天
+    hour: Math.floor((timestamp / 1000 / 60 / 60) % 24), // 时
+    minutes: Math.floor((timestamp / 1000 / 60) % 60), // 分
+    seconds: Math.floor((timestamp / 1000) % 60), // 秒
+    millisecond: timestamp % 1000,
+  }
+}
+
 const TIME_FORMAT_REG = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/
 
 export const getDateByString = (date: string, utc = false) => {

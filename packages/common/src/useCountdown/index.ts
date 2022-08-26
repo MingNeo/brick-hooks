@@ -1,5 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { formatTime as formatTimeByString, isBrowser, getTimeByString, invariant, setIntervalBySetTimeout, clearTimer } from '../utils'
+import {
+  formatTime as formatTimeByString,
+  isBrowser,
+  getTimeByString,
+  getformatTimeInfo,
+  invariant,
+  setIntervalBySetTimeout,
+  clearTimer,
+} from '../utils'
 
 interface CountDownProps {
   total?: number // 倒计时时间，格式毫秒
@@ -31,7 +39,7 @@ export default function useCountDown({
   invariant(!!endTime || !!total, 'endTime and total need least one')
   invariant(!endTime || !total, 'endTime and total need only one')
   const intervalRef = useRef<number | null>(null)
-  const timerRef = useRef<number | null>(null)
+  const timerRef = useRef<any>(null)
   const statusRef = useRef<string>('idle')
   const endTimeRef = useRef(
     typeof endTime === 'string' ? getTimeByString(endTime) : endTime || Date.now() + (total || 0)
@@ -86,9 +94,7 @@ export default function useCountDown({
         const progress = running()
         console.log('🚀 ~ file: index.ts ~ line 85 ~ loop ~ progress', progress, statusRef.current)
         if (progress > 0 && statusRef.current === 'running') {
-          intervalRef.current = isUseInterval
-            ? setIntervalBySetTimeout(running, step)
-            : raf(loop)
+          intervalRef.current = isUseInterval ? setIntervalBySetTimeout(running, step) : raf(loop)
         }
       }
       loop()
@@ -104,7 +110,15 @@ export default function useCountDown({
     }
   }, [])
 
-  return { status, endTime: endTimeState, formatedCountdown, countdown, start, stop }
+  return {
+    status,
+    endTime: endTimeState,
+    formatedCountdown,
+    countdown,
+    ...getformatTimeInfo(countdown),
+    start,
+    stop,
+  }
 }
 
 function formatTime(timestamp: number, format: string | ((progress: number) => string)) {

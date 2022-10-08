@@ -1,34 +1,4 @@
-;(self.webpackChunk_brick_hooks_root = self.webpackChunk_brick_hooks_root || []).push([
-  [5275],
-  {
-    73602: function (h, r, t) {
-      'use strict'
-      t.d(r, {
-        m: function () {
-          return l.m
-        },
-      })
-      var l = t(67624),
-        p = t(93142)
-    },
-    55481: function (h, r, t) {
-      'use strict'
-      t.r(r),
-        t.d(r, {
-          default: function () {
-            return U
-          },
-        })
-      var l = t(75290),
-        p = t(67294),
-        f = JSON.parse(
-          '{"menus":{"en-US":{"*":[{"path":"/","title":"brick-hooks","meta":{}}],"/create-context-hook":[{"path":"/create-context-hook","title":"createContextHook","meta":{}}],"/use-array":[{"path":"/use-array","title":"useArray","meta":{}}],"/use-async":[{"path":"/use-async","title":"useAsync","meta":{}}],"/use-countdown":[{"path":"/use-countdown","title":"useCountDown","meta":{}}],"/use-counter":[{"path":"/use-counter","title":"useCounter","meta":{}}],"/use-countup":[{"path":"/use-countup","title":"useCountUp","meta":{}}],"/use-data-list-to-map":[{"path":"/use-data-list-to-map","title":"useDataListToMap","meta":{}}],"/use-data-list-to-tree":[{"path":"/use-data-list-to-tree","title":"useDataListToTree","meta":{}}],"/use-data-tree-to-list":[{"path":"/use-data-tree-to-list","title":"useDataTreeToList","meta":{}}],"/use-debounce-effect":[{"path":"/use-debounce-effect","title":"useDebounceEffect","meta":{}}],"/use-debounce-fn":[{"path":"/use-debounce-fn","title":"useDebounceFn","meta":{}}],"/use-debounce-state":[{"path":"/use-debounce-state","title":"useDebounceState","meta":{}}],"/use-debounce-value":[{"path":"/use-debounce-value","title":"useDebounceValue","meta":{}}],"/use-deep-compare":[{"path":"/use-deep-compare","title":"useDeepCompare","meta":{}}],"/use-did-mount":[{"path":"/use-did-mount","title":"useDidMount","meta":{}}],"/use-did-update":[{"path":"/use-did-update","title":"useDidUpdate","meta":{}}],"/use-effect-maunal":[{"path":"/use-effect-maunal","title":"useEffectMaunal","meta":{}}],"/use-event-bus":[{"path":"/use-event-bus","title":"useEventBus","meta":{}}],"/use-force-render":[{"path":"/use-force-render","title":"useForceRender","meta":{}}],"/use-history-ref":[{"path":"/use-history-ref","title":"useHistoryRef","meta":{}}],"/use-history-state":[{"path":"/use-history-state","title":"useHistoryState","meta":{}}],"/use-input":[{"path":"/use-input","title":"useInput","meta":{}}],"/use-interval":[{"path":"/use-interval","title":"useInterval","meta":{}}],"/use-iso-effect":[{"path":"/use-iso-effect","title":"useIsoEffect","meta":{}}],"/use-list-checked":[{"path":"/use-list-checked","title":"useListChecked","meta":{}}],"/use-list-data":[{"path":"/use-list-data","title":"useListData","meta":{}}],"/use-list-sequence-load":[{"path":"/use-list-sequence-load","title":"useListSequenceLoad","meta":{}}],"/use-list-state":[{"path":"/use-list-state","title":"useListState","meta":{}}],"/use-list-view-data":[{"path":"/use-list-view-data","title":"useListViewData","meta":{}}],"/use-log-render":[{"path":"/use-log-render","title":"useLogRender","meta":{}}],"/use-memo-compare":[{"path":"/use-memo-compare","title":"useMemoCompare","meta":{}}],"/use-methods":[{"path":"/use-methods","title":"useMethods","meta":{}}],"/use-methods-immer":[{"path":"/use-methods-immer","title":"useMethodsImmer","meta":{}}],"/use-object-state":[{"path":"/use-object-state","title":"useObjectState","meta":{}}],"/use-object-state-immer":[{"path":"/use-object-state-immer","title":"useObjectStateImmer","meta":{}}],"/use-previous":[{"path":"/use-previous","title":"usePrevious","meta":{}}],"/use-reducer-immer":[{"path":"/use-reducer-immer","title":"useReducerImmer","meta":{}}],"/use-ref-callback":[{"path":"/use-ref-callback","title":"useRefCallback","meta":{}}],"/use-render-count":[{"path":"/use-render-count","title":"useRenderCount","meta":{}}],"/use-set":[{"path":"/use-set","title":"useSet","meta":{}}],"/use-throttle-fn":[{"path":"/use-throttle-fn","title":"useThrottleFn","meta":{}}],"/use-timeout":[{"path":"/use-timeout","title":"useTimeout","meta":{}}],"/use-timeout-fn":[{"path":"/use-timeout-fn","title":"useTimeoutFn","meta":{}}],"/use-toggle":[{"path":"/use-toggle","title":"useToggle","meta":{}}],"/use-trim":[{"path":"/use-trim","title":"useTrim","meta":{}}],"/use-trim-state":[{"path":"/use-trim-state","title":"useTrimValue","meta":{}}],"/use-unmounted-ref":[{"path":"/use-unmounted-ref","title":"useUnmountedRef","meta":{}}],"/use-value-ref":[{"path":"/use-value-ref","title":"useUpdateRef","meta":{}}],"/use-will-unmount":[{"path":"/use-will-unmount","title":"useDidMount","meta":{}}],"/use-animate":[{"path":"/use-animate","title":"useAnimate","meta":{}}],"/use-breakpoint":[{"path":"/use-breakpoint","title":"useBreakpoint","meta":{}}],"/use-cookie":[{"path":"/use-cookie","title":"useCookie","meta":{}}],"/use-dark-mode":[{"path":"/use-dark-mode","title":"useDarkMode","meta":{}}],"/use-event-listener":[{"path":"/use-event-listener","title":"useEventListener","meta":{}}],"/use-free-drag":[{"path":"/use-free-drag","title":"useFreeDrag","meta":{}}],"/use-hover":[{"path":"/use-hover","title":"useHover","meta":{}}],"/use-in-view":[{"path":"/use-in-view","title":"useInView","meta":{}}],"/use-key":[{"path":"/use-key","title":"useKey","meta":{}}],"/use-lazy-image":[{"path":"/use-lazy-image","title":"useLazyImage","meta":{}}],"/use-lazy-sequence-load":[{"path":"/use-lazy-sequence-load","title":"useLazySequenceLoad","meta":{}}],"/use-link":[{"path":"/use-link","title":"useLink","meta":{}}],"/use-media":[{"path":"/use-media","title":"useMedia","meta":{}}],"/use-media-query":[{"path":"/use-media-query","title":"useMediaquery","meta":{}}],"/use-online":[{"path":"/use-online","title":"useOnline","meta":{}}],"/use-script":[{"path":"/use-script","title":"useScript","meta":{}}],"/use-scroll":[{"path":"/use-scroll","title":"useScroll","meta":{}}],"/use-scroll-fixed":[{"path":"/use-scroll-fixed","title":"useFixed","meta":{}}],"/use-storage":[{"path":"/use-storage","title":"useStorage","meta":{}}],"/use-style":[{"path":"/use-style","title":"useStyle","meta":{}}],"/use-title":[{"path":"/use-title","title":"useTitle","meta":{}}],"/use-transition":[{"path":"/use-transition","title":"useTransition","meta":{}}],"/native":[{"title":"UseAnimate","path":"/native/use-animate","meta":{},"children":[{"path":"/native/use-animate","title":"useAnimate","meta":{}}]},{"title":"UseAnimateValue","path":"/native/use-animate-value","meta":{},"children":[{"path":"/native/use-animate-value","title":"useAnimateValue","meta":{}}]},{"title":"UseAppstate","path":"/native/use-appstate","meta":{},"children":[{"path":"/native/use-appstate","title":"useAppState","meta":{}}]},{"title":"UseAsyncStorage","path":"/native/use-async-storage","meta":{},"children":[{"path":"/native/use-async-storage","title":"useAsyncStorage","meta":{}}]},{"title":"UseFocusApp","path":"/native/use-focus-app","meta":{},"children":[{"path":"/native/use-focus-app","title":"useFocusApp","meta":{}}]},{"title":"UseInView","path":"/native/use-in-view","meta":{},"children":[{"path":"/native/use-in-view","title":"useInView","meta":{}}]},{"title":"UseLazySequenceLoad","path":"/native/use-lazy-sequence-load","meta":{},"children":[{"path":"/native/use-lazy-sequence-load","title":"useLazySequenceLoad","meta":{}}]},{"title":"UseScrollToTop","path":"/native/use-scroll-to-top","meta":{},"children":[{"path":"/native/use-scroll-to-top","title":"useScrollToTop","meta":{}}]},{"title":"UseTransition","path":"/native/use-transition","meta":{},"children":[{"path":"/native/use-transition","title":"useTransition","meta":{}}]}],"/business":[{"title":"UseAmapPoi","path":"/business/use-amap-poi","meta":{},"children":[{"path":"/business/use-amap-poi","title":"useAmapPoi","meta":{}}]}],"/use-cascader":[{"path":"/use-cascader","title":"useCascader","meta":{}}],"/use-cycle-buy":[{"path":"/use-cycle-buy","title":"useCycleBuy","meta":{}}],"/":[{"title":"\u4ECB\u7ECD","path":"/"},{"title":"Brick-hooks","children":[{"path":"/create-context-hook","title":"createContextHook"},{"path":"/use-array","title":"useArray"},{"path":"/use-async","title":"useAsync"},{"path":"/use-counter","title":"useCounter"},{"path":"/use-debounce-effect","title":"useDebounceEffect"},{"path":"/use-debounce-fn","title":"useDebounceFn"},{"path":"/use-debounce-state","title":"useDebounceState"},{"path":"/use-debounce-value","title":"useDebounceValue"},{"path":"/use-deep-compare","title":"useDeepCompare"},{"path":"/use-did-mount","title":"useDidMount"},{"path":"/use-will-unmount","title":"useDidMount"},{"path":"/use-did-update","title":"useDidUpdate"},{"path":"/use-unmounted-ref","title":"useUnmountedRef"},{"path":"/use-effect-maunal","title":"useEffectMaunal"},{"path":"/use-iso-effect","title":"useIsoEffect"},{"path":"/use-event-bus","title":"useEventBus"},{"path":"/use-force-render","title":"useForceRender"},{"path":"/use-input","title":"useInput"},{"path":"/use-interval","title":"useInterval"},{"path":"/use-memo-compare","title":"useMemoCompare"},{"path":"/use-methods","title":"useMethods"},{"path":"/use-methods-immer","title":"useMethodsImmer"},{"path":"/use-object-state","title":"useObjectState"},{"path":"/use-object-state-immer","title":"useObjectStateImmer"},{"path":"/use-previous","title":"usePrevious"},{"path":"/use-reducer-immer","title":"useReducerImmer"},{"path":"/use-ref-callback","title":"useRefCallback"},{"path":"/use-value-ref","title":"useUpdateRef"},{"path":"/use-set","title":"useSet"},{"path":"/use-throttle-fn","title":"useThrottleFn"},{"path":"/use-list-checked","title":"useListChecked"},{"path":"/use-list-data","title":"useListData"},{"path":"/use-list-state","title":"useListState"},{"path":"/use-list-view-data","title":"useListViewData"},{"path":"/use-data-list-to-tree","title":"useDataListToTree"},{"path":"/use-data-list-to-map","title":"useDataListToMap"},{"path":"/use-data-tree-to-list","title":"useDataTreeToList"},{"path":"/use-list-sequence-load","title":"useListSequenceLoad"},{"path":"/use-log-render","title":"useLogRender"},{"path":"/use-render-count","title":"useRenderCount"},{"path":"/use-timeout","title":"useTimeout"},{"path":"/use-timeout-fn","title":"useTimeoutFn"},{"path":"/use-toggle","title":"useToggle"},{"path":"/use-trim-state","title":"useTrimValue"},{"path":"/use-trim","title":"useTrim"},{"path":"/use-countdown","title":"useCountDown"},{"path":"/use-countup","title":"useCountUp"},{"path":"/use-history-ref","title":"useHistoryRef"},{"path":"/use-history-state","title":"useHistoryState"}]},{"title":"Brick-hooks-web","children":[{"path":"/use-animate","title":"useAnimate"},{"path":"/use-breakpoint","title":"useBreakpoint"},{"path":"/use-cookie","title":"useCookie"},{"path":"/use-dark-mode","title":"useDarkMode"},{"path":"/use-event-listener","title":"useEventListener"},{"path":"/use-free-drag","title":"useFreeDrag"},{"path":"/use-hover","title":"useHover"},{"path":"/use-in-view","title":"useInView"},{"path":"/use-key","title":"useKey"},{"path":"/use-lazy-image","title":"useLazyImage"},{"path":"/use-lazy-sequence-load","title":"useLazySequenceLoad"},{"path":"/use-link","title":"useLink"},{"path":"/use-media","title":"useMedia"},{"path":"/use-media-query","title":"useMediaquery"},{"path":"/use-online","title":"useOnline"},{"path":"/use-script","title":"useScript"},{"path":"/use-scroll","title":"useScroll"},{"path":"/use-scroll-fixed","title":"useFixed"},{"path":"/use-storage","title":"useStorage"},{"path":"/use-style","title":"useStyle"},{"path":"/use-title","title":"useTitle"},{"path":"/use-transition","title":"useTransition"}]},{"title":"Brick-hooks-native","path":"/native","children":[{"path":"/native/use-animate","title":"useAnimate"},{"path":"/native/use-animate-value","title":"useAnimateValue"},{"path":"/native/use-transition","title":"useTransition"},{"path":"/native/use-appstate","title":"useAppstate"},{"path":"/native/use-async-storage","title":"useAsyncStorage"},{"path":"/native/use-focus-app","title":"useFocusApp"},{"path":"/native/use-in-view","title":"useInView"},{"path":"/native/use-lazy-sequence-load","title":"useAnimate"},{"path":"/native/use-scroll-to-top","title":"useScrollToTop"}]},{"title":"Brick-hooks-business","children":[{"path":"/business/use-amap-poi","title":"useAmapPoi"},{"path":"/use-cascader","title":"useCascader"},{"path":"/use-cycle-buy","title":"useCycleBuy"}]}]}},"locales":[{"name":"en-US","label":"English"}],"navs":{"en-US":[{"title":"\u6307\u5357","path":"/"},{"title":"\u66F4\u65B0\u65E5\u5FD7","path":"https://github.com/MingNeo/custom-hooks/releases"},{"title":"GitHub","path":"https://github.com/MingNeo/custom-hooks"}]},"title":"Brick-hooks","logo":"/logo.svg","mode":"site","repository":{"url":"https://github.com/MingNeo/custom-hooks","branch":"master"},"theme":{},"exportStatic":{}}',
-        ),
-        a = t(6840),
-        y = t(6500),
-        s = t.n(y),
-        u = t(79004),
-        g = `import React from 'react'
+(self.webpackChunk_brick_hooks_root=self.webpackChunk_brick_hooks_root||[]).push([[5275],{73602:function(h,r,t){"use strict";t.d(r,{m:function(){return l.m}});var l=t(67624),p=t(93142)},55481:function(h,r,t){"use strict";t.r(r),t.d(r,{default:function(){return U}});var l=t(75290),p=t(67294),f=JSON.parse('{"menus":{"en-US":{"*":[{"path":"/","title":"brick-hooks","meta":{}}],"/create-context-hook":[{"path":"/create-context-hook","title":"createContextHook","meta":{}}],"/use-array":[{"path":"/use-array","title":"useArray","meta":{}}],"/use-async":[{"path":"/use-async","title":"useAsync","meta":{}}],"/use-countdown":[{"path":"/use-countdown","title":"useCountDown","meta":{}}],"/use-counter":[{"path":"/use-counter","title":"useCounter","meta":{}}],"/use-countup":[{"path":"/use-countup","title":"useCountUp","meta":{}}],"/use-data-list-to-map":[{"path":"/use-data-list-to-map","title":"useDataListToMap","meta":{}}],"/use-data-list-to-tree":[{"path":"/use-data-list-to-tree","title":"useDataListToTree","meta":{}}],"/use-data-tree-to-list":[{"path":"/use-data-tree-to-list","title":"useDataTreeToList","meta":{}}],"/use-debounce-effect":[{"path":"/use-debounce-effect","title":"useDebounceEffect","meta":{}}],"/use-debounce-fn":[{"path":"/use-debounce-fn","title":"useDebounceFn","meta":{}}],"/use-debounce-state":[{"path":"/use-debounce-state","title":"useDebounceState","meta":{}}],"/use-debounce-value":[{"path":"/use-debounce-value","title":"useDebounceValue","meta":{}}],"/use-deep-compare":[{"path":"/use-deep-compare","title":"useDeepCompare","meta":{}}],"/use-did-mount":[{"path":"/use-did-mount","title":"useDidMount","meta":{}}],"/use-did-update":[{"path":"/use-did-update","title":"useDidUpdate","meta":{}}],"/use-effect-maunal":[{"path":"/use-effect-maunal","title":"useEffectMaunal","meta":{}}],"/use-event-bus":[{"path":"/use-event-bus","title":"useEventBus","meta":{}}],"/use-force-render":[{"path":"/use-force-render","title":"useForceRender","meta":{}}],"/use-history-ref":[{"path":"/use-history-ref","title":"useHistoryRef","meta":{}}],"/use-history-state":[{"path":"/use-history-state","title":"useHistoryState","meta":{}}],"/use-input":[{"path":"/use-input","title":"useInput","meta":{}}],"/use-interval":[{"path":"/use-interval","title":"useInterval","meta":{}}],"/use-iso-effect":[{"path":"/use-iso-effect","title":"useIsoEffect","meta":{}}],"/use-list-checked":[{"path":"/use-list-checked","title":"useListChecked","meta":{}}],"/use-list-data":[{"path":"/use-list-data","title":"useListData","meta":{}}],"/use-list-sequence-load":[{"path":"/use-list-sequence-load","title":"useListSequenceLoad","meta":{}}],"/use-list-state":[{"path":"/use-list-state","title":"useListState","meta":{}}],"/use-list-view-data":[{"path":"/use-list-view-data","title":"useListViewData","meta":{}}],"/use-log-render":[{"path":"/use-log-render","title":"useLogRender","meta":{}}],"/use-memo-compare":[{"path":"/use-memo-compare","title":"useMemoCompare","meta":{}}],"/use-methods":[{"path":"/use-methods","title":"useMethods","meta":{}}],"/use-methods-immer":[{"path":"/use-methods-immer","title":"useMethodsImmer","meta":{}}],"/use-object-state":[{"path":"/use-object-state","title":"useObjectState","meta":{}}],"/use-object-state-immer":[{"path":"/use-object-state-immer","title":"useObjectStateImmer","meta":{}}],"/use-previous":[{"path":"/use-previous","title":"usePrevious","meta":{}}],"/use-reducer-immer":[{"path":"/use-reducer-immer","title":"useReducerImmer","meta":{}}],"/use-ref-callback":[{"path":"/use-ref-callback","title":"useRefCallback","meta":{}}],"/use-render-count":[{"path":"/use-render-count","title":"useRenderCount","meta":{}}],"/use-set":[{"path":"/use-set","title":"useSet","meta":{}}],"/use-throttle-fn":[{"path":"/use-throttle-fn","title":"useThrottleFn","meta":{}}],"/use-timeout":[{"path":"/use-timeout","title":"useTimeout","meta":{}}],"/use-timeout-fn":[{"path":"/use-timeout-fn","title":"useTimeoutFn","meta":{}}],"/use-toggle":[{"path":"/use-toggle","title":"useToggle","meta":{}}],"/use-trim":[{"path":"/use-trim","title":"useTrim","meta":{}}],"/use-trim-state":[{"path":"/use-trim-state","title":"useTrimValue","meta":{}}],"/use-unmounted-ref":[{"path":"/use-unmounted-ref","title":"useUnmountedRef","meta":{}}],"/use-value-ref":[{"path":"/use-value-ref","title":"useUpdateRef","meta":{}}],"/use-will-unmount":[{"path":"/use-will-unmount","title":"useDidMount","meta":{}}],"/use-animate":[{"path":"/use-animate","title":"useAnimate","meta":{}}],"/use-breakpoint":[{"path":"/use-breakpoint","title":"useBreakpoint","meta":{}}],"/use-cookie":[{"path":"/use-cookie","title":"useCookie","meta":{}}],"/use-dark-mode":[{"path":"/use-dark-mode","title":"useDarkMode","meta":{}}],"/use-event-listener":[{"path":"/use-event-listener","title":"useEventListener","meta":{}}],"/use-free-drag":[{"path":"/use-free-drag","title":"useFreeDrag","meta":{}}],"/use-hover":[{"path":"/use-hover","title":"useHover","meta":{}}],"/use-in-view":[{"path":"/use-in-view","title":"useInView","meta":{}}],"/use-key":[{"path":"/use-key","title":"useKey","meta":{}}],"/use-lazy-image":[{"path":"/use-lazy-image","title":"useLazyImage","meta":{}}],"/use-lazy-sequence-load":[{"path":"/use-lazy-sequence-load","title":"useLazySequenceLoad","meta":{}}],"/use-link":[{"path":"/use-link","title":"useLink","meta":{}}],"/use-media":[{"path":"/use-media","title":"useMedia","meta":{}}],"/use-media-query":[{"path":"/use-media-query","title":"useMediaquery","meta":{}}],"/use-online":[{"path":"/use-online","title":"useOnline","meta":{}}],"/use-script":[{"path":"/use-script","title":"useScript","meta":{}}],"/use-scroll":[{"path":"/use-scroll","title":"useScroll","meta":{}}],"/use-scroll-fixed":[{"path":"/use-scroll-fixed","title":"useFixed","meta":{}}],"/use-storage":[{"path":"/use-storage","title":"useStorage","meta":{}}],"/use-style":[{"path":"/use-style","title":"useStyle","meta":{}}],"/use-title":[{"path":"/use-title","title":"useTitle","meta":{}}],"/use-transition":[{"path":"/use-transition","title":"useTransition","meta":{}}],"/native":[{"title":"UseAnimate","path":"/native/use-animate","meta":{},"children":[{"path":"/native/use-animate","title":"useAnimate","meta":{}}]},{"title":"UseAnimateValue","path":"/native/use-animate-value","meta":{},"children":[{"path":"/native/use-animate-value","title":"useAnimateValue","meta":{}}]},{"title":"UseAppstate","path":"/native/use-appstate","meta":{},"children":[{"path":"/native/use-appstate","title":"useAppState","meta":{}}]},{"title":"UseAsyncStorage","path":"/native/use-async-storage","meta":{},"children":[{"path":"/native/use-async-storage","title":"useAsyncStorage","meta":{}}]},{"title":"UseFocusApp","path":"/native/use-focus-app","meta":{},"children":[{"path":"/native/use-focus-app","title":"useFocusApp","meta":{}}]},{"title":"UseInView","path":"/native/use-in-view","meta":{},"children":[{"path":"/native/use-in-view","title":"useInView","meta":{}}]},{"title":"UseLazySequenceLoad","path":"/native/use-lazy-sequence-load","meta":{},"children":[{"path":"/native/use-lazy-sequence-load","title":"useLazySequenceLoad","meta":{}}]},{"title":"UseScrollToTop","path":"/native/use-scroll-to-top","meta":{},"children":[{"path":"/native/use-scroll-to-top","title":"useScrollToTop","meta":{}}]},{"title":"UseTransition","path":"/native/use-transition","meta":{},"children":[{"path":"/native/use-transition","title":"useTransition","meta":{}}]}],"/business":[{"title":"UseAmapPoi","path":"/business/use-amap-poi","meta":{},"children":[{"path":"/business/use-amap-poi","title":"useAmapPoi","meta":{}}]}],"/use-cascader":[{"path":"/use-cascader","title":"useCascader","meta":{}}],"/use-cycle-buy":[{"path":"/use-cycle-buy","title":"useCycleBuy","meta":{}}],"/":[{"title":"\u4ECB\u7ECD","path":"/"},{"title":"Brick-hooks","children":[{"path":"/create-context-hook","title":"createContextHook"},{"path":"/use-array","title":"useArray"},{"path":"/use-async","title":"useAsync"},{"path":"/use-counter","title":"useCounter"},{"path":"/use-debounce-effect","title":"useDebounceEffect"},{"path":"/use-debounce-fn","title":"useDebounceFn"},{"path":"/use-debounce-state","title":"useDebounceState"},{"path":"/use-debounce-value","title":"useDebounceValue"},{"path":"/use-deep-compare","title":"useDeepCompare"},{"path":"/use-did-mount","title":"useDidMount"},{"path":"/use-will-unmount","title":"useDidMount"},{"path":"/use-did-update","title":"useDidUpdate"},{"path":"/use-unmounted-ref","title":"useUnmountedRef"},{"path":"/use-effect-maunal","title":"useEffectMaunal"},{"path":"/use-iso-effect","title":"useIsoEffect"},{"path":"/use-event-bus","title":"useEventBus"},{"path":"/use-force-render","title":"useForceRender"},{"path":"/use-input","title":"useInput"},{"path":"/use-interval","title":"useInterval"},{"path":"/use-memo-compare","title":"useMemoCompare"},{"path":"/use-methods","title":"useMethods"},{"path":"/use-methods-immer","title":"useMethodsImmer"},{"path":"/use-object-state","title":"useObjectState"},{"path":"/use-object-state-immer","title":"useObjectStateImmer"},{"path":"/use-previous","title":"usePrevious"},{"path":"/use-reducer-immer","title":"useReducerImmer"},{"path":"/use-ref-callback","title":"useRefCallback"},{"path":"/use-value-ref","title":"useUpdateRef"},{"path":"/use-set","title":"useSet"},{"path":"/use-throttle-fn","title":"useThrottleFn"},{"path":"/use-list-checked","title":"useListChecked"},{"path":"/use-list-data","title":"useListData"},{"path":"/use-list-state","title":"useListState"},{"path":"/use-list-view-data","title":"useListViewData"},{"path":"/use-data-list-to-tree","title":"useDataListToTree"},{"path":"/use-data-list-to-map","title":"useDataListToMap"},{"path":"/use-data-tree-to-list","title":"useDataTreeToList"},{"path":"/use-list-sequence-load","title":"useListSequenceLoad"},{"path":"/use-log-render","title":"useLogRender"},{"path":"/use-render-count","title":"useRenderCount"},{"path":"/use-timeout","title":"useTimeout"},{"path":"/use-timeout-fn","title":"useTimeoutFn"},{"path":"/use-toggle","title":"useToggle"},{"path":"/use-trim-state","title":"useTrimValue"},{"path":"/use-trim","title":"useTrim"},{"path":"/use-countdown","title":"useCountDown"},{"path":"/use-countup","title":"useCountUp"},{"path":"/use-history-ref","title":"useHistoryRef"},{"path":"/use-history-state","title":"useHistoryState"}]},{"title":"Brick-hooks-web","children":[{"path":"/use-animate","title":"useAnimate"},{"path":"/use-breakpoint","title":"useBreakpoint"},{"path":"/use-cookie","title":"useCookie"},{"path":"/use-dark-mode","title":"useDarkMode"},{"path":"/use-event-listener","title":"useEventListener"},{"path":"/use-free-drag","title":"useFreeDrag"},{"path":"/use-hover","title":"useHover"},{"path":"/use-in-view","title":"useInView"},{"path":"/use-key","title":"useKey"},{"path":"/use-lazy-image","title":"useLazyImage"},{"path":"/use-lazy-sequence-load","title":"useLazySequenceLoad"},{"path":"/use-link","title":"useLink"},{"path":"/use-media","title":"useMedia"},{"path":"/use-media-query","title":"useMediaquery"},{"path":"/use-online","title":"useOnline"},{"path":"/use-script","title":"useScript"},{"path":"/use-scroll","title":"useScroll"},{"path":"/use-scroll-fixed","title":"useFixed"},{"path":"/use-storage","title":"useStorage"},{"path":"/use-style","title":"useStyle"},{"path":"/use-title","title":"useTitle"},{"path":"/use-transition","title":"useTransition"}]},{"title":"Brick-hooks-native","path":"/native","children":[{"path":"/native/use-animate","title":"useAnimate"},{"path":"/native/use-animate-value","title":"useAnimateValue"},{"path":"/native/use-transition","title":"useTransition"},{"path":"/native/use-appstate","title":"useAppstate"},{"path":"/native/use-async-storage","title":"useAsyncStorage"},{"path":"/native/use-focus-app","title":"useFocusApp"},{"path":"/native/use-in-view","title":"useInView"},{"path":"/native/use-lazy-sequence-load","title":"useAnimate"},{"path":"/native/use-scroll-to-top","title":"useScrollToTop"}]},{"title":"Brick-hooks-business","children":[{"path":"/business/use-amap-poi","title":"useAmapPoi"},{"path":"/use-cascader","title":"useCascader"},{"path":"/use-cycle-buy","title":"useCycleBuy"}]}]}},"locales":[{"name":"en-US","label":"English"}],"navs":{"en-US":[{"title":"\u6307\u5357","path":"/"},{"title":"\u66F4\u65B0\u65E5\u5FD7","path":"https://github.com/MingNeo/custom-hooks/releases"},{"title":"GitHub","path":"https://github.com/MingNeo/custom-hooks"}]},"title":"Brick-hooks","logo":"/logo.svg","mode":"site","repository":{"url":"https://github.com/MingNeo/custom-hooks","branch":"master"},"theme":{},"exportStatic":{}}'),a=t(6840),y=t(6500),s=t.n(y),u=t(79004),g=`import React from 'react'
 import useCountDown from '.'
 
 export const Demo1 = () => {
@@ -60,8 +30,7 @@ export default function Demo() {
       <Demo2 />
     </div>
   )
-}`,
-        v = `import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+}`,v=`import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   formatTime as formatTimeByString,
   isBrowser,
@@ -192,8 +161,7 @@ function formatTime(timestamp: number, format: string | ((progress: number) => s
     : typeof format === 'function'
     ? format(timestamp)
     : ''
-}`,
-        m = `export function invariant(condition: boolean, message: string) {
+}`,m=`export function invariant(condition: boolean, message: string) {
   if (!condition) {
     throw new Error(message)
   }
@@ -324,8 +292,7 @@ export function clearTimer(timer: number) {
   try {
     clearTimeout(timer)
   } catch (error) {}
-}`,
-        w = `import React from 'react'
+}`,w=`import React from 'react'
 import useCountUp from '.'
 
 export const Demo1 = () => {
@@ -357,8 +324,7 @@ export default function Demo() {
       <Demo2 />
     </div>
   )
-}`,
-        S = `import { useCallback, useEffect, useRef } from 'react'
+}`,S=`import { useCallback, useEffect, useRef } from 'react'
 import useForceRender from '../useForceRender'
 import { formatTime as formatTimeByString, isBrowser, setIntervalBySetTimeout, clearTimer } from '../utils'
 
@@ -510,8 +476,7 @@ function formatTime(timestamp: number, format: string | ((progress: number) => s
     : typeof format === 'function'
     ? format(timestamp)
     : ''
-}`,
-        d = `import { useReducer } from 'react'
+}`,d=`import { useReducer } from 'react'
 
 type ForceUpdate = () => void
 
@@ -520,8 +485,7 @@ type ForceUpdate = () => void
  */
 export default function useForceRender(): ForceUpdate {
   return useReducer((n: number) => n + 1, 0)[1]
-}`,
-        b = `import React, { useEffect } from 'react'
+}`,b=`import React, { useEffect } from 'react'
 import useCounter from '../useCounter'
 import useHistoryRef from '.'
 import useForceRender from '../useForceRender'
@@ -556,8 +520,7 @@ export function Demo({ max = 10 } = {}) {
       <p>redoList: {JSON.stringify(redoList)}</p>
     </div>
   )
-}`,
-        P = `import { useMemo, useState } from 'react'
+}`,P=`import { useMemo, useState } from 'react'
 
 interface CounterOptions {
   min?: number
@@ -593,8 +556,7 @@ export default function useCounter(initialValue: number = 0, options: CounterOpt
   }, [initialValue, options])
 
   return [counter, methods]
-}`,
-        R = `import { useRef } from 'react'
+}`,R=`import { useRef } from 'react'
 import HistoryState, { Options, HistoryStock } from './historyState'
 
 export interface useHistoryRefOptions<Raw, Serialized = Raw> extends Options<Raw, Serialized> {}
@@ -633,8 +595,7 @@ export default function useHistoryRef<Raw, Serialized = Raw>(
   }
 
   return ref.current
-}`,
-        C = `export interface HistoryStock<T> {
+}`,C=`export interface HistoryStock<T> {
   snapshot: T
   timestamp: number
 }
@@ -788,8 +749,7 @@ export default class HistoryState<Raw, Serialized = Raw> {
   getLast() {
     return this.last
   }
-}`,
-        T = `import React, { useEffect } from 'react'
+}`,T=`import React, { useEffect } from 'react'
 import useAmapPoi from '.'
 
 export default function Demo() {
@@ -831,8 +791,7 @@ export default function Demo() {
       </button>
     </div>
   )
-}`,
-        L = `import { useState, useRef } from 'react'
+}`,L=`import { useState, useRef } from 'react'
 import { isBrowser } from '../utils'
 import { formatPoiInfo, getNearByInfos, loadAmapScript, searchPois } from './helper'
 
@@ -998,11 +957,9 @@ export default function useAmapPoi({
     getNearbyPois, // \u83B7\u53D6\u9644\u8FD1\u7684poi
     searchPois: handleSearchPois,
   }
-}`,
-        x = `export const isBrowser = !!(typeof window !== 'undefined' && window.document && window.document.createElement)
+}`,x=`export const isBrowser = !!(typeof window !== 'undefined' && window.document && window.document.createElement)
 
-export const isNil = (value: any) => value === undefined || value === null`,
-        D = `import { isBrowser } from '../utils'
+export const isNil = (value: any) => value === undefined || value === null`,D=`import { isBrowser } from '../utils'
 
 export function formatPoiInfo(poi: any) {
   let name = poi.name || poi.formattedAddress
@@ -1147,160 +1104,4 @@ export const loadAmapScript = (amapKey?: string, plugin = 'AMap.Geocoder') => {
       resolve(true)
     }
   })
-}`,
-        k = {
-          'usecountdown-demo': {
-            component: (0, u.D8)({
-              loader: (function () {
-                var n = (0, a.Z)(
-                  s().mark(function i() {
-                    return s().wrap(function (e) {
-                      for (;;)
-                        switch ((e.prev = e.next)) {
-                          case 0:
-                            return (e.next = 2), t.e(6050).then(t.bind(t, 22380))
-                          case 2:
-                            return e.abrupt('return', e.sent.default)
-                          case 3:
-                          case 'end':
-                            return e.stop()
-                        }
-                    }, i)
-                  }),
-                )
-                function o() {
-                  return n.apply(this, arguments)
-                }
-                return o
-              })(),
-              loading: () => null,
-            }),
-            previewerProps: {
-              sources: {
-                _: { tsx: g },
-                'index.ts': { import: '.', content: v },
-                'utils/index.ts': { import: '../utils', content: m },
-              },
-              dependencies: { react: { version: '16.14.0' } },
-              identifier: 'usecountdown-demo',
-            },
-          },
-          'usecountup-demo': {
-            component: (0, u.D8)({
-              loader: (function () {
-                var n = (0, a.Z)(
-                  s().mark(function i() {
-                    return s().wrap(function (e) {
-                      for (;;)
-                        switch ((e.prev = e.next)) {
-                          case 0:
-                            return (e.next = 2), t.e(6050).then(t.bind(t, 60315))
-                          case 2:
-                            return e.abrupt('return', e.sent.default)
-                          case 3:
-                          case 'end':
-                            return e.stop()
-                        }
-                    }, i)
-                  }),
-                )
-                function o() {
-                  return n.apply(this, arguments)
-                }
-                return o
-              })(),
-              loading: () => null,
-            }),
-            previewerProps: {
-              sources: {
-                _: { tsx: w },
-                'index.ts': { import: '.', content: S },
-                'useForceRender/index.ts': { import: '../useForceRender', content: d },
-                'utils/index.ts': { import: '../utils', content: m },
-              },
-              dependencies: { react: { version: '16.14.0' } },
-              identifier: 'usecountup-demo',
-            },
-          },
-          'usehistoryref-demo': {
-            component: (0, u.D8)({
-              loader: (function () {
-                var n = (0, a.Z)(
-                  s().mark(function i() {
-                    return s().wrap(function (e) {
-                      for (;;)
-                        switch ((e.prev = e.next)) {
-                          case 0:
-                            return (e.next = 2), t.e(6050).then(t.bind(t, 19353))
-                          case 2:
-                            return e.abrupt('return', e.sent.default)
-                          case 3:
-                          case 'end':
-                            return e.stop()
-                        }
-                    }, i)
-                  }),
-                )
-                function o() {
-                  return n.apply(this, arguments)
-                }
-                return o
-              })(),
-              loading: () => null,
-            }),
-            previewerProps: {
-              sources: {
-                _: { tsx: b },
-                'useCounter/index.ts': { import: '../useCounter', content: P },
-                'index.ts': { import: '.', content: R },
-                'historyState.ts': { import: './historyState', content: C },
-                'useForceRender/index.ts': { import: '../useForceRender', content: d },
-              },
-              dependencies: { react: { version: '16.14.0' } },
-              identifier: 'usehistoryref-demo',
-            },
-          },
-          'useamappoi-demo': {
-            component: (0, u.D8)({
-              loader: (function () {
-                var n = (0, a.Z)(
-                  s().mark(function i() {
-                    return s().wrap(function (e) {
-                      for (;;)
-                        switch ((e.prev = e.next)) {
-                          case 0:
-                            return (e.next = 2), t.e(6050).then(t.bind(t, 45331))
-                          case 2:
-                            return e.abrupt('return', e.sent.default)
-                          case 3:
-                          case 'end':
-                            return e.stop()
-                        }
-                    }, i)
-                  }),
-                )
-                function o() {
-                  return n.apply(this, arguments)
-                }
-                return o
-              })(),
-              loading: () => null,
-            }),
-            previewerProps: {
-              sources: {
-                _: { tsx: T },
-                'index.ts': { import: '.', content: L },
-                'utils/index.ts': { import: '../utils', content: x },
-                'helper.ts': { import: './helper', content: D },
-              },
-              dependencies: { react: { version: '16.14.0' } },
-              identifier: 'useamappoi-demo',
-            },
-          },
-        },
-        A = {},
-        M = t(56500),
-        U = (n) => p.createElement(M.Z, (0, l.Z)({}, n, { config: f, demos: k, apis: A }))
-    },
-  },
-])
+}`,k={"usecountdown-demo":{component:(0,u.D8)({loader:function(){var n=(0,a.Z)(s().mark(function i(){return s().wrap(function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,t.e(6050).then(t.bind(t,22380));case 2:return e.abrupt("return",e.sent.default);case 3:case"end":return e.stop()}},i)}));function o(){return n.apply(this,arguments)}return o}(),loading:()=>null}),previewerProps:{sources:{_:{tsx:g},"index.ts":{import:".",content:v},"utils/index.ts":{import:"../utils",content:m}},dependencies:{react:{version:"16.14.0"}},identifier:"usecountdown-demo"}},"usecountup-demo":{component:(0,u.D8)({loader:function(){var n=(0,a.Z)(s().mark(function i(){return s().wrap(function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,t.e(6050).then(t.bind(t,60315));case 2:return e.abrupt("return",e.sent.default);case 3:case"end":return e.stop()}},i)}));function o(){return n.apply(this,arguments)}return o}(),loading:()=>null}),previewerProps:{sources:{_:{tsx:w},"index.ts":{import:".",content:S},"useForceRender/index.ts":{import:"../useForceRender",content:d},"utils/index.ts":{import:"../utils",content:m}},dependencies:{react:{version:"16.14.0"}},identifier:"usecountup-demo"}},"usehistoryref-demo":{component:(0,u.D8)({loader:function(){var n=(0,a.Z)(s().mark(function i(){return s().wrap(function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,t.e(6050).then(t.bind(t,19353));case 2:return e.abrupt("return",e.sent.default);case 3:case"end":return e.stop()}},i)}));function o(){return n.apply(this,arguments)}return o}(),loading:()=>null}),previewerProps:{sources:{_:{tsx:b},"useCounter/index.ts":{import:"../useCounter",content:P},"index.ts":{import:".",content:R},"historyState.ts":{import:"./historyState",content:C},"useForceRender/index.ts":{import:"../useForceRender",content:d}},dependencies:{react:{version:"16.14.0"}},identifier:"usehistoryref-demo"}},"useamappoi-demo":{component:(0,u.D8)({loader:function(){var n=(0,a.Z)(s().mark(function i(){return s().wrap(function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,t.e(6050).then(t.bind(t,45331));case 2:return e.abrupt("return",e.sent.default);case 3:case"end":return e.stop()}},i)}));function o(){return n.apply(this,arguments)}return o}(),loading:()=>null}),previewerProps:{sources:{_:{tsx:T},"index.ts":{import:".",content:L},"utils/index.ts":{import:"../utils",content:x},"helper.ts":{import:"./helper",content:D}},dependencies:{react:{version:"16.14.0"}},identifier:"useamappoi-demo"}}},A={},M=t(56500),U=n=>p.createElement(M.Z,(0,l.Z)({},n,{config:f,demos:k,apis:A}))}}]);

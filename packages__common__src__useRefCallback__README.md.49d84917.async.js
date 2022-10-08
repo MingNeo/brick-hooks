@@ -1,37 +1,4 @@
-;(self.webpackChunk_brick_hooks_root = self.webpackChunk_brick_hooks_root || []).push([
-  [4404],
-  {
-    98866: function (r, s, u) {
-      'use strict'
-      u.r(s)
-      var e = u(67294),
-        n = u(36445),
-        l = u(91485),
-        o = e.memo((t) => {
-          var c = t.demos
-          return e.createElement(
-            e.Fragment,
-            null,
-            e.createElement(
-              'div',
-              { className: 'markdown' },
-              e.createElement(
-                'h2',
-                { id: 'userefcallback' },
-                e.createElement(
-                  n.AnchorLink,
-                  { to: '#userefcallback', 'aria-hidden': 'true', tabIndex: -1 },
-                  e.createElement('span', { className: 'icon icon-link' }),
-                ),
-                'useRefCallback',
-              ),
-              e.createElement(
-                'p',
-                null,
-                '\u53EF\u7528\u4E8E\u66FF\u6362\u90E8\u5206\u60C5\u51B5\u4E0B\u7684 React.useCallback\u3002\u8FD4\u56DE\u4E00\u4E2A function\uFF0C\u53EF\u4EE5\u4FDD\u8BC1\u51FD\u6570\u5730\u5740\u5728\u7EC4\u4EF6\u4E2D\u4E0D\u4F1A\u53D8\u5316\u3002\u89E3\u51B3 useCallback \u4F9D\u8D56\u503C\u53D8\u5316\u800C\u91CD\u65B0\u751F\u6210\u65B0\u51FD\u6570\u7684\u95EE\u9898\u3002',
-              ),
-              e.createElement(l.Z, {
-                code: `function MyComponent() {
+(self.webpackChunk_brick_hooks_root=self.webpackChunk_brick_hooks_root||[]).push([[4404],{98866:function(r,s,u){"use strict";u.r(s);var e=u(67294),n=u(36445),l=u(91485),o=e.memo(t=>{var c=t.demos;return e.createElement(e.Fragment,null,e.createElement("div",{className:"markdown"},e.createElement("h2",{id:"userefcallback"},e.createElement(n.AnchorLink,{to:"#userefcallback","aria-hidden":"true",tabIndex:-1},e.createElement("span",{className:"icon icon-link"})),"useRefCallback"),e.createElement("p",null,"\u53EF\u7528\u4E8E\u66FF\u6362\u90E8\u5206\u60C5\u51B5\u4E0B\u7684 React.useCallback\u3002\u8FD4\u56DE\u4E00\u4E2A function\uFF0C\u53EF\u4EE5\u4FDD\u8BC1\u51FD\u6570\u5730\u5740\u5728\u7EC4\u4EF6\u4E2D\u4E0D\u4F1A\u53D8\u5316\u3002\u89E3\u51B3 useCallback \u4F9D\u8D56\u503C\u53D8\u5316\u800C\u91CD\u65B0\u751F\u6210\u65B0\u51FD\u6570\u7684\u95EE\u9898\u3002"),e.createElement(l.Z,{code:`function MyComponent() {
   const [stateA, setStateA] = useState(0)
   const [stateB, setStateB] = useState(0)
 
@@ -54,27 +21,4 @@
   }, [stateB])
 
   return <Child>...</Child>
-}`,
-                lang: 'javascript',
-              }),
-            ),
-          )
-        })
-      s.default = (t) => {
-        var c = e.useContext(n.context),
-          E = c.demos
-        return (
-          e.useEffect(() => {
-            var a
-            t != null &&
-              (a = t.location) !== null &&
-              a !== void 0 &&
-              a.hash &&
-              n.AnchorLink.scrollToAnchor(decodeURIComponent(t.location.hash.slice(1)))
-          }, []),
-          e.createElement(o, { demos: E })
-        )
-      }
-    },
-  },
-])
+}`,lang:"javascript"})))});s.default=t=>{var c=e.useContext(n.context),E=c.demos;return e.useEffect(()=>{var a;t!=null&&(a=t.location)!==null&&a!==void 0&&a.hash&&n.AnchorLink.scrollToAnchor(decodeURIComponent(t.location.hash.slice(1)))},[]),e.createElement(o,{demos:E})}}}]);

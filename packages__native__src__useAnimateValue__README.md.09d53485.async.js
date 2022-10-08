@@ -1,43 +1,4 @@
-;(self.webpackChunk_brick_hooks_root = self.webpackChunk_brick_hooks_root || []).push([
-  [3786],
-  {
-    5007: function (m, u, a) {
-      'use strict'
-      a.r(u)
-      var n = a(67294),
-        t = a(36445),
-        i = a(91485),
-        l = n.memo((e) => {
-          var r = e.demos
-          return n.createElement(
-            n.Fragment,
-            null,
-            n.createElement(
-              'div',
-              { className: 'markdown' },
-              n.createElement(
-                'h2',
-                { id: 'useanimatevalue' },
-                n.createElement(
-                  t.AnchorLink,
-                  { to: '#useanimatevalue', 'aria-hidden': 'true', tabIndex: -1 },
-                  n.createElement('span', { className: 'icon icon-link' }),
-                ),
-                'useAnimateValue',
-              ),
-              n.createElement('p', null, '\u65B9\u4FBF\u4F7F\u7528 react-native Animated'),
-              n.createElement(
-                'h3',
-                { id: '\u7C7B\u578B\u58F0\u660E' },
-                n.createElement(
-                  t.AnchorLink,
-                  { to: '#\u7C7B\u578B\u58F0\u660E', 'aria-hidden': 'true', tabIndex: -1 },
-                  n.createElement('span', { className: 'icon icon-link' }),
-                ),
-                '\u7C7B\u578B\u58F0\u660E',
-              ),
-              n.createElement(i.Z, {
-                code: `function useAnimateValue(options: {
+(self.webpackChunk_brick_hooks_root=self.webpackChunk_brick_hooks_root||[]).push([[3786],{5007:function(m,u,a){"use strict";a.r(u);var n=a(67294),t=a(36445),i=a(91485),l=n.memo(e=>{var r=e.demos;return n.createElement(n.Fragment,null,n.createElement("div",{className:"markdown"},n.createElement("h2",{id:"useanimatevalue"},n.createElement(t.AnchorLink,{to:"#useanimatevalue","aria-hidden":"true",tabIndex:-1},n.createElement("span",{className:"icon icon-link"})),"useAnimateValue"),n.createElement("p",null,"\u65B9\u4FBF\u4F7F\u7528 react-native Animated"),n.createElement("h3",{id:"\u7C7B\u578B\u58F0\u660E"},n.createElement(t.AnchorLink,{to:"#\u7C7B\u578B\u58F0\u660E","aria-hidden":"true",tabIndex:-1},n.createElement("span",{className:"icon icon-link"})),"\u7C7B\u578B\u58F0\u660E"),n.createElement(i.Z,{code:`function useAnimateValue(options: {
   from: number
   to: number
   onAnimationEnd?: any
@@ -67,21 +28,7 @@
   start: () => void
   reset: () => void
   interpolate: ({ inputRange, outputRange, ...config }: any) => Animated.AnimatedInterpolation
-}`,
-                lang: 'typescript',
-              }),
-              n.createElement(
-                'h3',
-                { id: '\u7528\u6CD5' },
-                n.createElement(
-                  t.AnchorLink,
-                  { to: '#\u7528\u6CD5', 'aria-hidden': 'true', tabIndex: -1 },
-                  n.createElement('span', { className: 'icon icon-link' }),
-                ),
-                '\u7528\u6CD5',
-              ),
-              n.createElement(i.Z, {
-                code: `function MyComponent() {
+}`,lang:"typescript"}),n.createElement("h3",{id:"\u7528\u6CD5"},n.createElement(t.AnchorLink,{to:"#\u7528\u6CD5","aria-hidden":"true",tabIndex:-1},n.createElement("span",{className:"icon icon-link"})),"\u7528\u6CD5"),n.createElement(i.Z,{code:`function MyComponent() {
   const { animatedValue, interpolate, start, reset } = useAnimateValue({
     from: 0,
     to: 1,
@@ -113,27 +60,4 @@
       }}
     />
   )
-}`,
-                lang: 'javascript',
-              }),
-            ),
-          )
-        })
-      u.default = (e) => {
-        var r = n.useContext(t.context),
-          c = r.demos
-        return (
-          n.useEffect(() => {
-            var o
-            e != null &&
-              (o = e.location) !== null &&
-              o !== void 0 &&
-              o.hash &&
-              t.AnchorLink.scrollToAnchor(decodeURIComponent(e.location.hash.slice(1)))
-          }, []),
-          n.createElement(l, { demos: c })
-        )
-      }
-    },
-  },
-])
+}`,lang:"javascript"})))});u.default=e=>{var r=n.useContext(t.context),c=r.demos;return n.useEffect(()=>{var o;e!=null&&(o=e.location)!==null&&o!==void 0&&o.hash&&t.AnchorLink.scrollToAnchor(decodeURIComponent(e.location.hash.slice(1)))},[]),n.createElement(l,{demos:c})}}}]);

@@ -1,47 +1,4 @@
-;(self.webpackChunk_brick_hooks_root = self.webpackChunk_brick_hooks_root || []).push([
-  [6134],
-  {
-    45561: function (c, a, o) {
-      'use strict'
-      o.r(a)
-      var e = o(67294),
-        n = o(36445),
-        i = o(91485),
-        l = e.memo((t) => {
-          var r = t.demos
-          return e.createElement(
-            e.Fragment,
-            null,
-            e.createElement(
-              'div',
-              { className: 'markdown' },
-              e.createElement(
-                'h2',
-                { id: 'usetransition' },
-                e.createElement(
-                  n.AnchorLink,
-                  { to: '#usetransition', 'aria-hidden': 'true', tabIndex: -1 },
-                  e.createElement('span', { className: 'icon icon-link' }),
-                ),
-                'useTransition',
-              ),
-              e.createElement(
-                'p',
-                null,
-                '\u65B9\u4FBF\u4F7F\u7528 react-native Animated \u6765\u5B9E\u73B0\u8FC7\u6E21\u6548\u679C',
-              ),
-              e.createElement(
-                'h3',
-                { id: '\u7C7B\u578B\u58F0\u660E' },
-                e.createElement(
-                  n.AnchorLink,
-                  { to: '#\u7C7B\u578B\u58F0\u660E', 'aria-hidden': 'true', tabIndex: -1 },
-                  e.createElement('span', { className: 'icon icon-link' }),
-                ),
-                '\u7C7B\u578B\u58F0\u660E',
-              ),
-              e.createElement(i.Z, {
-                code: `function useTransition(options: {
+(self.webpackChunk_brick_hooks_root=self.webpackChunk_brick_hooks_root||[]).push([[6134],{45561:function(c,a,o){"use strict";o.r(a);var e=o(67294),n=o(36445),i=o(91485),l=e.memo(t=>{var r=t.demos;return e.createElement(e.Fragment,null,e.createElement("div",{className:"markdown"},e.createElement("h2",{id:"usetransition"},e.createElement(n.AnchorLink,{to:"#usetransition","aria-hidden":"true",tabIndex:-1},e.createElement("span",{className:"icon icon-link"})),"useTransition"),e.createElement("p",null,"\u65B9\u4FBF\u4F7F\u7528 react-native Animated \u6765\u5B9E\u73B0\u8FC7\u6E21\u6548\u679C"),e.createElement("h3",{id:"\u7C7B\u578B\u58F0\u660E"},e.createElement(n.AnchorLink,{to:"#\u7C7B\u578B\u58F0\u660E","aria-hidden":"true",tabIndex:-1},e.createElement("span",{className:"icon icon-link"})),"\u7C7B\u578B\u58F0\u660E"),e.createElement(i.Z,{code:`function useTransition(options: {
   from: Record<string, any>[]
   to: Record<string, any> \uFF5C Record<string, any>[],
   reverse: boolean,
@@ -54,21 +11,7 @@
   isInteraction?: boolean
   useNativeDriver?: boolean
   shouldReset?: boolean
-}): [any]`,
-                lang: 'typescript',
-              }),
-              e.createElement(
-                'h3',
-                { id: '\u7528\u6CD5' },
-                e.createElement(
-                  n.AnchorLink,
-                  { to: '#\u7528\u6CD5', 'aria-hidden': 'true', tabIndex: -1 },
-                  e.createElement('span', { className: 'icon icon-link' }),
-                ),
-                '\u7528\u6CD5',
-              ),
-              e.createElement(i.Z, {
-                code: `function MyComponent() {
+}): [any]`,lang:"typescript"}),e.createElement("h3",{id:"\u7528\u6CD5"},e.createElement(n.AnchorLink,{to:"#\u7528\u6CD5","aria-hidden":"true",tabIndex:-1},e.createElement("span",{className:"icon icon-link"})),"\u7528\u6CD5"),e.createElement(i.Z,{code:`function MyComponent() {
   const [visible, toggleVisible] = useToggle(true)
   const [style] = useTransition({
     from: { opacity: 0, marginLeft: 0, width: 50, height: 50 },
@@ -85,21 +28,7 @@
       <Button onClick={() => toggleVisible()}>Fade {visible ? 'Out' : 'In'}</Button>
     </>
   )
-}`,
-                lang: 'javascript',
-              }),
-              e.createElement(
-                'h4',
-                { id: '\u5728\u4E24\u4E2A\u7EC4\u4EF6\u4E2D\u5207\u6362' },
-                e.createElement(
-                  n.AnchorLink,
-                  { to: '#\u5728\u4E24\u4E2A\u7EC4\u4EF6\u4E2D\u5207\u6362', 'aria-hidden': 'true', tabIndex: -1 },
-                  e.createElement('span', { className: 'icon icon-link' }),
-                ),
-                '\u5728\u4E24\u4E2A\u7EC4\u4EF6\u4E2D\u5207\u6362',
-              ),
-              e.createElement(i.Z, {
-                code: `function MyComponent() {
+}`,lang:"javascript"}),e.createElement("h4",{id:"\u5728\u4E24\u4E2A\u7EC4\u4EF6\u4E2D\u5207\u6362"},e.createElement(n.AnchorLink,{to:"#\u5728\u4E24\u4E2A\u7EC4\u4EF6\u4E2D\u5207\u6362","aria-hidden":"true",tabIndex:-1},e.createElement("span",{className:"icon icon-link"})),"\u5728\u4E24\u4E2A\u7EC4\u4EF6\u4E2D\u5207\u6362"),e.createElement(i.Z,{code:`function MyComponent() {
   const [visible, toggleVisible] = useToggle(true)
   const from = { opacity: 0, width: 50, height: 50 }
   const to = { opacity: 1, width: 50, height: 50 }
@@ -126,21 +55,7 @@
       <Button onClick={() => toggleVisible()}>toggle</Button>
     </>
   )
-}`,
-                lang: 'javascript',
-              }),
-              e.createElement(
-                'h4',
-                { id: '\u7EC4\u5408\u591A\u4E2A\u8FC7\u6E21\u52A8\u753B' },
-                e.createElement(
-                  n.AnchorLink,
-                  { to: '#\u7EC4\u5408\u591A\u4E2A\u8FC7\u6E21\u52A8\u753B', 'aria-hidden': 'true', tabIndex: -1 },
-                  e.createElement('span', { className: 'icon icon-link' }),
-                ),
-                '\u7EC4\u5408\u591A\u4E2A\u8FC7\u6E21\u52A8\u753B',
-              ),
-              e.createElement(i.Z, {
-                code: `function MyComponent() {
+}`,lang:"javascript"}),e.createElement("h4",{id:"\u7EC4\u5408\u591A\u4E2A\u8FC7\u6E21\u52A8\u753B"},e.createElement(n.AnchorLink,{to:"#\u7EC4\u5408\u591A\u4E2A\u8FC7\u6E21\u52A8\u753B","aria-hidden":"true",tabIndex:-1},e.createElement("span",{className:"icon icon-link"})),"\u7EC4\u5408\u591A\u4E2A\u8FC7\u6E21\u52A8\u753B"),e.createElement(i.Z,{code:`function MyComponent() {
   const [visible, toggleVisible] = useToggle(true)
   const [compAStyle] = useTransition({
     from: { opacity: 0, left: 0, width: 400, height: 0 },
@@ -169,27 +84,4 @@
       <Button onClick={() => toggleVisible()}>toggle</Button>
     </>
   )
-}`,
-                lang: 'javascript',
-              }),
-            ),
-          )
-        })
-      a.default = (t) => {
-        var r = e.useContext(n.context),
-          s = r.demos
-        return (
-          e.useEffect(() => {
-            var u
-            t != null &&
-              (u = t.location) !== null &&
-              u !== void 0 &&
-              u.hash &&
-              n.AnchorLink.scrollToAnchor(decodeURIComponent(t.location.hash.slice(1)))
-          }, []),
-          e.createElement(l, { demos: s })
-        )
-      }
-    },
-  },
-])
+}`,lang:"javascript"})))});a.default=t=>{var r=e.useContext(n.context),s=r.demos;return e.useEffect(()=>{var u;t!=null&&(u=t.location)!==null&&u!==void 0&&u.hash&&n.AnchorLink.scrollToAnchor(decodeURIComponent(t.location.hash.slice(1)))},[]),e.createElement(l,{demos:s})}}}]);

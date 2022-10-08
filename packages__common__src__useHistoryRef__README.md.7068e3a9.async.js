@@ -1,114 +1,13 @@
-;(self.webpackChunk_brick_hooks_root = self.webpackChunk_brick_hooks_root || []).push([
-  [3197],
-  {
-    73602: function (d, o, n) {
-      'use strict'
-      n.d(o, {
-        m: function () {
-          return e.m
-        },
-      })
-      var e = n(67624),
-        u = n(93142)
-    },
-    96344: function (d, o, n) {
-      'use strict'
-      n.r(o)
-      var e = n(67294),
-        u = n(36445),
-        c = n(16889),
-        i = n(91485),
-        l = e.memo((t) => {
-          var r = t.demos,
-            a = r['usehistoryref-demo'].component
-          return e.createElement(
-            e.Fragment,
-            null,
-            e.createElement(
-              e.Fragment,
-              null,
-              e.createElement(
-                'div',
-                { className: 'markdown' },
-                e.createElement(
-                  'h2',
-                  { id: 'usehistoryref' },
-                  e.createElement(
-                    u.AnchorLink,
-                    { to: '#usehistoryref', 'aria-hidden': 'true', tabIndex: -1 },
-                    e.createElement('span', { className: 'icon icon-link' }),
-                  ),
-                  'useHistoryRef',
-                ),
-                e.createElement(
-                  'p',
-                  null,
-                  '\u521B\u5EFA\u3001\u5B58\u50A8\u3001\u7BA1\u7406\u5386\u53F2\u3002\u5E76\u53EF\u8FDB\u884C undo\u3001redo \u7B49\u64CD\u4F5C\u3002\u8FD4\u56DE\u4E00\u4E2A ref \u5BF9\u8C61',
-                ),
-                e.createElement(
-                  'h3',
-                  { id: '\u6F14\u793A' },
-                  e.createElement(
-                    u.AnchorLink,
-                    { to: '#\u6F14\u793A', 'aria-hidden': 'true', tabIndex: -1 },
-                    e.createElement('span', { className: 'icon icon-link' }),
-                  ),
-                  '\u6F14\u793A',
-                ),
-              ),
-              e.createElement(c.default, r['usehistoryref-demo'].previewerProps, e.createElement(a, null)),
-              e.createElement(
-                'div',
-                { className: 'markdown' },
-                e.createElement(
-                  'h3',
-                  { id: '\u7528\u6CD5' },
-                  e.createElement(
-                    u.AnchorLink,
-                    { to: '#\u7528\u6CD5', 'aria-hidden': 'true', tabIndex: -1 },
-                    e.createElement('span', { className: 'icon icon-link' }),
-                  ),
-                  '\u7528\u6CD5',
-                ),
-                e.createElement(i.Z, {
-                  code: `function MyComponent() {
+(self.webpackChunk_brick_hooks_root=self.webpackChunk_brick_hooks_root||[]).push([[3197],{73602:function(d,o,n){"use strict";n.d(o,{m:function(){return e.m}});var e=n(67624),u=n(93142)},96344:function(d,o,n){"use strict";n.r(o);var e=n(67294),u=n(36445),c=n(16889),i=n(91485),l=e.memo(t=>{var r=t.demos,a=r["usehistoryref-demo"].component;return e.createElement(e.Fragment,null,e.createElement(e.Fragment,null,e.createElement("div",{className:"markdown"},e.createElement("h2",{id:"usehistoryref"},e.createElement(u.AnchorLink,{to:"#usehistoryref","aria-hidden":"true",tabIndex:-1},e.createElement("span",{className:"icon icon-link"})),"useHistoryRef"),e.createElement("p",null,"\u521B\u5EFA\u3001\u5B58\u50A8\u3001\u7BA1\u7406\u5386\u53F2\u3002\u5E76\u53EF\u8FDB\u884C undo\u3001redo \u7B49\u64CD\u4F5C\u3002\u8FD4\u56DE\u4E00\u4E2A ref \u5BF9\u8C61"),e.createElement("h3",{id:"\u6F14\u793A"},e.createElement(u.AnchorLink,{to:"#\u6F14\u793A","aria-hidden":"true",tabIndex:-1},e.createElement("span",{className:"icon icon-link"})),"\u6F14\u793A")),e.createElement(c.default,r["usehistoryref-demo"].previewerProps,e.createElement(a,null)),e.createElement("div",{className:"markdown"},e.createElement("h3",{id:"\u7528\u6CD5"},e.createElement(u.AnchorLink,{to:"#\u7528\u6CD5","aria-hidden":"true",tabIndex:-1},e.createElement("span",{className:"icon icon-link"})),"\u7528\u6CD5"),e.createElement(i.Z,{code:`function MyComponent() {
   const { undo, redo, push, last, undoList, redoList, history } = useHistoryRef()
   return <div>...</div>
-}`,
-                  lang: 'javascript',
-                }),
-                e.createElement(
-                  'p',
-                  null,
-                  '\u9ED8\u8BA4\u4F7F\u7528 JSON.stringify\u3001JSON.parse \u6765\u8FDB\u884C\u6570\u636E\u7684\u5E8F\u5217\u5316\u548C\u53CD\u5E8F\u5217\u5316\uFF0C\u4E5F\u53EF\u4EE5\u901A\u8FC7 dump\u3001parse \u53C2\u6570\u624B\u5DE5\u5904\u7406',
-                ),
-                e.createElement(i.Z, {
-                  code: `function MyComponent() {
+}`,lang:"javascript"}),e.createElement("p",null,"\u9ED8\u8BA4\u4F7F\u7528 JSON.stringify\u3001JSON.parse \u6765\u8FDB\u884C\u6570\u636E\u7684\u5E8F\u5217\u5316\u548C\u53CD\u5E8F\u5217\u5316\uFF0C\u4E5F\u53EF\u4EE5\u901A\u8FC7 dump\u3001parse \u53C2\u6570\u624B\u5DE5\u5904\u7406"),e.createElement(i.Z,{code:`function MyComponent() {
   const { undo, redo, push, last, undoList, redoList, history } = useHistoryRef({
     dump: (source) => source,
     parse: (value) => value,
   })
   return <div>...</div>
-}`,
-                  lang: 'javascript',
-                }),
-                e.createElement(
-                  'h4',
-                  { id: '\u53D8\u5316\u65F6\u89E6\u53D1\u6E32\u67D3' },
-                  e.createElement(
-                    u.AnchorLink,
-                    { to: '#\u53D8\u5316\u65F6\u89E6\u53D1\u6E32\u67D3', 'aria-hidden': 'true', tabIndex: -1 },
-                    e.createElement('span', { className: 'icon icon-link' }),
-                  ),
-                  '\u53D8\u5316\u65F6\u89E6\u53D1\u6E32\u67D3',
-                ),
-                e.createElement(
-                  'p',
-                  null,
-                  '\u672C hook \u8FD4\u56DE\u503C\u5E76\u4E0D\u662F react \u7684 state\uFF0C\u56E0\u6B64\u4E0D\u4F1A\u89E6\u53D1\u7EC4\u4EF6\u66F4\u65B0\u3002\u53EF\u4F7F\u7528 onUpdate \u53C2\u6570\u8FDB\u884C\u81EA\u5B9A\u4E49\u5904\u7406\u6216\u4F7F\u7528 useHistoryState',
-                ),
-                e.createElement(i.Z, {
-                  code: `function MyComponent() {
+}`,lang:"javascript"}),e.createElement("h4",{id:"\u53D8\u5316\u65F6\u89E6\u53D1\u6E32\u67D3"},e.createElement(u.AnchorLink,{to:"#\u53D8\u5316\u65F6\u89E6\u53D1\u6E32\u67D3","aria-hidden":"true",tabIndex:-1},e.createElement("span",{className:"icon icon-link"})),"\u53D8\u5316\u65F6\u89E6\u53D1\u6E32\u67D3"),e.createElement("p",null,"\u672C hook \u8FD4\u56DE\u503C\u5E76\u4E0D\u662F react \u7684 state\uFF0C\u56E0\u6B64\u4E0D\u4F1A\u89E6\u53D1\u7EC4\u4EF6\u66F4\u65B0\u3002\u53EF\u4F7F\u7528 onUpdate \u53C2\u6570\u8FDB\u884C\u81EA\u5B9A\u4E49\u5904\u7406\u6216\u4F7F\u7528 useHistoryState"),e.createElement(i.Z,{code:`function MyComponent() {
   const [count, { inc }] = useCounter(0)
   const forceUpdate = useForceRender()
   const { undo, redo, push, last, undoList, redoList, history } = useHistoryRef({
@@ -139,21 +38,7 @@
       <p>redoList: {JSON.stringify(redoList)}</p>
     </div>
   )
-}`,
-                  lang: 'javascript',
-                }),
-                e.createElement(
-                  'h3',
-                  { id: '\u7C7B\u578B\u58F0\u660E' },
-                  e.createElement(
-                    u.AnchorLink,
-                    { to: '#\u7C7B\u578B\u58F0\u660E', 'aria-hidden': 'true', tabIndex: -1 },
-                    e.createElement('span', { className: 'icon icon-link' }),
-                  ),
-                  '\u7C7B\u578B\u58F0\u660E',
-                ),
-                e.createElement(i.Z, {
-                  code: `function useHistoryRef<Raw, Serialized = Raw>(options?: {
+}`,lang:"javascript"}),e.createElement("h3",{id:"\u7C7B\u578B\u58F0\u660E"},e.createElement(u.AnchorLink,{to:"#\u7C7B\u578B\u58F0\u660E","aria-hidden":"true",tabIndex:-1},e.createElement("span",{className:"icon icon-link"})),"\u7C7B\u578B\u58F0\u660E"),e.createElement(i.Z,{code:`function useHistoryRef<Raw, Serialized = Raw>(options?: {
   max?: number // \u6700\u591A\u4FDD\u5B58\u591A\u5C11\u6761\u6570\u636E\uFF0C\u9ED8\u8BA4\u4E0D\u9650\u5236
   dump?: (source: Raw) => Serialized // \u5E8F\u5217\u5316\u6570\u636E\u7684\u51FD\u6570
   parse?: <Raw>(value: Serialized) => Raw // \u53CD\u5E8F\u5217\u5316\u6570\u636E\u7684\u51FD\u6570
@@ -174,28 +59,4 @@
   getHistory: HistoryStock<Serialized>[]
   getUndoList: HistoryStock<Serialized>[]
   getRedoList: HistoryStock<Serialized>[]
-}`,
-                  lang: 'typescript',
-                }),
-              ),
-            ),
-          )
-        })
-      o.default = (t) => {
-        var r = e.useContext(u.context),
-          a = r.demos
-        return (
-          e.useEffect(() => {
-            var s
-            t != null &&
-              (s = t.location) !== null &&
-              s !== void 0 &&
-              s.hash &&
-              u.AnchorLink.scrollToAnchor(decodeURIComponent(t.location.hash.slice(1)))
-          }, []),
-          e.createElement(l, { demos: a })
-        )
-      }
-    },
-  },
-])
+}`,lang:"typescript"}))))});o.default=t=>{var r=e.useContext(u.context),a=r.demos;return e.useEffect(()=>{var s;t!=null&&(s=t.location)!==null&&s!==void 0&&s.hash&&u.AnchorLink.scrollToAnchor(decodeURIComponent(t.location.hash.slice(1)))},[]),e.createElement(l,{demos:a})}}}]);

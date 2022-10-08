@@ -1,6 +1,8 @@
 ## useHistoryState
 
-创建、存储、管理历史。并可进行undo、redo等操作。
+创建、存储、管理历史。并可进行 undo、redo 等操作。
+
+### 类型声明
 
 ```typescript
 function useHistoryState<Raw, Serialized = Raw>(options?: {
@@ -27,7 +29,8 @@ function useHistoryState<Raw, Serialized = Raw>(options?: {
 }
 ```
 
-### 使用
+### 用法
+
 ```javascript
 function MyComponent() {
   const { undo, redo, push, last, undoList, redoList, history } = useHistoryState()
@@ -49,12 +52,13 @@ function MyComponent() {
 }
 ```
 
-默认使用JSON.stringify、JSON.parse来进行数据的序列化和反序列化，也可以通过dump、parse参数手工处理
+默认使用 JSON.stringify、JSON.parse 来进行数据的序列化和反序列化，也可以通过 dump、parse 参数手工处理
+
 ```javascript
 function MyComponent() {
   const { undo, redo, push, last, undoList, redoList, history } = useHistoryState({
     dump: (source) => source,
-    parse: (value) => value
+    parse: (value) => value,
   })
   return <div>...</div>
 }

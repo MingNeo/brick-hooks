@@ -2,9 +2,13 @@
 
 创建一个字符串 state，并对字符串数据进行自动去掉空格的处理
 
+### 类型声明
+
 ```typescript
 function useTrimValue(initialValue: string | undefined, fullTrim?: boolean): [string, setTrimState]
 ```
+
+### 用法
 
 ```javascript
 function MyComponent(props) {

@@ -2,6 +2,8 @@
 
 方便使用 localStorage 和 sessionStorage
 
+### 类型声明
+
 ```typescript
 function useStorage(
   itemName: string,
@@ -12,13 +14,13 @@ function useStorage(
   }?: {
     watchStorageChange?: boolean
     storageType?: string
-  }
+  },
 ): [
   any,
   (value?: string | number | Record<string, any> | any[]) => void,
   {
     clear: () => void
-  }
+  },
 ]
 ```
 
@@ -34,7 +36,9 @@ setCacheUserInfo({ userName: 'klose' })
 ```
 
 ### useLocalStorage & useSessionStorage
-对useStorage进行简单封装，无需手工配置storageType
+
+对 useStorage 进行简单封装，无需手工配置 storageType
+
 ```javascript
 const [cacheUserInfo, setCacheUserInfo, { clear }] = useSessionStorage('user', {})
 ```

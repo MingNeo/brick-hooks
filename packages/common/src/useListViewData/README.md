@@ -2,6 +2,8 @@
 
 处理列表数据的 hooks, 请求数据、加载下一页、清空筛选条件、重载数据
 
+### 类型声明
+
 ```typescript
 function useListViewData(
   fetchFn: FetchFn,
@@ -9,7 +11,7 @@ function useListViewData(
     pageNo?: number
     pageSize?: number
     query?: Record<string, any>
-  }
+  },
 ): {
   listData: any[]
   query: {

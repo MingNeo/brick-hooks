@@ -2,6 +2,8 @@
 
 对数组类型的数据进行处理，可以直接操作数组方法
 
+### 用法
+
 ```javascript
 function MyComponent() {
   const [testArray, testArrayMethods] = useArray([1, 2, 3])
@@ -13,20 +15,20 @@ function MyComponent() {
 
 ### actions
 
-| 方法 | 说明|
-|-----------|------------------------|
-| set      | 设置数组的值             | 
-| push     | 同 Array.prototype.push   | 
-| slice     | 同 Array.prototype.slice   |
-| pop     | 同 Array.prototype.pop   | 
-| clear     | 清空   | 
-| reverse | 同 Array.prototype.reverse |
-| concat | 同 Array.prototype.concat |
-| sort | 同 Array.prototype.sort |
-| sortBy | 基于指定字段做升降序排序, 默认为 ASC，详情见 useArray |
-| remove | 移除指定值，详情见 useArray |
-| removeById | 当数据格式为[{ id: 'xxx', value, ... }, ...]时，根据 id 移除对应的值 |
-| removeIndex | 移除指定 index 的值 |
+| 方法        | 说明                                                                 |
+| ----------- | -------------------------------------------------------------------- |
+| set         | 设置数组的值                                                         |
+| push        | 同 Array.prototype.push                                              |
+| slice       | 同 Array.prototype.slice                                             |
+| pop         | 同 Array.prototype.pop                                               |
+| clear       | 清空                                                                 |
+| reverse     | 同 Array.prototype.reverse                                           |
+| concat      | 同 Array.prototype.concat                                            |
+| sort        | 同 Array.prototype.sort                                              |
+| sortBy      | 基于指定字段做升降序排序, 默认为 ASC，详情见 useArray                |
+| remove      | 移除指定值，详情见 useArray                                          |
+| removeById  | 当数据格式为[{ id: 'xxx', value, ... }, ...]时，根据 id 移除对应的值 |
+| removeIndex | 移除指定 index 的值                                                  |
 
 ##### sortBy
 

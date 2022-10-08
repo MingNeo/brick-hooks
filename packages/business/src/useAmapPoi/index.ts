@@ -1,32 +1,54 @@
-import { useState } from 'react'
-import { formatPoiInfo } from './helper'
+import { useState, useRef } from 'react'
+import { isBrowser } from '../utils'
+import { formatPoiInfo, getNearByInfos, loadAmapScript, searchPois } from './helper'
 
-type Poi = Record<string, any>
+type Location = {
+  latitude?: string
+  longitude?: string
+  [x: string]: any
+}
+
+type Poi = {
+  latitude?: string
+  longitude?: string
+  [x: string]: any
+}
 
 interface AmapNearByPoiInfo extends Poi {
   pois: Poi[]
   [x: string]: any
 }
 
-export type GetNearByInfos = ({
-  latitude,
-  longitude,
-}: {
-  latitude?: string
-  longitude?: string
-  [x: string]: any
-}) => Promise<AmapNearByPoiInfo>
+export type GetNearByInfos = (location: Location | Poi) => Promise<AmapNearByPoiInfo>
 
 interface Options {
-  defaultPoi?: Poi
-  currentLocation?: Record<string, any>
+  defaultPoi?: Poi // 指定默认poi 格式为高德地图Poi格式
+  currentLocation?: { city?: string; [x: string]: any } // 当前定位信息，通常无需传这个值，searchPois时如不传city，则使用此处当前定位的城市
   services?: {
-    getNearByPoiList?: GetNearByInfos
-    searchPoiList?: any
+    getNearByPoiList?: GetNearByInfos // 自行封装的获取附近的poi列表的服务，使用获取附近Poi功能必传。
+    searchPoiList?: any // 自行封装的搜索poi的服务，使用搜索poi功能必传
   }
-  nearbyShowCurrent?: boolean
-  onChange?: (poi: Poi) => void
+  onCurrentPoiChange?: (poi: Poi) => void
   formatPoi?: (poi: Poi) => Poi
+
+  amapKey?: string
+}
+
+type GetNearbyPois = (options?: {
+  current: Location
+  size?: number // 展示数量
+  formatPois?: ((pois: Poi[]) => Poi[]) | ((pois: Poi[]) => Promise<Poi[]>)
+  showCurrent?: boolean
+}) => Promise<Poi[]>
+
+interface UseAmapPoiRetrun {
+  currentPoi: Poi
+  pois: any[]
+  nearbyPois: any[]
+  onSelectPoi: (poi: Poi) => Promise<void>
+  getNearbyPois: GetNearbyPois
+  searchPois: (params: any) => Promise<Poi[]>
+  setCurrentPos: (current: Poi) => Promise<Poi>
 }
 
 /**
@@ -37,67 +59,94 @@ export default function useAmapPoi({
   defaultPoi,
   currentLocation,
   services: { getNearByPoiList, searchPoiList } = {},
-  nearbyShowCurrent = true,
-  onChange,
+  onCurrentPoiChange,
   formatPoi = formatPoiInfo,
-}: Options = {}) {
+  amapKey,
+}: Options = {}): UseAmapPoiRetrun {
+  const loadedScriptRef = useRef<boolean>(false)
+  if (isBrowser) {
+    // 如果是浏览器端使用，默认可以不传service而使用内置的
+    getNearByPoiList = getNearByPoiList || getNearByInfos
+    searchPoiList = searchPoiList || searchPois
+    if (!loadedScriptRef.current && amapKey) {
+      loadedScriptRef.current = true
+      loadAmapScript(amapKey)
+    }
+  }
+
   const [currentPoi, setCurrentPoi] = useState(defaultPoi)
   const [pois, setPois] = useState([])
   const [nearbyPois, setNearbyPois] = useState([])
 
-  // 设置临时的地址选择
-  const onSelectPoi = async (poi: Poi) => {
+  const handleSetCurrentPos = async (poi: Location | Poi) => {
     if (!poi.latitude || !poi.longitude) {
       setCurrentPoi({})
       return
     }
 
-    const newPoiData = await formatPoi(poi)
-    if (!newPoiData.city || !newPoiData.poiId) {
-      const data = await getNearByPoiList({ latitude: poi.latitude, longitude: poi.longitude })
+    let newPoiData = await formatPoi(poi)
+    if ((!newPoiData.city || !newPoiData.poiId) && getNearByPoiList) {
+      const data = await getNearByPoiList(poi)
       newPoiData.city =
         newPoiData.city || data.city || data.cityname || data.pois?.[0]?.city || data.pois?.[0]?.cityname
       newPoiData.poiId = newPoiData.poiId || data.poiId || data.pois?.[0]?.poiId
-      if (!newPoiData.city) return
+      newPoiData = await formatPoi(newPoiData)
     }
+    if (!newPoiData.city) return
     setCurrentPoi(newPoiData)
-    onChange && onChange(newPoiData)
+    return newPoiData
+  }
+
+  // 设置临时的地址选择
+  const onSelectPoi = async (poi: Poi) => {
+    let newPoiData
+    try {
+      newPoiData = await handleSetCurrentPos(poi)
+      onCurrentPoiChange && onCurrentPoiChange(newPoiData)
+    } catch (error) {
+      console.log('select poi error')
+    }
   }
 
   // 根据城市/搜索关键字获取地址列表， 如不传city，则使用当前定位的城市
-  const searchPois = async (params) => {
-    const resultPois = (await searchPoiList({ ...params, city: params.city || currentLocation?.city })) || []
-    setPois(resultPois)
-    return resultPois
+  const handleSearchPois = async (params) => {
+    if (!searchPoiList) {
+      throw new Error('please set service searchPoiList')
+    }
+    try {
+      const resultPois = (await searchPoiList({ ...params, city: params.city || currentLocation?.city })) || []
+      setPois(resultPois)
+      return resultPois
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   /**
    * 根据定位获取几条附近的Poi
    */
-  const getNearbyPois = async (
-    {
-      latitude,
-      longitude,
-      size = 5,
-      formatPois = (pois: Poi[]) => pois.map(formatPoi),
-    }: {
-      latitude: string
-      longitude: string
-      size?: number
-      formatPois?: ((pois: Poi) => Poi[]) | ((pois: Poi) => Promise<Poi[]>)
-    } = {} as any
-  ) => {
-    const { pois, ...current } = await getNearByPoiList({ latitude, longitude })
+  const getNearbyPois: GetNearbyPois = async ({
+    current,
+    size = 5,
+    formatPois = (pois: Poi[]) => pois.map(formatPoi),
+    showCurrent = false,
+  }) => {
+    if (!getNearByPoiList) {
+      throw new Error('please set service getNearByPoiList')
+    }
+    const result = await getNearByPoiList(current)
     const showPois: Poi[] =
-      pois?.splice(0, size).map((poi: Poi) => ({ ...poi, city: poi.city || current.city || current.cityname })) || []
+      result.pois
+        ?.splice(0, size)
+        .map((poi: Poi) => ({ ...poi, city: poi.city || current.city || current.cityname })) || []
 
-    if (!current.latitude || !current.longitude || !showPois?.length) {
+    if (!result.latitude || !result.longitude || !showPois?.length) {
       setNearbyPois([])
       return []
     }
 
     // 地图等当前定位列表里增加当前定位点
-    if (nearbyShowCurrent) {
+    if (showCurrent) {
       showPois.unshift(current)
     }
 
@@ -111,7 +160,8 @@ export default function useAmapPoi({
     pois,
     nearbyPois,
     onSelectPoi,
+    setCurrentPos: handleSetCurrentPos,
     getNearbyPois, // 获取附近的poi
-    searchPois,
+    searchPois: handleSearchPois,
   }
 }

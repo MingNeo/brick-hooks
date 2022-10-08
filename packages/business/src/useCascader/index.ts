@@ -23,7 +23,7 @@ const reducers = {
   // 请求加载子节点数据后更新到nodeMap中
   addNodes: (
     state: State,
-    payload: { nodes: any; parent: any; checked?: boolean; disabled?: boolean; parentIdKey?: string; level?: number }
+    payload: { nodes: any; parent: any; checked?: boolean; disabled?: boolean; parentIdKey?: string; level?: number },
   ) => {
     const { nodes, parent, checked, disabled, parentIdKey = DEFAULT_PARENT_KEY, level } = payload
     nodes?.forEach((node: CascaderNode) => {
@@ -105,12 +105,14 @@ export default function useCascader({
     disabledIds && api.setDisableds({ ids: disabledIds, disabled: true })
   }, [disabledIds, api])
 
-  const { flatNodes, checkeds } = useMemo(() => {
+  const { flatNodes, checkeds, maxLevel } = useMemo(() => {
     const flatNodes = Object.values(nodeMap) as CascaderNode[]
     const checkeds = flatNodes.filter((v: CascaderNode) => v.checked)
+    const maxLevel = flatNodes.reduce((prev, cur) => (cur.level > prev ? cur.level : prev), 0)
     return {
       flatNodes,
       checkeds,
+      maxLevel,
     }
   }, [nodeMap])
 
@@ -144,6 +146,7 @@ export default function useCascader({
     data: treeData,
     flatNodes,
     checkeds,
+    maxLevel,
     toggleChecked,
     setDisableds,
     setCheckeds,

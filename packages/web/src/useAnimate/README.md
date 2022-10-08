@@ -6,6 +6,8 @@
 
 brickHooksNative.useAnimate 基于 react-native-web 的 animated 而非 css，内置 easing 要丰富一些且支持自定义函数。其他用法与本 hook 基本一致。
 
+### 类型声明
+
 ```typescript
 function useAnimate(options: {
   from?: Record<string, any>[]
@@ -21,6 +23,8 @@ function useAnimate(options: {
   keyframesName?: string // 使用指定keyframes，使用css样式表中已有的keyframes，设置这个值之后from、to、range无效
 }): [any, { start: any; reset: any; animatedValue: any; }]
 ```
+
+### 用法
 
 #### 基本使用
 
@@ -41,7 +45,7 @@ function MyComponent() {
 }
 ```
 
-#### 使用 keyframesName 指定已有 css
+#### 用法 keyframesName 指定已有 css
 
 ```css
 /* index.css */
@@ -131,7 +135,7 @@ function MyComponent() {
 }
 ```
 
-#### 使用 transform
+#### 用法 transform
 
 ```javascript
 function MyComponent() {

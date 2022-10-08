@@ -1,7 +1,6 @@
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook, act } from '@testing-library/react-hooks'
 import jestDiff from 'jest-diff'
-import { act } from 'react-test-renderer'
-import useListState from '..'
+import useListState from '../'
 
 const mockData = [
   { id: 'a001', pid: 0, value: '山东' },
@@ -28,7 +27,7 @@ describe('useListState 校验', () => {
         ({ initialValue }) => useListState(initialValue, (originValue, { transObj }) => transObj(originValue)),
         {
           initialProps: { initialValue: mockData },
-        }
+        },
       )
 
       expect(jestDiff(result.current[0], mapResult)).toMatch('Compared values have no visual difference.')
@@ -68,7 +67,7 @@ describe('useListState 校验', () => {
         ({ initialValue }) => useListState(initialValue, (originValue, { transTree }) => transTree(originValue)),
         {
           initialProps: { initialValue: mockData },
-        }
+        },
       )
 
       expect(jestDiff(result.current[0], treeResult)).toMatch('Compared values have no visual difference.')
@@ -91,7 +90,7 @@ describe('useListState 校验', () => {
           useListState(initialValue, (originValue, { group }) => group(originValue, { groupKey: 'pid' })),
         {
           initialProps: { initialValue: mockData },
-        }
+        },
       )
 
       expect(jestDiff(result.current[0], groupResult)).toMatch('Compared values have no visual difference.')
@@ -114,7 +113,7 @@ describe('useListState 校验', () => {
           useListState(initialValue, (originValue, { partition }) => partition(originValue, { groupKey: 'pid' })),
         {
           initialProps: { initialValue: mockData },
-        }
+        },
       )
 
       expect(jestDiff(result.current[0], partitionResult)).toMatch('Compared values have no visual difference.')
@@ -136,11 +135,11 @@ describe('useListState 校验', () => {
             chain(originValue)
               .filter((v) => !v.ignore)
               .partition({ groupKey: 'pid' })
-              .value()
+              .value(),
           ),
         {
           initialProps: { initialValue: mockChainData },
-        }
+        },
       )
 
       expect(jestDiff(result.current[0], partitionResult)).toMatch('Compared values have no visual difference.')

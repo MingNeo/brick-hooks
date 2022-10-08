@@ -2,6 +2,8 @@
 
 向页面中插入一个 script 文件
 
+### 类型声明
+
 ```typescript
 function useScript(
   src: string,
@@ -10,7 +12,7 @@ function useScript(
     async?: boolean // default: true script标签使用异步模式
     manual?: boolean // default: false 手动模式
     removeOnDestroy?: boolean // default: false 卸载组件时删除script标签
-  }
+  },
 ): {
   status: 'idle' | 'loading' | 'success' | 'error'
   load: () => Promise<Element>
@@ -18,13 +20,14 @@ function useScript(
 }
 ```
 
-### 使用
+### 用法
+
 ```javascript
 function MyComponent() {
   const { status } = useScript('http://xxx.cdn.com/moment.js')
 
   useEffect(() => {
-    if(status ==='success') {
+    if (status === 'success') {
       // ...
     }
   }, [status])
@@ -33,7 +36,7 @@ function MyComponent() {
 }
 ```
 
-也可以使用onLoaded
+也可以使用 onLoaded
 
 ```javascript
 function MyComponent() {
@@ -56,7 +59,7 @@ function MyComponent() {
 }
 ```
 
-不同组件同样script不会重复插入
+不同组件同样 script 不会重复插入
 
 ```javascript
 // http://xxx.cdn.com/moment.js 只会插入一次

@@ -1,18 +1,18 @@
 ## useListData
 
-对[{}, {}, ...]格式的数据进行处理, 自动监听变化并更新，可以使用自定义处理函数对数据进行处理
-可以理解为针对列表数据的相关处理函数及 useMemo 的封装，并提供链式的写法
+对[{}, {}, ...]格式的数据进行处理, 自动监听变化并更新，可以使用自定义处理函数对数据进行处理可以理解为针对列表数据的相关处理函数及 useMemo 的封装，并提供链式的写法
 
 ### 基本用法
 
-不使用内置方法的情况下，相当于一个写法不同的 useMemo
-useListState 的第二个参数，是一个数据处理回调函数，可以在其中对每次更新的数据自动做处理。
+不使用内置方法的情况下，相当于一个写法不同的 useMemo useListState 的第二个参数，是一个数据处理回调函数，可以在其中对每次更新的数据自动做处理。
+
+### 类型声明
 
 ```typescript
 function useListData<T extends Record<string, any>>(
   value?: T[],
   factory?: (originData: T[], transformMethods: typeof transformsMap) => any,
-  deps?: any[]
+  deps?: any[],
 ): any
 ```
 
@@ -32,13 +32,13 @@ const data = useListData(initialValue, (originValue) => originValue.filter(v.id 
 // result: [{ id: 1, value: 0 }]
 ```
 
-### 使用内置方法进行处理
+### 用法内置方法进行处理
 
 useListData 提供了如下若干内置 transform 方法，可以方便对原始数据进行自动处理
 
 #### transObj 数组转为对象
 
-默认key为id，可不填写。
+默认 key 为 id，可不填写。
 
 ```javascript
 const initialValue = [
@@ -58,6 +58,8 @@ const data = useListData(listData, (originValue, { transObj }) => transObj(origi
 ```
 
 #### transTree 数组转为树
+
+### 类型声明
 
 ```typescript
 transTree(data: Record<string, any>[], { parentId, id, children }?: {
@@ -80,7 +82,7 @@ const data = useListData(initialValue, (originValue, { transTree }) => transTree
 
 ```javascript
 // result
-[
+;[
   {
     id: 'a001',
     pid: 0,
@@ -136,7 +138,7 @@ const data = useListData(initialValue, (value, { partition }) => partition(value
 
 ```javascript
 // result
-[
+;[
   [
     { id: 'q1', city: 'qingdao', value: 0 },
     { id: 'q2', city: 'qingdao', value: 1 },
@@ -163,7 +165,7 @@ const data = useListData(initialValue, (value, { removeById }) => removeById(val
 
 ```javascript
 // result
-[
+;[
   { id: 'q2', city: 'qingdao', value: 1 },
   { id: 'h1', city: 'hangzhou', value: 2 },
   { id: 'h2', city: 'hangzhou', value: 3 },
@@ -185,7 +187,7 @@ const data = useListData(initialValue, (value, { removeIndex }) => removeIndex(v
 
 ```javascript
 // result
-[
+;[
   { id: 'q1', city: 'qingdao', value: 0 },
   { id: 'h1', city: 'hangzhou', value: 2 },
   { id: 'h2', city: 'hangzhou', value: 3 },
@@ -208,13 +210,13 @@ const data = useListData(initialValue, (originValue, { chain }) =>
   chain(originValue)
     .filter((v) => v.value !== 0)
     .partition({ groupKey: 'city' })
-    .value()
+    .value(),
 )
 ```
 
 ```javascript
 // result
-[
+;[
   [{ id: 'q2', city: 'qingdao', value: 1 }],
   [
     { id: 'h1', city: 'hangzhou', value: 2 },
@@ -223,14 +225,14 @@ const data = useListData(initialValue, (originValue, { chain }) =>
 ]
 ```
 
-除了使用内置的方法，也可以通过next方法，使用自定义函数进行, 或随时对数据进行自由处理
+除了使用内置的方法，也可以通过 next 方法，使用自定义函数进行, 或随时对数据进行自由处理
 
 ```javascript
 const data = useListData(initialValue, (originValue, { chain }) =>
   chain(originValue)
     .next((value) => value.filter((v) => !v.ignore))
     .partition({ groupKey: 'pid' })
-    .value()
+    .value(),
 )
 
 const data = useListData(initialValue, (originValue, { chain }) => {

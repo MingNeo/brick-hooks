@@ -9,7 +9,7 @@ import {
   clearTimer,
 } from '../utils'
 
-interface CountDownProps {
+interface CountDownOptions {
   total?: number // 倒计时时间，格式毫秒
   endTime?: number | string // 结束时间，时间戳格式 或 "yyyy-mm-dd HH:MM:SS"
   format?: string | ((progress: number) => string) // 展示的格式
@@ -35,14 +35,14 @@ export default function useCountDown({
   endTime,
   total,
   autoRun = true,
-}: CountDownProps) {
+}: CountDownOptions) {
   invariant(!!endTime || !!total, 'endTime and total need least one')
   invariant(!endTime || !total, 'endTime and total need only one')
   const intervalRef = useRef<number | null>(null)
   const timerRef = useRef<any>(null)
   const statusRef = useRef<string>('idle')
   const endTimeRef = useRef(
-    typeof endTime === 'string' ? getTimeByString(endTime) : endTime || Date.now() + (total || 0)
+    typeof endTime === 'string' ? getTimeByString(endTime) : endTime || Date.now() + (total || 0),
   )
   const [{ endTime: endTimeState, status, countdown }, setState] = useState<StateProps>({
     status: 'idle',
@@ -99,7 +99,7 @@ export default function useCountDown({
       }
       loop()
     }, 0)
-  }, [endTimeState, format, onStart, onStep, setState, step, stop])
+  }, [endTime, format, onStart, onStep, step, stop, total])
 
   useEffect(() => {
     autoRun && start()
@@ -108,6 +108,7 @@ export default function useCountDown({
       clearTimer(intervalRef.current)
       timerRef.current && clearTimeout(timerRef.current)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return {

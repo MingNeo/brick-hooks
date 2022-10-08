@@ -2,7 +2,9 @@
 
 通过 js 方便使用媒体查询判断当前是否匹配
 
-## Usage <a name = "usage"></a>
+### 用法
+
+### 类型声明
 
 ```typescript
 function useMediaQuery(mediaQuery: string): boolean

@@ -1,6 +1,13 @@
+---
+nav:
+  path: /native
+---
+
 ## useAnimateValue
 
 方便使用 react-native Animated
+
+### 类型声明
 
 ```typescript
 function useAnimateValue(options: {
@@ -36,7 +43,7 @@ function useAnimateValue(options: {
 }
 ```
 
-#### 使用
+### 用法
 
 ```javascript
 function MyComponent() {

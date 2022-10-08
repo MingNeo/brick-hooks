@@ -1,24 +1,24 @@
 # `brick-hooks-native`
 
-> 可用于React-native 的React Hooks Library
+> 可用于 React-native 的 React Hooks Library
 
-## Usage
+## 用法
 
 ```
 const { useAppstate } = require('brick-hooks-native');
 ```
 
-[文档](https://terminus-org.erda.cloud/terminus/workBench/projects/213/apps/6541/repo/tree/master/packages/native/README.md) 
+[文档](https://terminus-org.erda.cloud/terminus/workBench/projects/213/apps/6541/repo/tree/master/packages/native/README.md)
 
 [useAnimateValue](./src/useAnimateValue/README.md) 方便使用 react-native Animated,保留原始用法
 
 [useAnimate](./src/useAnimate/README.md) 方便使用 react-native Animated
 
-[useAppstate](./src/useAppstate/README.md) 方便监听app前后台切换
+[useAppstate](./src/useAppstate/README.md) 方便监听 app 前后台切换
 
-[useAsyncStorage](./src/useAsyncStorage/README.md) 方便使用react-native的storage
+[useAsyncStorage](./src/useAsyncStorage/README.md) 方便使用 react-native 的 storage
 
-[useFocusApp](./src/useFocusApp/README.md) 监听app focus(从后台切换到前台)
+[useFocusApp](./src/useFocusApp/README.md) 监听 app focus(从后台切换到前台)
 
 [useInView](./src/useInView/README.md) 监听滚动进入可视区域
 

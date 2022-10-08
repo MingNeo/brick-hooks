@@ -1,80 +1,87 @@
 import moment from 'dayjs'
 
-export const defaultModelKeyMap = {
-  singleday: 'singleday', // 单次
-  everyday: 'everyday', // 每日送
-  weekday: 'weekday', // 工作日送
-  oddday: 'oddday', // 单日
-  evenday: 'evenday', // 双日
-  threeday: 'threeday', // 三日送
-  weekend: 'weekend', // 周末送
-}
-
-export const defaultModelMap = {
-  singleday: {
+export const defaultModels = [
+  {
     key: 'singleday',
     value: 'singleday',
+    name: '单次购',
     disabled: () => false,
   }, // 单次
-  everyday: {
+  {
     key: 'everyday',
     value: 'everyday',
+    name: '每日送',
     disabled: () => false,
   }, // 每日送
-  weekday: {
+  {
     key: 'weekday',
     value: 'weekday',
-    disabled: (current) => [1, 2, 3, 4, 5].includes(current.day()),
+    name: '工作日送',
+    disabled: (current) => [0, 6].includes(moment(current).day()),
   }, // 工作日送
-  oddday: {
+  {
     key: 'oddday',
     value: 'oddday',
-    disabled: (current) => current.date() % 2 === 0,
+    name: '单日送',
+    disabled: (current) => moment(current).date() % 2 === 0,
   }, // 单日
-  evenday: {
+  {
     key: 'evenday',
     value: 'evenday',
-    disabled: (current) => current.date() % 2 !== 0,
+    name: '双日送',
+    disabled: (current) => moment(current).date() % 2 !== 0,
   }, // 双日
-  threeday: {
+  {
     key: 'threeday',
     value: 'threeday',
-    disabled: (current) => current.date() % 3 !== 0,
+    name: '三日送',
+    disabled: (current) => moment(current).date() % 3 !== 0,
   }, // 三日送
-  weekend: {
+  {
     key: 'weekend',
     value: 'weekend',
-    disabled: (current) => [0, 6].includes(current.day()),
+    name: '周末送',
+    disabled: (current) => [1, 2, 3, 4, 5].includes(moment(current).day()),
   }, // 周末送
-}
+]
 
-export const defaultCycleMap = {
-  custom: {
+export const defaultCycles = [
+  {
     key: 'custom',
-    value: 0,
+    value: 'custom',
+    name: '随心订',
     check: (current) => true,
+    range: (current) => getMonthRange(current, 0),
   }, // 自选
-  nextMonth: {
+  {
     key: 'nextMonth',
-    value: 1,
+    value: 'nextMonth',
+    name: '下个月',
     check: (current) => isInMonthRange(current, 1),
+    range: (current) => getMonthRange(current, 1),
   }, // 下个月
-  nextTwoMonth: {
+  {
     key: 'nextTwoMonth',
-    value: 2,
+    value: 'nextTwoMonth',
+    name: '下两个月',
     check: (current) => isInMonthRange(current, 2),
+    range: (current) => getMonthRange(current, 2),
   }, // 下两个月
-  nextThreeMonth: {
+  {
     key: 'nextThreeMonth',
-    value: 3,
+    value: 'nextThreeMonth',
+    name: '下三个月',
     check: (current) => isInMonthRange(current, 3),
+    range: (current) => getMonthRange(current, 3),
   }, // 下三个月
-}
+]
+
+export const getMap = (arr) => arr.reduce((prev, cur) => ({ ...prev, [cur.key]: cur }), {})
 
 export function formatDatas(dates: any[]): any {
   const sortValue = dates.sort((a: any, b: any) => moment(a).diff(b))
   return {
-    range: sortValue.length ? [moment(sortValue[0]), moment(sortValue[sortValue.length - 1])] : [],
+    range: sortValue.length ? [sortValue[0], sortValue[sortValue.length - 1]] : [],
     dates: sortValue,
   }
 }
@@ -86,20 +93,27 @@ export function formatDatas(dates: any[]): any {
  */
 export function isInMonthRange(current: any, m: number = 1) {
   const [start, end] = getMonthRange(moment(), m)
-  return current.isBetween(start, end, 'day', '[]')
+  return current.isAfter(moment(start).subtract(1, 'day'), 'day') && current.isBefore(moment(end).add(1, 'day'), 'day')
 }
 
 // 获取连续日期内的所有时间
 export function getRangeDate([start, end] = []) {
-  const current = moment(start)
+  let next = moment(start)
   const list = []
-  let next = true
   while (next) {
-    if ((current as any).isSameOrBefore(end)) {
-      list.push(current.format('YYYY-MM-DD'))
-      current.add(1, 'd')
+    if (end) {
+      if (next.isSame(end)) {
+        list.push(next.format('YYYY-MM-DD'))
+        next = undefined
+      } else if (next.isBefore(end)) {
+        list.push(next.format('YYYY-MM-DD'))
+        next = next.add(1, 'd')
+      } else {
+        next = undefined
+      }
     } else {
-      next = false
+      list.push(next.format('YYYY-MM-DD'))
+      next = undefined
     }
   }
   return list

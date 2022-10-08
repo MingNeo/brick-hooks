@@ -1,13 +1,14 @@
 ## useBreakpoint
 
-方便对不同屏幕尺寸使用不同数据
-基于 useMedia, 通过js 方便使用媒体查询。
+方便对不同屏幕尺寸使用不同数据基于 useMedia, 通过 js 方便使用媒体查询。
 
-## Usage <a name = "usage"></a>
+## 用法 <a name = "usage"></a>
 
 breakpointList 是一个数组，当有多条匹配时，会根据数组 index 的顺序获取第一个匹配的 value
 
 如过设置初始值，则初始状态不根据媒体查询判断，而使用初始值
+
+### 类型声明
 
 ```typescript
 function useBreakpoint(breakpointList: BreakpointList, initialValue?: any): any

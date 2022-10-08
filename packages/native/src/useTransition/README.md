@@ -1,6 +1,13 @@
+---
+nav:
+  path: /native
+---
+
 ## useTransition
 
 方便使用 react-native Animated 来实现过渡效果
+
+### 类型声明
 
 ```typescript
 function useTransition(options: {
@@ -19,7 +26,8 @@ function useTransition(options: {
 }): [any]
 ```
 
-#### 使用
+### 用法
+
 ```javascript
 function MyComponent() {
   const [visible, toggleVisible] = useToggle(true)
@@ -42,6 +50,7 @@ function MyComponent() {
 ```
 
 #### 在两个组件中切换
+
 ```javascript
 function MyComponent() {
   const [visible, toggleVisible] = useToggle(true)
@@ -74,6 +83,7 @@ function MyComponent() {
 ```
 
 #### 组合多个过渡动画
+
 ```javascript
 function MyComponent() {
   const [visible, toggleVisible] = useToggle(true)

@@ -1,24 +1,33 @@
 ## useCookie
 
-方便使用cookie
+方便使用 cookie
+
+### 类型声明
 
 ```typescript
-function useCookie(key: string): [string, SetItem, {
-  get: () => string;
-  refresh: () => void;
-}]
+function useCookie(key: string): [
+  string,
+  SetItem,
+  {
+    get: () => string
+    refresh: () => void
+  },
+]
 
-const SetItem: (name: string, value: string | number | boolean, options: {
-  days: any;
-  path: any;
-}) => Promise<unknown>
+const SetItem: (
+  name: string,
+  value: string | number | boolean,
+  options: {
+    days: any
+    path: any
+  },
+) => Promise<unknown>
 ```
 
-js无法自动监听cookie改变，因此，useCookie返回的cookie item值不会自动更新。
-可以使用refreshItem来刷新为cookie中最新值，或使用api.get方法获取最新值
+js 无法自动监听 cookie 改变，因此，useCookie 返回的 cookie item 值不会自动更新。可以使用 refreshItem 来刷新为 cookie 中最新值，或使用 api.get 方法获取最新值
 
 ```javascript
-const [userCookie, updateUserCookie, userCookieAPi] = useCookie('userName');
+const [userCookie, updateUserCookie, userCookieAPi] = useCookie('userName')
 
 // 设置值
 await updateUserCookie('klose')

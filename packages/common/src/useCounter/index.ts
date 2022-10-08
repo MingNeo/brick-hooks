@@ -14,7 +14,7 @@ interface Methods {
 }
 
 /**
- * 数字步进
+ * 返回一个步进的数值，并提供一系列方法
  */
 export default function useCounter(initialValue: number = 0, options: CounterOptions = {}): [number, Methods] {
   const [counter, setCounter] = useState(initialValue)

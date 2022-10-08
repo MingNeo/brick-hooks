@@ -1,6 +1,8 @@
 ## useTransition
 
-方便使用 react-native Animated 来实现过渡效果
+方便实现过渡效果
+
+### 类型声明
 
 ```typescript
 function useTransition(options: {
@@ -12,14 +14,15 @@ function useTransition(options: {
   loop?: number
   duration?: number
   delay?: number
-  easing?: 'linear' | 'ease' | 'quad' | 'cubic' | 'sin' | 'circle' | 'exp' | 'bounce' | 'in' | 'out' | 'inOut' | ((value: number) => number) // 曲线函数，使用ReactNative.Animated的Easing函数
+  easing?: 'linear' | 'ease' | 'quad' | 'cubic' | 'sin' | 'circle' | 'exp' | 'bounce' | 'in' | 'out' | 'inOut' // 曲线函数
   isInteraction?: boolean
   useNativeDriver?: boolean
   shouldReset?: boolean
 }): [any]
 ```
 
-#### 使用
+### 用法
+
 ```javascript
 function MyComponent() {
   const [visible, toggleVisible] = useToggle(true)
@@ -34,7 +37,7 @@ function MyComponent() {
 
   return (
     <>
-      <Animated.View style={{ backgroundColor: 'powderblue', ...style }} />
+      <div style={{ backgroundColor: 'powderblue', ...style }} />
       <Button onClick={() => toggleVisible()}>Fade {visible ? 'Out' : 'In'}</Button>
     </>
   )
@@ -42,6 +45,7 @@ function MyComponent() {
 ```
 
 #### 在两个组件中切换
+
 ```javascript
 function MyComponent() {
   const [visible, toggleVisible] = useToggle(true)
@@ -59,11 +63,11 @@ function MyComponent() {
   return (
     <>
       {visible ? (
-        <Animated.View style={{ ...style, backgroundColor: 'powderblue' }}>
+        <div style={{ ...style, backgroundColor: 'powderblue' }}>
           <View style={{ fontSize: 40 }}>😄</View>
         </Animated.View>
       ) : (
-        <Animated.View style={{ ...style, backgroundColor: 'red' }}>
+        <div style={{ ...style, backgroundColor: 'red' }}>
           <View style={{ fontSize: 40 }}>🤪</View>
         </Animated.View>
       )}
@@ -74,6 +78,7 @@ function MyComponent() {
 ```
 
 #### 组合多个过渡动画
+
 ```javascript
 function MyComponent() {
   const [visible, toggleVisible] = useToggle(true)
@@ -98,8 +103,8 @@ function MyComponent() {
   return (
     <>
       <View style={{ position: 'relative', height: 450 }}>
-        <Animated.View style={{ position: 'absolute', backgroundColor: 'powderblue', ...compAStyle }} />
-        <Animated.View style={{ position: 'absolute', backgroundColor: 'red', ...compBStyle }} />
+        <div style={{ position: 'absolute', backgroundColor: 'powderblue', ...compAStyle }} />
+        <div style={{ position: 'absolute', backgroundColor: 'red', ...compBStyle }} />
       </View>
       <Button onClick={() => toggleVisible()}>toggle</Button>
     </>

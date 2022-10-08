@@ -1,13 +1,13 @@
 # useTimeoutFn
 
-优雅使用 setTimeout 函数的hook
+优雅使用 setTimeout 函数的 hook
 
 - 组件卸载的时候自动 clearTimeout
 - 返回一个 promise，setTimeout 执行完毕可以继续处理
 - 返回是否正在等待执行 isPending
 - 允许手工调用 stop 结束等待
 
-## Usage <a name = "usage"></a>
+## 用法 <a name = "usage"></a>
 
 ```javascript
 const [value, { inc }] = useCounter(0)

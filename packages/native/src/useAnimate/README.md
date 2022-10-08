@@ -1,6 +1,13 @@
+---
+nav:
+  path: /native
+---
+
 ## useAnimate
 
 方便使用 react-native Animated
+
+### 类型声明
 
 ```typescript
 function useAnimate(options: {
@@ -19,13 +26,14 @@ function useAnimate(options: {
 }): [any, { start: any; reset: any; animatedValue: any; }]
 ```
 
-#### 使用
+### 用法
+
 ```javascript
 function MyComponent() {
   const [styleProps, { start }] = useAnimate({
-    from: { opacity: 0, marginLeft: 0, width: 50, height: 50},
+    from: { opacity: 0, marginLeft: 0, width: 50, height: 50 },
     to: { opacity: 1, marginLeft: 500, width: 200, height: 200 },
-    autoRun: true
+    autoRun: true,
   })
 
   return <Animated.View style={{ ...baseStyle, ...styleProps }} />
@@ -33,15 +41,16 @@ function MyComponent() {
 ```
 
 #### 设置循环次数、动画持续时间、延迟时间、手动触发等
+
 ```javascript
-import { Easing, View } from "react-native";
+import { Easing, View } from 'react-native'
 function MyComponent() {
   const [styleProps, { start }] = useAnimate({
-    from: { opacity: 0, marginLeft: 0, width: 50, height: 50},
+    from: { opacity: 0, marginLeft: 0, width: 50, height: 50 },
     to: { opacity: 1, marginLeft: 500, width: 200, height: 200 },
     loop: 2, // -1则无限循环
     duration: 500,
-    delay: 1000
+    delay: 1000,
   })
 
   return (
@@ -55,25 +64,30 @@ function MyComponent() {
 
 #### 设置曲线
 
+### 类型声明
+
 ```typescript
 type easing = 'linear'| 'ease'|'quad'|'cubic'|'sin'|'circle'|'exp'|'bounce'|'in'| 'out'| 'inOut' | ((...any[]) => any);
 ```
-使用内置曲线，或自定义曲线函数(可直接使用react-native的Easing)
+
+使用内置曲线，或自定义曲线函数(可直接使用 react-native 的 Easing)
+
 ```javascript
 function MyComponent() {
   const [styleProps, { start }] = useAnimate({
-    from: { opacity: 0, marginLeft: 0, width: 50, height: 50},
+    from: { opacity: 0, marginLeft: 0, width: 50, height: 50 },
     to: { opacity: 1, marginLeft: 500, width: 200, height: 200 },
     easing: 'bounce',
     // 等同于
-    easing: Easing.bounce
+    easing: Easing.bounce,
   })
 
   return <Animated.View style={{ ...baseStyle, ...styleProps }} />
 }
 ```
 
-#### 设置多个keyframe
+#### 设置多个 keyframe
+
 ```javascript
 function MyComponent() {
   const [styleProps, { start }] = useAnimate({
@@ -96,10 +110,9 @@ function MyComponent() {
 }
 ```
 
-#### 使用transform
-基本上大多数的样式都可以直接像编写React-native组件中的style一样使用，但是transform例外。
-以下transform-functions直接使用，无需类似{ transform: [{ rotateX: 0 }, { scale: 2}] } 这样使用
-matrix、perspective、rotate、rotateX、rotateY、rotateZ、scale、scaleX、scaleY、translateX、translateY、skewX、skewY
+#### 用法 transform
+
+基本上大多数的样式都可以直接像编写 React-native 组件中的 style 一样使用，但是 transform 例外。以下 transform-functions 直接使用，无需类似{ transform: [{ rotateX: 0 }, { scale: 2}] } 这样使用 matrix、perspective、rotate、rotateX、rotateY、rotateZ、scale、scaleX、scaleY、translateX、translateY、skewX、skewY
 
 ```javascript
 function MyComponent() {

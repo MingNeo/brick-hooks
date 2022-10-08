@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useIsoEffect } from 'brick-hooks'
 import uuid from 'uuid'
 import useStyle from '../useStyle'
 import createDangerousStringForStyles, { bounceKeyFrames } from './helper'
@@ -63,9 +64,9 @@ export default function useAnimate({
         timerRef.current = null
       }, 0)
     }
-  }, [reset, duration, easing, delay, loop, id, defaultUseFrom, reverse])
+  }, [reset, duration, easing, delay, loop, id, reverse])
 
-  useEffect(() => {
+  useIsoEffect(() => {
     autoRun && start()
   }, [autoRun, start])
 

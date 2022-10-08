@@ -9,20 +9,21 @@
 - 配合 hydrogen-store-effect-plugin 可以使用 effect 进行异步管理 😄
 - 配合 hydrogen-store-immer-plugin 可以像 vuex 一样写 reducer😄
 
-## Usage
+## 用法
 
-仅需要把 useState 换成 useStore，即可立即跨模块共享全局数据，可以无需添加 Provider 等处理。
-同时做了性能优化，仅订阅使用的模块会触发更新，不会有使用 useContext 的性能问题
+仅需要把 useState 换成 useStore，即可立即跨模块共享全局数据，可以无需添加 Provider 等处理。同时做了性能优化，仅订阅使用的模块会触发更新，不会有使用 useContext 的性能问题
+
+### 类型声明
 
 ```typescript
 type UseStore = <S>(
   moduleName?: string,
   autoMerge?: boolean,
-  willUpdate?: boolean
+  willUpdate?: boolean,
 ) => [S, SetStore<SetStoreAction<S>>, ToolMethods<S>]
 ```
 
-#### 立即使用
+### 用法
 
 ```javascript
 import { useStore } from 'hydrogen-store'
@@ -107,6 +108,8 @@ function TestStore() {
 
 reducer 格式为
 
+### 类型声明
+
 ```typescript
 ;(state: S, payload: any) => S
 ```
@@ -137,7 +140,7 @@ function TestStore() {
 }
 ```
 
-#### 使用 redux devtool
+#### 用法 redux devtool
 
 即使因为种种原因你不想使用 redux 了，但是否时常会怀念 redux-devtool 的方便？hydrogen-store 可以方便开启 redux-devtool。仅需引入一个插件
 
@@ -193,10 +196,9 @@ function Home() {
 }
 ```
 
-##### 使用 createApp
+##### 用法 createApp
 
-如果你喜欢将 store 存放在 context 中并使用 Provider，或者SSR等需要不在整个端共享Store, 可以使用 createApp。
-与不使用 hydrogen-store 直接使用 react context 存储数据对比
+如果你喜欢将 store 存放在 context 中并使用 Provider，或者 SSR 等需要不在整个端共享 Store, 可以使用 createApp。与不使用 hydrogen-store 直接使用 react context 存储数据对比
 
 - hydrogen-store 带来的各种方便开发、管理的能力，如 reducer、使用 redux devtool 等等进行调试。
 - createApp 创建的 store 在创建之后引用就不会变化，因此未使用数据的变更不会触发所有组件更新，你可以安全的使用 useStore hook 获取数据
@@ -224,7 +226,7 @@ function Child() {
 }
 ```
 
-##### 使用 createContainer 创建单个模块
+##### 用法 createContainer 创建单个模块
 
 如果不希望使用全局 store，也可以创建单个模块
 
@@ -256,7 +258,7 @@ const { Provider, useStore } = createContainer(
     plugins: [reduxPlugin],
     // 每个store会连接不同的 redux devtool instance, 我们可以定义不同的id加以区分
     devtoolId: 'Address Store',
-  }
+  },
 )
 ```
 
@@ -298,11 +300,7 @@ Module 仅在 createStore 或者 registerModule 中进行初始化。初始化�
 
 ##### reducers
 
-使用 reducer 可以极大方便对数据对更加集中的管理。同样推荐将状态的系列变更处理放在自定义 reducer 中。
-但是应该注意，虽然全局 state+reducer 有点 redux 的感觉，而且还能使用 redux-devtool。
-但是 hydrogen-store 的设计思路是一个不侵入 hooks 写法的状态库，更多类似的是 React.useState/React.useReducer 的全局化。
-reducer 应当只是纯函数，只做状态的处理/格式化。getter、异步 action 这些事情，都推荐放到组件中使用 useMemo、useEffect 等去处理。
-虽然使用 hydrogen-store 可以很方便的存储全局状态，但是并不必要把所有数据都放在 store 中！
+使用 reducer 可以极大方便对数据对更加集中的管理。同样推荐将状态的系列变更处理放在自定义 reducer 中。但是应该注意，虽然全局 state+reducer 有点 redux 的感觉，而且还能使用 redux-devtool。但是 hydrogen-store 的设计思路是一个不侵入 hooks 写法的状态库，更多类似的是 React.useState/React.useReducer 的全局化。 reducer 应当只是纯函数，只做状态的处理/格式化。getter、异步 action 这些事情，都推荐放到组件中使用 useMemo、useEffect 等去处理。虽然使用 hydrogen-store 可以很方便的存储全局状态，但是并不必要把所有数据都放在 store 中！
 
 如果你真的喜欢/需要进行统一的状态管理，见下面的 effects 模块
 
@@ -318,6 +316,8 @@ effect 类似于 reducer，不同在于：
 effects 概念基本等同于 dva 的 effects、vuex 的 actions
 
 使用 dispatch 触发 reducer action，使用 dispatchEffect 触发 effect action
+
+### 类型声明
 
 ```typescript
 type dispatchEffect = (effectName: string, payload: any, moduleName?: string) => any

@@ -93,7 +93,7 @@ export function isFunction(value) {
 }
 
 export function setIntervalBySetTimeout(callback: () => void, delay: number) {
-  let timer: number | null = null
+  let timer: ReturnType<typeof setTimeout> | null = null
   let offset = 0 // 误差时间
 
   let count = 0
@@ -105,6 +105,7 @@ export function setIntervalBySetTimeout(callback: () => void, delay: number) {
     callback()
     timer = setTimeout(() => {
       offset = Date.now() - start - count * delay
+      count++
       loop()
     }, nextDelay)
   }

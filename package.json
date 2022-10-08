@@ -4,7 +4,7 @@
   "workspaces": [
     "packages/*"
   ],
-  "description": "通用hooks集合",
+  "description": "通用hooks集",
   "scripts": {
     "test": "jest",
     "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap && npm run build",
@@ -20,7 +20,15 @@
     "pull:h-store-redux-plugin": "git subtree pull --prefix=packages/hydrogen-store-redux-plugin git@github.com:MingNeo/hydrogen-store-redux-plugin.git master",
     "push:h-store-redux-plugin": "git subtree push --prefix=packages/hydrogen-store-redux-plugin git@github.com:MingNeo/hydrogen-store-redux-plugin.git master",
     "pull:h-store-immer-plugin": "git subtree pull --prefix=packages/hydrogen-store-immer-plugin git@github.com:MingNeo/hydrogen-store-immer-plugin.git master",
-    "push:h-store-immer-plugin": "git subtree push --prefix=packages/hydrogen-store-immer-plugin git@github.com:MingNeo/hydrogen-store-immer-plugin.git master"
+    "push:h-store-immer-plugin": "git subtree push --prefix=packages/hydrogen-store-immer-plugin git@github.com:MingNeo/hydrogen-store-immer-plugin.git master",
+    "docs:start": "dumi dev",
+    "docs:build": "dumi build",
+    "docs:deploy": "gh-pages -d dist",
+    "deploy": "npm run docs:build && npm run docs:deploy",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "umi-test": "umi-test",
+    "umi-test:coverage": "umi-test --coverage",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -31,12 +39,26 @@
     "registry": "https://registry.npmjs.org",
     "access": "public"
   },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
+  },
   "dependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.13.8",
+    "@umijs/plugin-esbuild": "^1.4.1",
     "moment-business": "^3.0.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-native": "^0.61.5"
+    "react-native": "^0.61.5",
+    "redux": "^4.2.0",
+    "umi": "3.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
@@ -54,6 +76,8 @@
     "@types/react-dom": "^16.9.8",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.26.0",
+    "@umijs/fabric": "^2.8.1",
+    "@umijs/test": "^3.0.5",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.1.0",
@@ -61,6 +85,7 @@
     "create-test-server": "^3.0.1",
     "dayjs": "^1.10.4",
     "del": "^5.1.0",
+    "dumi": "^1.1.0",
     "enzyme": "^3.11.0",
     "eslint": "^7.23.0",
     "eslint-config-jest-enzyme": "^7.1.2",
@@ -74,15 +99,14 @@
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "father": "^4.0.0-rc.2",
+    "gh-pages": "^3.0.0",
     "jest": "^26.4.2",
     "lerna": "^3.22.1",
+    "lint-staged": "^10.0.7",
     "mockjs": "^1.1.0",
     "prettier": "^2.2.1",
-    "react-is": "^16.9.0",
-    "react-test-renderer": "^16.9.0",
-    "reinspect": "^1.1.0",
-    "ts-jest": "^26.5.4",
-    "typescript": "^3.9.9"
+    "yorkie": "^2.0.0"
   },
   "bugs": {
     "url": "https://github.com/MingNeo/custom-hooks/issues"

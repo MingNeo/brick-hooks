@@ -2,22 +2,33 @@
 
 # dependencies
 node_modules
+/npm-debug.log*
+/yarn-error.log
+/yarn.lock
+package-lock.json
 
 # production
-dist
+/es
+/docs-dist
 public
 lib
 esm
 
 # misc
 .DS_Store
-npm-debug.log*
-
+coverage
 .eslintcache
 
 dump.rdb
 mock
 
+# umi
+.umi
+.umi-production
+.umi-test
+.env.local
+
+# ide
 .vscode
 .idea
 .chrome

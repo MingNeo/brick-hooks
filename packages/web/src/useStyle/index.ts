@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useRef } from 'react'
+import { useIsoEffect } from 'brick-hooks'
 import { isBrowser } from '../utils'
 
 /**
@@ -11,35 +12,38 @@ import { isBrowser } from '../utils'
 export default function useStyle(
   styleContent: string,
   id?: string,
-  { removeOnDestroy = false }: { removeOnDestroy?: boolean } = {}
+  { removeOnDestroy = false }: { removeOnDestroy?: boolean } = {},
 ) {
   const styleNodeRef = useRef(null)
   const setStyle = useCallback(() => {
     try {
       let style = (styleNodeRef.current = document.querySelector<HTMLStyleElement>(`style#${id}`))
 
-      if (!style && styleContent) {
+      if (!style) {
         style = document.createElement('style')
         style.id = id
         style.type = 'text/css'
-        style.innerHTML = styleContent
+        style.innerHTML = styleContent || ''
         document.head.appendChild(style)
+      } else {
+        style.innerHTML = styleContent || ''
       }
     } catch (error) {
       console.warn(error)
     }
-  }, [id])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, styleContent])
 
   const removeStyle = useCallback(() => {
     try {
-      let style = styleNodeRef.current || document.querySelector<HTMLStyleElement>(`style#${id}`)
+      const style = styleNodeRef.current || document.querySelector<HTMLStyleElement>(`style#${id}`)
       style && document.head.removeChild(style)
     } catch (error) {
       console.warn(error)
     }
   }, [id])
 
-  useEffect(() => {
+  useIsoEffect(() => {
     isBrowser && setStyle()
     return () => {
       isBrowser && removeOnDestroy && removeStyle()

@@ -1,4 +1,6 @@
+const umiPrettierConfs = require('@umijs/fabric').prettier
 module.exports = {
+  ...umiPrettierConfs,
   stylelintIntegration: true,
   semi: false,
   tabWidth: 2,

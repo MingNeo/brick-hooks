@@ -2,10 +2,11 @@
 
 通过 js 方便使用媒体查询
 
-## Usage <a name = "usage"></a>
+mediaQueryValueList 是一个数组，当有多条 mediaQuery 匹配时，会根据数组 index 的顺序获取第一个匹配的 value 如过设置初始值，则初始状态不根据媒体查询判断，而使用初始值
 
-mediaQueryValueList 是一个数组，当有多条 mediaQuery 匹配时，会根据数组 index 的顺序获取第一个匹配的 value
-如过设置初始值，则初始状态不根据媒体查询判断，而使用初始值
+### 用法
+
+### 类型声明
 
 ```typescript
 function useMedia<T = any>(mediaQueryValueList: MediaQueryValueList, initialValue?: T): T

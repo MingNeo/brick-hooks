@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { act } from '@testing-library/react-hooks'
-import { render, fireEvent } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import useInView from '..'
 
 const timeout = (time: number) => new Promise<any>((resolve) => setTimeout(resolve, time))

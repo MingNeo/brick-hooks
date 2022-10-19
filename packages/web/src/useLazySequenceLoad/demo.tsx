@@ -13,7 +13,8 @@ function Item(props) {
         marginBottom: 10,
         border: '1px solid #eee',
       }}
-      {...props}></div>
+      {...props}
+    ></div>
   )
 }
 
@@ -23,7 +24,10 @@ const list = new Array(20).fill(1).map((v, i: number) => ({
 }))
 
 export const Demo1 = () => {
-  const { showfooterLoading, showList, rootProps, loadingProps } = useLazySequenceLoad(list, { groupSize: 3 })
+  const { showfooterLoading, showList, rootProps, loadingProps } = useLazySequenceLoad(list, {
+    groupSize: 3,
+    wait: 500,
+  })
 
   return (
     <div>
@@ -57,3 +61,5 @@ export const Demo2 = () => {
     </div>
   )
 }
+
+export default Demo1

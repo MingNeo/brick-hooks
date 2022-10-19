@@ -1,5 +1,5 @@
 import React from 'react'
-import { Demo } from '../../../../web/src/useLazyImage/demo'
+import Demo from '../../../../web/src/useLazyImage/demo'
 
 export default {
   title: 'useLazyImageDemo',

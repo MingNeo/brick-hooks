@@ -6,9 +6,9 @@ describe('useListViewData 校验', () => {
     expect(useListViewData).toBeDefined()
   })
 
-  let fetchParams = { ...defaultInitialQuery }
+  const fetchParams = { ...defaultInitialQuery }
 
-  let fetchFn: FetchFn = (params) => {
+  const fetchFn: FetchFn = (params) => {
     const query = { ...fetchParams, ...(params || {}) }
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -22,7 +22,7 @@ describe('useListViewData 校验', () => {
       ({ fetchFn }) => {
         return useListViewData(fetchFn)
       },
-      { initialProps: { fetchFn } }
+      { initialProps: { fetchFn } },
     )
     expect(result.current.query).toEqual(defaultInitialQuery)
     expect(Object.values(result.current.listData)).toEqual([])
@@ -34,13 +34,13 @@ describe('useListViewData 校验', () => {
       ({ fetchFn }) => {
         return useListViewData(fetchFn)
       },
-      { initialProps: { fetchFn } }
+      { initialProps: { fetchFn } },
     )
 
     expect(result.current.loading).toEqual(false)
 
     await act(async () => {
-      result.current.loadData({ page: { pageNo: 1, pageSize: 10 }, query: {} }).then((response: any) => {
+      result.current.loadData({ pageNo: 1, pageSize: 10, query: {} }).then((response: any) => {
         expect(result.current.loading).toEqual(false)
         expect(response).toMatch('load data success')
       })
@@ -55,9 +55,9 @@ describe('useListViewData 校验', () => {
   it('请求下一页正常', async () => {
     const { result, waitForNextUpdate } = renderHook(
       ({ fetchFn }) => {
-        return useListViewData(fetchFn, { pageSize: 2 })
+        return useListViewData(fetchFn, { initialQuery: { pageSize: 2 }, isMerge: true })
       },
-      { initialProps: { fetchFn } }
+      { initialProps: { fetchFn } },
     )
     act(() => {
       result.current.loadData()
@@ -85,7 +85,7 @@ describe('useListViewData 校验', () => {
       ({ fetchFn }) => {
         return useListViewData(fetchFn)
       },
-      { initialProps: { fetchFn } }
+      { initialProps: { fetchFn } },
     )
     act(() => {
       result.current.clearQuery()
@@ -98,7 +98,7 @@ describe('useListViewData 校验', () => {
       ({ fetchFn }) => {
         return useListViewData(fetchFn)
       },
-      { initialProps: { fetchFn } }
+      { initialProps: { fetchFn } },
     )
     act(() => {
       result.current.reloadData().then(() => {

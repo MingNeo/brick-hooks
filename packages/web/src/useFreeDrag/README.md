@@ -2,6 +2,12 @@
 
 可以快速给一个绝对定位的节点提供自由拖拽能力
 
+### 演示
+
+<code src="./demo.tsx"></code>
+
+### 用法
+
 ```javascript
 function Comp() {
   const { onMousedown, dragStyle } = useFreeDrag((rect) => {
@@ -10,10 +16,7 @@ function Comp() {
 
   return (
     <div style={{ position: 'relative', height: 450, width: '100%' }}>
-      <div
-        onMousedown={onMousedown}
-        style={{ height: 50, width: 50, backgroundColor: 'blue', ...dragStyle }}
-      />
+      <div onMousedown={onMousedown} style={{ height: 50, width: 50, backgroundColor: 'blue', ...dragStyle }} />
     </div>
   )
 }

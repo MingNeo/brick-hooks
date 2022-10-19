@@ -8,7 +8,18 @@ export interface QueryParams {
   query: Record<string, any>
 }
 
-export type FetchFn = (query: QueryParams) => Promise<{ data: any; hasMore: undefined | boolean }>
+interface Options {
+  isMerge?: boolean // 是否自动合并，用于翻页
+  autoLoad?: boolean
+  initialQuery?: {
+    pageSize?: number
+    pageNo?: number
+  }
+}
+
+export type FetchFn = (
+  query: QueryParams,
+) => Promise<{ data: any[]; hasMore?: boolean; total?: number; [x: string]: any }>
 
 export const defaultInitialQuery: QueryParams = {
   pageNo: 1,
@@ -26,31 +37,35 @@ const listViewReducers = {
 /**
  * 处理列表数据的hooks
  */
-export default function useListViewData(fetchFn: FetchFn, initialQuery = {}, options = {}) {
+export default function useListViewData(fetchFn: FetchFn, options: Options = {}) {
+  const { isMerge = false, autoLoad = false, initialQuery = {} } = options
   const initQuery = useMemo(() => ({ ...defaultInitialQuery, ...initialQuery }), [initialQuery])
 
-  const { isMerge = true } = options as any
   const [asyncFetchData, { loading }] = useAsync(fetchFn)
 
-  const [{ listData, query, hasMore }, setObjectState, { setQuery }] = useObjectState(
+  const [{ listData, query, hasMore, total, pageTotal }, setObjectState, { setQuery }] = useObjectState(
     {
       hasMore: false,
-      listDataMap: {},
+      total: 0,
+      pageTotal: 0,
       listData: [],
       query: initQuery, // 用于筛选的请求参数
     },
-    listViewReducers
+    listViewReducers,
   )
 
   // 获取数据, filter通过请求参数传入
   const loadData = useCallback(
-    (params?: Record<string, any>) => {
+    (params: Record<string, any> = {}) => {
       const currentQuery = { ...query, ...params }
       return new Promise((resolve, reject) => {
-        asyncFetchData(params)
-          .then(({ data, hasMore: hasMorePage }) => {
+        asyncFetchData(currentQuery)
+          .then(({ data, hasMore: hasMorePage, total }) => {
+            const pageTotal = +(total / currentQuery.pageSize).toFixed(0)
             setObjectState((prevState) => ({
-              hasMore: hasMorePage,
+              total,
+              pageTotal,
+              hasMore: hasMorePage ?? pageTotal > currentQuery.pageNo,
               query: currentQuery,
               listData: isMerge ? [...prevState.listData, ...data] : data,
             }))
@@ -61,10 +76,13 @@ export default function useListViewData(fetchFn: FetchFn, initialQuery = {}, opt
           })
       })
     },
-    [asyncFetchData, isMerge, query, setObjectState]
+    [asyncFetchData, isMerge, query, setObjectState],
   )
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    autoLoad && loadData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoLoad])
 
   // 获取下一页数据
   const loadNextPage = useCallback(() => {
@@ -72,30 +90,46 @@ export default function useListViewData(fetchFn: FetchFn, initialQuery = {}, opt
       hasMore &&
       loadData({
         ...query,
-        pageNo: query.pageNo + 1,
+        pageNo: +query.pageNo + 1,
       })
     )
   }, [loadData, query, hasMore])
+
+  // 获取上一页数据
+  const loadPrevPage = useCallback(() => {
+    return (
+      query.pageNo - 1 > 0 &&
+      loadData({
+        ...query,
+        pageNo: query.pageNo - 1,
+      })
+    )
+  }, [loadData, query])
 
   /**
    * 清空筛选条件
    */
   const clearQuery = useCallback(() => {
-    setObjectState({ query: initQuery })
-  }, [initQuery, setObjectState])
+    setQuery(initQuery)
+  }, [initQuery, setQuery])
 
   // 重载数据，即清空分页、查询条件重新请求
   const reloadData = useCallback(() => {
-    setObjectState({ query: initQuery })
+    setQuery(initQuery)
     return loadData(initQuery)
-  }, [setObjectState, initQuery, loadData])
+  }, [initQuery, loadData, setQuery])
 
   return {
+    current: query.pageNo,
+    total,
+    pageTotal,
+    hasMore,
     listData,
-    query: query,
+    query,
     loading,
     loadData,
     loadNextPage,
+    loadPrevPage,
     clearQuery,
     reloadData,
     setQuery,

@@ -2,6 +2,10 @@
 
 判断某个元素是否需要固定位置悬浮，多用于滚动到一定位置后，悬浮 header 等
 
+### 演示
+
+<code src="./demo.tsx"></code>
+
 ### 类型声明
 
 ```typescript

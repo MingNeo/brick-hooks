@@ -4,13 +4,13 @@
 
 mediaQueryValueList 是一个数组，当有多条 mediaQuery 匹配时，会根据数组 index 的顺序获取第一个匹配的 value 如过设置初始值，则初始状态不根据媒体查询判断，而使用初始值
 
-### 用法
-
 ### 类型声明
 
 ```typescript
 function useMedia<T = any>(mediaQueryValueList: MediaQueryValueList, initialValue?: T): T
 ```
+
+### 用法
 
 ```javascript
 // 栅格布局时，不同尺寸使用不同的宽度

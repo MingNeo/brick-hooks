@@ -2,7 +2,7 @@ import React from 'react'
 import useBreakpoint from '.'
 import useMedia from '../useMedia'
 
-export function Demo() {
+export default function Demo() {
   const breakpointList = [
     { min: 1200, value: 6 },
     { min: 768, max: 1200, value: 12 },

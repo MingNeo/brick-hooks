@@ -10,6 +10,10 @@ useLazySequenceLoad 基于本 hook 及 useInView 自动进行懒加载。
 
 一般的列表懒加载不一定适用 useListSequenceLoad，可以在每个 item 中单独使用 brickHooksWeb.useInView。
 
+### 演示
+
+<code src="./demo.tsc"></code>
+
 ### 类型声明
 
 ```typescript

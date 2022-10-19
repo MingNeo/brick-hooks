@@ -28,7 +28,7 @@ export function Demo1() {
       rotateZ: '200deg',
     },
   })
-  console.log("🚀 ~ file: demo.jsx ~ line 31 ~ Demo1 ~ styleProps", styleProps);
+
   return (
     <>
       <div style={{ ...baseStyle, ...styleProps }} />
@@ -40,7 +40,7 @@ export function Demo1() {
 }
 
 export function Demo2() {
-  const [styleProps, { start, interpolate }] = useAnimate({
+  const [styleProps, { start }] = useAnimate({
     from: {
       opacity: 0,
       marginLeft: 0,
@@ -56,7 +56,8 @@ export function Demo2() {
     duration: 500,
     autoRun: false,
     delay: 100,
-    easing: 'bounce', // easing: 'linear',
+    easing: 'bounce',
+    // easing: 'linear',
     // easing: 'ease',
     // easing: 'quad',
     // easing: 'cubic',
@@ -110,6 +111,7 @@ export function Demo3() {
       },
     ],
     loop: 1,
+    autoRun: false,
     duration: 1000,
   })
   return (
@@ -185,4 +187,14 @@ export function DemoLoop() {
     duration: 1000,
   })
   return <div style={{ ...baseStyle, ...styleProps }} />
+}
+
+export default function Demo() {
+  return (
+    <div>
+      <DemoLoop />
+      <Demo2 />
+      <Demo3 />
+    </div>
+  )
 }

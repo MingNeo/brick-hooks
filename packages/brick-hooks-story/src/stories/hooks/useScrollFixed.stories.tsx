@@ -1,5 +1,5 @@
 import React from 'react'
-import { Demo } from './../../../../web/src/useScrollFixed/demo'
+import Demo from './../../../../web/src/useScrollFixed/demo'
 
 export default {
   title: 'useScrollFixed',

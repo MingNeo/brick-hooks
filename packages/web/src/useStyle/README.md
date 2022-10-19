@@ -2,6 +2,10 @@
 
 向页面中插入一段 Style 为防止重复插入, id 是必填的, 会在 style 标签上添加 id 属性
 
+### 演示
+
+<code src="./demo.tsx"></code>
+
 ### 类型声明
 
 ```typescript
@@ -15,6 +19,8 @@ function useStyle(
   },
 ): () => void
 ```
+
+### 用法
 
 ```javascript
 const style = `

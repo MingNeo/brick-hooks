@@ -1,7 +1,7 @@
 import React from 'react'
 import useInView from '.'
 
-export const Demo = () => {
+const Demo = () => {
   const { isInView, rootProps, targetProps } = useInView()
 
   return (
@@ -22,3 +22,5 @@ export const Demo = () => {
     </>
   )
 }
+
+export default Demo

@@ -24,6 +24,8 @@ const SetItem: (
 ) => Promise<unknown>
 ```
 
+### 用法
+
 js 无法自动监听 cookie 改变，因此，useCookie 返回的 cookie item 值不会自动更新。可以使用 refreshItem 来刷新为 cookie 中最新值，或使用 api.get 方法获取最新值
 
 ```javascript

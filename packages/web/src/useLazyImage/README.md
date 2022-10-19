@@ -2,6 +2,10 @@
 
 自动对图片进行懒加载处理
 
+### 演示
+
+<code src="./demo.tsx"></code>
+
 ### 类型声明
 
 ```typescript

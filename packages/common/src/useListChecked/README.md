@@ -2,20 +2,27 @@
 
 对列表提供单选、多选能力, 如购物车、带 checkbox 的列表等
 
+### 演示
+
+<code src="./demo.tsx"></code>
+
 ### 类型声明
 
 ```typescript
+interface Item extends Record<string, any> {
+  id: string
+}
 function useListChecked(
-  items?: (string | number)[],
-  defaultSelecteds?: (string | number)[],
+  items?: Item[],
+  defaultSelecteds?: string[],
 ): {
   isAllChecked: boolean
   checkedIds: string[]
-  checkedMap: {}
   setChecked: (key: string, checked: boolean) => void
   toggleChecked: (key: string, checked?: boolean) => void
-  toggleAllChecked: (checked: any) => void
+  toggleAllChecked: (checked?: boolean) => void
   clearChecked: () => void
+  updateItems: (items: Item[]) => void
 }
 ```
 

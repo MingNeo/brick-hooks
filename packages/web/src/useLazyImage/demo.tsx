@@ -1,7 +1,7 @@
 import React from 'react'
 import useLazyImage from '.'
 
-export const Demo = () => {
+const Demo = () => {
   useLazyImage('.lazy-load-container img')
 
   return (
@@ -18,3 +18,5 @@ export const Demo = () => {
     </div>
   )
 }
+
+export default Demo

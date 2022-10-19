@@ -7,7 +7,7 @@
 - 返回是否正在等待执行 isPending
 - 允许手工调用 stop 结束等待
 
-## 用法 <a name = "usage"></a>
+### 用法
 
 ```javascript
 const [value, { inc }] = useCounter(0)

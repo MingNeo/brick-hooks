@@ -36,17 +36,17 @@ describe('useCascader 校验', () => {
     expect(result.current.data).toEqual([])
     expect(result.current.loading).toEqual(true)
     await waitForNextUpdate()
-    expect(result.current.data.map(v => v.id)).toEqual(mockData.filter((v) => v.pid === 0).map(v => v.id))
+    expect(result.current.data.map((v) => v.id)).toEqual(mockData.filter((v) => v.pid === 0).map((v) => v.id))
     expect(result.current.loading).toEqual(false)
     await act(async () => {
-      await result.current.loadSubTree({ id: 1, pid: 0, value: '陕西' })
+      await result.current.loadSub({ id: 1, pid: 0, value: '陕西' })
     })
     expect(result.current.loading).toEqual(false)
     expect(
       jestDiff(
         sort(result.current.flatNodes).map((v) => v.id),
-        sort(mockData.filter((v) => v.pid === 0 || v.pid === 1).map((v) => v.id))
-      )
+        sort(mockData.filter((v) => v.pid === 0 || v.pid === 1).map((v) => v.id)),
+      ),
     ).toMatch('Compared values have no visual difference.')
     act(() => {
       result.current.toggleChecked(1, true)

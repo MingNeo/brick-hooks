@@ -2,6 +2,10 @@
 
 处理列表数据的 hooks, 请求数据、加载下一页、清空筛选条件、重载数据
 
+### 演示
+
+<code src="./demo/demo1.tsx"></code> <code src="./demo/demo2.tsx"></code>
+
 ### 类型声明
 
 ```typescript
@@ -25,16 +29,11 @@ function useListViewData(
   loadNextPage: () => Promise<any>
   clearQuery: () => void
   reloadData: () => Promise<any>
-  setQuery: React.Dispatch<
-    React.SetStateAction<{
-      pageNo: number
-      pageSize: number
-      hasMore: boolean
-      query: Record<string, any>
-    }>
-  >
+  setQuery: ()
 }
 ```
+
+### 用法
 
 ```javascript
 function MyComponent() {

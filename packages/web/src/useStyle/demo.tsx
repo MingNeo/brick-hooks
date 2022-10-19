@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import useStyle from '.'
 
-export const Demo = () => {
+const Demo = () => {
   const [bgColor, setBgColor] = useState('red')
   useStyle(`
     #test-useStyle-demo {
@@ -16,3 +16,5 @@ export const Demo = () => {
     </>
   )
 }
+
+export default Demo

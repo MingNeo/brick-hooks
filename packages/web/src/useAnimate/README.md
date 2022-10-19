@@ -6,6 +6,10 @@
 
 brickHooksNative.useAnimate 基于 react-native-web 的 animated 而非 css，内置 easing 要丰富一些且支持自定义函数。其他用法与本 hook 基本一致。
 
+### 演示
+
+<code src="./demo.tsx"></code>
+
 ### 类型声明
 
 ```typescript

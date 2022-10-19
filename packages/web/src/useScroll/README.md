@@ -2,6 +2,10 @@
 
 用于获取一个 scroll 的滚动值,且提供一个方法滚动到当前容器的顶部，用于如切换 tab 时重置列表位置等
 
+### 演示
+
+<code src="./demo.tsx"></code>
+
 ### 类型声明
 
 ```typescript
@@ -12,6 +16,8 @@ function useScroll({
   root?: Element | Ref<Element> | (Window & typeof globalThis)
   onScroll?: any
 }): {
+  left: number
+  top: number
   rootRef: React.MutableRefObject<any>
   scrollToTop: (y?: any) => void
   scrollToLeft: (x?: any) => void
@@ -19,6 +25,8 @@ function useScroll({
   y: number
 }
 ```
+
+### 用法
 
 #### 页面滚动
 

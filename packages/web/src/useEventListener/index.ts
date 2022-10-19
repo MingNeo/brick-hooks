@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { isBrowser } from '../utils'
 
-type Handler = (...args: any[]) => any
+type Handler = (...args: any[]) => void
 interface Options {
-  capture?: any
+  capture?: boolean
   once?: boolean
   passive?: boolean
   signal?: AbortSignal

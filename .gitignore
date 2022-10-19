@@ -20,7 +20,6 @@ coverage
 .eslintcache
 
 dump.rdb
-mock
 
 # umi
 .umi

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Demo as WebDemo } from '../../../../web/src/useInView/demo'
+import WebDemo from '../../../../web/src/useInView/demo'
 import { Demo as NativeDemo } from '../../../../native/src/useInView/demo'
 
 export default {

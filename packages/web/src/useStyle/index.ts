@@ -1,6 +1,7 @@
-import { useCallback, useRef } from 'react'
-import { useIsoEffect } from 'brick-hooks'
+import React, { useCallback, useRef } from 'react'
 import { isBrowser } from '../utils'
+
+const useIsoEffect = isBrowser ? React.useLayoutEffect : React.useEffect
 
 /**
  * 向页面中插入一段style

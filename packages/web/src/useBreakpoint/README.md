@@ -2,17 +2,21 @@
 
 方便对不同屏幕尺寸使用不同数据基于 useMedia, 通过 js 方便使用媒体查询。
 
-## 用法 <a name = "usage"></a>
+### 演示
 
-breakpointList 是一个数组，当有多条匹配时，会根据数组 index 的顺序获取第一个匹配的 value
-
-如过设置初始值，则初始状态不根据媒体查询判断，而使用初始值
+<code src="./demo.tsx"></code>
 
 ### 类型声明
 
 ```typescript
 function useBreakpoint(breakpointList: BreakpointList, initialValue?: any): any
 ```
+
+### 用法
+
+breakpointList 是一个数组，当有多条匹配时，会根据数组 index 的顺序获取第一个匹配的 value
+
+如过设置初始值，则初始状态不根据媒体查询判断，而使用初始值
 
 ```javascript
 // 栅格布局时，屏幕宽度大于1200 则组件宽度设为25%，768-992为50%，小于768为100%

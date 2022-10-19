@@ -18,7 +18,8 @@ function Item(props) {
         marginBottom: 10,
         border: '1px solid #eee',
       }}
-      {...props}></div>
+      {...props}
+    ></div>
   )
 }
 
@@ -32,7 +33,7 @@ const list2 = new Array(20).fill(1).map((v, i: number) => ({
   value: i + 1,
 }))
 
-export function Demo() {
+export default function Demo() {
   const { targetRef, rootRef, isFixed, fixedStyle } = useScrollFixed({
     limit: 90,
     fixedStyle: {
@@ -49,7 +50,8 @@ export function Demo() {
           <div
             style={{
               height: 22,
-            }}></div>
+            }}
+          ></div>
         )}
         <div style={fixedStyle as any} ref={targetRef}>
           哈哈哈哈哈

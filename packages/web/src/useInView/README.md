@@ -4,6 +4,10 @@
 
 如需提前触发 inView，可以使用[rootMargin](https://developer.mozilla.org/zh-CN/docs/Web/API/Intersection_Observer_API)
 
+### 演示
+
+<code src="./demo.tsx"></code>
+
 ### 类型声明
 
 ```typescript

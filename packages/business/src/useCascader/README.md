@@ -2,6 +2,10 @@
 
 用于级联树等多级类目的展示、选中，如省市区、多级类目。
 
+### 演示
+
+<code src="./demo/index.tsx"></code>
+
 ### 类型声明
 
 ```typescript

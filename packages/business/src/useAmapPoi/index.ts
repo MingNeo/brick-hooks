@@ -23,7 +23,12 @@ export type GetNearByInfos = (location: Location | Poi) => Promise<AmapNearByPoi
 
 interface Options {
   defaultPoi?: Poi // 指定默认poi 格式为高德地图Poi格式
-  currentLocation?: { city?: string; [x: string]: any } // 当前定位信息，通常无需传这个值，searchPois时如不传city，则使用此处当前定位的城市
+  currentLocation?: {
+    city?: string
+    latitude?: string
+    longitude?: string
+    [x: string]: any
+  } // 当前定位信息，通常无需传这个值，searchPois时如不传city，则使用此处当前定位的城市
   services?: {
     getNearByPoiList?: GetNearByInfos // 自行封装的获取附近的poi列表的服务，使用获取附近Poi功能必传。
     searchPoiList?: any // 自行封装的搜索poi的服务，使用搜索poi功能必传
@@ -48,7 +53,7 @@ interface UseAmapPoiRetrun {
   onSelectPoi: (poi: Poi) => Promise<void>
   getNearbyPois: GetNearbyPois
   searchPois: (params: any) => Promise<Poi[]>
-  setCurrentPos: (current: Poi) => Promise<Poi>
+  setCurrentPois: (current: Poi) => Promise<Poi>
 }
 
 /**
@@ -84,14 +89,18 @@ export default function useAmapPoi({
       return
     }
 
-    let newPoiData = await formatPoi(poi)
+    let newPoiData: any = {}
     if ((!newPoiData.city || !newPoiData.poiId) && getNearByPoiList) {
       const data = await getNearByPoiList(poi)
-      newPoiData.city =
-        newPoiData.city || data.city || data.cityname || data.pois?.[0]?.city || data.pois?.[0]?.cityname
-      newPoiData.poiId = newPoiData.poiId || data.poiId || data.pois?.[0]?.poiId
-      newPoiData = await formatPoi(newPoiData)
+      console.log('🚀 ~ file: index.ts ~ line 95 ~ handleSetCurrentPos ~ data', data)
+      const closestPoi = data.pois?.[0]
+      if (!newPoiData.poiId) {
+        newPoiData =
+          newPoiData.poiId || data.poiId ? { ...newPoiData, poiId: newPoiData.poiId || data.poiId } : { ...closestPoi }
+      }
+      newPoiData.city = newPoiData.city || data.city || data.cityname || closestPoi?.city || closestPoi?.cityname
     }
+    newPoiData = await formatPoi(newPoiData)
     if (!newPoiData.city) return
     setCurrentPoi(newPoiData)
     return newPoiData
@@ -160,7 +169,7 @@ export default function useAmapPoi({
     pois,
     nearbyPois,
     onSelectPoi,
-    setCurrentPos: handleSetCurrentPos,
+    setCurrentPois: handleSetCurrentPos,
     getNearbyPois, // 获取附近的poi
     searchPois: handleSearchPois,
   }

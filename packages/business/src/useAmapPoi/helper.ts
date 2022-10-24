@@ -3,28 +3,28 @@ import { isBrowser } from '../utils'
 export function formatPoiInfo(poi: any) {
   let name = poi.name || poi.formattedAddress
   name = formatPoiName(poi, name)
-  const address = poi.formattedAddress + poi.number
+  const address = `${poi.formattedAddress || poi.address}${poi.number || ''}`
   const currentPoi = {
     ...poi,
     latitude: poi.latitude,
     longitude: poi.longitude,
-    adcode: poi.adCode,
+    adcode: poi.adCode || poi.adcode,
     name,
     address,
     city: poi.city || poi.cityname,
-    cityCode: poi.cityCode,
+    cityCode: poi.cityCode || poi.citycode,
   }
   return currentPoi
 }
 
 export function formatPoiName(data: any, name: string = '') {
-  const { province = '', city = '', district = '' } = data
+  const { province = '', city = '', district = '', street } = data
   const removeAddress = province + city + district
   let newName = name.replace(removeAddress, '')
 
   if (newName.length > 18) {
-    if (data.street) {
-      newName = newName.replace(data.street, '')
+    if (street) {
+      newName = newName.replace(street, '')
     }
   }
 
@@ -130,16 +130,25 @@ export const loadAmapScript = (amapKey?: string, plugin = 'AMap.Geocoder') => {
     const AMap = (window as any)?.AMap
     if (!AMap) {
       if (amapKey) {
-        inserScript(`//webapi.amap.com/maps?v=2.0&key=${amapKey}&plugin=${plugin}`).then(resolve)
+        inserScript(`//webapi.amap.com/maps?v=2.0&key=${amapKey}&plugin=${plugin}`).then(() => {
+          const start = Date.now()
+          const interval = setInterval(() => {
+            if ((window as any).AMap) {
+              clearInterval(interval)
+              resolve(true)
+            } else if (Date.now() - start > 3000) {
+              clearInterval(interval)
+            }
+          }, 30)
+        })
       } else {
         // eslint-disable-next-line no-console
-        console.error('please use setAmapKey to set key')
+        console.error('please set amapKey')
       }
     } else if (AMap && !AMap.Map) {
       // eslint-disable-next-line no-console
       console.error('please use plugin AMap.Geocoder')
     } else if (AMap && AMap.Map) {
-      // fn(...args)
       resolve(true)
     }
   })

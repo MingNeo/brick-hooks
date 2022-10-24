@@ -1,6 +1,6 @@
 import React from 'react'
 import 'antd/es/cascader/style/css'
-import areaJson from './area.json'
+import areaJson from './area'
 import useCascader from '..'
 
 const fetchSub = ({ id = 0 }: any = {}) => {

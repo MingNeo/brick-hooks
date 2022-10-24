@@ -1,0 +1,17 @@
+.location-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+  background-color: aliceblue;
+  border-radius: 10px;
+  padding: 0 10px;
+  height: 30px;
+  font-size: 12px;
+}
+
+.location-bar .left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

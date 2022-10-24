@@ -27,7 +27,7 @@ export default function useAsync<A extends AsyncFunction>(
     onResult?: (res: any) => void
     debounceTime?: number
     manual?: boolean
-  } = {}
+  } = {},
 ): [
   Exector,
   {
@@ -36,7 +36,7 @@ export default function useAsync<A extends AsyncFunction>(
     loading: boolean
     status: 'success' | 'loading' | 'idle' | 'fail' | 'mutate success'
     mutate: (...args: any[]) => any
-  }
+  },
 ] {
   const [{ result, status, error }, setData] = useObjectState<{ status: Status; result: any; error: any }>({
     status: 'idle',
@@ -57,25 +57,23 @@ export default function useAsync<A extends AsyncFunction>(
       if (fetchingPromiseRef.current) {
         return fetchingPromiseRef.current
       }
-      fetchingPromiseRef.current = new Promise((resolve, reject) => {
-        const pending = asyncFunction(...args)
+      fetchingPromiseRef.current = (async () => {
         setData({ status: 'loading' })
-        pending
-          .then((res) => {
-            fetchingPromiseRef.current = null
-            setData({ result: res, status: 'success' })
-            onResultRef.current && onResultRef.current(res)
-            resolve(res)
-          })
-          .catch((err) => {
-            fetchingPromiseRef.current = null
-            setData({ result: undefined, error: err, status: 'fail' })
-            reject(err)
-          })
-      })
+        try {
+          const res = await asyncFunction(...args)
+          fetchingPromiseRef.current = null
+          setData({ result: res, status: 'success' })
+          onResultRef.current && onResultRef.current(res)
+          return res
+        } catch (error) {
+          fetchingPromiseRef.current = null
+          setData({ result: undefined, error, status: 'fail' })
+          throw new Error(error)
+        }
+      })()
       return fetchingPromiseRef.current
     },
-    [asyncFunction, setData]
+    [asyncFunction, setData],
   )
 
   const [debounceExector] = useDebounceFn(originExector, debounceTime)
@@ -83,7 +81,7 @@ export default function useAsync<A extends AsyncFunction>(
   // 如果有debounceTime则使用debounce的函数
   const exector = useMemo(
     () => (debounceTime ? debounceExector : originExector),
-    [debounceExector, debounceTime, originExector]
+    [debounceExector, debounceTime, originExector],
   )
 
   const mutate = useCallback(async (callback) => {

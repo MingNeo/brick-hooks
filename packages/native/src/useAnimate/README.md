@@ -43,7 +43,9 @@ function MyComponent() {
 #### 设置循环次数、动画持续时间、延迟时间、手动触发等
 
 ```javascript
-import { Easing, View } from 'react-native'
+import { Easing, View, Animated } from 'react-native'
+import { useAnimate } from 'brick-hooks-native'
+
 function MyComponent() {
   const [styleProps, { start }] = useAnimate({
     from: { opacity: 0, marginLeft: 0, width: 50, height: 50 },

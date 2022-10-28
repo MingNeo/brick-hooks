@@ -7,6 +7,10 @@ nav:
 
 方便使用高德地图进行关键词搜索 poi、搜索附近的 poi 浏览器端使用时，内置 js api，可直接使用，并提供自动加载高德地图 js 文件 react native 端使用时，需要手工设置 services
 
+### 演示
+
+<code src="./demo/index.tsx"></code>
+
 ### 类型声明
 
 ```typescript
@@ -29,10 +33,6 @@ function useAmapPoi(options?: {
   searchPois: (params: any) => Promise<...>;
 }
 ```
-
-### 演示
-
-<code src="./demo.tsx"></code>
 
 ### 用法
 

@@ -1,3 +1,8 @@
+---
+nav:
+  path: /web
+---
+
 ## useScript
 
 向页面中插入一个 script 文件

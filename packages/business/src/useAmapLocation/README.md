@@ -28,10 +28,6 @@ function useAmapLocation({ amapKey, getLocation }?: any): {
 }
 ```
 
-### 演示
-
-<code src="./demo.tsx"></code>
-
 ### 用法
 
 ```javascript

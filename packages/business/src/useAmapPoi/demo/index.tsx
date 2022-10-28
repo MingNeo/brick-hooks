@@ -34,14 +34,14 @@ export default function Demo() {
   })
 
   useEffect(() => {
-    location && setCurrentPois(location)
-    getNearbyPois({ current: location })
+    if (location) {
+      setCurrentPois(location)
+      getNearbyPois({ current: location })
+    }
   }, [location])
 
-  console.log('🚀 ~ file: demo.tsx ~ line 8 ~ Demo ~ pois', pois)
-
   return (
-    <div style={{ width: '200px' }}>
+    <div className="business-useAmapPoi">
       <div className="location-bar">
         <div className="left">
           <span>{defaultIcon}</span>

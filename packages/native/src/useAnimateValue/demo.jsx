@@ -1,6 +1,5 @@
-import React from 'react'
-import { Animated, Easing } from 'react-native'
-import useAnimateValue from '.'
+import { Animated, Easing } from 'react-native-web'
+import useAnimateValue from './index'
 
 export function Demo1() {
   const { animatedValue, interpolate, start } = useAnimateValue({
@@ -75,3 +74,5 @@ export const Demo2 = () => {
     </>
   )
 }
+
+export default Demo1

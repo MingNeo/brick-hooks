@@ -4,10 +4,12 @@ import uuid from 'uuid'
 import useStyle from '../useStyle'
 import createDangerousStringForStyles, { bounceKeyFrames } from './helper'
 
+interface Style extends Record<string, string> {}
+
 interface Options {
-  from?: any
-  to?: any
-  range?: any
+  from?: Style
+  to?: Style | Style[]
+  range?: number[]
   duration?: number
   easing?: 'linear' | 'ease' | 'in' | 'out' | 'inOut' | 'bounce'
   delay?: number
@@ -31,40 +33,71 @@ export default function useAnimate({
   keyframesName,
   defaultUseFrom = true,
   reverse = false,
-}: Options = {}): any[] {
+}: Options = {}): [Record<string, any>, { start: (options: { reverse?: boolean }) => void; reset: () => void }] {
   const uuidRef = useRef()
   if (!uuidRef.current) {
     uuidRef.current = uuid()
   }
 
   const fromRef = useRef(defaultUseFrom ? from : {})
+  const toRef = useRef(to)
+  toRef.current = to
+  const rangeRef = useRef(range)
+  rangeRef.current = range
   const timerRef = useRef<any>()
 
   const [style, setStyle] = useState(fromRef.current)
   const id = useMemo(() => keyframesName ?? `keyframe-${uuidRef.current}`, [keyframesName])
 
-  useStyle(!keyframesName && from && to ? getKeyFramesStyle({ id, from, to, range, easing }) : undefined, id, {
-    removeOnDestroy: true,
-  })
+  useEffect(() => {
+    console.log('first')
+  }, [])
+
+  useStyle(
+    useMemo(() => {
+      if (!keyframesName && fromRef.current && toRef.current) {
+        const styleContent = getKeyFramesStyle({
+          id,
+          from: fromRef.current,
+          to: toRef.current,
+          range: rangeRef.current,
+          easing,
+        })
+        return `${styleContent}`
+      } else {
+        return undefined
+      }
+    }, [easing, id, keyframesName]),
+    id,
+    {
+      removeOnDestroy: true,
+    },
+  )
 
   const reset = useCallback(() => setStyle({ ...fromRef.current }), [])
 
-  const start = useCallback(() => {
-    if (!timerRef.current) {
-      reset()
-      timerRef.current = setTimeout(() => {
-        const animation = `${duration}ms ${easing === 'bounce' ? 'linear' : easing} ${delay}ms ${
-          loop === -1 ? 'infinite' : loop
-        } ${reverse ? 'reverse' : 'normal'} both running ${id}`
-        setStyle({
-          ...fromRef.current,
-          animation,
-          WebkitAnimation: animation,
-        })
-        timerRef.current = null
-      }, 0)
-    }
-  }, [reset, duration, easing, delay, loop, id, reverse])
+  const start = useCallback(
+    ({ reverse: currentReverse }: { reverse?: boolean } = {}) => {
+      if (!timerRef.current) {
+        reset()
+        timerRef.current = setTimeout(() => {
+          const animation = `${duration}ms ${easing === 'bounce' ? 'linear' : easing} ${delay}ms ${
+            loop === -1 ? 'infinite' : loop
+          } ${currentReverse || reverse ? 'reverse' : 'normal'} both running ${id}`
+
+          setStyle({
+            backfaceVisibility: 'hidden',
+            // perspective: '1000',
+            ...fromRef.current,
+            animation,
+            WebkitAnimation: animation,
+          })
+          timerRef.current = null
+        }, 0)
+      }
+    },
+    [reset, duration, easing, delay, loop, id, reverse],
+  )
 
   useIsoEffect(() => {
     autoRun && start()
@@ -75,6 +108,7 @@ export default function useAnimate({
       timerRef.current && clearTimeout(timerRef.current)
       reset()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return [style, { start, reset }]

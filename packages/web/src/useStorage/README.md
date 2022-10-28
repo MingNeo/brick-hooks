@@ -1,3 +1,8 @@
+---
+nav:
+  path: /web
+---
+
 ## useStorage
 
 方便使用 localStorage 和 sessionStorage
@@ -35,7 +40,7 @@ const [cacheUserInfo, setCacheUserInfo, { clear }] = useStorage('user', {}, { wa
 setCacheUserInfo({ userName: 'klose' })
 ```
 
-### useLocalStorage & useSessionStorage
+### useSessionStorage
 
 对 useStorage 进行简单封装，无需手工配置 storageType
 

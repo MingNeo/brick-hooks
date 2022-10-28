@@ -84,6 +84,7 @@ export default function useCountDown({
     const raf =
       window.requestAnimationFrame ||
       (window as any).webkitRequestAnimationFrame ||
+      // eslint-disable-next-line no-undef
       ((callback: TimerHandler) => setTimeout(callback, 1000 / 60))
     const isUseInterval = (step && step >= 17) || !isBrowser
 
@@ -92,7 +93,6 @@ export default function useCountDown({
         clearTimer(intervalRef.current)
         clearTimeout(timerRef.current)
         const progress = running()
-        console.log('🚀 ~ file: index.ts ~ line 85 ~ loop ~ progress', progress, statusRef.current)
         if (progress > 0 && statusRef.current === 'running') {
           intervalRef.current = isUseInterval ? setIntervalBySetTimeout(running, step) : raf(loop)
         }

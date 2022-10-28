@@ -1,3 +1,8 @@
+---
+nav:
+  path: /web
+---
+
 ## useAnimate
 
 方便在 web 中使用 animate
@@ -8,7 +13,7 @@ brickHooksNative.useAnimate 基于 react-native-web 的 animated 而非 css，�
 
 ### 演示
 
-<code src="./demo.tsx"></code>
+<code src="./demo.jsx"></code>
 
 ### 类型声明
 
@@ -25,7 +30,10 @@ function useAnimate(options: {
   autoRun?: boolean // 为true时组件加载自动执行动画，为false则使用start方法主动触发动画
   shouldReset?: boolean
   keyframesName?: string // 使用指定keyframes，使用css样式表中已有的keyframes，设置这个值之后from、to、range无效
-}): [any, { start: any; reset: any; animatedValue: any; }]
+}): [Record<string, any>, {
+  start: (options: { reverse?: boolean; }) => void;
+  reset: () => void;
+}]
 ```
 
 ### 用法

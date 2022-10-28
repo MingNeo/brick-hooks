@@ -1,6 +1,5 @@
-import React from 'react'
-import { Animated, Easing } from 'react-native'
-import useAnimate from '.'
+import { Animated, Easing } from 'react-native-web'
+import useAnimate from './index'
 
 const baseStyle = {
   width: 50,
@@ -231,3 +230,5 @@ export function AnimatedValueDemo() {
     </>
   )
 }
+
+export default Demo1

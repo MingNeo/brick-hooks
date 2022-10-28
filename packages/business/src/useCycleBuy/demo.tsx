@@ -1,23 +1,14 @@
----
-nav:
-  path: /business
----
+import React from 'react'
+import { DatePicker, Radio } from 'antd'
+import 'antd/es/date-picker/style/css'
+import 'antd/es/radio/style/css'
+import useCycleBuy from '.'
 
-# useCycleBuy
+const { RangePicker } = DatePicker
 
-日期周期/区间选择，用于周期购等场景
-
-### 演示
-
-<code src="./demo.tsx"></code>
-
-### 用法
-
-```javascript
-function Comp() {
+const UseCycleBuy = () => {
   const {
     dates,
-    setDates,
     model,
     models,
     cycles,
@@ -45,6 +36,7 @@ function Comp() {
           ))}
         </Radio.Group>
       </div>
+
       <div>
         {model !== 'singleday' && (
           <Radio.Group onChange={onCycleChange} defaultValue={cycle}>
@@ -56,9 +48,20 @@ function Comp() {
           </Radio.Group>
         )}
       </div>
-      <div>{cycle === 'custom' && <RangePicker disabledDate={checkDateDisable} onChange={setRange} />}</div>
-      result: {JSON.stringify(dates)}
+
+      <div>
+        {cycle === 'custom' && (
+          <RangePicker
+            disabledDate={checkDateDisable}
+            onChange={(values, formatString) => setRange(values.map((v) => v.format()))}
+          />
+        )}
+      </div>
+
+      {JSON.stringify(dates)}
+      {JSON.stringify(range)}
     </>
   )
 }
-```
+
+export default UseCycleBuy

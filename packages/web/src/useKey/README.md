@@ -1,3 +1,8 @@
+---
+nav:
+  path: /web
+---
+
 ## useKey
 
 监听键盘按下

@@ -12,7 +12,7 @@ useLazySequenceLoad 基于本 hook 及 useInView 自动进行懒加载。
 
 ### 演示
 
-<code src="./demo.tsc"></code>
+<code src="./demo.tsx"></code>
 
 ### 类型声明
 

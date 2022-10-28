@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { useAsync } from 'brick-hooks'
 import { useCallback, useEffect, useReducer, useRef } from 'react'
-import { isBrowser } from 'src/utils'
+import { isBrowser } from '../utils'
 
 export const defaultNavigator = isBrowser ? window.navigator : undefined
 

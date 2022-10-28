@@ -10,8 +10,8 @@ import { isBrowser } from '../utils'
  */
 export default function useLink(
   href: string,
-  id?: string,
-  { removeOnDestroy = false }: { removeOnDestroy?: boolean } = {}
+  id: string,
+  { removeOnDestroy = false }: { removeOnDestroy?: boolean } = {},
 ) {
   const linkNodeRef = useRef(null)
   const setLink = useCallback(() => {
@@ -29,11 +29,11 @@ export default function useLink(
     } catch (error) {
       console.warn(error)
     }
-  }, [id])
+  }, [href, id])
 
   const removeLink = useCallback(() => {
     try {
-      let link = linkNodeRef.current || document.querySelector<HTMLLinkElement>(`link#${id}`)
+      const link = linkNodeRef.current || document.querySelector<HTMLLinkElement>(`link#${id}`)
       link && document.head.removeChild(link)
     } catch (error) {
       console.warn(error)
@@ -46,7 +46,7 @@ export default function useLink(
       isBrowser && removeOnDestroy && removeLink()
       linkNodeRef.current = null
     }
-  }, [setLink, removeLink])
+  }, [setLink, removeLink, removeOnDestroy])
 
   return removeLink
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View } from 'react-native'
+import { ScrollView, View } from 'react-native-web'
 import useNativeInView from '.'
 
 export const Demo = () => {

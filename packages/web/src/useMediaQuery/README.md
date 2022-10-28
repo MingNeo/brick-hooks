@@ -1,3 +1,8 @@
+---
+nav:
+  path: /web
+---
+
 ## useMediaquery
 
 通过 js 方便使用媒体查询判断当前是否匹配

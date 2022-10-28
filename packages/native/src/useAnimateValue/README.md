@@ -46,6 +46,9 @@ function useAnimateValue(options: {
 ### 用法
 
 ```javascript
+import { View, Animated } from 'react-native'
+import { useAnimate } from 'brick-hooks-native'
+
 function MyComponent() {
   const { animatedValue, interpolate, start, reset } = useAnimateValue({
     from: 0,

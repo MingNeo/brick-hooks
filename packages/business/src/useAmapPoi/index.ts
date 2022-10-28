@@ -92,7 +92,6 @@ export default function useAmapPoi({
     let newPoiData: any = {}
     if ((!newPoiData.city || !newPoiData.poiId) && getNearByPoiList) {
       const data = await getNearByPoiList(poi)
-      console.log('🚀 ~ file: index.ts ~ line 95 ~ handleSetCurrentPos ~ data', data)
       const closestPoi = data.pois?.[0]
       if (!newPoiData.poiId) {
         newPoiData =

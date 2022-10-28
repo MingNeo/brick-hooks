@@ -9,21 +9,11 @@ export default function useTransition({ from, to, reverse = false, ...config }) 
     ...config,
   })
 
-  const [reverseStyle, reverseApi] = useAnimate({
-    from,
-    to,
-    autoRun: false,
-    reverse: true,
-    ...config,
-  })
-
   useLayoutEffect(() => {
-    if (!reverse) {
-      api.start()
-    } else {
-      reverseApi.start()
-    }
+    console.log('reverse', reverse)
+    api.start({ reverse })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reverse])
 
-  return [!reverse ? style : reverseStyle]
+  return [style]
 }

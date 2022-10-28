@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import useInView from '../useInView'
 
 interface Options {
-  target?: any
+  target?: any[]
   root?: any
   groupSize?: number
   onLoadingInView?: (...args: any[]) => void

@@ -1,6 +1,8 @@
 ## usePageFocus
-与useFocusEffect类似，但是传入的effect函数无需要使用useCallback处理
-effect函数变化也不会触发，只有页面focus时才会触发
+
+与 useFocusEffect 类似，但是传入的 effect 函数无需要使用 useCallback 处理 effect 函数变化也不会触发，只有页面 focus 时才会触发
+
+### 用法
 
 ```javascript
 usePageFocus(() => {
@@ -8,7 +10,8 @@ usePageFocus(() => {
 })
 ```
 
-eg:页面focus时自动滚动到top
+eg:页面 focus 时自动滚动到 top
+
 ```javascript
 import { usePageFocus } from 'brick-hooks-react-navigation4'
 import { useScrollToTop } from 'brick-hooks-native'

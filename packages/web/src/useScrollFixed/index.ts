@@ -33,7 +33,7 @@ function useScrollFixed(
     onScroll?: () => void
     checkIsFixed?: CheckIsFixed
     initialFixed?: boolean
-  } = {}
+  } = {},
 ) {
   const {
     limit = 200,
@@ -65,6 +65,7 @@ function useScrollFixed(
       root: rootRef?.current || window,
       target: targetRef.current,
       checkIsFixed,
+      fixedStyle: old.fixedStyle,
     })
     // 防止每次滚动都触发渲染，只有当悬浮状态或样式发生变化时才触发渲染
     if (current.isFixed !== old.isFixed || checkObjDiff(current.fixedStyle, old.fixedStyle)) {
@@ -94,17 +95,18 @@ function getFixedInfo({
   root,
   target,
   checkIsFixed = ({ offset, limit }) => offset > limit,
+  fixedStyle,
 }: {
   offset: number
   limit: Limit
   root?: Element
   target?: Element
   checkIsFixed?: CheckIsFixed
+  fixedStyle?: Record<string, any>
 }) {
   const usedLimit = getLimit(limit, { root, target })
   const isFixed = checkIsFixed({ offset, limit: usedLimit, root, target })
-  const fixedStyle = isFixed ? { ...DefaultFixedStyle, top: usedLimit } : {}
-  return { isFixed, fixedStyle }
+  return { isFixed, fixedStyle: isFixed ? { ...DefaultFixedStyle, top: 0, ...fixedStyle } : {} }
 }
 
 /**

@@ -18,7 +18,7 @@ type Clear = () => void
 export default function useStorage(
   itemName: string,
   initialValue: any = undefined,
-  { watchStorageChange = false, storageType = 'localStorage' } = {}
+  { watchStorageChange = false, storageType = 'localStorage' } = {},
 ): [any, SetValue, { clear: Clear }] {
   const initialValueRef = useRef(initialValue)
   const [value, setStateValue] = useState(() => getStorage(storageType, itemName) || initialValue)
@@ -57,18 +57,12 @@ export default function useStorage(
   return [value, methods.setValue, { clear: methods.clear }]
 }
 
-export const useLocalStorage = (
-  itemName: string,
-  initialValue: any = undefined,
-  { watchStorageChange = false } = {}
-) => {
-  return useStorage(itemName, initialValue, { watchStorageChange, storageType: 'localStorage' })
-}
+export const useLocalStorage = useStorage
 
 export const useSessionStorage = (
   itemName: string,
   initialValue: any = undefined,
-  { watchStorageChange = false } = {}
+  { watchStorageChange = false } = {},
 ) => {
   return useStorage(itemName, initialValue, {
     watchStorageChange,

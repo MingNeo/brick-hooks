@@ -1,3 +1,8 @@
+---
+nav:
+  path: /web
+---
+
 ## useMedia
 
 通过 js 方便使用媒体查询
@@ -13,6 +18,21 @@ function useMedia<T = any>(mediaQueryValueList: MediaQueryValueList, initialValu
 ### 用法
 
 ```javascript
+// 区分pc、mobile
+function MyComponent() {
+  const mediaQueryValueList = [
+    {
+      media: '(min-width: 415px)',
+      value: 'pc',
+    },
+    {
+      media: '(max-width: 414px)',
+      value: 'mobile',
+    },
+  ]
+  const type = useMedia(mediaQueryValueList) // 浏览器可视尺寸小于415时，type为: mobile
+}
+
 // 栅格布局时，不同尺寸使用不同的宽度
 // 用于屏幕尺寸breakpoint的情况，也可以直接使用useBreakpoint
 function MyComponent() {
@@ -26,7 +46,7 @@ function MyComponent() {
       value: 24,
     },
   ]
-  const col = useMedia(mediaQueryValueList)
+  const col = useMedia(mediaQueryValueList) // 浏览器可视尺寸大于1200时，col为: 6
 }
 
 // 根据系统主题色切换样式

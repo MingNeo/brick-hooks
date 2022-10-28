@@ -1,6 +1,15 @@
+---
+nav:
+  path: /web
+---
+
 ## useTransition
 
 方便实现过渡效果
+
+### 演示
+
+<code src="./demo.tsx" iframe="true"></code>
 
 ### 类型声明
 

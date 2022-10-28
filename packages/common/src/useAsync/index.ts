@@ -68,7 +68,7 @@ export default function useAsync<A extends AsyncFunction>(
         } catch (error) {
           fetchingPromiseRef.current = null
           setData({ result: undefined, error, status: 'fail' })
-          throw new Error(error)
+          Promise.reject(error)
         }
       })()
       return fetchingPromiseRef.current

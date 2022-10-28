@@ -2,8 +2,11 @@
 
 提供一个 Pub/Sub 的 hook，可用作跨组件通信。
 
-### 直接使用全局 bus
-> ！全局bus不要在server端使用，如需开启ssr，使用createEventBus。
+### 用法
+
+#### 直接使用全局 bus
+
+> ！全局 bus 不要在 server 端使用，如需开启 ssr，使用 createEventBus。
 
 使用 useEventBus
 
@@ -21,7 +24,8 @@ const { publish } = useEventBus();
 const handleChange = (payload) => publish('loginEventBus', payload)
 ```
 
-返回指定事件的useSubscribe、publish
+返回指定事件的 useSubscribe、publish
+
 ```javascript
 import { useEventBus } from 'brick-hooks'
 function Component1() {
@@ -38,7 +42,7 @@ function Component2() {
 }
 ```
 
-直接使用 全局useSubscribe、publish
+直接使用 全局 useSubscribe、publish
 
 ```javascript
 import { useSubscribe, publish } from 'brick-hooks'
@@ -57,17 +61,18 @@ function Component2() {
 }
 ```
 
-### 创建一个独立的 eventBus 实例及相关 hooks
+#### 独立 eventBus 实例
 
-通过 createEventBus 创建一个独立的 eventBus 实例，即可与全局的 eventBus 隔离开来
-如果使用ssr，则必须使用独立eventBus 实例，推荐直接使用createContextEventBus
+通过 createEventBus 创建一个独立的 eventBus 实例，即可与全局的 eventBus 隔离开来。
+
+如果使用 ssr，则必须使用独立 eventBus 实例，推荐直接使用 createContextEventBus
 
 ```javascript
 import { createEventBus } from 'brick-hooks'
 const { publish, useSubscribe, useEventBus } = createEventBus()
 ```
 
-### 创建一个独立的，且使用 react context 的 eventBus 及相关 hooks
+#### 创建一个独立的，且使用 react context 的 eventBus 及相关 hooks
 
 ```javascript
 import { createContextEventBus } from 'brick-hooks'

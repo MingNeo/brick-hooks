@@ -1,3 +1,8 @@
+---
+nav:
+  path: /web
+---
+
 ## useDarkMode
 
 方便切换 DarkMode

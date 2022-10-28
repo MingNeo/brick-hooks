@@ -34,7 +34,7 @@ interface Options {
  * 日期周期/区间选择，用于周期购等场景
  */
 export default function useCycleBuy(defaultData: Data = {}, options: Options = {}) {
-  const { models = defaultModels, cycles = defaultCycles } = options
+  const { models = defaultModels as unknown as Model[], cycles = defaultCycles as unknown as Cycle[] } = options
   const { model: defaultModel = '', cycle: defaultCycle = '', dates: defaultDates = [] } = defaultData
 
   const modelMap = useMemo(() => getMap(models), [models])

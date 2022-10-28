@@ -1,6 +1,6 @@
 import { isBrowser } from '../utils'
 
-export function formatPoiInfo(poi: any) {
+export function formatPoiInfo(poi: any = {}) {
   let name = poi.name || poi.formattedAddress
   name = formatPoiName(poi, name)
   const address = `${poi.formattedAddress || poi.address}${poi.number || ''}`

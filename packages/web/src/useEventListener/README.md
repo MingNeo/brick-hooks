@@ -1,3 +1,8 @@
+---
+nav:
+  path: /web
+---
+
 ## useEventListener
 
 方便为 dom 节点绑定 event，组件卸载时自动进行解绑

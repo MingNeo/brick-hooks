@@ -3,6 +3,7 @@ import useScrollFixed from '.'
 
 export const containerStyle = {
   width: '100%',
+  maxHeight: '100%',
   height: 400,
   overflow: 'scroll',
   border: '1px solid',
@@ -36,9 +37,6 @@ const list2 = new Array(20).fill(1).map((v, i: number) => ({
 export default function Demo() {
   const { targetRef, rootRef, isFixed, fixedStyle } = useScrollFixed({
     limit: 90,
-    fixedStyle: {
-      top: 16,
-    },
   })
   return (
     <div>

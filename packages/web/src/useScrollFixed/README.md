@@ -1,10 +1,15 @@
+---
+nav:
+  path: /web
+---
+
 ## useFixed
 
 判断某个元素是否需要固定位置悬浮，多用于滚动到一定位置后，悬浮 header 等
 
 ### 演示
 
-<code src="./demo.tsx"></code>
+<code src="./demo.tsx" iframe="true"></code>
 
 ### 类型声明
 

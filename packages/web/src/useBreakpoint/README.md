@@ -1,10 +1,15 @@
+---
+nav:
+  path: /web
+---
+
 ## useBreakpoint
 
 方便对不同屏幕尺寸使用不同数据基于 useMedia, 通过 js 方便使用媒体查询。
 
 ### 演示
 
-<code src="./demo.tsx"></code>
+<code src="./demo.jsx"></code>
 
 ### 类型声明
 

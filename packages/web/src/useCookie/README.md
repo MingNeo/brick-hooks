@@ -1,3 +1,8 @@
+---
+nav:
+  path: /web
+---
+
 ## useCookie
 
 方便使用 cookie
@@ -5,23 +10,17 @@
 ### 类型声明
 
 ```typescript
-function useCookie(key: string): [
-  string,
+type SetItem = (value: string | number | boolean, options?: { days: number; path: string }) => void
+
+type Value = string
+
+type Return = [
+  Value,
   SetItem,
-  {
-    get: () => string
-    refresh: () => void
-  },
+  { get: () => Promise<string>; refresh: () => Promise<void>; delete: () => Promise<void> },
 ]
 
-const SetItem: (
-  name: string,
-  value: string | number | boolean,
-  options: {
-    days: any
-    path: any
-  },
-) => Promise<unknown>
+function useCookie(key: string): Return
 ```
 
 ### 用法

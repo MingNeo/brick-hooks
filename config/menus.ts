@@ -25,6 +25,7 @@ export const coreHooks = {
     'useMethodsImmer',
     'useObjectState',
     'useObjectStateImmer',
+    'usePolling',
     'usePrevious',
     'useReducerImmer',
     'useRefCallback',
@@ -61,6 +62,7 @@ export const coreHooks = {
 
 export const webHooks = {
   title: 'Brick-hooks-web',
+  path: '/web',
   children: [
     'useAnimate',
     'useBreakpoint',
@@ -68,6 +70,7 @@ export const webHooks = {
     'useDarkMode',
     'useEventListener',
     'useFreeDrag',
+    'useGeoLocation',
     'useHover',
     'useInView',
     'useKey',
@@ -140,5 +143,12 @@ export const nativeHooks = {
 
 export const businessHooks = {
   title: 'Brick-hooks-business',
-  children: ['useAmapPoi', 'useCascader', 'useCycleBuy'],
+  path: '/business',
+  children: ['useAmapLocation', 'useAmapPoi', 'useCascader', 'useCycleBuy'],
+}
+
+export const reactNavigation4Hooks = {
+  title: 'Brick-hooks-react-navigation4',
+  path: '/navigation4',
+  children: ['useFocusEffect', 'useIsFocused', 'useNavigation', 'useNavigationState', 'usePageFocus', 'useScrollToTop'],
 }

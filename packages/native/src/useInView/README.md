@@ -31,6 +31,8 @@ function useInView(options?: {
 }
 ```
 
+### 用法
+
 ```javascript
 function Comp({ onInView, rootRef, ...restProps }) {
   const { isInView, targetProps, rootProps } = useInView()
@@ -42,12 +44,11 @@ function Comp({ onInView, rootRef, ...restProps }) {
   }, [isInView])
 
   return (
-    <div {...rootProps} className="container">
-      <div {...targetProps} {...restProps}>
-        {' '}
-        ...{' '}
-      </div>
-    </div>
+    <View {...rootProps} className="container">
+      <View {...targetProps} {...restProps}>
+        // ...
+      </View>
+    </View>
   )
 }
 ```

@@ -7,6 +7,19 @@ nav:
 
 方便滚动 ScrollView 到顶部
 
+### 类型声明
+
+```typescript
+function useScrollToTop(
+  ref: any,
+  options?: {
+    animated?: boolean
+  },
+): Callback
+```
+
+### 用法
+
 ```javascript
 function Comp() {
   const ref = React.useRef(null)
@@ -20,6 +33,8 @@ function Comp() {
   )
 }
 ```
+
+自定义 scrollToTop 方法
 
 ```javascript
 function Comp() {

@@ -32,7 +32,7 @@ export default function LocationBar() {
     <div className="location-bar">
       <div className="left">
         <span>{DefaultIcon}</span>
-        <span>{loading ? '正在定位' : `${location.latitude}, ${location.longitude}`}</span>
+        <span>{loading ? '正在定位' : `${location?.latitude}, ${location?.longitude}`}</span>
       </div>
       <div className="right" onClick={loadLocation}>
         重新定位

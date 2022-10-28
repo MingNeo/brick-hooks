@@ -1,3 +1,8 @@
+---
+nav:
+  path: /web
+---
+
 ## useHover
 
 方便添加鼠标悬浮处理

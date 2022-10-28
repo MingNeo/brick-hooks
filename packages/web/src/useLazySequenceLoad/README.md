@@ -1,3 +1,8 @@
+---
+nav:
+  path: /web
+---
+
 ## useLazySequenceLoad
 
 列表页以分组模式按需加载下一组，适用每个 item 各不相同情况。如首页装修/信息流。基于 useListSequenceLoad 及 useInView 自动进行懒加载。

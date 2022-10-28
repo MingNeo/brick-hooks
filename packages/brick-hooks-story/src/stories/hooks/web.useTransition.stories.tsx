@@ -1,21 +1,21 @@
 import React from 'react'
-import { Demo1, Demo2, Demo3, Demo4 } from './../../../../native/src/useTransition/demo'
+import { Demo1, Demo2, Demo3, Demo4 } from './../../../../web/src/useTransition/demo'
 
 export default {
-  title: 'useTransition',
+  title: 'web useTransition',
 }
 
 export const UseTransition = () => <Demo1 />
 
 UseTransition.story = {
-  name: 'useTransition',
+  name: 'web useTransition',
 }
 
 // 在两个组件间切换
 export const StoryDemo2 = () => <Demo2 />
 
 StoryDemo2.story = {
-  name: '在两个组件间切换',
+  name: 'web 在两个组件间切换',
 }
 
 // 组合多个组件过渡动画

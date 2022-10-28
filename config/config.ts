@@ -1,4 +1,4 @@
-import { coreHooks, webHooks, nativeHooks, businessHooks } from './menus'
+import { coreHooks, webHooks, nativeHooks, businessHooks, reactNavigation4Hooks } from './menus'
 
 const packages = require('../packages/common/package.json')
 
@@ -36,9 +36,19 @@ export default {
     'brick-hooks-web': process.cwd() + '/packages/web/src/index.ts',
     'brick-hooks-native': process.cwd() + '/packages/native/src/index.ts',
     'brick-hooks-business': process.cwd() + '/packages/business/src/index.ts',
+    'react-native': 'react-native-web',
   },
   resolve: {
-    includes: ['docs', 'packages/common/src', 'packages/web/src', 'packages/native/src', 'packages/business/src'],
+    includes: [
+      'docs',
+      'packages/common/src',
+      'packages/web/src',
+      'packages/web/src/docs',
+      'packages/native/src',
+      'packages/business/src',
+      'packages/business/docs',
+      'packages/react-navigation4/src',
+    ],
     passivePreview: true,
   },
   links: [
@@ -63,6 +73,7 @@ export default {
       webHooks,
       nativeHooks,
       businessHooks,
+      reactNavigation4Hooks,
     ],
   },
   scripts: [

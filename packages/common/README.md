@@ -1,6 +1,6 @@
 # `brick-hooks`
 
-> 可用于 React/React-native 的 React Hooks Library 部分仅可用于 web/react-native 的 hook 见 brick-hooks-web、brick-hooks-native
+> 可用于 React/React-native 的 React Hooks Library. 部分仅可用于 web/react-native 的 hook 见 brick-hooks-web、brick-hooks-native
 
 ## 用法
 

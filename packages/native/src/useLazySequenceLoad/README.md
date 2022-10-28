@@ -11,13 +11,11 @@ nav:
 
 一般的列表懒加载不一定适用 useLazySequenceLoad，可以在每个 item 中单独使用 brickHooksWeb.useInView。
 
-### 用法
-
 ### 类型声明
 
 ```typescript
 function useLazySequenceLoad(
-  listData: any,
+  listData: any[],
   { target, root, groupSize, onLoadingInView }: Options,
 ): {
   showfooterLoading: boolean
@@ -31,6 +29,8 @@ function useLazySequenceLoad(
   }
 }
 ```
+
+### 用法
 
 ```javascript
 function Container() {

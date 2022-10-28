@@ -1,6 +1,6 @@
 {
   "name": "hydrogen-store-effect-plugin",
-  "version": "0.3.2",
+  "version": "0.3.7",
   "description": "> ",
   "author": "klose <mingrenjbdtx@gmail.com>",
   "homepage": "https://github.com/MingNeo/hydrogen-store-effect-plugin#readme",
@@ -32,15 +32,15 @@
     "url": "https://github.com/MingNeo/hydrogen-store-effect-plugin/issues"
   },
   "dependencies": {
-    "hydrogen-store": "^0.3.2"
+    "hydrogen-store": "^0.3.7"
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^7.0.2",
     "@types/jest": "^26.0.23",
+    "eslint": "^8.0.0",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.5",
-    "typescript": "^3.9.9",
-    "@testing-library/react-hooks": "^7.0.2",
-    "eslint": "^8.0.0"
+    "typescript": "^3.9.9"
   },
   "peerDependencies": {
     "react": ">=16.9.0"

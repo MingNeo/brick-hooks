@@ -1,0 +1,6 @@
+(self.webpackChunk_brick_hooks_root=self.webpackChunk_brick_hooks_root||[]).push([[6081],{41333:function(s,l,n){"use strict";n.r(l);var e=n(67294),o=n(36445),c=n(91485),r=e.memo(u=>{var a=u.demos;return e.createElement(e.Fragment,null,e.createElement("div",{className:"markdown"},e.createElement("h2",{id:"uselockbodyscroll"},e.createElement(o.AnchorLink,{to:"#uselockbodyscroll","aria-hidden":"true",tabIndex:-1},e.createElement("span",{className:"icon icon-link"})),"useLockBodyScroll"),e.createElement("p",null,"\u5728 modal \u5F39\u7A97\u7B49\u754C\u9762\u4E2D\uFF0C\u6709\u65F6\u5019\u4F1A\u89E6\u53D1\u80CC\u666F\u9875\u9762\u7684\u6EDA\u52A8\u3002\u4F7F\u7528\u6B64 hook \u5C06\u9501\u5B9A\u80CC\u666F\u9875\u9762"),e.createElement("h3",{id:"\u7528\u6CD5"},e.createElement(o.AnchorLink,{to:"#\u7528\u6CD5","aria-hidden":"true",tabIndex:-1},e.createElement("span",{className:"icon icon-link"})),"\u7528\u6CD5"),e.createElement(c.Z,{code:`function Modal() {
+  // \u6DFB\u52A0\u6B64hook \u5373\u53EF
+  useLockBodyScroll()
+
+  return <div></div>
+}`,lang:"javascript"})))});l.default=u=>{var a=e.useContext(o.context),d=a.demos;return e.useEffect(()=>{var t;u!=null&&(t=u.location)!==null&&t!==void 0&&t.hash&&o.AnchorLink.scrollToAnchor(decodeURIComponent(u.location.hash.slice(1)))},[]),e.createElement(r,{demos:d})}}}]);

@@ -1,7 +1,8 @@
 ## useLogRender
 
-调试用，打印触发渲染的 state。
-生产环境应该禁用
+调试用，打印触发渲染的 state。生产环境应该禁用
+
+### 用法
 
 ```javascript
 function MyComponent(props) {

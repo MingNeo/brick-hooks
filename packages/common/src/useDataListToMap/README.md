@@ -1,7 +1,8 @@
 ## useDataListToMap
 
-对数组类型的数据进行处理，可以直接操作数组方法。
-useListData 中转化为 Object 的封装
+对数组类型的数据进行处理，可以直接操作数组方法。 useListData 中转化为 Object 的封装
+
+### 用法
 
 ```javascript
 const listData = [

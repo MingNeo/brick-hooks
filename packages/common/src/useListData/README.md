@@ -2,10 +2,6 @@
 
 对[{}, {}, ...]格式的数据进行处理, 自动监听变化并更新，可以使用自定义处理函数对数据进行处理可以理解为针对列表数据的相关处理函数及 useMemo 的封装，并提供链式的写法
 
-### 基本用法
-
-不使用内置方法的情况下，相当于一个写法不同的 useMemo useListState 的第二个参数，是一个数据处理回调函数，可以在其中对每次更新的数据自动做处理。
-
 ### 类型声明
 
 ```typescript
@@ -15,6 +11,10 @@ function useListData<T extends Record<string, any>>(
   deps?: any[],
 ): any
 ```
+
+### 用法
+
+不使用内置方法的情况下，相当于一个写法不同的 useMemo useListState 的第二个参数，是一个数据处理回调函数，可以在其中对每次更新的数据自动做处理。
 
 ```javascript
 const initialValue = [
@@ -32,11 +32,11 @@ const data = useListData(initialValue, (originValue) => originValue.filter(v.id 
 // result: [{ id: 1, value: 0 }]
 ```
 
-### 用法内置方法进行处理
+#### 用法内置方法进行处理
 
 useListData 提供了如下若干内置 transform 方法，可以方便对原始数据进行自动处理
 
-#### transObj 数组转为对象
+##### transObj 数组转为对象
 
 默认 key 为 id，可不填写。
 
@@ -57,9 +57,9 @@ const data = useListData(listData, (originValue, { transObj }) => transObj(origi
 }
 ```
 
-#### transTree 数组转为树
+##### transTree 数组转为树
 
-### 类型声明
+###### 类型声明
 
 ```typescript
 transTree(data: Record<string, any>[], { parentId, id, children }?: {
@@ -96,7 +96,7 @@ const data = useListData(initialValue, (originValue, { transTree }) => transTree
 ]
 ```
 
-#### group 分组
+##### group 分组
 
 ```javascript
 const initialValue = [
@@ -123,7 +123,7 @@ const data = useListData(initialValue, (value, { group }) => group(value, { grou
 }
 ```
 
-#### partition 分组
+##### partition 分组
 
 ```javascript
 const initialValue = [
@@ -150,7 +150,7 @@ const data = useListData(initialValue, (value, { partition }) => partition(value
 ]
 ```
 
-#### removeById 根据 id 移除数据
+##### removeById 根据 id 移除数据
 
 ```javascript
 const initialValue = [
@@ -172,7 +172,7 @@ const data = useListData(initialValue, (value, { removeById }) => removeById(val
 ]
 ```
 
-#### removeIndex 根据 index 移除数据
+##### removeIndex 根据 index 移除数据
 
 ```javascript
 const initialValue = [
@@ -194,7 +194,7 @@ const data = useListData(initialValue, (value, { removeIndex }) => removeIndex(v
 ]
 ```
 
-### 链式语法进行数据处理
+#### 链式语法进行数据处理
 
 使用链式语法可以方便的将复杂的数据处理写的简洁清晰
 

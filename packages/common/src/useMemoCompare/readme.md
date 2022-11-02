@@ -2,6 +2,8 @@
 
 用于简化某些特殊情况下 useMemo 的判断
 
+### 用法
+
 ```javascript
 function MyComponent({ obj }) {
   const [state, setState] = useState()

@@ -1,8 +1,8 @@
 ## useEffectMaunal
 
-同 useEffect，不同的是，不通过 deps 进行触发, 而通过返回一个更新函数触发 effect callback。
-主要应用于需要使用 useEffect 的 destory 返回函数的情况。
-callEffect 自动保持最新，无需传递 args
+同 useEffect，不同的是，不通过 deps 进行触发, 而通过返回一个更新函数触发 effect callback。主要应用于需要使用 useEffect 的 destory 返回函数的情况。 callEffect 自动保持最新，无需传递 args
+
+### 用法
 
 ```javascript
 function MyComponent() {

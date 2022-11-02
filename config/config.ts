@@ -42,9 +42,11 @@ export default {
     includes: [
       'docs',
       'packages/common/src',
+      'packages/common/docs',
       'packages/web/src',
-      'packages/web/src/docs',
+      'packages/web/docs',
       'packages/native/src',
+      'packages/native/docs',
       'packages/business/src',
       'packages/business/docs',
       'packages/react-navigation4/src',

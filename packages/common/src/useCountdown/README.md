@@ -6,6 +6,33 @@
 
 <code src="./demo.tsx"></code>
 
+### 类型声明
+
+```typescript
+function useCountDown(options: {
+  total?: number // 倒计时时间，格式毫秒
+  endTime?: number | string // 结束时间，时间戳格式 或 "yyyy-mm-dd HH:MM:SS"
+  format?: string | ((progress: number) => string) // 展示的格式，如"hh:mm:ss", 或返回一个毫秒数，自行格式化
+  step?: number // 循环的时间
+  onStart?: () => void
+  onStep?: (step: number, formatedProgress: string) => void
+  onFinished?: () => void
+  autoRun?: boolean
+}): {
+  start: () => void
+  stop: () => void
+  day: number
+  hour: number
+  minutes: number
+  seconds: number
+  millisecond: number
+  status: 'idle' | 'running' | 'pause' | 'resumed' | 'finished'
+  endTime: number
+  formatedCountdown: string
+  countdown: number
+}
+```
+
 ### 用法
 
 ```javascript
@@ -34,32 +61,5 @@ function MyComponent() {
       <p>{formatedCountdown}S</p>
     </div>
   )
-}
-```
-
-### 类型声明
-
-```typescript
-function useCountDown(options: {
-  total?: number // 倒计时时间，格式毫秒
-  endTime?: number | string // 结束时间，时间戳格式 或 "yyyy-mm-dd HH:MM:SS"
-  format?: string | ((progress: number) => string) // 展示的格式，如"hh:mm:ss", 或返回一个毫秒数，自行格式化
-  step?: number // 循环的时间
-  onStart?: () => void
-  onStep?: (step: number, formatedProgress: string) => void
-  onFinished?: () => void
-  autoRun?: boolean
-}): {
-  start: () => void
-  stop: () => void
-  day: number
-  hour: number
-  minutes: number
-  seconds: number
-  millisecond: number
-  status: 'idle' | 'running' | 'pause' | 'resumed' | 'finished'
-  endTime: number
-  formatedCountdown: string
-  countdown: number
 }
 ```

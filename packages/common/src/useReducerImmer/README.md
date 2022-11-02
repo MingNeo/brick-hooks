@@ -2,7 +2,7 @@
 
 提供一个使用 immer 的 useReducer，除了 reducer 可以使用 immer 的方式直接修改数据外，与 useReducer 保持一致
 
-多数情况下使用 useObjectStateImmer、userMethodsImmer 更简单清晰，考虑要不要去掉这个 hooks。
+多数情况下使用 useObjectStateImmer、userMethodsImmer 更简单清晰。
 
 ### 用法
 

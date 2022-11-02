@@ -1,10 +1,10 @@
 ## useObjectState
 
-面向对象的 useState，自动进行合并，基本可以认为等同于 class 组件的 this.setState，并扩充了 reducer 的使用。
-是 useMethods 的更进一步封装。
+面向对象的 useState，自动进行合并，基本可以认为等同于 class 组件的 this.setState，并扩充了 reducer 的使用。是 useMethods 的更进一步封装。
 
-目前实现了两个版本(immer 版本和普通版本)。
-建议业务组件中的相关联的一组状态，都使用 useObjectState/useObjectStateImmer 来替代 useState/useReducer 进行集合管理。
+目前实现了两个版本(immer 版本和普通版本)。建议业务组件中的相关联的一组状态，都使用 useObjectState/useObjectStateImmer 来替代 useState/useReducer 进行集合管理。
+
+### 用法
 
 ```javascript
 function MyComponent() {
@@ -33,10 +33,7 @@ const homeMethods = {
 }
 
 function MyComponent() {
-  const [homeData, setHomeData, { updateTitle, updatePageData }] = useObjectState(
-    { test: 1 },
-    homeMethods
-  )
+  const [homeData, setHomeData, { updateTitle, updatePageData }] = useObjectState({ test: 1 }, homeMethods)
 
   // 触发自定义reducer
   const handleUpdateTitle = () => updateTitle('test title')

@@ -2,6 +2,8 @@
 
 对字符串数据进行自动去掉空格的处理
 
+### 用法
+
 ```javascript
 function MyComponent(props) {
   // 默认仅移除首尾空格

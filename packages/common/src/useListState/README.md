@@ -4,7 +4,9 @@
 
 与 useListData 类似，不同的是 useListData 类似于 useMemo，对一个 state 进行自动处理生成新的 getter 的值。而这个 hook 则直接提供 setState 方法，setState 原始值并自动通过回调函数进行处理
 
-### 基础用法
+### 用法
+
+#### 基础用法
 
 使用 listMethods 替代 useArray，具体用法见 useArray
 
@@ -23,7 +25,7 @@
 | removeById  | 当数据格式为[{ id: 'xxx', value, ... }, ...]时，根据 id 移除对应的值 |
 | removeIndex | 移除指定 index 的值                                                  |
 
-### 自定义数据处理
+#### 自定义数据处理
 
 useListState 的第二个参数，是一个数据处理回调函数，可以在其中对每次更新的数据自动做处理。完全自由处理的情况下，相当于组合了 useState/useArray 及 useMemo
 
@@ -39,7 +41,7 @@ listMethods.push({ id: 3, value: 1 })
 // result: [{id: 2, value: 1}, {id: 3, value: 1}]
 ```
 
-### 用法内置方法进行数据处理
+#### 用法内置方法进行数据处理
 
 useListState 提供了一系列内置方法，可以方便的自动对数据进行各种转换也可以通过 chain 对数据进行链式的处理
 
@@ -53,7 +55,7 @@ useListState 提供了一系列内置方法，可以方便的自动对数据进�
 | removeIndex | 根据 index 移除数据  |
 | chain       | 链式语法进行数据处理 |
 
-#### transObj 数组转为对象
+##### transObj 数组转为对象
 
 ```javascript
 const initialValue = [
@@ -74,9 +76,9 @@ const [data, listMethods] = useListState(initialValue, (originValue, { transObj 
 }
 ```
 
-#### transTree 数组转为树
+##### transTree 数组转为树
 
-### 类型声明
+##### 类型声明
 
 ```typescript
 transTree(data: Record<string, any>[], { parentId, id, children }?: {
@@ -115,7 +117,7 @@ const [treeData, listMethods] = useListState(flatData, (originValue, { transTree
 ]
 ```
 
-#### group 分组
+##### group 分组
 
 ```javascript
 const initialValue = [
@@ -142,7 +144,7 @@ const [data, listMethods] = useListState(initialValue, (value, { group }) => gro
 }
 ```
 
-#### partition 分组
+##### partition 分组
 
 ```javascript
 const initialValue = [
@@ -169,7 +171,7 @@ const [data, listMethods] = useListState(initialValue, (value, { partition }) =>
 ]
 ```
 
-#### removeById 根据 id 移除数据
+##### removeById 根据 id 移除数据
 
 ```javascript
 const initialValue = [
@@ -191,7 +193,7 @@ const [data, listMethods] = useListState(initialValue, (value, { removeById }) =
 ]
 ```
 
-#### removeIndex 根据 index 移除数据
+##### removeIndex 根据 index 移除数据
 
 ```javascript
 const initialValue = [
@@ -213,7 +215,7 @@ const [data, listMethods] = useListState(initialValue, (value, { removeIndex }) 
 ]
 ```
 
-### 链式语法进行数据处理
+#### 链式语法进行数据处理
 
 使用链式语法可以方便的将复杂的数据处理写的简洁清晰
 

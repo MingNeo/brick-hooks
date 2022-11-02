@@ -1,5 +1,6 @@
 export const coreHooks = {
   title: 'Brick-hooks',
+  path: '/common',
   children: [
     'createContextHook',
     'useArray',
@@ -87,6 +88,7 @@ export const webHooks = {
     'useStyle',
     'useTitle',
     'useTransition',
+    'useWindowResize',
   ],
 }
 
@@ -124,7 +126,7 @@ export const nativeHooks = {
     },
     {
       path: '/native/use-lazy-sequence-load',
-      title: 'useAnimate',
+      title: 'useLazySequenceLoad',
     },
     {
       path: '/native/use-scroll-to-top',

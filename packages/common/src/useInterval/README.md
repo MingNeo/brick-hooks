@@ -18,7 +18,9 @@ function useInterval(
 }
 ```
 
-### 直接使用
+### 用法
+
+#### 直接使用
 
 ```javascript
 function MyComponent() {
@@ -28,7 +30,7 @@ function MyComponent() {
 }
 ```
 
-### 手动触发
+#### 手动触发
 
 ```javascript
 function MyComponent() {

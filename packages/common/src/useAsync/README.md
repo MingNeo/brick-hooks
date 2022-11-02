@@ -1,10 +1,10 @@
 ## useAsync
 
-对异步函数做简单处理的 hook。
-一般来说项目里对 fetch 都会做了一定程度的封装。这个简单的 hook 仅做自动 loading、自动 debounce、mutate 的处理。
-返回处理过后的函数和 loading、error 等状态。
+对异步函数做简单处理的 hook。一般来说项目里对 fetch 都会做了一定程度的封装。这个简单的 hook 仅做自动 loading、自动 debounce、mutate 的处理。返回处理过后的函数和 loading、error 等状态。
 
 复杂异步请求管理可以使用 SWR 等开源请求库。
+
+### 类型声明
 
 ```ts
 function useAsync<A extends AsyncFunction>(
@@ -18,7 +18,7 @@ function useAsync<A extends AsyncFunction>(
     onResult?: (res: any) => void
     debounceTime?: number
     manual?: boolean
-  }
+  },
 ): [
   (...args: any[]) => Promise<any>,
   {
@@ -27,9 +27,11 @@ function useAsync<A extends AsyncFunction>(
     loading: boolean
     status: 'success' | 'loading' | 'idle' | 'fail' | 'mutate success'
     mutate: (...args: any[]) => any
-  }
+  },
 ]
 ```
+
+### 用法
 
 #### 自动触发请求
 
@@ -67,8 +69,7 @@ function MyComponent() {
 
 #### debounce
 
-使用 debounceTime 时，将自动进行 debounce 处理
-注意，使用 debounceTime 后, 请求函数 不会再有返回值
+使用 debounceTime 时，将自动进行 debounce 处理注意，使用 debounceTime 后, 请求函数 不会再有返回值
 
 ```javascript
 // 使用debounce
@@ -81,7 +82,7 @@ const [loadData, { loading, result }] = useAsync(
   (...args) => {
     fetchData(...args).then((res) => {})
   },
-  { debounceTime: 500 }
+  { debounceTime: 500 },
 )
 ```
 
@@ -99,9 +100,7 @@ const [loadData, { loading, result }] = useAsync(fetchData, {
 
 #### mutate
 
-很多时候我们会加载数据，更新数据，重新加载数据。
-如，购物车页面，加载列表 -> 勾选某个商品 -> 请求数据 -> 刷新列表。
-如果等待请求成功后再设置选中体验会很不好，因此我们可以在请求回来之前先设置选中的效果
+很多时候我们会加载数据，更新数据，重新加载数据。如，购物车页面，加载列表 -> 勾选某个商品 -> 请求数据 -> 刷新列表。如果等待请求成功后再设置选中体验会很不好，因此我们可以在请求回来之前先设置选中的效果
 
 ```javascript
 // 自动更新数据

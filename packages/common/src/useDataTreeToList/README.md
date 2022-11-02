@@ -2,6 +2,8 @@
 
 将树的格式的数据转化为列表，为 useListData 中转化为 tree 的进一步封装
 
+### 用法
+
 ```javascript
   const data = [{
     id: 1,

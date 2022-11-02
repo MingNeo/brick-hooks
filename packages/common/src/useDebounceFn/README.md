@@ -2,6 +2,8 @@
 
 对函数进行防抖处理
 
+### 用法
+
 ```javascript
 const getData = async () => {}
 const [debounceCb, cancel] = useDebounceFn(getData, 200)

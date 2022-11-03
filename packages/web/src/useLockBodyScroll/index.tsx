@@ -1,5 +1,5 @@
 import { useLayoutEffect } from 'react'
-import { isBrowser } from 'umi'
+import { isBrowser } from '../utils'
 
 /**
  * 锁定body，禁止滚动

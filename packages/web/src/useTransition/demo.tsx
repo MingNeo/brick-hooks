@@ -129,36 +129,32 @@ export function Demo3() {
     reverse: !visible, // delay: 100,
   })
   return (
-    <div
-      style={{
-        position: 'relative',
-        height: 450,
-      }}
-    >
-      <div
-        style={{
-          position: 'absolute',
-          backgroundColor: 'powderblue',
-          ...compAStyle,
-        }}
-      />
-      /* Using the spread operator to merge the styles. */
-      <div
-        style={{
-          position: 'absolute',
-          backgroundColor: 'red',
-          ...compBStyle,
-        }}
-      />
-      <div
-        style={{
-          position: 'absolute',
-          top: 400,
-        }}
-      >
+    <>
+      <div>
         <button onClick={() => toggleVisible()}>toggle</button>
       </div>
-    </div>
+      <div
+        style={{
+          position: 'relative',
+          height: 450,
+        }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            backgroundColor: 'powderblue',
+            ...compAStyle,
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            backgroundColor: 'red',
+            ...compBStyle,
+          }}
+        />
+      </div>
+    </>
   )
 }
 

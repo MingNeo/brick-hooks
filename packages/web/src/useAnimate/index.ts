@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useIsoEffect } from 'brick-hooks'
-import uuid from 'uuid'
+import { v4 as uuid } from 'uuid'
 import useStyle from '../useStyle'
 import createDangerousStringForStyles, { bounceKeyFrames } from './helper'
 

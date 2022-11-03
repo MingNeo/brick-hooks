@@ -14,7 +14,8 @@ function Item(props) {
         marginBottom: 10,
         border: '1px solid #eee',
       }}
-      {...props}></div>
+      {...props}
+    ></div>
   )
 }
 
@@ -23,7 +24,7 @@ const list = new Array(20).fill(1).map((v, i: number) => ({
   value: i + 1,
 }))
 
-export const Demo = ({ Loading }) => {
+const Demo = ({ Loading }) => {
   const rootRef = useRef<any>()
   const { showfooterLoading, showList, loadNextGroup } = useListSequenceLoad(list, { groupSize: 3 })
 
@@ -46,3 +47,5 @@ export const Demo = ({ Loading }) => {
     </div>
   )
 }
+
+export default Demo

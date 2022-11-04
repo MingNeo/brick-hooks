@@ -1,6 +1,6 @@
 {
   "name": "brick-hooks-story",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "private": true,
   "description": "> ",
   "author": "Klose <mingrenjbdtx@gmail.com>",
@@ -29,7 +29,7 @@
   "dependencies": {
     "animated": "^0.2.2",
     "antd": "^4.19.0",
-    "brick-hooks": "^0.3.7",
+    "brick-hooks": "^0.3.8",
     "eslint": "^8.0.0",
     "range-interpolator": "^1.0.2",
     "react": "^18.2.0",

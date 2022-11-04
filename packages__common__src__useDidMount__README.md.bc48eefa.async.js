@@ -1,0 +1,5 @@
+(self.webpackChunk_brick_hooks_root=self.webpackChunk_brick_hooks_root||[]).push([[8142],{65100:function(r,a,t){"use strict";t.r(a);var e=t(62472),o=t(34019),l=t(94834),s=e.memo(n=>{var c=n.demos;return e.createElement(e.Fragment,null,e.createElement("div",{className:"markdown"},e.createElement("h2",{id:"usedidmount"},e.createElement(o.AnchorLink,{to:"#usedidmount","aria-hidden":"true",tabIndex:-1},e.createElement("span",{className:"icon icon-link"})),"useDidMount"),e.createElement("p",null,"\u63D0\u4F9B\u4E00\u4E2A\u7C7B\u4F3C\u4E8E class \u7EC4\u4EF6 \u751F\u547D\u5468\u671F\u7684 hooks"),e.createElement("h3",{id:"\u7528\u6CD5"},e.createElement(o.AnchorLink,{to:"#\u7528\u6CD5","aria-hidden":"true",tabIndex:-1},e.createElement("span",{className:"icon icon-link"})),"\u7528\u6CD5"),e.createElement(l.Z,{code:`function MyComponent() {
+  useDidMount(() => {
+    // ...
+  })
+}`,lang:"javascript"})))});a.default=n=>{var c=e.useContext(o.context),i=c.demos;return e.useEffect(()=>{var u;n!=null&&(u=n.location)!==null&&u!==void 0&&u.hash&&o.AnchorLink.scrollToAnchor(decodeURIComponent(n.location.hash.slice(1)))},[]),e.createElement(s,{demos:i})}}}]);

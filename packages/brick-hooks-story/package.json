@@ -32,23 +32,24 @@
     "brick-hooks": "^0.3.7",
     "eslint": "^8.0.0",
     "range-interpolator": "^1.0.2",
-    "react": "^16.9.0",
+    "react": "^18.2.0",
     "react-dom": "^16.9.0",
     "react-json-view": "^1.21.3",
-    "react-native-web": "^0.17.5"
+    "react-native-web": "^0.18.10",
+    "require-from-string": "^2.0.2"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.5.10",
-    "@storybook/addon-essentials": "^6.5.10",
-    "@storybook/addon-links": "^6.5.10",
-    "@storybook/addons": "^6.5.10",
-    "@storybook/react": "^6.5.10",
+    "@storybook/addon-actions": "^6.5.13",
+    "@storybook/addon-essentials": "^6.5.13",
+    "@storybook/addon-links": "^6.5.13",
+    "@storybook/addons": "^6.5.13",
+    "@storybook/react": "^6.5.13",
     "@testing-library/react-hooks": "^5.1.1",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.5",
-    "typescript": "^3.9.9"
+    "typescript": "^4.8.4"
   },
   "bugs": {
     "url": "https://github.com/MingNeo/custom-hooks/issues"

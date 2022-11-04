@@ -84,7 +84,7 @@ describe('hydrogen-store-effect-plugin', () => {
     })
 
     // 通过dispatchEffect方式更新
-    act(() => result.current.dispatchEffect('effectCountInc', { step: 1 }))
+    act(() => (result.current.dispatchEffect as any)('effectCountInc', { step: 1 }))
 
     expect(result.current.state).toEqual({
       setCount: 1,

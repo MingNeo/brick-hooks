@@ -1,11 +1,12 @@
-0 silly argv {
-0 silly argv   _: [ 'add' ],
-0 silly argv   globs: [ 'packages/common' ],
-0 silly argv   lernaVersion: '3.22.1',
-0 silly argv   '$0': 'lerna',
-0 silly argv   pkg: 'lodash.cloneDeep'
-0 silly argv }
-1 notice cli v3.22.1
-2 verbose rootPath /Users/klose/code/mine/custom-hooks
-3 error Error: 404 Not Found - GET https://registry.npmjs.org/lodash.cloneDeep - Not found
-3 error     at /Users/klose/code/mine/custom-hooks/node_modules/@evocateur/npm-registry-fetch/check-response.js:104:15
+0 verbose rootPath /Users/klose/code/mine/custom-hooks
+1 silly argv {
+1 silly argv   _: [ 'add' ],
+1 silly argv   globs: [ 'packages/web' ],
+1 silly argv   lernaVersion: '5.0.1',
+1 silly argv   '$0': 'lerna',
+1 silly argv   pkg: 'uuit'
+1 silly argv }
+2 notice cli v5.0.1
+3 verbose rootPath /Users/klose/code/mine/custom-hooks
+4 error HttpErrorGeneral: 404 Not Found - GET https://registry.npmmirror.com/uuit - [NOT_FOUND] uuit not found
+4 error     at /Users/klose/.nvm/versions/node/v14.18.1/lib/node_modules/lerna-cli/node_modules/npm-registry-fetch/check-response.js:95:15

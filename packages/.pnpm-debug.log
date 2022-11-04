@@ -1,0 +1,15 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1,
+    "workspacePrefix": "/Users/klose/code/mine/custom-hooks"
+  },
+  "1 error pnpm": {
+    "code": "ERR_PNPM_PUBLIC_HOIST_PATTERN_DIFF",
+    "err": {
+      "name": "pnpm",
+      "message": "This modules directory was created using a different public-hoist-pattern value. Run \"pnpm install\" to recreate the modules directory.",
+      "code": "ERR_PNPM_PUBLIC_HOIST_PATTERN_DIFF",
+      "stack": "pnpm: This modules directory was created using a different public-hoist-pattern value. Run \"pnpm install\" to recreate the modules directory.\n    at validateModules (/Users/klose/.nvm/versions/node/v14.18.1/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:91982:15)\n    at getContext (/Users/klose/.nvm/versions/node/v14.18.1/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:91895:34)\n    at async mutateModules (/Users/klose/.nvm/versions/node/v14.18.1/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:119565:19)\n    at async recursive (/Users/klose/.nvm/versions/node/v14.18.1/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:121485:29)\n    at async handler (/Users/klose/.nvm/versions/node/v14.18.1/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:121789:11)\n    at async /Users/klose/.nvm/versions/node/v14.18.1/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:182056:21\n    at async run (/Users/klose/.nvm/versions/node/v14.18.1/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:182030:34)\n    at async runPnpm (/Users/klose/.nvm/versions/node/v14.18.1/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:182249:5)\n    at async /Users/klose/.nvm/versions/node/v14.18.1/pnpm-global/5/node_modules/.pnpm/pnpm@6.30.0/node_modules/pnpm/dist/pnpm.cjs:182241:7"
+    }
+  }
+}

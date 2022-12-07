@@ -36,6 +36,8 @@ function useCountDown(options: {
 ### 用法
 
 ```javascript
+import { useCountDown } from 'brick-hooks'
+
 function MyComponent() {
   // 设置total或endTime其中一个作为结束时间
   const { formatedCountdown } = useCountDown({ endTime: Date.now() + 1000000, step: 1000 })

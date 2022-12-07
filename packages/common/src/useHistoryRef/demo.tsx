@@ -27,10 +27,10 @@ export default function Demo({ max = 10 } = {}) {
       <button disabled={redoList.length < 1} onClick={redo}>
         redo
       </button>
-      <p>last: {JSON.stringify(last)}</p>
-      <p>undoList: {JSON.stringify(undoList)}</p>
-      <p>history: {JSON.stringify(history)}</p>
-      <p>redoList: {JSON.stringify(redoList)}</p>
+      <p>last: {JSON.stringify(last, undefined, 2)}</p>
+      <p>undoList: {JSON.stringify(undoList, undefined, 2)}</p>
+      <p>history: {JSON.stringify(history, undefined, 2)}</p>
+      <p>redoList: {JSON.stringify(redoList, undefined, 2)}</p>
     </div>
   )
 }

@@ -2,7 +2,10 @@ import { isNil } from '../utils'
 
 type Data = Record<string, any>[]
 
-export function transformListToTree(data: Data, { parentId = 'pid', id = 'id', children = 'children' } = {}) {
+export function transformListToTree(
+  data: Data,
+  { rootParentId = undefined, parentId = 'pid', id = 'id', children = 'children' } = {},
+) {
   const cloneData = JSON.parse(JSON.stringify(data)) as Data
   const dataMap = transformListToMap(data)
   return cloneData.filter((curr) => {
@@ -10,7 +13,7 @@ export function transformListToTree(data: Data, { parentId = 'pid', id = 'id', c
     if (childrenItem.length) {
       curr[children] = childrenItem
     }
-    return !curr[parentId] || isNil(dataMap[curr[parentId]])
+    return curr[parentId] === rootParentId || !curr[parentId] || isNil(dataMap[curr[parentId]])
   })
 }
 

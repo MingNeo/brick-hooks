@@ -3,6 +3,7 @@ import { isBrowser } from '../utils'
 import { formatPoiInfo, getNearByInfos, loadAmapScript, searchPois } from './helper'
 
 type Location = {
+  city?: string
   latitude?: string
   longitude?: string
   [x: string]: any
@@ -23,15 +24,10 @@ export type GetNearByInfos = (location: Location | Poi) => Promise<AmapNearByPoi
 
 interface Options {
   defaultPoi?: Poi // 指定默认poi 格式为高德地图Poi格式
-  currentLocation?: {
-    city?: string
-    latitude?: string
-    longitude?: string
-    [x: string]: any
-  } // 当前定位信息，通常无需传这个值，searchPois时如不传city，则使用此处当前定位的城市
+  currentLocation?: Location // 当前定位信息，通常无需传这个值，searchPois时如不传city，则使用此处当前定位的城市
   services?: {
     getNearByPoiList?: GetNearByInfos // 自行封装的获取附近的poi列表的服务，使用获取附近Poi功能必传。
-    searchPoiList?: any // 自行封装的搜索poi的服务，使用搜索poi功能必传
+    searchPoiList?: (params: Location) => Promise<Poi[]> // 自行封装的搜索poi的服务，使用搜索poi功能必传
   }
   onCurrentPoiChange?: (poi: Poi) => void
   formatPoi?: (poi: Poi) => Poi
@@ -48,11 +44,11 @@ type GetNearbyPois = (options?: {
 
 interface UseAmapPoiRetrun {
   currentPoi: Poi
-  pois: any[]
-  nearbyPois: any[]
+  pois: Poi[]
+  nearbyPois: Poi[]
   onSelectPoi: (poi: Poi) => Promise<void>
   getNearbyPois: GetNearbyPois
-  searchPois: (params: any) => Promise<Poi[]>
+  searchPois: (params: Location) => Promise<Poi[]>
   setCurrentPois: (current: Poi) => Promise<Poi>
 }
 

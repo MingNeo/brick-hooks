@@ -36,6 +36,8 @@ function useAsync<A extends AsyncFunction>(
 #### 自动触发请求
 
 ```javascript
+import { useAsync } from 'brick-hooks'
+
 const fetchData = (params) => {
   return request('/api/xxx')
 }

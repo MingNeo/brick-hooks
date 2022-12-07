@@ -36,6 +36,8 @@ function useCountup(options: CountupProps): {
 ### 用法
 
 ```javascript
+import { useCountDown } from 'brick-hooks'
+
 function MyComponent() {
   const { formatedCountup } = useCountDown({ maxLength: 1000000, step: 1000 })
 

@@ -67,7 +67,7 @@ export default function CreateStoreDemo() {
         </Button>
         <Button onClick={() => dispatchEffect('testEffect', { c: 101 })}>dispatchEffect action</Button>
       </div>
-      <p>state: {JSON.stringify(state)}</p>
+      <p>state: {JSON.stringify(state, undefined, 2)}</p>
       <Comp1 />
       <Comp2 />
     </div>

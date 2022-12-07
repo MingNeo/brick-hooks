@@ -5,6 +5,8 @@
 ### 用法
 
 ```javascript
+import { useDebounceFn } from 'brick-hooks'
+
 const getData = async () => {}
 const [debounceCb, cancel] = useDebounceFn(getData, 200)
 

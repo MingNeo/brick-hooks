@@ -25,8 +25,8 @@ const DefaultFixedStyle = {
 
 function useScrollFixed(
   options: {
-    target?: MutableRefObject<any> | any
-    root?: MutableRefObject<any> | any
+    target?: MutableRefObject<any>
+    root?: MutableRefObject<any>
     limit?: Limit
     fixedStyle?: Record<string, any>
     horizontal?: boolean
@@ -47,10 +47,10 @@ function useScrollFixed(
   } = options
   const propFixedStyleRef = useRef(propFixedStyle)
 
-  const targetRef = useRef<any>(target?.current ?? target ?? (isBrowser ? window : undefined))
-  if (target) targetRef.current = target?.current ?? target ?? (isBrowser ? window : undefined)
+  const targetRef = useRef<any>(target?.current ?? (isBrowser ? window : undefined))
+  if (target) targetRef.current = target?.current ?? (isBrowser ? window : undefined)
 
-  const { x, y, rootRef } = useScroll({ root, onScroll })
+  const { x, y, rootRef } = useScroll({ rootRef: root, onScroll })
 
   const fixedInfoRef = useRef({
     isFixed: initialFixed,

@@ -21,7 +21,12 @@ type Location = {
   [x: string]: any
 }
 
-function useAmapLocation({ amapKey, getLocation }?: any): {
+interface Options {
+  amapKey?: string
+  getLocation?: () => Promise<Location>
+}
+
+function useAmapLocation({ amapKey, getLocation }?: Options): {
   location: Location
   loading: boolean
   loadLocation: Exector

@@ -7,6 +7,10 @@ nav:
 
 方便使用 react-native Animated
 
+### 演示
+
+<code src="./demo.jsx"></code>
+
 ### 类型声明
 
 ```typescript

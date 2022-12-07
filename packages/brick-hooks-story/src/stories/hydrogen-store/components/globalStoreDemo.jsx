@@ -62,7 +62,7 @@ export default function GlobalStoreDemo() {
         <Button onClick={() => dispatch('countInc', { step: 1 })}>dispatch action</Button>
         <Button onClick={() => dispatchEffect('effectCountInc', { step: 1 })}>dispatchEffect action</Button>
       </div>
-      <p>state: {JSON.stringify(state)}</p>
+      <p>state: {JSON.stringify(state, undefined, 2)}</p>
       <Comp1 />
       <Comp2 />
     </div>

@@ -21,6 +21,8 @@ import { useCookie } from 'brick-hooks-web';
 
 [useDarkMode](https://mingneo.github.io/brick-hooks/web/useDarkMode) 使用夜间模式
 
+[useGrayMode](https://mingneo.github.io/brick-hooks/web/useGrayMode) 使用黑白模式
+
 [useEventListener](https://mingneo.github.io/brick-hooks/web/useEventListener) 使用夜间模式
 
 [useFreeDrag](https://mingneo.github.io/brick-hooks/web/useFreeDrag) 方便对一个绝对定位的元素添加随意拖动定位的能力

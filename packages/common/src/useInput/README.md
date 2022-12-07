@@ -5,6 +5,8 @@
 ### 用法
 
 ```javascript
+import { useInput } from 'brick-hooks'
+
 function MyComponent() {
   let { value, onChange } = useInput('xxx')
   return <input value={value} onChange={onChange} />

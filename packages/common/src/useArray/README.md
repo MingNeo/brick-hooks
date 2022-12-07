@@ -5,6 +5,8 @@
 ### 用法
 
 ```javascript
+import { useArray } from 'brick-hooks'
+
 function MyComponent() {
   const [testArray, testArrayMethods] = useArray([1, 2, 3])
 

@@ -5,5 +5,7 @@
 ### 用法
 
 ```javascript
+import { useDebounceState } from 'brick-hooks'
+
 const [state, setDebounceState] = useDebounceState(initialState, 200)
 ```

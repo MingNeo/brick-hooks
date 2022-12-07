@@ -8,7 +8,7 @@ function useContainer() {
       testAction: (state = {}, payload = {}) => {
         return { ...state, ...payload }
       },
-    }
+    },
   )
 
   return { state, setState, dispatch }
@@ -49,7 +49,7 @@ const Parent = function () {
       >
         -
       </button>
-      {JSON.stringify(state)}
+      {JSON.stringify(state, undefined, 2)}
       <button
         onClick={() => {
           setState({ b: (state.b || 0) + 1 }, true)
@@ -64,7 +64,7 @@ const Parent = function () {
       >
         testDispatch
       </button>
-      <p>state: {JSON.stringify(state)}</p>
+      <p>state: {JSON.stringify(state, undefined, 2)}</p>
     </div>
   )
 }
@@ -130,7 +130,7 @@ export const ChildrenComponentUseCustomSum = () => {
   return (
     <div>
       <h2>CompD: use custom sum a + b + c</h2>
-      <p>state: {JSON.stringify(state)}</p>
+      <p>state: {JSON.stringify(state, undefined, 2)}</p>
       <p>renderCount: {renderCount}</p>
     </div>
   )

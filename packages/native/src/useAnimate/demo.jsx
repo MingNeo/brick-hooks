@@ -1,4 +1,5 @@
-import { Animated, Easing } from 'react-native-web'
+import { useState } from 'react'
+import { Animated } from 'react-native-web'
 import useAnimate from './index'
 
 const baseStyle = {
@@ -11,7 +12,7 @@ const baseStyle = {
   alignItems: 'center',
 }
 
-export function Demo1() {
+export function Demo1({ options }) {
   const [styleProps, { start }] = useAnimate({
     from: {
       opacity: 0,
@@ -22,67 +23,50 @@ export function Demo1() {
     },
     to: {
       opacity: 1,
-      marginLeft: 500,
+      marginLeft: 300,
       width: 200,
       height: 200,
       rotateZ: '200deg',
     },
+    ...options,
   })
   return (
     <>
-      <Animated.View style={{ ...baseStyle, ...styleProps }} />
       <div>
         <button onClick={() => start()}>Start</button>
       </div>
+      <Animated.View style={{ ...baseStyle, ...styleProps }} />
     </>
   )
 }
 
+const easingList = ['bounce', 'linear', 'ease', 'quad', 'cubic', 'sin', 'circle', 'exp', 'in', 'out', 'inOut']
 export function Demo2() {
-  const [styleProps, { start, interpolate }] = useAnimate({
-    from: {
-      opacity: 0,
-      marginLeft: 0,
-      width: 50,
-      height: 50,
-    },
-    to: {
-      opacity: 1,
-      marginLeft: 500,
-      width: 200,
-      height: 200,
-    },
-    duration: 500,
-    autoRun: false,
-    delay: 100,
-    // easing: Easing.bounce,
-    easing: 'bounce', // easing: 'linear',
-    // easing: 'ease',
-    // easing: 'quad',
-    // easing: 'cubic',
-    // easing: 'sin',
-    // easing: 'circle',
-    // easing: 'exp',
-    // easing: 'in',
-    // easing: 'out',
-    // easing: 'inOut',
-  })
+  const [easing, setEasing] = useState('bounce')
   return (
     <>
-      <Animated.View
-        style={{
-          ...baseStyle,
-          ...styleProps,
+      <div>
+        <select value={easing} onChange={(e) => setEasing(e.target.value)}>
+          {easingList.map((v) => (
+            <option value={v}>{v}</option>
+          ))}
+        </select>
+      </div>
+      <Demo1
+        key={easing}
+        options={{
+          to: {
+            opacity: 1,
+            marginLeft: 300,
+            width: 200,
+            height: 200,
+          },
+          duration: 500,
+          autoRun: false,
+          delay: 100,
+          easing,
         }}
       />
-      {/* <Animated.Text>
-        {interpolate({
-          outputRange: [0, 100],
-        })}
-      </Animated.Text> */}
-      <div>
-        <button onClick={() => start()}>Start</button>
-      </div>
     </>
   )
 }
@@ -111,13 +95,14 @@ export function Demo3() {
     ],
     loop: 1,
     duration: 1000,
+    autoRun: false,
   })
   return (
     <>
-      <Animated.View style={{ ...baseStyle, ...styleProps }} />
       <div>
         <button onClick={() => start()}>Start</button>
       </div>
+      <Animated.View style={{ ...baseStyle, ...styleProps }} />
     </>
   )
 }
@@ -153,13 +138,14 @@ export function RangeDemo() {
     ],
     loop: 1,
     duration: 1000,
+    autoRun: false,
   })
   return (
     <>
-      <Animated.View style={{ ...baseStyle, ...styleProps }} />
       <div>
         <button onClick={() => start()}>Start</button>
       </div>
+      <Animated.View style={{ ...baseStyle, ...styleProps }} />
     </>
   )
 }
@@ -206,9 +192,13 @@ export function AnimatedValueDemo() {
     loop: 1,
     duration: 1000,
     delay: 100,
+    autoRun: false,
   })
   return (
     <>
+      <div>
+        <button onClick={() => start()}>Start</button>
+      </div>
       <Animated.View
         style={{
           ...baseStyle,
@@ -224,11 +214,25 @@ export function AnimatedValueDemo() {
           }),
         }}
       />
-      <div>
-        <button onClick={() => start()}>Start</button>
-      </div>
     </>
   )
 }
 
-export default Demo1
+export default function Demo() {
+  return (
+    <div>
+      <h3>Demo1</h3>
+      <Demo1 />
+      <h3>Demo2</h3>
+      <Demo2 />
+      <h3>Demo3</h3>
+      <Demo3 />
+      <h3>range</h3>
+      <RangeDemo />
+      <h3>loop</h3>
+      <DemoLoop />
+      <h3>custom interpolate</h3>
+      <AnimatedValueDemo />
+    </div>
+  )
+}

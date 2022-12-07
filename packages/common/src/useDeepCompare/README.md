@@ -8,6 +8,8 @@
 ### 用法
 
 ```javascript
+import { useDeepCompare } from 'brick-hooks'
+
 function MyComponent(props) {
   const treeData = useDeepCompare(props.data)
 }

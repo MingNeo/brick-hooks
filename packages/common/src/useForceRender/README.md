@@ -5,6 +5,8 @@
 ### 用法
 
 ```javascript
+import { useForceRender } from 'brick-hooks'
+
 function MyComponent() {
   const forceUpdate = useForceRender()
 }

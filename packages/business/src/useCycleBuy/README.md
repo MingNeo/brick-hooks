@@ -57,7 +57,7 @@ function Comp() {
         )}
       </div>
       <div>{cycle === 'custom' && <RangePicker disabledDate={checkDateDisable} onChange={setRange} />}</div>
-      result: {JSON.stringify(dates)}
+      result: {JSON.stringify(dates, undefined, 2)}
     </>
   )
 }

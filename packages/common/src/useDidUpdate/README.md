@@ -5,6 +5,8 @@
 ### 用法
 
 ```javascript
+import { useDidUpdate } from 'brick-hooks'
+
 function MyComponent() {
   useDidUpdate(() => {
     // ...

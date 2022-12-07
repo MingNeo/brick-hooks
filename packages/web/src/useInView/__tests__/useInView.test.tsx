@@ -9,14 +9,21 @@ function ScrollView() {
   const rootRef = useRef<any>()
   const targetRef = useRef()
   const { rootProps, targetProps, isInView } = useInView({ target: targetRef, root: rootRef })
-  const scrollToTop = () => rootRef.current?.scrollTo(100)
   return (
-    <div style={{ height: '1000px', width: '100px' }} {...rootProps}>
-      <p style={{ width: '100%', height: '100px', marginTop: '200px' }} {...targetProps}>
-        item
-      </p>
-      <p data-state={isInView}>isInView</p>
-      <button onClick={() => scrollToTop()}>btn</button>
+    <div style={{ width: '100px', height: 100, overflow: 'scroll' }} {...rootProps}>
+      <div
+        style={{
+          width: 200,
+          height: 50,
+          backgroundColor: 'powderblue',
+          marginTop: 300,
+          marginBottom: 300,
+        }}
+        {...targetProps}
+        data-state={isInView ? 'true' : 'false'}
+      >
+        isInView
+      </div>
     </div>
   )
 }
@@ -24,20 +31,21 @@ function ScrollView() {
 describe('useInView', () => {
   it('initial scroll', async () => {
     const { container, getByText } = render(React.createElement(ScrollView))
+    expect(getByText('isInView').dataset.state).toEqual('false')
 
     act(() => {
-      container.scrollTop = 100
+      container.scrollTop = 10
     })
 
-    await act(async () => await timeout(1))
-    expect(container.scrollTop).toBe(100)
+    await act(async () => await timeout(10))
+    expect(container.scrollTop).toBe(10)
     expect(getByText('isInView').dataset.state).toEqual('false')
 
     act(() => {
       container.scrollTop = 220
     })
 
-    await act(async () => await timeout(1))
+    await act(async () => await timeout(10))
     expect(container.scrollTop).toBe(220)
     expect(getByText('isInView').dataset.state).toEqual('false')
   })

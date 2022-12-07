@@ -74,7 +74,7 @@ export default function ImmerDemo() {
         <Button onClick={() => dispatch('countInc', { step: 1 })}>dispatch action</Button>
         <Button onClick={() => dispatchEffect('effectCountInc', { step: 1 })}>dispatchEffect action</Button>
       </div>
-      <div>{JSON.stringify(state)}</div>
+      <div>{JSON.stringify(state, undefined, 2)}</div>
       <Comp1></Comp1>
       <Comp2></Comp2>
     </div>

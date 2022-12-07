@@ -17,6 +17,8 @@ function useListData<T extends Record<string, any>>(
 不使用内置方法的情况下，相当于一个写法不同的 useMemo useListState 的第二个参数，是一个数据处理回调函数，可以在其中对每次更新的数据自动做处理。
 
 ```javascript
+import { useListData } from 'brick-hooks'
+
 const initialValue = [
   { id: 1, value: 0 },
   { id: 2, value: 1 },

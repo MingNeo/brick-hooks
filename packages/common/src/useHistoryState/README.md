@@ -32,6 +32,8 @@ function useHistoryState<Raw, Serialized = Raw>(options?: {
 ### 用法
 
 ```javascript
+import { useHistoryState } from 'brick-hooks'
+
 function MyComponent() {
   const { undo, redo, push, last, undoList, redoList, history } = useHistoryState()
   return (

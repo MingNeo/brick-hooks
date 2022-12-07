@@ -9,6 +9,8 @@
 ### 用法
 
 ```javascript
+import { useHistoryRef } from 'brick-hooks'
+
 function MyComponent() {
   const { undo, redo, push, last, undoList, redoList, history } = useHistoryRef()
   return <div>...</div>

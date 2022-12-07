@@ -5,6 +5,8 @@
 ### 用法
 
 ```javascript
+import { useDataTreeToList } from 'brick-hooks'
+
   const data = [{
     id: 1,
     pid: 0,

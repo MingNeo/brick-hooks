@@ -23,6 +23,8 @@ function useInterval(
 #### 直接使用
 
 ```javascript
+import { useInterval } from 'brick-hooks'
+
 function MyComponent() {
   useInterval(() => {
     // ...

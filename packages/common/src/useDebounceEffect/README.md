@@ -5,6 +5,8 @@
 ### 用法
 
 ```javascript
+import { useDebounceEffect } from 'brick-hooks'
+
 useDebounceEffect(
   () => {
     setResultData(state)

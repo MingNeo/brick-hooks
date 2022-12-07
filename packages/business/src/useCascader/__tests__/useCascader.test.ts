@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import jestDiff from 'jest-diff'
+import { useMemo } from 'react'
 import useCascader from '..'
 
 const mockData = [
@@ -32,16 +33,14 @@ describe('useCascader 校验', () => {
   })
 
   it('初始状态正常', async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useCascader({ fetchSub, parentIdKey: 'pid' }))
-    expect(result.current.data).toEqual([])
-    expect(result.current.loading).toEqual(true)
-    await waitForNextUpdate()
-    expect(result.current.data.map((v) => v.id)).toEqual(mockData.filter((v) => v.pid === 0).map((v) => v.id))
+    const { result, waitForNextUpdate } = renderHook(() => {
+      return useCascader({ fetchSub, data: useMemo(() => mockData.filter((v) => !v.pid), []), parentIdKey: 'pid' })
+    })
+    expect(result.current.data.map((v) => v.id)).toEqual(mockData.filter((v) => !v.pid).map((v) => v.id))
     expect(result.current.loading).toEqual(false)
     await act(async () => {
-      await result.current.loadSub({ id: 1, pid: 0, value: '陕西' })
+      await result.current.loadSub('1')
     })
-    expect(result.current.loading).toEqual(false)
     expect(
       jestDiff(
         sort(result.current.flatNodes).map((v) => v.id),

@@ -5,6 +5,8 @@
 ### 用法
 
 ```javascript
+import { useDataListToMap } from 'brick-hooks'
+
 const listData = [
   { id: 'a', value: 'A' },
   { id: 'b', value: 'B' },

@@ -5,6 +5,8 @@ useListData 中转化为 tree 的封装，将列表类型数据转化为树的�
 ### 用法
 
 ```javascript
+import { useDataListToTree } from 'brick-hooks'
+
 const mockData = [
   { id: 1, pid: 0, value: '山东' },
   { id: 2, pid: 1, value: '济南' },

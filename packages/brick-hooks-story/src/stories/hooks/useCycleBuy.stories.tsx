@@ -56,8 +56,8 @@ export const UseCycleBuy = () => {
 
       <div>{cycle === 'custom' && <RangePicker disabledDate={checkDateDisable} onChange={setRange} />}</div>
 
-      {JSON.stringify(dates)}
-      {JSON.stringify(range)}
+      {JSON.stringify(dates, undefined, 2)}
+      {JSON.stringify(range, undefined, 2)}
     </>
   )
 }

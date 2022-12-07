@@ -18,6 +18,8 @@ function useCounter(initialValue?: number, options?: CounterOptions): [number, M
 ### 用法
 
 ```javascript
+import { useCounter } from 'brick-hooks'
+
 function MyComponent() {
   const [count, actions] = useCounter(0, { min: 0, max: 100 })
   actions.inc() // count: oldCount + 1

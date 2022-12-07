@@ -11,6 +11,8 @@
 ### 用法
 
 ```javascript
+import { useIsoEffect } from 'brick-hooks'
+
 function MyComponent() {
   useIsoEffect(() => {
     // ...

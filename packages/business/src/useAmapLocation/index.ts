@@ -9,11 +9,16 @@ type Location = {
   [x: string]: any
 }
 
+interface Options {
+  amapKey?: string
+  getLocation?: () => Promise<Location>
+}
+
 /**
  * 使用高德地图获取定位
  * @returns
  */
-export default function useAmapLocation({ amapKey, getLocation = getLocationByAmapWebFn(amapKey) }: any = {}) {
+export default function useAmapLocation({ amapKey, getLocation = getLocationByAmapWebFn(amapKey) }: Options = {}) {
   const [location, setLocation] = useState<Location>()
   const loadLocation = () =>
     getLocation()

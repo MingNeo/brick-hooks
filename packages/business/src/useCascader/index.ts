@@ -1,11 +1,12 @@
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { useAsync, useDataListToTree, useMethodsImmer, useRefCallback } from 'brick-hooks'
 
 type Id = string | number
 type CascaderNode = {
   checked?: boolean
-  id?: Id
+  id: Id
   level?: number
+  name?: string
   [x: string]: any
 }
 
@@ -13,9 +14,10 @@ interface State {
   nodeMap: Record<string, CascaderNode>
   disabledIds: any[]
   activeIds: Id[]
+  multipleActive?: boolean
 }
 
-const DEFAULT_PARENT_KEY = 'parent'
+const DEFAULT_PARENT_KEY = 'pid'
 
 export function isNil(value: any) {
   return value === undefined || value === null
@@ -25,25 +27,52 @@ const reducers = {
   // 请求加载子节点数据后更新到nodeMap中
   addNodes: (
     state: State,
-    payload: { nodes: any; parent: any; checked?: boolean; disabled?: boolean; parentIdKey?: string; level?: number },
+    payload: { nodes: any; parentId: any; checked?: boolean; disabled?: boolean; parentIdKey?: string; level?: number },
   ) => {
-    const { nodes, parent, checked, disabled, parentIdKey = DEFAULT_PARENT_KEY, level } = payload
+    const { nodes, parentId, checked, disabled, parentIdKey = DEFAULT_PARENT_KEY, level } = payload
     nodes?.forEach((node: CascaderNode) => {
       const { children, ...nodeInfo } = node
       state.nodeMap[node.id] = {
         ...nodeInfo,
         level,
-        [parentIdKey]: node[parentIdKey] ?? parent?.id,
+        [parentIdKey]: node[parentIdKey] ?? parentId,
       }
 
-      const nodeChecked = checked ?? parent?.checked
+      const nodeChecked = checked
       if (!isNil(nodeChecked)) {
         state.nodeMap[node.id].checked = nodeChecked
       }
-      const nodeDisabled = (state.disabledIds.includes(node.id) || disabled) ?? parent?.disabled
+      const nodeDisabled = state.disabledIds.includes(node.id) || disabled
       if (!isNil(nodeDisabled)) {
-        state.nodeMap[node.id].checked = nodeDisabled
+        state.nodeMap[node.id].disabled = nodeDisabled
       }
+    })
+  },
+  // 一次性更新所有节点
+  setNodes: (
+    state: State,
+    payload: {
+      nodes: {
+        id: string
+        name: string
+        checked: boolean
+        disabled: boolean
+        pid: string
+      }[]
+      parentIdKey?: string
+    },
+  ) => {
+    const { nodes } = payload
+    state.nodeMap = {}
+    nodes?.forEach((node: CascaderNode) => {
+      const { children, ...nodeInfo } = node
+      state.nodeMap[node.id] = nodeInfo
+
+      const nodeDisabled = state.disabledIds.includes(node.id) || node.disabled
+      if (!isNil(nodeDisabled)) {
+        state.nodeMap[node.id].disabled = nodeDisabled
+      }
+      state.nodeMap[node.id].level = node.level ?? (node.pid ? state.nodeMap[node.pid].level + 1 : 1)
     })
   },
 
@@ -89,14 +118,17 @@ export default function useCascader({
   fetchSub,
   disabledIds = [],
   onCheckedChange = () => {},
-  root,
   parentIdKey = DEFAULT_PARENT_KEY,
+  data,
+  rootParentId,
 }: {
-  fetchSub: (current?: CascaderNode) => CascaderNode[] | Promise<CascaderNode[]>
+  fetchSub?: (current?: CascaderNode) => CascaderNode[] | Promise<CascaderNode[]>
+  data: CascaderNode[]
   disabledIds?: Id[]
   onCheckedChange?: (checkIds: Id[]) => void
-  root?: CascaderNode
   parentIdKey?: string
+  multiple?: boolean
+  rootParentId?: Id
 }) {
   const [{ nodeMap, activeIds }, api] = useMethodsImmer(reducers, {
     nodeMap: {},
@@ -105,7 +137,7 @@ export default function useCascader({
   })
 
   const onCheckedChangeRef = useRefCallback(onCheckedChange)
-  const [fetchSubAsync, { loading }] = useAsync(fetchSub)
+  const [fetchDataAsync, { loading }] = useAsync(fetchSub)
 
   const { flatNodes, checkeds, checkedIds, maxLevel } = useMemo(() => {
     const flatNodes = Object.values(nodeMap) as CascaderNode[]
@@ -120,19 +152,20 @@ export default function useCascader({
     }
   }, [nodeMap])
 
-  const treeData = useDataListToTree(flatNodes, { parentId: parentIdKey })
+  const treeData = useDataListToTree(flatNodes, { parentId: parentIdKey, rootParentId })
 
-  const loadSub = async (current: CascaderNode) => {
-    const isLoaded = flatNodes.some((v) => v[parentIdKey] === current.id)
+  const loadSub = async (current: Id) => {
+    const isLoaded = flatNodes.some((v) => current && v[parentIdKey] === current)
     if (isLoaded) return
-    const subNodes = await fetchSubAsync(current)
+    const currentNode: CascaderNode = nodeMap[current]
+    const subNodes = await fetchDataAsync(currentNode, true)
     api.addNodes({
       nodes: subNodes,
-      parent: current,
-      checked: current.checked,
-      disabled: current.disabled,
+      parentId: currentNode?.id,
+      checked: currentNode?.checked,
+      disabled: currentNode?.disabled,
       parentIdKey,
-      level: current.level + 1,
+      level: currentNode?.level + 1,
     })
   }
 
@@ -141,15 +174,16 @@ export default function useCascader({
   const setCheckeds = async (ids: Id[], checked: boolean) => api.setCheckeds({ ids, checked })
   const clearCheckeds = async () => api.clearCheckeds()
 
-  const setActive = (node: CascaderNode) => {
-    api.toggleActive(node?.id)
-  }
+  const setActive = useCallback((nodeId: Id) => {
+    api.toggleActive(nodeId)
+  }, [])
 
   useEffect(() => {
-    fetchSubAsync(root).then((subtree) => {
-      api.addNodes({ nodes: subtree, parent: root, checked: root?.checked, parentIdKey, level: 1 })
+    api.setNodes({
+      nodes: data,
     })
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
 
   useEffect(() => {
     disabledIds && api.setDisableds({ ids: disabledIds, disabled: true })
@@ -159,14 +193,29 @@ export default function useCascader({
     onCheckedChangeRef && onCheckedChangeRef(checkeds)
   }, [checkeds, onCheckedChangeRef])
 
-  return {
-    loading,
+  const dataCache = useRef<any>()
+  dataCache.current = {
     data: treeData,
     flatNodes,
+    nodeMap,
     checkedIds,
     checkeds,
     activeIds,
     maxLevel,
+  }
+
+  const getData = useCallback(() => dataCache.current, [])
+
+  return {
+    loading,
+    data: treeData,
+    flatNodes,
+    nodeMap,
+    checkedIds,
+    checkeds,
+    activeIds,
+    maxLevel,
+    getData,
     toggleChecked,
     setDisableds,
     setCheckeds,

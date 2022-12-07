@@ -14,24 +14,42 @@ nav:
 ### 类型声明
 
 ```typescript
-function useAmapPoi(options?: {
-  defaultPoi?: Poi; // 指定默认poi 格式为高德地图Poi格式
-  currentLocation?: { city?: string; [x:string]: any } ; // 当前定位信息，通常无需传这个值，searchPois时如不传city，则使用此处当前定位的城市
-  services?: {
-    getNearByPoiList?: GetNearByInfos; // 自行封装的获取附近的poi列表的服务。native端必传，浏览器端如不传则使用内置服务
-    searchPoiList?: any; // 自行封装的搜索poi的服务。native端必传，浏览器端如不传则使用内置服务
-  };
-  onChange?: (poi: Poi) => void;
-  formatPoi?: (poi: Poi, getNearByPoiList?: any) => Poi;
-  amapKey?: string; // 浏览器端配置amapKey 即可自动加载高德地图js
-}): {
-  currentPoi: Poi;
-  pois: any[];
-  nearbyPois: any[];
-  onSelectPoi: (poi: Poi) => Promise<...>;
-  getNearbyPois: ({ current, size, formatPois, showCurrent }) => Promise<...>;
-  searchPois: (params: any) => Promise<...>;
+type Location = {
+  city?: string
+  latitude?: string
+  longitude?: string
+  [x: string]: any
 }
+
+type Poi = {
+  latitude?: string
+  longitude?: string
+  [x: string]: any
+}
+
+interface UseAmapPoiRetrun {
+  currentPoi: Poi
+  pois: Poi[]
+  nearbyPois: Poi[]
+  onSelectPoi: (poi: Poi) => Promise<void>
+  getNearbyPois: GetNearbyPois
+  searchPois: (params: Location) => Promise<Poi[]>
+  setCurrentPois: (current: Poi) => Promise<Poi>
+}
+
+interface Options {
+  defaultPoi?: Poi // 指定默认poi 格式为高德地图Poi格式
+  currentLocation?: Location // 当前定位信息，通常无需传这个值，searchPois时如不传city，则使用此处当前定位的城市
+  services?: {
+    getNearByPoiList?: GetNearByInfos // 自行封装的获取附近的poi列表的服务，使用获取附近Poi功能必传。native端必传，浏览器端如不传则使用内置服务
+    searchPoiList?: (params: Location) => Promise<Poi[]> // 自行封装的搜索poi的服务，native端必传，浏览器端如不传则使用内置服务
+  }
+  onCurrentPoiChange?: (poi: Poi) => void
+  formatPoi?: (poi: Poi) => Poi
+  amapKey?: string
+}
+
+function useAmapPoi(options?: Options): UseAmapPoiRetrun
 ```
 
 ### 用法
@@ -47,7 +65,9 @@ export default function Demo() {
 
   return (
     <div>
-      {JSON.stringify(currentPoi)}
+      <div>
+        {currentPoi.longitude} {currentPoi.latitude}
+      </div>
       <div style={{ display: 'flex' }}>
         <button onClick={() => searchPois({ city: '青岛', address: '五四广场' })}>搜索五四广场</button>
         <ul>

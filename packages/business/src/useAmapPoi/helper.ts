@@ -69,7 +69,7 @@ export const getNearByInfos = ({ latitude, longitude }) => {
 }
 
 export const searchPois = ({ city, address }: { city?: string; address?: string } = {}) => {
-  return new Promise((resolve, reject) => {
+  return new Promise<any>((resolve, reject) => {
     const AMap = (window as any)?.AMap
 
     AMap.plugin('AMap.PlaceSearch', function () {

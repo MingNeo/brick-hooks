@@ -15,8 +15,8 @@ nav:
 
 ```typescript
 function useScrollFixed(options?: {
-  target?: MutableRefObject<any> | any
-  root?: MutableRefObject<any> | any
+  target?: MutableRefObject<any> // 一个ref或{ current: node }
+  root?: MutableRefObject<any> // 一个ref或{ current: node }
   limit?: (() => number) | number
   fixedStyle?: Record<string, any>
   horizontal?: boolean

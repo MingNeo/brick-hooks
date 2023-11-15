@@ -1,12 +1,12 @@
 {
-  "name": "@brick-hooks/root",
+  "name": "brick-hooks-root",
   "private": true,
   "workspaces": [
     "packages/*"
   ],
-  "description": "通用hooks集",
+  "description": "react/react-native通用hooks",
   "scripts": {
-    "test": "jest",
+    "test": "lerna run test",
     "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap && npm run build",
     "bootstrap": "lerna bootstrap",
     "pnpmBuild": "pnpm --filter './packages/**' build",
@@ -39,9 +39,6 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,jsx,less,md,json}": [
@@ -113,7 +110,6 @@
     "lint-staged": "^10.0.7",
     "mockjs": "^1.1.0",
     "prettier": "^2.2.1",
-    "yorkie": "^2.0.0",
     "@react-native-community/async-storage": "^1.12.1"
   },
   "bugs": {

@@ -13,6 +13,8 @@ export { default as useWillUnmount } from './useWillUnmount'
 export { default as useDidUpdate } from './useDidUpdate'
 export { default as useUnmountedRef } from './useUnmountedRef'
 export { default as useEffectMaunal } from './useEffectMaunal'
+export { default as useEffectWithPrev } from './useEffectWithPrev'
+export { default as useMemoWithPrev } from './useMemoWithPrev'
 export { default as useIsoEffect } from './useIsoEffect'
 export {
   default as useEventBus,
@@ -34,7 +36,8 @@ export { default as usePolling } from './usePolling'
 export { default as usePrevious } from './usePrevious'
 export { default as useReducerImmer } from './useReducerImmer'
 export { default as useRefCallback } from './useRefCallback'
-export { default as useValueRef } from './useValueRef'
+export { default as useValueRef } from './useRefValue' // 兼容旧的
+export { default as useRefValue } from './useRefValue'
 export { default as useSet } from './useSet'
 export { default as useThrottleFn } from './useThrottleFn'
 

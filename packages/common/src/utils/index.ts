@@ -54,11 +54,11 @@ export const formatTime = (timestamp: number, format = 'dd hh:mm:ss.SSS'): strin
 
 export const getformatTimeInfo = (timestamp: number) => {
   return {
-    day: Math.floor(timestamp / 1000 / 60 / 60 / 24), // 天
-    hour: Math.floor((timestamp / 1000 / 60 / 60) % 24), // 时
+    days: Math.floor(timestamp / 1000 / 60 / 60 / 24), // 天
+    hours: Math.floor((timestamp / 1000 / 60 / 60) % 24), // 时
     minutes: Math.floor((timestamp / 1000 / 60) % 60), // 分
     seconds: Math.floor((timestamp / 1000) % 60), // 秒
-    millisecond: timestamp % 1000,
+    milliseconds: timestamp % 1000,
   }
 }
 

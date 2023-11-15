@@ -1,12 +1,103 @@
-0 verbose rootPath /Users/klose/code/mine/custom-hooks
-1 silly argv {
-1 silly argv   _: [ 'add' ],
-1 silly argv   globs: [ 'packages/web' ],
-1 silly argv   lernaVersion: '5.0.1',
-1 silly argv   '$0': 'lerna',
-1 silly argv   pkg: 'uuit'
-1 silly argv }
-2 notice cli v5.0.1
-3 verbose rootPath /Users/klose/code/mine/custom-hooks
-4 error HttpErrorGeneral: 404 Not Found - GET https://registry.npmmirror.com/uuit - [NOT_FOUND] uuit not found
-4 error     at /Users/klose/.nvm/versions/node/v14.18.1/lib/node_modules/lerna-cli/node_modules/npm-registry-fetch/check-response.js:95:15
+17 error Error: Command failed with exit code 1: git remote update
+17 error @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+17 error @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+17 error @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+17 error IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+17 error Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+17 error It is also possible that a host key has just been changed.
+17 error The fingerprint for the RSA key sent by the remote host is
+17 error SHA256:uNiVztksCsDhcc0u9e8BujQXVUpKZIDTMczCvj3tD2s.
+17 error Please contact your system administrator.
+17 error Add correct host key in /Users/klose/.ssh/known_hosts to get rid of this message.
+17 error Offending RSA key in /Users/klose/.ssh/known_hosts:1
+17 error Host key for github.com has changed and you have requested strict checking.
+17 error Host key verification failed.
+17 error fatal: Could not read from remote repository.
+17 error
+17 error Please make sure you have the correct access rights
+17 error and the repository exists.
+17 error error: could not fetch hydrogen
+17 error @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+17 error @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+17 error @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+17 error IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+17 error Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+17 error It is also possible that a host key has just been changed.
+17 error The fingerprint for the RSA key sent by the remote host is
+17 error SHA256:uNiVztksCsDhcc0u9e8BujQXVUpKZIDTMczCvj3tD2s.
+17 error Please contact your system administrator.
+17 error Add correct host key in /Users/klose/.ssh/known_hosts to get rid of this message.
+17 error Offending RSA key in /Users/klose/.ssh/known_hosts:1
+17 error Host key for github.com has changed and you have requested strict checking.
+17 error Host key verification failed.
+17 error fatal: Could not read from remote repository.
+17 error
+17 error Please make sure you have the correct access rights
+17 error and the repository exists.
+17 error error: could not fetch effect-plugin
+17 error @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+17 error @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+17 error @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+17 error IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+17 error Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+17 error It is also possible that a host key has just been changed.
+17 error The fingerprint for the RSA key sent by the remote host is
+17 error SHA256:uNiVztksCsDhcc0u9e8BujQXVUpKZIDTMczCvj3tD2s.
+17 error Please contact your system administrator.
+17 error Add correct host key in /Users/klose/.ssh/known_hosts to get rid of this message.
+17 error Offending RSA key in /Users/klose/.ssh/known_hosts:1
+17 error Host key for github.com has changed and you have requested strict checking.
+17 error Host key verification failed.
+17 error fatal: Could not read from remote repository.
+17 error
+17 error Please make sure you have the correct access rights
+17 error and the repository exists.
+17 error error: could not fetch redux-plugin
+17 error @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+17 error @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+17 error @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+17 error IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+17 error Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+17 error It is also possible that a host key has just been changed.
+17 error The fingerprint for the RSA key sent by the remote host is
+17 error SHA256:uNiVztksCsDhcc0u9e8BujQXVUpKZIDTMczCvj3tD2s.
+17 error Please contact your system administrator.
+17 error Add correct host key in /Users/klose/.ssh/known_hosts to get rid of this message.
+17 error Offending RSA key in /Users/klose/.ssh/known_hosts:1
+17 error Host key for github.com has changed and you have requested strict checking.
+17 error Host key verification failed.
+17 error fatal: Could not read from remote repository.
+17 error
+17 error Please make sure you have the correct access rights
+17 error and the repository exists.
+17 error error: could not fetch immer-plugin
+17 error @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+17 error @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+17 error @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+17 error IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+17 error Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+17 error It is also possible that a host key has just been changed.
+17 error The fingerprint for the RSA key sent by the remote host is
+17 error SHA256:uNiVztksCsDhcc0u9e8BujQXVUpKZIDTMczCvj3tD2s.
+17 error Please contact your system administrator.
+17 error Add correct host key in /Users/klose/.ssh/known_hosts to get rid of this message.
+17 error Offending RSA key in /Users/klose/.ssh/known_hosts:1
+17 error Host key for github.com has changed and you have requested strict checking.
+17 error Host key verification failed.
+17 error fatal: Could not read from remote repository.
+17 error
+17 error Please make sure you have the correct access rights
+17 error and the repository exists.
+17 error error: could not fetch origin
+17 error Fetching hydrogen
+17 error Fetching effect-plugin
+17 error Fetching redux-plugin
+17 error Fetching immer-plugin
+17 error Fetching origin
+17 error Fetching gitee
+17 error     at makeError (/Users/klose/code/mine/custom-hooks/node_modules/.pnpm/registry.npmmirror.com+execa@5.1.1/node_modules/execa/lib/error.js:60:11)
+17 error     at Function.module.exports.sync (/Users/klose/code/mine/custom-hooks/node_modules/.pnpm/registry.npmmirror.com+execa@5.1.1/node_modules/execa/index.js:194:17)
+17 error     at Object.execSync (/Users/klose/code/mine/custom-hooks/node_modules/.pnpm/registry.npmmirror.com+@lerna+child-process@6.0.1/node_modules/@lerna/child-process/index.js:39:16)
+17 error     at updateRemote (/Users/klose/code/mine/custom-hooks/node_modules/.pnpm/registry.npmmirror.com+@lerna+version@6.0.1_nx@15.0.7+typescript@4.8.4/node_modules/@lerna/version/lib/is-behind-upstream.js:34:16)
+17 error     at isBehindUpstream (/Users/klose/code/mine/custom-hooks/node_modules/.pnpm/registry.npmmirror.com+@lerna+version@6.0.1_nx@15.0.7+typescript@4.8.4/node_modules/@lerna/version/lib/is-behind-upstream.js:16:3)
+17 error     at VersionCommand.initialize (/Users/klose/code/mine/custom-hooks/node_modules/.pnpm/registry.npmmirror.com+@lerna+version@6.0.1_nx@15.0.7+typescript@4.8.4/node_modules/@lerna/version/index.js:156:9)

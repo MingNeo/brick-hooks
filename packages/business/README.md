@@ -1,6 +1,6 @@
 # `brick-hooks-business`
 
-> 业务 hooks 的封装
+> 业务 hooks 的封装 [在线文档](https://mingneo.github.io/brick-hooks/)
 
 ## 用法
 

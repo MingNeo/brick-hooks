@@ -4,6 +4,12 @@
 
 目前实现了两个版本(immer 版本和普通版本)。建议业务组件中的相关联的一组状态，都使用 useObjectState/useObjectStateImmer 来替代 useState/useReducer 进行集合管理。
 
+### 类型声明
+
+```typescript
+function useObjectState<S extends State>(initialState?: S, methods?: Methods<S>): [S, SetState, BoundActionMethods]
+```
+
 ### 用法
 
 ```javascript
@@ -24,20 +30,22 @@ function MyComponent() {
 }
 ```
 
-使用 methods/reducers
+使用 methods
 
 ```javascript
-const homeMethods = {
+const homeReducers = {
   updateTitle: (prevState = {}, title) => ({ ...prevState, title }),
   updatePageData: (prevState = {}, payload) => ({ ...prevState, ...payload }),
 }
 
 function MyComponent() {
-  const [homeData, setHomeData, { updateTitle, updatePageData }] = useObjectState({ test: 1 }, homeMethods)
+  const [homeData, setHomeData, methods] = useObjectState({ test: 1 }, homeReducers)
 
   // 触发自定义reducer
-  const handleUpdateTitle = () => updateTitle('test title')
-  // homeData: { test: 1, title: 'test title' }
+  const handleUpdateTitle = () => methods.updateTitle('test title')
+  // 亦可使用dispatch
+  const handleUpdateTitle = () => methods.dispatch('updateTitle', 'test title')
+  // next homeData: { test: 1, title: 'test title' }
 
   return <div>/* ... */</div>
 }

@@ -30,7 +30,7 @@ export const coreHooks = {
     'usePrevious',
     'useReducerImmer',
     'useRefCallback',
-    'useValueRef',
+    'useRefValue',
     'useSet',
     'useThrottleFn',
 

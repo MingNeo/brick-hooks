@@ -4,7 +4,7 @@ import useMethods, { BoundActionMethods } from '../useMethods'
 type State = Record<string, any>
 type SetState = (nextState: any, merge?: boolean) => void
 
-type Methods<S> = Record<string, (...args: any[]) => S>
+type Reducers<S> = Record<string, (...args: any[]) => S>
 
 const defaultMethods = {
   _set: (prevState: State, payload: State) => (typeof payload === 'function' ? payload(prevState) : payload),
@@ -17,19 +17,19 @@ const defaultMethods = {
 /**
  * 面向对象的useState，自动进行合并，基本可以认为等同于class组件的this.setState
  * @param initialState 约定必须是一个object
- * @param methods 自定义reducers方法
+ * @param reducers 自定义reducers方法
  * @returns [state, setState, stateMethods]
  */
 export default function useObjectState<S extends State>(
   initialState: S = {} as S,
-  methods: Methods<S> = {}
+  reducers: Reducers<S> = {},
 ): [S, SetState, BoundActionMethods] {
-  const [state, stateMethods] = useMethods<S>({ ...methods, ...defaultMethods }, initialState as S)
+  const [state, stateMethods] = useMethods<S>({ ...reducers, ...defaultMethods }, initialState as S)
 
   const setState: SetState = useCallback(
     (nextState, merge: boolean = true) => (merge ? stateMethods._setMerge(nextState) : stateMethods._set(nextState)),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [],
   )
 
   return [state, setState, stateMethods]

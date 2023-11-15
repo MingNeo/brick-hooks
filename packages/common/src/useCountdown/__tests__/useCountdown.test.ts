@@ -14,7 +14,7 @@ describe('useCountdown 校验', () => {
     expect(result.current.countdown).toBe(0)
     expect(result.current.minutes).toBe(0)
     expect(result.current.seconds).toBe(0)
-    expect(result.current.millisecond).toBe(0)
+    expect(result.current.milliseconds).toBe(0)
   })
 
   it('counts down', () => {

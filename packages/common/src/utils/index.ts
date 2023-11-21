@@ -54,11 +54,11 @@ export const formatTime = (timestamp: number, format = 'dd hh:mm:ss.SSS'): strin
 
 export const getformatTimeInfo = (timestamp: number) => {
   return {
-    days: Math.floor(timestamp / 1000 / 60 / 60 / 24), // 天
-    hours: Math.floor((timestamp / 1000 / 60 / 60) % 24), // 时
-    minutes: Math.floor((timestamp / 1000 / 60) % 60), // 分
-    seconds: Math.floor((timestamp / 1000) % 60), // 秒
-    milliseconds: timestamp % 1000,
+    day: Math.floor(timestamp / 1000 / 60 / 60 / 24), // 天
+    hour: Math.floor((timestamp / 1000 / 60 / 60) % 24), // 时
+    minute: Math.floor((timestamp / 1000 / 60) % 60), // 分
+    second: Math.floor((timestamp / 1000) % 60), // 秒
+    millisecond: timestamp % 1000,
   }
 }
 
@@ -114,17 +114,23 @@ export function setIntervalBySetTimeout(callback: () => void, delay: number) {
   return timer
 }
 
-export function clearTimer(timer: number) {
+export function clearTimer(timer: number, timeoutType: string) {
   if (!timer) return
 
-  try {
-    clearInterval(timer)
-  } catch (error) {}
+  if (timeoutType === 'raf') {
+    try {
+      const clearRaf = window.cancelAnimationFrame || (window as any).webkitCancelAnimationFrame
+      clearRaf(timer)
+    } catch (error) {}
+    return
+  }
 
-  try {
-    const clearRaf = window.cancelAnimationFrame || (window as any).webkitCancelAnimationFrame
-    clearRaf(timer)
-  } catch (error) {}
+  if (timeoutType === 'interval') {
+    try {
+      clearInterval(timer)
+    } catch (error) {}
+    return
+  }
 
   try {
     clearTimeout(timer)

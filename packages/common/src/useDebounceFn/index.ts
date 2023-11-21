@@ -48,25 +48,33 @@ export default function useDebounceFn(
     }
 
     const debounceFn = (...args: any) => {
-      const cb = (fire: boolean) => {
-        cancel()
-        fire && fnRef.current && fnRef.current.apply(null, args)
-        timer.current = null
-      }
-
-      if (!isNil(optionsRef.current.wait)) {
-        if (optionsRef.current.leading && !timer.current) {
+      return new Promise((resolve, reject) => {
+        const cb = async (fire?: boolean) => {
+          cancel()
+          timer.current = null
+          if (fire && fnRef.current) {
+            try {
+              resolve(await fnRef.current.apply(null, args))
+            } catch (error) {
+              reject(error)
+            }
+          }
+        }
+  
+        if (!isNil(optionsRef.current.wait)) {
+          if (optionsRef.current.leading && !timer.current) {
+            cb(true)
+          }
+  
+          cancel()
+          timer.current = setTimeout(() => {
+            cb(!!optionsRef.current.trailing)
+          }, optionsRef.current.wait) as unknown as number
+        } else {
+          cancel()
           cb(true)
         }
-
-        cancel()
-        timer.current = setTimeout(() => {
-          cb(optionsRef.current.trailing)
-        }, optionsRef.current.wait) as unknown as number
-      } else {
-        cancel()
-        cb(true)
-      }
+      })
     }
     return [debounceFn, cancel]
   }, [])

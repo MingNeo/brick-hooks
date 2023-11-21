@@ -16,11 +16,12 @@ export default function useScroll({
   const [pos, setPos] = useState({ x: 0, y: 0 })
   const scrollRef = useRef<any>(root || (isBrowser ? window : undefined))
   const timerRef = useRef<any>()
+  const onScrollRef = useRef<any>()
 
   useEffect(() => {
     let ticking: number | null = null
     const rootNode = rootRef?.current || scrollRef.current
-    const onScroll = (e) => {
+    const onScroll = onScrollRef.current = (e) => {
       // 使用requestAnimationFrame做防抖
       if (ticking === null) {
         ticking = window.requestAnimationFrame(() => {
@@ -45,6 +46,7 @@ export default function useScroll({
     timerRef.current = setTimeout(() => {
       const rootNode = rootRef?.current || scrollRef.current
       rootNode?.scrollTo?.({ y, top: y })
+      onScrollRef.current?.()
     }, 0)
   }, [])
 

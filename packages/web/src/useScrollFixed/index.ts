@@ -23,16 +23,17 @@ const DefaultFixedStyle = {
   position: 'fixed',
 }
 
+// useScrollFixed 是一个用于判断窗口滚动是否超过限定值时浮动窗口的自定义 Hook
 function useScrollFixed(
   options: {
-    target?: MutableRefObject<any>
-    root?: MutableRefObject<any>
-    limit?: Limit
-    fixedStyle?: Record<string, any>
-    horizontal?: boolean
-    onScroll?: () => void
-    checkIsFixed?: CheckIsFixed
-    initialFixed?: boolean
+    target?: MutableRefObject<any>  // 被测试窗口节点
+    root?: MutableRefObject<any>  // 窗口滚动的根节点
+    limit?: Limit // 判断滚动是否超过窗口头部的数值
+    fixedStyle?: Record<string, any> // 这里传入的 record 键值对表示特定的 fixed 样式
+    horizontal?: boolean // 默认不传即 vertical 滚动
+    onScroll?: () => void // 滚动监听时的回调
+    checkIsFixed?: CheckIsFixed // 一个函数，用来根据滚动偏移量和限制偏移量来判断当前是否 fixed
+    initialFixed?: boolean; // 当页面刚开始是是否要渲染 fixed
   } = {},
 ) {
   const {
@@ -50,7 +51,7 @@ function useScrollFixed(
   const targetRef = useRef<any>(target?.current ?? (isBrowser ? window : undefined))
   if (target) targetRef.current = target?.current ?? (isBrowser ? window : undefined)
 
-  const { x, y, rootRef } = useScroll({ rootRef: root, onScroll })
+  const { x, y, rootRef, scrollToTop, scrollToLeft } = useScroll({ rootRef: root, onScroll })
 
   const fixedInfoRef = useRef({
     isFixed: initialFixed,
@@ -70,11 +71,15 @@ function useScrollFixed(
     // 防止每次滚动都触发渲染，只有当悬浮状态或样式发生变化时才触发渲染
     if (current.isFixed !== old.isFixed || checkObjDiff(current.fixedStyle, old.fixedStyle)) {
       fixedInfoRef.current = current
+      return current
     }
     return old
   }, [limit, horizontal, x, y, rootRef])
 
-  return useMemo(() => ({ targetRef, rootRef, ...fixedInfo }), [rootRef, fixedInfo])
+  return useMemo(
+    () => ({ targetRef, rootRef, ...fixedInfo, scrollToTop, scrollToLeft }),
+    [rootRef, fixedInfo, scrollToTop, scrollToLeft],
+  )
 }
 
 export default useScrollFixed
@@ -94,7 +99,7 @@ function getFixedInfo({
   limit,
   root,
   target,
-  checkIsFixed = ({ offset, limit }) => offset > limit,
+  checkIsFixed = ({ offset, limit }) => offset > limit, // 默认函数判断滚动超过 limit 时为固定顶部
   fixedStyle,
 }: {
   offset: number

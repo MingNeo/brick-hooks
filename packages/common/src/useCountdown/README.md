@@ -1,6 +1,6 @@
 ## useCountDown
 
-倒计时
+倒计时, 针对浏览器端间隔小于 17 毫秒每帧的，使用 requestAnimationFrame 实现，以保持毫秒级平滑过渡，react-native /nodejs 端使用 setTimeout 实现来避免误差。
 
 ### 演示
 

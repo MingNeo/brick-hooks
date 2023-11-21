@@ -6,7 +6,7 @@
   ],
   "description": "react/react-native通用hooks",
   "scripts": {
-    "test": "lerna run test",
+    "test": "pnpm jest",
     "init": "rm -rf node_modules && npm install && npm run clean && npm run bootstrap && npm run build",
     "bootstrap": "lerna bootstrap",
     "pnpmBuild": "pnpm --filter './packages/**' build",

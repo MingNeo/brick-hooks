@@ -12,9 +12,9 @@ describe('useCountdown 校验', () => {
     const { result } = renderHook(() => useCountdown({ total: 5000, format: 's.SS', step: 10, autoRun: false }))
     expect(result.current.formatedCountdown).toBe('0.00')
     expect(result.current.countdown).toBe(0)
-    expect(result.current.minutes).toBe(0)
-    expect(result.current.seconds).toBe(0)
-    expect(result.current.milliseconds).toBe(0)
+    expect(result.current.minute).toBe(0)
+    expect(result.current.second).toBe(0)
+    expect(result.current.millisecond).toBe(0)
   })
 
   it('counts down', () => {
@@ -26,7 +26,7 @@ describe('useCountdown 校验', () => {
     })
 
     expect(result.current.formatedCountdown).toBe('0:4')
-    expect(result.current.minutes).toBe(0)
-    expect(result.current.seconds).toBe(4)
+    expect(result.current.minute).toBe(0)
+    expect(result.current.second).toBe(4)
   })
 })

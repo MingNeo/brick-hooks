@@ -10,7 +10,7 @@ const Demo = () => {
       <div ref={rootRef} style={{ width: '100%', height: 100, overflow: 'scroll', border: '1px solid' }}>
         <div
           style={{
-            width: 200,
+            lineHeight: '50px',
             height: 50,
             backgroundColor: 'powderblue',
             marginTop: 500,

@@ -66,13 +66,15 @@ export default function useCountDown({
     countdown: 0,
   })
 
+  const timeoutType = useRef(getTimeoutType(step))
+
   const formatedCountdown = useMemo(() => formatTime(countdown, format), [countdown, format])
-  const timeoutFn = getTimeoutMethod(step)
+  const timeoutFn = useMemo(() => getTimeoutMethod(step), [step])
   intervalRef.current.type = timeoutFn.type
 
   // 停止倒计时
   const stop = useCallback(() => {
-    clearTimer(intervalRef.current.timer, intervalRef.current.type)
+    clearTimer(intervalRef.current.timer, timeoutType.current)
     clearTimeout(timerRef.current)
     setState((prev) => ({ ...prev, countdown: 0, status: 'finished' }))
     statusRef.current = 'finished'
@@ -81,7 +83,7 @@ export default function useCountDown({
 
   // 开始倒计时
   const start = useCallback(() => {
-    clearTimer(intervalRef.current.timer, intervalRef.current.type)
+    clearTimer(intervalRef.current.timer, timeoutType.current)
     onStart?.()
     endTimeRef.current = !endTime ? Date.now() + (total || 0) : endTimeRef.current
     setState((prev) => ({ ...prev, status: 'running', endTime: endTimeRef.current }))
@@ -101,7 +103,7 @@ export default function useCountDown({
 
     timerRef.current = setTimeout(() => {
       const loop = () => {
-        clearTimer(intervalRef.current.timer, intervalRef.current.type)
+        clearTimer(intervalRef.current.timer, timeoutType.current)
         clearTimeout(timerRef.current)
 
         const progress = running()
@@ -118,8 +120,9 @@ export default function useCountDown({
     autoRun && start()
 
     const interval = intervalRef.current
+    const timerType = timeoutType.current
     return () => {
-      clearTimer(interval.timer, interval.type)
+      clearTimer(interval.timer, timerType)
       timerRef.current && clearTimeout(timerRef.current)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -168,16 +171,29 @@ function clearTimer(timer: number, timeoutType: string) {
   } catch (error) {}
 }
 
-function getTimeoutMethod(step: number) {
-  let fn
-  if (isBrowser && (window.requestAnimationFrame || (window as any).webkitRequestAnimationFrame)) {
-    fn = window.requestAnimationFrame || (window as any).webkitRequestAnimationFrame
-    fn.type = 'raf'
-    return fn
+type TimerCallback = { (callback: () => void): number; type?: any }
+
+function getTimeoutType(step: number) {
+  return isBrowser && (window.requestAnimationFrame || (window as any).webkitRequestAnimationFrame) && step < 17 ? 'raf' : 'timeout'
+}
+
+function getTimeoutMethod(step: number): TimerCallback {
+  if (getTimeoutType(step) === 'raf') {
+    return window.requestAnimationFrame || (window as any).webkitRequestAnimationFrame
   }
 
-  // eslint-disable-next-line no-undef
-  fn = (callback: TimerHandler) => setTimeout(callback, (step && step >= 17) || !isBrowser ? step : 1000 / 60)
-  fn.type = 'timeout'
-  return fn
+  const delay = (step && step >= 17) || !isBrowser ? step : 1000 / 60
+  let offset = 0 // 误差时间
+  let count = 0
+  let nextDelay = delay
+  const start = Date.now()
+
+  return (callback: () => void) => {
+    nextDelay = delay - offset
+    return setTimeout(() => {
+      offset = Date.now() - start - count * delay
+      count++
+      callback()
+    }, nextDelay) as unknown as number
+  }
 }

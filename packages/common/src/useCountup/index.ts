@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import useForceRender from '../useForceRender'
 import { formatTime as formatTimeByString, isBrowser, setIntervalBySetTimeout, clearTimer } from '../utils'
 
@@ -15,8 +15,9 @@ interface CountupProps {
 
 type Running = () => { countup: number; formatedCountup: string }
 
+type Status = 'idle' | 'running' | 'pause' | 'finished'
 interface StateProps {
-  status: 'idle' | 'running' | 'pause' | 'finished'
+  status: Status
 }
 
 /**
@@ -32,13 +33,16 @@ export default function useCountup({
   autoRun = true,
   loopWhenEnd = false,
 }: CountupProps) {
-  const intervalRef = useRef<number | null>(null)
+  const intervalRef = useRef({ timer: undefined, type: '' })
   const timerRef = useRef<number | null>(null)
-  const statusRef = useRef<string>('idle')
+  const statusRef = useRef<Status>('idle')
   const runningListRef = useRef<Running[]>([])
   const countUpRef = useRef<number>(0)
 
   const forceUpdate = useForceRender()
+
+  const timeoutFn = useMemo(() => getTimeoutMethod(step, typeof format === 'string' && /S+/gi.test(format)), [step])
+  intervalRef.current.type = timeoutFn.type
 
   const setCountup = useCallback((value, shouldForceUpdate = false) => {
     countUpRef.current = value
@@ -50,19 +54,19 @@ export default function useCountup({
   // 停止计时
   const stop = useCallback(
     (reset = false) => {
-      clearTimer(intervalRef.current)
+      clearTimer(intervalRef.current.timer, intervalRef.current.type)
       clearTimeout(timerRef.current)
       statusRef.current = 'finished'
       onFinished && onFinished(countUpRef.current, formatTime(countUpRef.current, format))
       runningListRef.current = []
       setCountup(reset ? 0 : countUpRef.current, true)
     },
-    [onFinished, format]
+    [onFinished, format],
   )
 
   // 重置计时
   const reset = useCallback(() => {
-    clearTimer(intervalRef.current)
+    clearTimer(intervalRef.current.timer, intervalRef.current.type)
     clearTimeout(timerRef.current)
     statusRef.current = 'idle'
     runningListRef.current = []
@@ -91,24 +95,20 @@ export default function useCountup({
       isOvertime && !loopWhenEnd && stop()
       return { countup: currentCountup, formatedCountup: formatedProgress }
     },
-    [maxLength, loopWhenEnd, onStep, format]
+    [maxLength, loopWhenEnd, onStep, format],
   )
 
   // 开始计时
   const start = useCallback(() => {
     onStart && onStart()
-    let startTime = Date.now()
+    const startTime = Date.now()
     const running = () => getCurrentCountup(startTime)
-
-    const raf = isBrowser ? window.requestAnimationFrame || (window as any).webkitRequestAnimationFrame : undefined
-    // 如果不计毫秒、或者指定步长超过1/60秒、或在非浏览器端，则使用setTimeout
-    const isUseInterval = !raf || (step && step >= 17) || (typeof format === 'string' && !/S+/gi.test(format))
 
     timerRef.current = setTimeout(() => {
       statusRef.current = 'running'
       runningListRef.current.push(running)
       const loop = () => {
-        clearTimer(intervalRef.current)
+        clearTimer(intervalRef.current.timer, intervalRef.current.type)
         clearTimeout(timerRef.current)
         // const progress = running()
         // 维护一个running函数数组，用于暂停和恢复
@@ -116,18 +116,18 @@ export default function useCountup({
         const progress = current?.()
         if ((loopWhenEnd || progress.countup > 0) && statusRef.current === 'running') {
           runningListRef.current.push(running)
-          intervalRef.current = isUseInterval ? setIntervalBySetTimeout(running, step) : raf(loop)
+          intervalRef.current.timer = timeoutFn(loop)
         }
       }
       loop()
     }, 0)
-  }, [format, onStart, step, loopWhenEnd, getCurrentCountup])
+  }, [onStart, getCurrentCountup, loopWhenEnd, timeoutFn])
 
   useEffect(() => {
     autoRun && start()
 
     return () => {
-      clearTimer(intervalRef.current)
+      clearTimer(intervalRef.current.timer, intervalRef.current.type)
       timerRef.current && clearTimeout(timerRef.current)
     }
   }, [])
@@ -150,4 +150,34 @@ function formatTime(timestamp: number, format: string | ((progress: number) => s
     : typeof format === 'function'
     ? format(timestamp)
     : ''
+}
+
+function getTimeoutMethod(step: number, useRaf) {
+  let fn
+  if (
+    isBrowser &&
+    (window.requestAnimationFrame || (window as any).webkitRequestAnimationFrame) &&
+    (step < 17 || useRaf)
+  ) {
+    fn = window.requestAnimationFrame || (window as any).webkitRequestAnimationFrame
+    fn.type = 'raf'
+    return fn
+  }
+
+  const delay = (step && step >= 17) || !isBrowser ? step : 1000 / 60
+  let offset = 0 // 误差时间
+  let count = 0
+  let nextDelay = delay
+  const start = Date.now()
+
+  fn = (callback: () => void) => {
+    nextDelay = delay - offset
+    return setTimeout(() => {
+      offset = Date.now() - start - count * delay
+      count++
+      callback()
+    }, nextDelay)
+  }
+  fn.type = 'timeout'
+  return fn
 }

@@ -7,7 +7,7 @@ nav:
 
 方便在 web 中使用 animate
 
-注：如果你使用 react-native-web 且使用 brick-hooks-native，那么可以直接使用 brickHooksNative.useAnimate，无需更换适配。
+注：如果你使用 react-native-web 且使用 brick-hooks-native，那么可以直接使用 brickHooksNative.useAnimate。
 
 brickHooksNative.useAnimate 基于 react-native-web 的 animated 而非 css，内置 easing 要丰富一些且支持自定义函数。其他用法与本 hook 基本一致。
 

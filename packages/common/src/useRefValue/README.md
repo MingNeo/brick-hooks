@@ -7,7 +7,6 @@
 ```javascript
 function MyComponent() {
   const valueRef = useRefValue(value)
-
-  // valueRef.current ...
+  console.log(valueRef.current)
 }
 ```

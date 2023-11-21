@@ -138,7 +138,7 @@ importers:
       '@types/react-dom': ^16.9.8
       animated: ^0.2.2
       antd: ^4.19.0
-      brick-hooks: ^0.4.1
+      brick-hooks: ^0.4.2
       eslint: ^8.0.0
       jest: ^26.6.3
       range-interpolator: ^1.0.2
@@ -177,7 +177,7 @@ importers:
     specifiers:
       '@testing-library/react-hooks': ^5.1.1
       '@types/jest': ^26.0.23
-      brick-hooks: ^0.4.1
+      brick-hooks: ^0.4.2
       eslint: ^8.0.0
       jest: ^26.6.3
       ts-jest: ^26.5.5
@@ -298,7 +298,7 @@ importers:
       '@types/jest': ^26.0.23
       '@types/react-native': ^0.64.10
       antd: ^4.24.0
-      brick-hooks: ^0.4.1
+      brick-hooks: ^0.4.2
       eslint: ^8.0.0
       jest: ^26.6.3
       react-native-web: ^0.18.10
@@ -322,7 +322,7 @@ importers:
       '@testing-library/react-hooks': ^5.1.1
       '@types/jest': ^26.0.23
       '@types/react-native': ^0.64.10
-      brick-hooks-native: ^0.4.1
+      brick-hooks-native: ^0.4.2
       eslint: ^8.0.0
       jest: ^26.6.3
       ts-jest: ^26.5.5
@@ -342,7 +342,7 @@ importers:
     specifiers:
       '@testing-library/react-hooks': ^5.1.1
       '@types/jest': ^26.0.23
-      brick-hooks: ^0.4.1
+      brick-hooks: ^0.4.2
       css-mediaquery: ^0.1.2
       eslint: ^8.0.0
       intersection-observer: ^0.12.0
@@ -21745,26 +21745,6 @@ packages:
       strip-eof: registry.npmmirror.com/strip-eof/1.0.0
     dev: true
 
-  registry.npmmirror.com/execa/0.8.0:
-    resolution:
-      {
-        integrity: sha512-zDWS+Rb1E8BlqqhALSt9kUhss8Qq4nN3iof3gsOdyINksElaPyNBtKUMTR62qhvgVWR0CqCX7sdnKe4MnUbFEA==,
-        registry: https://registry.npm.terminus.io/,
-        tarball: https://registry.npmmirror.com/execa/-/execa-0.8.0.tgz,
-      }
-    name: execa
-    version: 0.8.0
-    engines: { node: '>=4' }
-    dependencies:
-      cross-spawn: registry.npmmirror.com/cross-spawn/5.1.0
-      get-stream: registry.npmmirror.com/get-stream/3.0.0
-      is-stream: registry.npmmirror.com/is-stream/1.1.0
-      npm-run-path: registry.npmmirror.com/npm-run-path/2.0.2
-      p-finally: registry.npmmirror.com/p-finally/1.0.0
-      signal-exit: registry.npmmirror.com/signal-exit/3.0.7
-      strip-eof: registry.npmmirror.com/strip-eof/1.0.0
-    dev: true
-
   registry.npmmirror.com/execa/1.0.0:
     resolution:
       {
@@ -31803,18 +31783,6 @@ packages:
       is-core-module: registry.npmmirror.com/is-core-module/2.11.0
       semver: registry.npmmirror.com/semver/7.3.8
       validate-npm-package-license: registry.npmmirror.com/validate-npm-package-license/3.0.4
-    dev: true
-
-  registry.npmmirror.com/normalize-path/1.0.0:
-    resolution:
-      {
-        integrity: sha512-7WyT0w8jhpDStXRq5836AMmihQwq2nrUVQrgjvUo/p/NZf9uy/MeJ246lBJVmWuYXMlJuG9BNZHF0hWjfTbQUA==,
-        registry: https://registry.npm.terminus.io/,
-        tarball: https://registry.npmmirror.com/normalize-path/-/normalize-path-1.0.0.tgz,
-      }
-    name: normalize-path
-    version: 1.0.0
-    engines: { node: '>=0.10.0' }
     dev: true
 
   registry.npmmirror.com/normalize-path/2.1.1:
@@ -42086,18 +42054,6 @@ packages:
       get-stdin: registry.npmmirror.com/get-stdin/4.0.1
     dev: true
     optional: true
-
-  registry.npmmirror.com/strip-indent/2.0.0:
-    resolution:
-      {
-        integrity: sha512-RsSNPLpq6YUL7QYy44RnPVTn/lcVZtb48Uof3X5JLbF4zD/Gs7ZFDv2HWol+leoQN2mT86LAzSshGfkTlSOpsA==,
-        registry: https://registry.npm.terminus.io/,
-        tarball: https://registry.npmmirror.com/strip-indent/-/strip-indent-2.0.0.tgz,
-      }
-    name: strip-indent
-    version: 2.0.0
-    engines: { node: '>=4' }
-    dev: true
 
   registry.npmmirror.com/strip-indent/3.0.0:
     resolution:

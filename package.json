@@ -28,8 +28,7 @@
     "deploy": "npm run docs:build && npm run docs:deploy",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "umi-test": "umi-test",
-    "umi-test:coverage": "umi-test --coverage",
-    "prepublishOnly": "npm run build"
+    "umi-test:coverage": "umi-test --coverage"
   },
   "repository": {
     "type": "git",

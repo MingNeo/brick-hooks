@@ -1,5 +1,7 @@
 ## useAsync
 
+! 已废弃，可使用useRequest替代。
+
 对异步函数做简单处理的 hook。一般来说项目里对 fetch 都会做了一定程度的封装。这个简单的 hook 仅做自动 loading、自动 debounce、mutate 的处理。返回处理过后的函数和 loading、error 等状态。
 
 复杂异步请求管理可以使用 SWR 等开源请求库。
@@ -109,7 +111,7 @@ const [loadData, { loading, result }] = useAsync(fetchData, {
 const [loadData, { loading, result, mutate }] = useAsync(fetchData)
 
 const handleClick = (key) => {
-  mutate({ ...result, [key]: 'selected' })
+  mutate({ ...result, data: result.data.map((v) => ({ ...v, selected: v.key === key })) });
   loadData()
 }
 ```

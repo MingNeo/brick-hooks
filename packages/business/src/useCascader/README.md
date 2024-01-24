@@ -38,11 +38,3 @@ function useCascader({
   loadSubTree: (current: CascaderNode) => Promise<void>
 }
 ```
-
-## 用法
-
-```javascript
-const fetchSubChildren = () => {
-  return fetch('http://example.com/movies.json').then((response) => response.json())
-}
-```

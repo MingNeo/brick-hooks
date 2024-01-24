@@ -49,7 +49,7 @@ function useFreeDrag(
 
 ```javascript
 function Comp() {
-  const { onMousedown, dragStyle } = useFreeDrag((rect) => {
+  const { onMousedown, style: dragStyle } = useFreeDrag((rect) => {
     console.log(rect)
   })
 
@@ -64,5 +64,5 @@ function Comp() {
 如果初始状态不是 left:0,top:0，则需要设置 initialRect
 
 ```javascript
-  const { onMousedown, dragStyle } = useFreeDrag(() => {}, { initialRect: { left: 10, top: 10 })
+  const { onMousedown, style: dragStyle } = useFreeDrag(() => {}, { initialRect: { left: 10, top: 10 })
 ```

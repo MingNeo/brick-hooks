@@ -1,11 +1,11 @@
-## useTrimValue
+## useTrimState
 
 创建一个字符串 state，并对字符串数据进行自动去掉空格的处理
 
 ### 类型声明
 
 ```typescript
-function useTrimValue(initialValue: string | undefined, fullTrim?: boolean): [string, setTrimState]
+function useTrimState(initialValue: string | undefined, fullTrim?: boolean): [string, setTrimState]
 ```
 
 ### 用法
@@ -13,8 +13,8 @@ function useTrimValue(initialValue: string | undefined, fullTrim?: boolean): [st
 ```javascript
 function MyComponent(props) {
   // 默认仅移除首尾空格
-  const [value, setTrimValue] = useTrimValue(props.text) // ' ss ss ' => 'ss sss'
+  const [trimvalue, setTrimValue] = useTrimState(props.text) // ' ss ss ' => 'ss sss'
   // 第二个参数控制是否去除字符串中所有的空格
-  const [value, setTrimValue] = useTrimValue(props.text, true) // ' ss ss ' => 'sssss'
+  const [trimvalue, setTrimValue] = useTrimState(props.text, true) // ' ss ss ' => 'sssss'
 }
 ```

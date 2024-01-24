@@ -9,6 +9,10 @@
 ### 类型声明
 
 ```typescript
+type FetchFn = (
+  query: QueryParams,
+) => Promise<{ data: Record<string, any>[]; hasMore?: boolean; total?: number; [x: string]: any }>
+
 function useListViewData(
   fetchFn: FetchFn,
   initialQuery?: {
@@ -37,7 +41,6 @@ function useListViewData(
 
 ```javascript
 function MyComponent() {
-  // 注意， 异步请求getData返回数据必须是any[]格式
   const { listData, loadData, loadNextPage, loading } = useListViewData(getData, { pageSize: 1, pageNo: 10 })
 
   useEffect(() => {

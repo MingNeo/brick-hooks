@@ -1,16 +1,11 @@
 import React, { useEffect } from 'react'
 import useCounter from '../useCounter'
 import useHistoryRef from '.'
-import useForceRender from '../useForceRender'
 
 export default function Demo({ max = 10 } = {}) {
   const [count, { inc }] = useCounter(0)
-  const forceUpdate = useForceRender()
   const { undo, redo, push, last, undoList, redoList, history } = useHistoryRef({
-    max,
-    onUpdate: (nextState) => {
-      forceUpdate()
-    },
+    max, renderOnChange: true
   })
 
   useEffect(() => {

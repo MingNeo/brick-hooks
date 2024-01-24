@@ -16,9 +16,6 @@ interface CountupProps {
 type Running = () => { countup: number; formatedCountup: string }
 
 type Status = 'idle' | 'running' | 'pause' | 'finished'
-interface StateProps {
-  status: Status
-}
 
 /**
  * 计时hooks，可以用于天、时、分、秒、毫秒的计时

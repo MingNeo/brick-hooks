@@ -1,6 +1,10 @@
 ## useEffectMaunal
+!! 此hook即将废弃， 使用场景较少。且会带来一些心智负担。
 
-同 useEffect，不同的是，不通过 deps 进行触发, 而通过返回一个更新函数触发 effect callback。主要应用于需要使用 useEffect 的 destory 返回函数的情况。 callEffect 自动保持最新，无需传递 args
+受控的useEffect，等同于useCallback + useEffect
+通过返回一个更新函数触发 effect callback。
+
+主要应用于需要使用 useEffect 的 destory 函数的情况。 callEffect 自动保持最新，无需传递 args
 
 ### 用法
 
@@ -23,18 +27,16 @@ function MyComponent() {
 
 // 等同于
 function MyComponent() {
-  const timerRef = useRef()
+  const [value, setValue] = useState({})
   const callEffect = useCallback(() => {
-    const timer = setTimeout(() => {
-      // ...
-    })
-  }, [])
+    // ...
+  }, [value])
 
   useEffect(() => {
     return () => {
-      clearTimeout(timerRef.current)
+      // value
     }
-  }, [])
+  }, [value])
 
   return <Child onClick={callEffect}>...</Child>
 }

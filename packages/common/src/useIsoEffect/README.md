@@ -1,6 +1,5 @@
 ## useIsoEffect
-
-替换 useLayoutEffect，以兼容 ssr，在 server 端自动使用 useEffect
+useLayoutEffect的替代品，以兼容 ssr/react-native，在 server 端自动使用 useEffect
 
 ### 类型声明
 

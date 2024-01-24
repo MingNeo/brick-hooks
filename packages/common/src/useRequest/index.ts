@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import useDebounceFn from '../useDebounceFn'
+import { isFunction } from '../utils'
 
 type AsyncFunction = (...args: any[]) => any | Promise<any>
 
@@ -76,8 +77,8 @@ export default function useRequest<A extends AsyncFunction>(
   const exector = debounceTime ? debounceExector : originExector
 
   const mutate = useCallback(
-    async (callback) => {
-      const data = await callback(resultRef.current)
+    async (newData: (Record<string, any> | any[] | ((result: any) => any))) => {
+      const data = isFunction(newData) ? await (newData as any)(resultRef.current) : newData
       setState((prev) => ({ ...prev, result: data, status: 'mutate success' }))
     },
     [setState],

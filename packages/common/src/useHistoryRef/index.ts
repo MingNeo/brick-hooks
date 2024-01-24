@@ -1,7 +1,9 @@
-import { useRef } from 'react'
+import { useRef, useReducer } from 'react'
 import HistoryState, { Options, HistoryStock } from './historyState'
 
-export interface useHistoryRefOptions<Raw, Serialized = Raw> extends Options<Raw, Serialized> {}
+export interface useHistoryRefOptions<Raw, Serialized = Raw> extends Options<Raw, Serialized> {
+  renderOnChange?: boolean // 是否在数据变化时重新渲染组件
+}
 
 export interface Return<Raw, Serialized> {
   source: Raw // 原始数据
@@ -31,9 +33,15 @@ export default function useHistoryRef<Raw, Serialized = Raw>(
   // source: Raw,
   options: useHistoryRefOptions<Raw, Serialized> = {}
 ): Return<Raw, Serialized> {
+  const [, forceUpdate] = useReducer((prev: number) => prev + 1, 0)
   const ref = useRef<any>()
   if (!ref.current) {
-    ref.current = new HistoryState(options)
+    const { renderOnChange, onUpdate, ...restOptions } = options
+    ref.current = new HistoryState({ ...restOptions, onUpdate: (...args) => {
+      onUpdate?.(...args)
+      // 历史发生变化或触发undo等操作时，强制组件更新
+      renderOnChange && forceUpdate()
+    }})
   }
 
   return ref.current

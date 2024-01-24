@@ -19,7 +19,7 @@ interface Options {
 
 export type FetchFn = (
   query: QueryParams,
-) => Promise<{ data: any[]; hasMore?: boolean; total?: number; [x: string]: any }>
+) => Promise<{ data: Record<string, any>[]; hasMore?: boolean; total?: number; [x: string]: any }>
 
 export const defaultInitialQuery: QueryParams = {
   pageNo: 1,

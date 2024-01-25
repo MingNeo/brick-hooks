@@ -27,7 +27,7 @@ export default function useCookie(key: string): Return {
       await deleteCookie(key)
     }
 
-    return [item, updateItem, { get, refresh, delete: deleteItem }]
+    return [item, updateItem, { get, refresh, set: updateItem, delete: deleteItem }]
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key])
 }

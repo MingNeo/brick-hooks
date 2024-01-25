@@ -3,22 +3,26 @@ nav:
   path: /web
 ---
 
-## useMediaquery
-
-通过 js 方便使用媒体查询判断当前是否匹配
+## useQueryParams
+获取url参数
 
 ### 类型声明
 
 ```typescript
-function useMediaQuery(mediaQuery: string): boolean
+function useQueryParams(queryStr?: string): {
+  queryParams: {};
+  set: (params: object, refresh?: boolean) => void;
+  remove: (key: string, refresh?: boolean) => void;
+}
 ```
 
 ### 用法
 
 ```javascript
 function MyComponent() {
-  const isPad = useMediaQuery('(min-width: 768px) and (max-width: 992px)')
-  const isPC = useMediaQuery('(min-width: 1200px)')
-  // window.innerWidth: 1200, isPC: true, isPad: false
+  // 获取当前页面url参数
+  const { queryParams } = useQueryParams()
+  // 可接受一个参数字符串，用于指定解析的字符串而非自动从url获取
+  const { queryParams } = useQueryParams('a=1&b=2')
 }
 ```

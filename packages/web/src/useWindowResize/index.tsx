@@ -22,7 +22,7 @@ const useWindowResize = (
   })
 
   useEffect(() => {
-    refCallback(size)
+    refCallback(size as any)
   }, [size, refCallback])
 
   return size

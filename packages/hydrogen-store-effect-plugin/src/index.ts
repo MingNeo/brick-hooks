@@ -42,7 +42,7 @@ export function getEffects(modules = {}) {
 }
 
 /**
- * 使用这个插件后，store-next的将可以使用effects处理异步
+ * 使用这个插件后，hydrogen-store的将可以使用effects处理异步
  * @returns
  */
 function effectPlugin<S>(Store: any) {

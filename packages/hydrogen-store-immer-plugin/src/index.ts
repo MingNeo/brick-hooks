@@ -14,7 +14,7 @@ function isObject(value) {
 }
 
 /**
- * 使用这个插件后，store-next将可以使用immer的语法编写reducer
+ * 使用这个插件后，hydrogen-store将可以使用immer的语法编写reducer
  */
 function immerPlugin<S>(Store: any) {
   function reducerFactory(reducers: Record<string, any>) {
